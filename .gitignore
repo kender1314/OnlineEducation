@@ -16,7 +16,7 @@ build/
 settings.gradle
 gradlew.bat
 gradlew
-
+/gradle/
 
 ### IntelliJ IDEA ###
 .idea
