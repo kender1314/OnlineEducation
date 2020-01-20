@@ -1,5 +1,9 @@
 package com.graduate.onlineeducation.service;
 
+import com.graduate.onlineeducation.entity.User;
+
+import java.util.Map;
+
 /**
  * @Author hejiang
  * @Version 1.0.0 RELEASE
@@ -7,4 +11,12 @@ package com.graduate.onlineeducation.service;
  * @Description:
  */
 public interface UserLoginService {
+
+    /**
+     * login
+     *
+     * @param params params
+     * @return User
+     */
+    User login(Map<String, Object> params);
 }

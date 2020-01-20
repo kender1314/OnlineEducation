@@ -1,6 +1,12 @@
 package com.graduate.onlineeducation.service.impl;
 
+import com.graduate.onlineeducation.entity.User;
+import com.graduate.onlineeducation.repo.UserLoginRepository;
+import com.graduate.onlineeducation.service.UserLoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * @Author hejiang
@@ -9,5 +15,23 @@ import org.springframework.stereotype.Service;
  * @Description:
  */
 @Service
-public class UserLoginServiceImpl {
+public class UserLoginServiceImpl implements UserLoginService {
+
+    private final UserLoginRepository userLoginRepository;
+
+    @Autowired
+    public UserLoginServiceImpl(UserLoginRepository userLoginRepository) {
+        this.userLoginRepository = userLoginRepository;
+    }
+
+    @Override
+    public User login(Map<String, Object> params) {
+        String userName = null;
+        String password = null;
+        if (params != null) {
+            userName = params.get("userName").toString();
+            password = params.get("password").toString();
+        }
+        return userLoginRepository.login(userName, password);
+    }
 }
