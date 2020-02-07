@@ -1,6 +1,7 @@
 package com.graduate.onlineeducation.service;
 
 import com.graduate.onlineeducation.entity.User;
+import org.springframework.data.domain.Page;
 
 import java.util.Map;
 
@@ -18,5 +19,12 @@ public interface UserLoginService {
      * @param params params
      * @return User
      */
-    User login(Map<String, Object> params);
+    User login(String username, String password);
+
+    /**
+     * getUsersList
+     *
+     * @return the list of users
+     */
+    Page<User> getUsersList(Map<String, Object> params);
 }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul class="layui-nav layui-bg-blue">
+    <a href="index.html"><img src="../images/logo.png" height="42" width="300" style="margin-right: 50px"/></a>
+    <li class="layui-nav-item layui-this"><a href="">首页</a></li>
+    <li class="layui-nav-item">
+        <a href="javascript:;">分类</a>
+        <dl class="layui-nav-child">
+            <dd><a href="">IT.互联网</a></dd>
+            <dd><a href="">设计.创作</a></dd>
+            <dd><a href="">电商.平台</a></dd>
+            <dd><a href="">语言.留学</a></dd>
+            <dd><a href="">升学.考研</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item" style="margin-left: 60%">
+        <a href=""><img src="../images/news.png" height="25" width="25" /></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:;">贤心</a>
+        <dl class="layui-nav-child">
+            <dd><a href="">基本资料</a></dd>
+            <dd><a href="">修改密码</a></dd>
+            <dd><a href="">购物车</a></dd>
+            <hr>
+            <dd><a href="">退出</a></dd>
+        </dl>
+    </li>
+</ul>
+</body>
+</html>
+<script>
+    layui.use('element', function () {
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        //监听导航点击
+        element.on('nav(demo)', function (elem) {
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+</script>

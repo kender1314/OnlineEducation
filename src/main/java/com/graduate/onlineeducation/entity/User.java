@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "graduate_user")
 public class User implements Serializable {
-    private static final long serialVersionUID = 7865307119473450123L;
+    private static final long serialVersionUID = 2514333989278491301L;
 
     /**
      * TABLE：使用一个特定的数据库表格来保存主键。

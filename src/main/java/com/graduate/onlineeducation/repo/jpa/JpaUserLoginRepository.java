@@ -3,6 +3,9 @@ package com.graduate.onlineeducation.repo.jpa;
 import com.graduate.onlineeducation.entity.User;
 import com.graduate.onlineeducation.repo.UserLoginRepository;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Query;
 
 /**
@@ -24,4 +27,7 @@ public interface JpaUserLoginRepository extends UserLoginRepository {
     @Override
     @Query(value = "select * from graduate_user where user_name = ?1 and password = ?2", nativeQuery = true)
     User login(String userName, String password);
+
+    @Override
+    Page<User> findAll(Specification<User> spec, Pageable pageable);
 }

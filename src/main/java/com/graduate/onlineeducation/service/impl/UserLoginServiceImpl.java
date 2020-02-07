@@ -3,7 +3,11 @@ package com.graduate.onlineeducation.service.impl;
 import com.graduate.onlineeducation.entity.User;
 import com.graduate.onlineeducation.repo.UserLoginRepository;
 import com.graduate.onlineeducation.service.UserLoginService;
+import com.graduate.onlineeducation.support.ByUserSpecification;
+import com.graduate.onlineeducation.support.PaginationBase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -25,13 +29,13 @@ public class UserLoginServiceImpl implements UserLoginService {
     }
 
     @Override
-    public User login(Map<String, Object> params) {
-        String userName = null;
-        String password = null;
-        if (params != null) {
-            userName = params.get("userName").toString();
-            password = params.get("password").toString();
-        }
-        return userLoginRepository.login(userName, password);
+    public User login(String username, String password) {
+        return userLoginRepository.login(username, password);
+    }
+
+    @Override
+    public Page<User> getUsersList(Map<String, Object> params) {
+        Specification<User> specification = new ByUserSpecification(params);
+        return userLoginRepository.findAll(specification, PaginationBase.getPagination(params));
     }
 }
