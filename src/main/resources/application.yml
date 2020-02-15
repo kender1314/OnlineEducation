@@ -15,6 +15,8 @@ spring:
     prefix: classpath:/static/
     suffix: .html
     encoding: UTF-8
+  resources:
+    static-locations: classpath:/static/
 #security:
 #  basic:
 #    enabled: false

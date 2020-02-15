@@ -24,7 +24,7 @@ import java.util.Map;
  * @Description:
  */
 @Controller
-@RequestMapping("/graduate/user")
+@RequestMapping("/user")
 public class UserLoginController {
 
     private Logger logger = LoggerFactory.getLogger(UserLoginController.class);
@@ -40,7 +40,7 @@ public class UserLoginController {
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public ModelAndView login(String username, String password) {
         User user =  userLoginService.login(username, password);
-        return new ModelAndView("/views/index", "user", user);
+        return new ModelAndView("/views/personal_information", "user", user);
     }
 
     @ResponseBody

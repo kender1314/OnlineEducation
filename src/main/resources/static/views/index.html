@@ -5,14 +5,6 @@
     <title>首页</title>
     <!--Layui-->
     <link rel="stylesheet" href="../lib/layui/css/layui.css">
-    <script src="../lib/layui/layui.js"></script>
-    <!--jquery-->
-    <script src="../lib/jquery-2.1.4/jquery.min.js"></script>
-    <!--json-->
-    <script src="../lib/json/json2.js" type="text/javascript"></script>
-
-    <script src="../js/common.js"></script>
-    <script src="../js/index.js"></script>
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/common.css">
 </head>
@@ -31,94 +23,182 @@
 
 <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
     <ul class="layui-tab-title" style="text-align: center;">
-        <li class="layui-this my-li"><h2>IT.互联网</h2></li>
-        <li class="my-li"><h2>设计.创作</h2></li>
-        <li class="my-li"><h2>电商.平台</h2></li>
-        <li class="my-li"><h2>语言.留学</h2></li>
-        <li class="my-li"><h2>升学.考研</h2></li>
+        <li class="layui-this my-li"><h2>编程语言</h2></li>
+        <li class="my-li"><h2>云计算大数据</h2></li>
+        <li class="my-li"><h2>前端</h2></li>
+        <li class="my-li"><h2>移动开发</h2></li>
+        <li class="my-li"><h2>兴趣职场</h2></li>
     </ul>
     <div class="layui-tab-content" style="height: 100px;">
         <div class="layui-tab-item layui-show">
-            <div class="layui-row layui-col-space15" style="width: 80%; margin-left: 10%">
+            <div class="layui-row layui-col-space15 my-layui-row">
                 <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
                     <ul class="layui-tab-title">
                         <li style="pointer-events: none"><h3>热门分类</h3></li>
-                        <li class="layui-this">网站设置</li>
-                        <li>用户管理</li>
-                        <li>权限分配</li>
-                        <li>商品管理</li>
-                        <li>订单管理</li>
+                        <li class="layui-this">不限</li>
+                        <li>Java</li>
+                        <li>C++</li>
+                        <li>Python</li>
+                        <li>C</li>
                     </ul>
                     <div class="layui-tab-content" style="height: 100px;">
                         <div class="layui-tab-item"></div>
                         <div class="layui-tab-item layui-show">
-                            <div class="layui-col-md6" style="width: 370px; padding: 5px">
-                                <div class="layui-card">
-                                    <a href=""><img src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLDPKia9ZsLjIb5JFDJ1gJ9TpHRicBSXO4hQ5lBEdUA4uyBA69aJ6nSyDscic7SWOIiaOck/356" width="360"></a>
-                                    <a href=""><div class="layui-card-header">Java性能调优全解2.5</div></a>
-                                    <div class="layui-card-body">
-                                        <span>8978人已报名</span>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span>评分：6.81</span><br>
-                                        <span style="color: red">￥299.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-md6" style="width: 370px; padding: 5px">
-                                <div class="layui-card">
-                                    <a href=""><img src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLD0icukqCNodrpd0T09XE4niawPRkSZobPQBqZyIqHvsicamu7q4dzjoSWa3hCu66Z3mI/356" width="360"></a>
-                                    <a href=""><div class="layui-card-header">Java性能调优全解2.5</div></a>
-                                    <div class="layui-card-body">
-                                        <span>8978人已报名</span>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span>评分：6.81</span><br>
-                                        <span style="color: red">￥299.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-md6" style="width: 370px; padding: 5px">
-                                <div class="layui-card">
-                                    <a href=""><img src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLAbmOdIJ1HHhFdK32Yy7hJgNyMm7PWs8ZSaxJPia0j2FoNSice6qXfdSPS5UkvgRx8hg/356" width="360"></a>
-                                    <a href=""><div class="layui-card-header">Java性能调优全解2.5</div></a>
-                                    <div class="layui-card-body">
-                                        <span>8978人已报名</span>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span>评分：6.81</span><br>
-                                        <span style="color: red">￥299.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-md6" style="width: 370px; padding: 5px">
-                                <div class="layui-card">
-                                    <a href=""><img src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356" width="360"></a>
-                                    <a href=""><div class="layui-card-header">Java性能调优全解2.5</div></a>
-                                    <div class="layui-card-body">
-                                        <span>8978人已报名</span>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span>评分：6.81</span><br>
-                                        <span style="color: red">￥299.00</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <ul class="flow-default" id="LAY_demo1_1"></ul>
                         </div>
                         <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo1"></ul>
+                            <ul class="flow-default" id="LAY_demo1_2"></ul>
                         </div>
-                        <div class="layui-tab-item">内容4</div>
-                        <div class="layui-tab-item">内容5</div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo1_3"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo1_4"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo1_5"></ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="layui-tab-item">内容2</div>
-        <div class="layui-tab-item">内容3</div>
-        <div class="layui-tab-item">内容4</div>
-        <div class="layui-tab-item">内容5</div>
+        <div class="layui-tab-item">
+            <div class="layui-row layui-col-space15 my-layui-row" >
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title">
+                        <li style="pointer-events: none"><h3>热门分类</h3></li>
+                        <li class="layui-this">不限</li>
+                        <li>Java</li>
+                        <li>C++</li>
+                        <li>Python</li>
+                        <li>C</li>
+                    </ul>
+                    <div class="layui-tab-content" style="height: 100px;">
+                        <div class="layui-tab-item"></div>
+                        <div class="layui-tab-item layui-show">
+                            <ul class="flow-default" id="LAY_demo2_1"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo2_2"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo2_3"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo2_4"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo2_5"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-row layui-col-space15 my-layui-row" >
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title">
+                        <li style="pointer-events: none"><h3>热门分类</h3></li>
+                        <li class="layui-this">不限</li>
+                        <li>Java</li>
+                        <li>C++</li>
+                        <li>Python</li>
+                        <li>C</li>
+                    </ul>
+                    <div class="layui-tab-content" style="height: 100px;">
+                        <div class="layui-tab-item"></div>
+                        <div class="layui-tab-item layui-show">
+                            <ul class="flow-default" id="LAY_demo3_1"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo3_2"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo3_3"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo3_4"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo3_5"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-row layui-col-space15 my-layui-row">
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title">
+                        <li style="pointer-events: none"><h3>热门分类</h3></li>
+                        <li class="layui-this">不限</li>
+                        <li>Java</li>
+                        <li>C++</li>
+                        <li>Python</li>
+                        <li>C</li>
+                    </ul>
+                    <div class="layui-tab-content" style="height: 100px;">
+                        <div class="layui-tab-item"></div>
+                        <div class="layui-tab-item layui-show">
+                            <ul class="flow-default" id="LAY_demo4_1"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo4_2"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo4_3"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo4_4"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo4_5"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-row layui-col-space15 my-layui-row">
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title">
+                        <li style="pointer-events: none"><h3>热门分类</h3></li>
+                        <li class="layui-this">不限</li>
+                        <li>Java</li>
+                        <li>C++</li>
+                        <li>Python</li>
+                        <li>C</li>
+                    </ul>
+                    <div class="layui-tab-content" style="height: 100px;">
+                        <div class="layui-tab-item"></div>
+                        <div class="layui-tab-item layui-show">
+                            <ul class="flow-default" id="LAY_demo5_1"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo5_2"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo5_3"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo5_4"></ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo5_5"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
 </html>
-<script type="text/javascript">
-    $(".navigation").load('navigation.html');
-    $.nicenav(300, '216px');
-</script>
+<script src="../lib/layui/layui.js" type="text/javascript"></script>
+<!--jquery-->
+<script src="../lib/jquery-2.1.4/jquery.min.js" type="text/javascript"></script>
+<!--json-->
+<script src="../lib/json/json2.js" type="text/javascript"></script>
+
+<script src="../js/index.js" type="text/javascript"></script>
+<script src="../js/common.js" type="text/javascript"></script>

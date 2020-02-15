@@ -2,3 +2,7 @@
     color: #369bff;
     text-decoration:none;
 }
+.my-layui-row{
+    width: 84%;
+    margin-left: 8%;
+}

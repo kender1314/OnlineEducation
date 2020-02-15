@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>导航栏</title>
 </head>
 <body>
 <ul class="layui-nav layui-bg-blue">
-    <a href="index.html"><img src="../images/logo.png" height="42" width="300" style="margin-right: 50px"/></a>
+    <a href="index.html"><img src="../images/logo.png" height="42" width="250" style="margin-right: 50px"/></a>
     <li class="layui-nav-item layui-this"><a href="">首页</a></li>
     <li class="layui-nav-item">
         <a href="javascript:;">分类</a>
@@ -18,14 +18,26 @@
             <dd><a href="">升学.考研</a></dd>
         </dl>
     </li>
-    <li class="layui-nav-item" style="margin-left: 60%">
-        <a href=""><img src="../images/news.png" height="25" width="25" /></a>
+    <div class="layui-input-inline" id="showSearch" style="margin-left: 50%">
+        <form action="">
+            <input type="tel" name="search" id="search"
+                   style="display: none; width: 200px; border-radius:10px; height: 30px; border: white 1px solid; padding-left: 10px">
+            <button id="searchSubmit" type="submit"
+                    style="display: none; background-color:rgba(0,0,255,0); border:none">
+                <img src="../images/search.png" height="25" width="25"/>
+            </button>
+            <a href="javascript:void(0);" onClick="showsearch()"><img src="../images/search.png" id="images" height="25" width="25"/></a>
+        </form>
+    </div>
+    <li class="layui-nav-item" style="margin-left: 20px">
+        <a href=""><img src="../images/news.png" height="25" width="25"/><span class="layui-badge-dot"></span></a>
     </li>
-    <li class="layui-nav-item">
-        <a href="javascript:;">贤心</a>
+    <li class="layui-nav-item" style="margin-left: 10px">
+        <a href="javascript:;"><img src="../images/user.png" height="25" width="25"/></a>
         <dl class="layui-nav-child">
             <dd><a href="">基本资料</a></dd>
             <dd><a href="">修改密码</a></dd>
+            <dd><a href="">我的收藏</a></dd>
             <dd><a href="">购物车</a></dd>
             <hr>
             <dd><a href="">退出</a></dd>
@@ -44,4 +56,15 @@
             layer.msg(elem.text());
         });
     });
+
+    function showsearch() {
+        var value = document.getElementById("search").style.display;
+        if (value == "none") {
+            document.getElementById("search").style.display = "inline";
+            document.getElementById("images").style.display = "none";
+            document.getElementById("searchSubmit").style.display = "inline";
+            document.getElementById("showSearch").style.marginLeft = "36%";
+        } else
+            document.getElementById("search").style.display = "none";
+    }
 </script>
