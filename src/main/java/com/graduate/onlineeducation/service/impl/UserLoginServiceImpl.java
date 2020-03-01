@@ -29,7 +29,9 @@ public class UserLoginServiceImpl implements UserLoginService {
     }
 
     @Override
-    public User login(String username, String password) {
+    public User login(Map<String, Object> params) {
+        String username = (String) params.get("username");
+        String password = (String) params.get("password");
         return userLoginRepository.login(username, password);
     }
 

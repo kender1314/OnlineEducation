@@ -21,7 +21,7 @@ public interface UserLoginRepository extends PagingAndSortingRepository<User, In
      *
      * @param userName userName
      * @param password userName
-     * @return User
+     * @return UserE
      */
     User login(String userName, String password);
 

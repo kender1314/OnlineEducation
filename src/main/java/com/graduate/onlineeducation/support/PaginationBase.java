@@ -16,7 +16,7 @@ import java.util.Map;
 public class PaginationBase extends Sort {
 
     private static final String PAGE = "page";
-    private static final String PAGE_SIZE = "pageSize";
+    private static final String PAGE_SIZE = "limit";
     private static final String SORT_KEY = "sortKey";
     private static final String SORT_DESC = "sortDesc";
 
@@ -29,7 +29,7 @@ public class PaginationBase extends Sort {
 
         int page = 1;
         if (quertMap.get(PAGE) != null) {
-            page = Integer.valueOf(quertMap.get(PAGE) + "");
+            page = Integer.valueOf(quertMap.get(PAGE) + "") - 1;
         }
 
         int size = 20;

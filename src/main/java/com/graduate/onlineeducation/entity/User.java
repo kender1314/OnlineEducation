@@ -1,22 +1,22 @@
 package com.graduate.onlineeducation.entity;
 
-import javax.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Author hejiang
  * @Version 1.0.0 RELEASE
- * @Date 2020-01-19 14:13
+ * @Date 2020-02-16 14:31
  * @Description:
  */
 @Entity
-@Table(name = "graduate_user")
+@Table(name = "gp_user")
 public class User implements Serializable {
     private static final long serialVersionUID = 2514333989278491301L;
-
     /**
      * TABLE：使用一个特定的数据库表格来保存主键。
      * SEQUENCE：根据底层数据库的序列来生成主键，条件是数据库支持序列。
@@ -25,14 +25,48 @@ public class User implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "user_id")
     private Integer id;
 
     @NotNull
+    @Column(name = "user_name")
     private String userName;
 
     @NotNull
-    private String password;
+    @Column(name = "user_phone_number")
+    private String userPhoneNumber;
+
+    @NotNull
+    @Column(name = "user_mail")
+    private String userMail;
+
+    @NotNull
+    @Column(name = "user_password")
+    private String userPassword;
+
+    @NotNull
+    @Column(name = "user_integral")
+    private Integer userIntegral;
+
+    @Column(name = "user_brief_introduction")
+    private String introduction;
+
+    @Column(name = "user_major")
+    private String major;
+
+    @Column(name = "user_address")
+    private String userAddress;
+
+    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd")
+    @Column(name = "user_birth")
+    private Date userBirth;
+
+    @Column(name = "user_education")
+    private String userEducation;
+
+    public User(){
+
+    }
 
     public Integer getId() {
         return id;
@@ -50,12 +84,76 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPhoneNumber() {
+        return userPhoneNumber;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserPhoneNumber(String userPhoneNumber) {
+        this.userPhoneNumber = userPhoneNumber;
+    }
+
+    public String getUserMail() {
+        return userMail;
+    }
+
+    public void setUserMail(String userMail) {
+        this.userMail = userMail;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public Integer getUserIntegral() {
+        return userIntegral;
+    }
+
+    public void setUserIntegral(Integer userIntegral) {
+        this.userIntegral = userIntegral;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public String getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
+    }
+
+    public Date getUserBirth() {
+        return userBirth;
+    }
+
+    public void setUserBirth(Date userBirth) {
+        this.userBirth = userBirth;
+    }
+
+    public String getUserEducation() {
+        return userEducation;
+    }
+
+    public void setUserEducation(String userEducation) {
+        this.userEducation = userEducation;
     }
 
     @Override
@@ -63,7 +161,15 @@ public class User implements Serializable {
         return "User{" +
                 "id=" + id +
                 ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
+                ", userPhoneNumber='" + userPhoneNumber + '\'' +
+                ", userMail='" + userMail + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", userIntegral=" + userIntegral +
+                ", introduction='" + introduction + '\'' +
+                ", major='" + major + '\'' +
+                ", userAddress='" + userAddress + '\'' +
+                ", userBirth=" + userBirth +
+                ", userEducation='" + userEducation + '\'' +
                 '}';
     }
 }

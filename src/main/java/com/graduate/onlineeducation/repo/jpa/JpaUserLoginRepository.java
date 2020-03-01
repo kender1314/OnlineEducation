@@ -22,10 +22,10 @@ public interface JpaUserLoginRepository extends UserLoginRepository {
      *
      * @param userName userName
      * @param password password
-     * @return User
+     * @return UserE
      */
     @Override
-    @Query(value = "select * from graduate_user where user_name = ?1 and password = ?2", nativeQuery = true)
+    @Query(value = "select * from gp_user where user_name = ?1 and user_password = ?2", nativeQuery = true)
     User login(String userName, String password);
 
     @Override

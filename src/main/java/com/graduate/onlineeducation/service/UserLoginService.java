@@ -15,11 +15,10 @@ public interface UserLoginService {
 
     /**
      * login
-     *
-     * @param params params
-     * @return User
+     * @param params 账号和密码
+     * @return
      */
-    User login(String username, String password);
+    User login(Map<String, Object> params);
 
     /**
      * getUsersList
