@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,5 +42,10 @@ public class UserManageServiceImpl implements UserManageService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<User> getUserList(String param) {
+        return userManageRepository.findByParam(param);
     }
 }

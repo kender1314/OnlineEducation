@@ -56,7 +56,7 @@ public class Video implements Serializable {
 
     @NotNull
     @Column(name = "video_cover_url")
-    private Integer coverUrl;
+    private String coverUrl;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
@@ -130,11 +130,11 @@ public class Video implements Serializable {
         this.playbackVolume = playbackVolume;
     }
 
-    public Integer getCoverUrl() {
+    public String getCoverUrl() {
         return coverUrl;
     }
 
-    public void setCoverUrl(Integer coverUrl) {
+    public void setCoverUrl(String coverUrl) {
         this.coverUrl = coverUrl;
     }
 

@@ -3,6 +3,7 @@ package com.graduate.onlineeducation.service;
 import com.graduate.onlineeducation.entity.User;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,4 +31,11 @@ public interface UserManageService {
      * @param user 用户数据
      */
     boolean updateUser(User user);
+
+    /**
+     * 查找用户信息
+     * @param param 条件
+     * @return
+     */
+    List<User> getUserList(String param);
 }

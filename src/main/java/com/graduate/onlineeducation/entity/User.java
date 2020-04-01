@@ -1,6 +1,7 @@
 package com.graduate.onlineeducation.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -57,7 +58,8 @@ public class User implements Serializable {
     @Column(name = "user_address")
     private String userAddress;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "user_birth")
     private Date userBirth;
 

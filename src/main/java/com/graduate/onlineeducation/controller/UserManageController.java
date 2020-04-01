@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,8 +43,22 @@ public class UserManageController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/updateUser")
-    public boolean updateUser(User user){
+    public String updateUser(User user){
+        userManageService.updateUser(user);
+        return "/views/admin_user";
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/insertUser")
+    public boolean insertUser(User user){
         return userManageService.updateUser(user);
+
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getUserList")
+    public List<User> getUserList(String param){
+        return userManageService.getUserList(param);
     }
 }
 

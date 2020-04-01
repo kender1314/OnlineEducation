@@ -23,7 +23,8 @@ dependencies {
     compile 'com.alibaba:druid:1.1.20'
     compile 'org.json:json:20180130'
     compile 'com.alibaba:fastjson:1.2.7'
-    compile 'org.springframework.boot:spring-boot-devtools:2.0.1.RELEASE'
+//    热处理
+//    compile 'org.springframework.boot:spring-boot-devtools:2.0.1.RELEASE'
 //    compile 'org.springframework.boot:spring-boot-starter-security'
 }
 
