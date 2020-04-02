@@ -450,10 +450,12 @@
                     btn: ['保存', '取消'],
                     btn1: function (index, layero) {
                         layero.find('.edituser').click();
+
                     },
                     btn2: function (index, layero) {
                         layer.close(index);
                     }
+
                 });
             }
         });
@@ -465,7 +467,11 @@
                 table.reload('testReload', {
                     url: '/userManage/search'
                     , where: {
-                        param: demoReload.val()
+                        query: demoReload.val(),
+                    }
+                    , method: 'post'
+                    , page: {
+                        curr: 1  //重新从第 1 页开始
                     }
                 });
             }

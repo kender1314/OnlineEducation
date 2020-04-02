@@ -62,12 +62,9 @@ public class UserManageController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/search")
-    public Result<Object> getUserList(String param){
-        Map<String, Object> params = new HashMap<>();
-        params.put("limit", 1);
-        List<User> users = userManageService.getUserList(param);
-        Page<User> user = new PageImpl(users, PaginationBase.getPagination(params), users.size());
-        return ResultUtils.success(user);
+    public Result<Object> getUserList(String query, @RequestParam Map<String, Object> params){
+        Page<User> users = userManageService.getUserList(query, params);
+        return ResultUtils.success(users);
     }
 }
 

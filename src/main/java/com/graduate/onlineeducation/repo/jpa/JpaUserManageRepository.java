@@ -26,11 +26,13 @@ public interface JpaUserManageRepository extends UserManageRepository {
 
     @Override
     User save(User user);
-//    or user_phone_number like %?1% or user_mail like %?1%\n" +
+
+    //    or user_phone_number like %?1% or user_mail like %?1%\n" +
 //    or user_major like %?1% or user_address like %?1% or user_education like %?1% or convert(user_birth, DATETIME) like binary %?1%
 //            "
     @Override
     @Query(value = "select * from gp_user where user_name like %?1% or user_phone_number like %?1% " +
-            "or user_phone_number like %?1% or user_mail like %?1%", nativeQuery = true)
-    List<User> findByParam(String param);
+            "or user_major like %?1% or user_mail like %?1% or user_address like %?1% " +
+            "or user_education like %?1%", nativeQuery = true)
+    Page<User> findByParam(String query, Pageable pageable);
 }

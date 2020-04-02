@@ -34,8 +34,8 @@ public interface UserManageService {
 
     /**
      * 查找用户信息
-     * @param param 条件
+     * @param query 条件
      * @return
      */
-    List<User> getUserList(String param);
+    Page<User> getUserList(String query, Map<String, Object> params);
 }

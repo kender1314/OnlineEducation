@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +44,7 @@ public class UserManageServiceImpl implements UserManageService {
     }
 
     @Override
-    public List<User> getUserList(String param) {
-        return userManageRepository.findByParam(param);
+    public Page<User> getUserList(String query, Map<String, Object> params) {
+        return userManageRepository.findByParam(query, PaginationBase.getPagination(params));
     }
 }

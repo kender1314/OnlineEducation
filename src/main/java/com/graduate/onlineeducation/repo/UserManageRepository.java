@@ -40,8 +40,8 @@ public interface UserManageRepository extends PagingAndSortingRepository<User, I
 
     /**
      * 查找用户信息
-     * @param param 查询条件
+     * @param query 查询条件
      * @return 用户信息列表
      */
-    List<User> findByParam(String param);
+    Page<User> findByParam(String query, Pageable pageable);
 }
