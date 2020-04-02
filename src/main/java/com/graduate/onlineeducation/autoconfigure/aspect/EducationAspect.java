@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class EducationAspect {
-    @Pointcut("@annotation(com.graduate.onlineeducation.autoconfigure.annotations.Education)")
+    @Pointcut("@within(com.graduate.onlineeducation.autoconfigure.annotations.Education)||" +
+            "@annotation(com.graduate.onlineeducation.autoconfigure.annotations.Education)")
     public void educationPointCut() {
 
     }

@@ -31,17 +31,15 @@ public class UserManageServiceImpl implements UserManageService {
     }
 
     @Override
-    public void deleteUser(Integer id) {
+    public boolean deleteUser(Integer id) {
         userManageRepository.deleteById(id);
+        return true;
     }
 
     @Override
     public boolean updateUser(User user) {
         User userTemp = userManageRepository.save(user);
-        if(userTemp == null){
-            return false;
-        }
-        return true;
+        return userTemp != null;
     }
 
     @Override

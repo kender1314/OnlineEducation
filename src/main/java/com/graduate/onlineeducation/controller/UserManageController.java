@@ -1,13 +1,20 @@
 package com.graduate.onlineeducation.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.graduate.onlineeducation.common.Result;
+import com.graduate.onlineeducation.common.ResultUtils;
 import com.graduate.onlineeducation.entity.User;
 import com.graduate.onlineeducation.service.UserManageService;
+import com.graduate.onlineeducation.support.PaginationBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,16 +37,15 @@ public class UserManageController {
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/userList")
-    public Page<User> getUserList(@RequestParam Map<String, Object> params) {
+    public Result<Object> getUserList(@RequestParam Map<String, Object> params) {
         Page<User> user =  userManageService.getUserList(params);
-        return user;
+        return ResultUtils.success(user);
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/deleteUser")
-    public boolean deleteUser(Integer id){
-        userManageService.deleteUser(id);
-        return true;
+    public Result<Object> deleteUser(Integer id){
+        return ResultUtils.success( userManageService.deleteUser(id));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/updateUser")
@@ -50,15 +56,18 @@ public class UserManageController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/insertUser")
-    public boolean insertUser(User user){
-        return userManageService.updateUser(user);
-
+    public Result<Object> insertUser(User user){
+        return ResultUtils.success(userManageService.updateUser(user));
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/getUserList")
-    public List<User> getUserList(String param){
-        return userManageService.getUserList(param);
+    @RequestMapping(method = RequestMethod.POST, value = "/search")
+    public Result<Object> getUserList(String param){
+        Map<String, Object> params = new HashMap<>();
+        params.put("limit", 1);
+        List<User> users = userManageService.getUserList(param);
+        Page<User> user = new PageImpl(users, PaginationBase.getPagination(params), users.size());
+        return ResultUtils.success(user);
     }
 }
 

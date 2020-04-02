@@ -18,6 +18,6 @@ public class HomeController {
 //    @Education
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String homePage() {
-        return "/views/admin_order";
+        return "/views/admin_user";
     }
 }

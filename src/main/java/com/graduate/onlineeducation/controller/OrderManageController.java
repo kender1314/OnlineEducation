@@ -1,5 +1,7 @@
 package com.graduate.onlineeducation.controller;
 
+import com.graduate.onlineeducation.common.Result;
+import com.graduate.onlineeducation.common.ResultUtils;
 import com.graduate.onlineeducation.entity.Order;
 import com.graduate.onlineeducation.service.OrderManageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,8 @@ public class OrderManageController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/orderList")
-    public Page<Order> getOrderList(@RequestParam Map<String, Object> params){
+    public Result<Object> getOrderList(@RequestParam Map<String, Object> params){
         Page<Order> orders = orderManageService.getOrderList(params);
-        return orders;
+        return ResultUtils.success(orders);
     }
 }

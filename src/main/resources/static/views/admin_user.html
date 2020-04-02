@@ -113,10 +113,10 @@
             , method: 'post'
             , parseData: function (res) {
                 return {
-                    "code": 0,
-                    "msg": "",
-                    "count": res.totalElements,
-                    "data": res.content
+                    "code": res.code,
+                    "msg": res.msg,
+                    "count": res.data.totalElements,
+                    "data": res.data.content
                 }
             }
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
@@ -146,164 +146,164 @@
         table.on('toolbar(test)', function (obj) {
             if (obj.event === 'addUser') {
                 layer.open({
-                        type: 6,
-                        title:'修改信息',
-                        // skin:'layui-layer-rim',
-                        area:['600px', 'auto'],
+                    type: 6,
+                    title: '修改信息',
+                    // skin:'layui-layer-rim',
+                    area: ['600px', 'auto'],
 
-                        content: '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
-                            +'<table>'
-                            + '<tr>'
-                            + '<td>'
-                            + '<div class="layui-form-item" style="margin-top: 20px">\n'
-                            + '    <label class="layui-form-label" style="font-size: 13px">用户名</label>\n'
-                            + '    <div class="layui-input-block">\n'
-                            + '      <input type="tel" id="userName" placeholder="请输入用户名" autocomplete="off" class="layui-input" '
-                            + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                            + '    </div>\n'
-                            + '  </div>'
-                            + '</td>'
-                            + '<td>'
-                            +'<div class="layui-form-item" style="margin-top: 20px">\n'
-                            + '    <label class="layui-form-label" style="font-size: 13px">电话</label>\n'
-                            + '    <div class="layui-input-block">\n'
-                            + '      <input type="tel" id="userPhoneNumber" placeholder="请输入电话" autocomplete="off" class="layui-input" '
-                            + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                            + '    </div>\n'
-                            + '  </div>'
-                            +'</td>'
-                            + '</tr>'
-                            + '<tr>'
-                            + '<td>'
-                            + '<div class="layui-form-item">\n'
-                            + '    <label class="layui-form-label" style="font-size: 13px">邮件</label>\n'
-                            + '    <div class="layui-input-block">\n'
-                            + '      <input type="tel" id="userMail" placeholder="请输入邮件" autocomplete="off" class="layui-input" '
-                            + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                            + '    </div>\n'
-                            + '  </div>'
-                            + '</td>'
-                            +'<td>'
-                            + '<div class="layui-form-item">\n'
-                            + '    <label class="layui-form-label" style="font-size: 13px">密码</label>\n'
-                            + '    <div class="layui-input-block">\n'
-                            + '      <input type="tel" id="userPassword" placeholder="请输入密码" autocomplete="off" class="layui-input" '
-                            + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                            + '    </div>\n'
-                            + '  </div>'
-                            + '</td>'
-                            + '</tr>'
-                            + '<tr>'
-                            + '<td>'
-                            +'<div class="layui-form-item">\n'
-                            + '    <label class="layui-form-label" style="font-size: 13px">积分</label>\n'
-                            + '    <div class="layui-input-block">\n'
-                            + '      <input type="tel" id="userIntegral" placeholder="请输入积分" autocomplete="off" class="layui-input" '
-                            + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                            + '    </div>\n'
-                            + '  </div>'
-                            + '</td>'
-                            + '<td >'
-                            + '<div class="layui-form-item">\n'
-                            + '    <label class="layui-form-label" style="font-size: 13px">最高学历</label>\n'
-                            + '    <div class="layui-input-block">\n'
-                            + '      <input type="tel" id="userEducation" placeholder="请输入最高学历" autocomplete="off" class="layui-input" '
-                            + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                            + '    </div>\n'
-                            + '  </div>'
-                            + '</td>'
-                            + '</tr>'
-                            + '<tr>'
-                            + '<td colspan="2">'
-                            +'<div class="layui-form-item">\n'
-                            + '    <label class="layui-form-label" style="font-size: 13px">地址</label>\n'
-                            + '    <div class="layui-input-block">\n'
-                            + '      <input type="tel" id="userAddress" placeholder="请输入地址" autocomplete="off" class="layui-input" '
-                            + 'style="width: 410px; height: 30px; margin-top: 5px">\n'
-                            + '    </div>\n'
-                            + '  </div>'
-                            + '</td>'
-                            + '</tr>'
-                            + '<tr>'
-                            + '<td>'
-                            +'<div class="layui-form-item">\n'
-                            + '    <label class="layui-form-label" style="font-size: 13px">专业方向</label>\n'
-                            + '    <div class="layui-input-block">\n'
-                            + '      <input type="tel" id="major" placeholder="请输入专业方向" autocomplete="off" class="layui-input" '
-                            + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                            + '    </div>\n'
-                            + '  </div>'
-                            + '</td>'
-                            + '<td>'
-                            + '<div class="layui-form-item">\n'
-                            + '    <label class="layui-form-label" style="font-size: 13px">出生日期</label>\n'
-                            + '    <div class="layui-input-block">\n'
-                            + '    <input type="date" id="userBirth" class="layui-input" placeholder="yyyy-MM-dd"'
-                            + 'style="width: 150px; height: 30px; margin-top: 5px">'
-                            + '    </div>\n'
-                            + '  </div>'
-                            + '</td>'
-                            + '</tr>'
-                            + '<tr>'
-                            + '<td colspan="2">'
-                            +'<div class="layui-form-item">\n'
-                            + '    <label class="layui-form-label" style="font-size: 13px">介绍</label>\n'
-                            + '    <div style="margin-left: 110px; width: 410px; ">\n'
-                            + '      <textarea placeholder="请输入内容" id="introduction" class="layui-textarea"></textarea>\n'
-                            + '    </div>\n'
-                            + '  </div>'
-                            + '</td>'
-                            + '</tr>'
-                            + '</table>'
-                            +'</div>'
-                        ,
-                        btn:['保存','取消'],
-                        btn1: function (index,layero) {
-                            var formData = new FormData();
-                            var userName = document.getElementById("userName").value;
-                            var userPhoneNumber = document.getElementById("userPhoneNumber").value;
-                            var userMail = document.getElementById("userMail").value;
-                            var userPassword = document.getElementById("userPassword").value;
-                            var userIntegral = document.getElementById("userIntegral").value;
-                            var userEducation = document.getElementById("userEducation").value;
-                            var userAddress = document.getElementById("userAddress").value;
-                            var major = document.getElementById("major").value;
-                            var userBirth = document.getElementById("userBirth").value;
-                            var introduction = document.getElementById("introduction").value;
-                            formData.append("userName", userName);
-                            formData.append("userPhoneNumber", userPhoneNumber);
-                            formData.append("userMail", userMail);
-                            formData.append("userPassword", userPassword);
-                            formData.append("userIntegral", userIntegral);
-                            formData.append("userEducation", userEducation);
-                            formData.append("userAddress", userAddress);
-                            formData.append("major", major);
-                            formData.append("userBirth", userBirth);
-                            formData.append("introduction", introduction);
-                            $.ajax({
-                                url: "/userManage/insertUser",
-                                type: "post",
-                                dataType: "json",
-                                data: formData,
-                                contentType: false,
-                                processData: false,
-                                success: function (msg) {
-                                    console.log(msg);
-                                    if (msg === true) {
-                                        //关闭弹框
-                                        layer.close(index);
-                                        layer.msg("添加成功", {icon: 6});
-                                    } else {
-                                        layer.msg("添加失败", {icon: 5});
-                                    }
+                    content: '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
+                        + '<table>'
+                        + '<tr>'
+                        + '<td>'
+                        + '<div class="layui-form-item" style="margin-top: 20px">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">用户名</label>\n'
+                        + '    <div class="layui-input-block">\n'
+                        + '      <input type="tel" id="userName" placeholder="请输入用户名" autocomplete="off" class="layui-input" '
+                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '<td>'
+                        + '<div class="layui-form-item" style="margin-top: 20px">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">电话</label>\n'
+                        + '    <div class="layui-input-block">\n'
+                        + '      <input type="tel" id="userPhoneNumber" placeholder="请输入电话" autocomplete="off" class="layui-input" '
+                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '</tr>'
+                        + '<tr>'
+                        + '<td>'
+                        + '<div class="layui-form-item">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">邮件</label>\n'
+                        + '    <div class="layui-input-block">\n'
+                        + '      <input type="tel" id="userMail" placeholder="请输入邮件" autocomplete="off" class="layui-input" '
+                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '<td>'
+                        + '<div class="layui-form-item">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">密码</label>\n'
+                        + '    <div class="layui-input-block">\n'
+                        + '      <input type="tel" id="userPassword" placeholder="请输入密码" autocomplete="off" class="layui-input" '
+                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '</tr>'
+                        + '<tr>'
+                        + '<td>'
+                        + '<div class="layui-form-item">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">积分</label>\n'
+                        + '    <div class="layui-input-block">\n'
+                        + '      <input type="tel" id="userIntegral" placeholder="请输入积分" autocomplete="off" class="layui-input" '
+                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '<td >'
+                        + '<div class="layui-form-item">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">最高学历</label>\n'
+                        + '    <div class="layui-input-block">\n'
+                        + '      <input type="tel" id="userEducation" placeholder="请输入最高学历" autocomplete="off" class="layui-input" '
+                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '</tr>'
+                        + '<tr>'
+                        + '<td colspan="2">'
+                        + '<div class="layui-form-item">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">地址</label>\n'
+                        + '    <div class="layui-input-block">\n'
+                        + '      <input type="tel" id="userAddress" placeholder="请输入地址" autocomplete="off" class="layui-input" '
+                        + 'style="width: 410px; height: 30px; margin-top: 5px">\n'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '</tr>'
+                        + '<tr>'
+                        + '<td>'
+                        + '<div class="layui-form-item">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">专业方向</label>\n'
+                        + '    <div class="layui-input-block">\n'
+                        + '      <input type="tel" id="major" placeholder="请输入专业方向" autocomplete="off" class="layui-input" '
+                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '<td>'
+                        + '<div class="layui-form-item">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">出生日期</label>\n'
+                        + '    <div class="layui-input-block">\n'
+                        + '    <input type="date" id="userBirth" class="layui-input" placeholder="yyyy-MM-dd"'
+                        + 'style="width: 150px; height: 30px; margin-top: 5px">'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '</tr>'
+                        + '<tr>'
+                        + '<td colspan="2">'
+                        + '<div class="layui-form-item">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">介绍</label>\n'
+                        + '    <div style="margin-left: 110px; width: 410px; ">\n'
+                        + '      <textarea placeholder="请输入内容" id="introduction" class="layui-textarea"></textarea>\n'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '</tr>'
+                        + '</table>'
+                        + '</div>'
+                    ,
+                    btn: ['保存', '取消'],
+                    btn1: function (index, layero) {
+                        var formData = new FormData();
+                        var userName = document.getElementById("userName").value;
+                        var userPhoneNumber = document.getElementById("userPhoneNumber").value;
+                        var userMail = document.getElementById("userMail").value;
+                        var userPassword = document.getElementById("userPassword").value;
+                        var userIntegral = document.getElementById("userIntegral").value;
+                        var userEducation = document.getElementById("userEducation").value;
+                        var userAddress = document.getElementById("userAddress").value;
+                        var major = document.getElementById("major").value;
+                        var userBirth = document.getElementById("userBirth").value;
+                        var introduction = document.getElementById("introduction").value;
+                        formData.append("userName", userName);
+                        formData.append("userPhoneNumber", userPhoneNumber);
+                        formData.append("userMail", userMail);
+                        formData.append("userPassword", userPassword);
+                        formData.append("userIntegral", userIntegral);
+                        formData.append("userEducation", userEducation);
+                        formData.append("userAddress", userAddress);
+                        formData.append("major", major);
+                        formData.append("userBirth", userBirth);
+                        formData.append("introduction", introduction);
+                        $.ajax({
+                            url: "/userManage/insertUser",
+                            type: "post",
+                            dataType: "json",
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success: function (msg) {
+                                console.log(msg);
+                                if (msg.data === true) {
+                                    //关闭弹框
+                                    layer.close(index);
+                                    layer.msg("添加成功", {icon: 6});
+                                } else {
+                                    layer.msg("添加失败", {icon: 5});
                                 }
-                            });
+                            }
+                        });
 
-                        },
-                        btn2:function (index,layero) {
-                            layer.close(index);
-                        }
-                    });
+                    },
+                    btn2: function (index, layero) {
+                        layer.close(index);
+                    }
+                });
             }
         });
 
@@ -316,7 +316,7 @@
                         url: "/userManage/deleteUser?id=" + data.id,
                         type: "POST",
                         success: function (msg) {
-                            if (msg === true) {
+                            if (msg.data === true) {
                                 //删除这一行
                                 obj.del();
                                 //关闭弹框
@@ -333,14 +333,14 @@
             } else if (obj.event === 'edit') {
                 layer.open({
                     type: 6,
-                    title:'修改信息',
+                    title: '修改信息',
                     // skin:'layui-layer-rim',
-                    area:['600px', 'auto'],
+                    area: ['600px', 'auto'],
 
                     content: '<form class="layui-form" action="/userManage/updateUser" method="post"> '
                         + '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
                         + '<input type="hidden" name="id" value="' + data.id + '">'
-                        +'<table>'
+                        + '<table>'
                         + '<tr>'
                         + '<td>'
                         + '<div class="layui-form-item" style="margin-top: 20px">\n'
@@ -352,14 +352,14 @@
                         + '  </div>'
                         + '</td>'
                         + '<td>'
-                        +'<div class="layui-form-item" style="margin-top: 20px">\n'
+                        + '<div class="layui-form-item" style="margin-top: 20px">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">电话</label>\n'
                         + '    <div class="layui-input-block">\n'
                         + '      <input type="tel" name="userPhoneNumber" placeholder="请输入电话" value="' + data.userPhoneNumber + '" autocomplete="off" class="layui-input" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
                         + '    </div>\n'
                         + '  </div>'
-                        +'</td>'
+                        + '</td>'
                         + '</tr>'
                         + '<tr>'
                         + '<td>'
@@ -371,7 +371,7 @@
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
-                        +'<td>'
+                        + '<td>'
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">密码</label>\n'
                         + '    <div class="layui-input-block">\n'
@@ -383,7 +383,7 @@
                         + '</tr>'
                         + '<tr>'
                         + '<td>'
-                        +'<div class="layui-form-item">\n'
+                        + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">积分</label>\n'
                         + '    <div class="layui-input-block">\n'
                         + '      <input type="tel" name="userIntegral" placeholder="请输入积分" value="' + data.userIntegral + '" autocomplete="off" class="layui-input" '
@@ -403,7 +403,7 @@
                         + '</tr>'
                         + '<tr>'
                         + '<td colspan="2">'
-                        +'<div class="layui-form-item">\n'
+                        + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">地址</label>\n'
                         + '    <div class="layui-input-block">\n'
                         + '      <input type="tel" name="userAddress" placeholder="请输入地址" value="' + data.userAddress + '" autocomplete="off" class="layui-input" '
@@ -414,7 +414,7 @@
                         + '</tr>'
                         + '<tr>'
                         + '<td>'
-                        +'<div class="layui-form-item">\n'
+                        + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">专业方向</label>\n'
                         + '    <div class="layui-input-block">\n'
                         + '      <input type="tel" name="major" placeholder="请输入专业方向" value="' + data.major + '" autocomplete="off" class="layui-input" '
@@ -434,7 +434,7 @@
                         + '</tr>'
                         + '<tr>'
                         + '<td colspan="2">'
-                        +'<div class="layui-form-item">\n'
+                        + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">介绍</label>\n'
                         + '    <div style="margin-left: 110px; width: 410px; ">\n'
                         + '      <textarea placeholder="请输入内容" name="introduction" class="layui-textarea">' + data.introduction + '</textarea>\n'
@@ -444,14 +444,14 @@
                         + '</tr>'
                         + '</table>'
                         + '<button class="sub-bindbtn edituser" lay-submit lay-filter="bind" style="display: none;">'
-                        +'</div>'
+                        + '</div>'
                         + '</form>'
                     ,
-                    btn:['保存','取消'],
-                    btn1: function (index,layero) {
+                    btn: ['保存', '取消'],
+                    btn1: function (index, layero) {
                         layero.find('.edituser').click();
                     },
-                    btn2:function (index,layero) {
+                    btn2: function (index, layero) {
                         layer.close(index);
                     }
                 });
@@ -459,19 +459,18 @@
         });
 
         var $ = layui.$, active = {
-            reload: function(){
+            reload: function () {
                 var demoReload = $('#demoReload');
                 //执行重载
                 table.reload('testReload', {
-                    url: '/api/table/search'
-                    ,where: {
-
+                    url: '/userManage/search'
+                    , where: {
+                        param: demoReload.val()
                     }
-                }, 'data');
+                });
             }
         };
-
-        $('.demoTable .layui-btn').on('click', function(){
+        $('.demoTable .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });

@@ -24,7 +24,7 @@ public interface UserManageService {
      * 删除用户
      * @param id id
      */
-    void deleteUser(Integer id);
+    boolean deleteUser(Integer id);
 
     /**
      * 更新用户信息
