@@ -92,7 +92,7 @@ public class ResultUtils {
      * 管理员信息错误
      * @return
      */
-    public static Result<Object> manager_info_error() {
+    public static Result<Object> managerInfoError() {
         Result<Object> result = new Result<Object>();
         result.setCode(CommonCode.MANAGER_INFO_ERROR.getCode());
         result.setMsg(CommonCode.MANAGER_INFO_ERROR.getMessage());
@@ -103,7 +103,7 @@ public class ResultUtils {
      * 请求方法错误
      * @return
      */
-    public static Result<Object> request_method_error() {
+    public static Result<Object> requestMethodError() {
         Result<Object> result = new Result<Object>();
         result.setCode(CommonCode.REQUEST_METHOD_ERROR.getCode());
         result.setMsg(CommonCode.REQUEST_METHOD_ERROR.getMessage());
@@ -114,7 +114,7 @@ public class ResultUtils {
      * 参数缺失
      * @return
      */
-    public static Result<Object> param_loss_error() {
+    public static Result<Object> paramLossError() {
         Result<Object> result = new Result<Object>();
         result.setCode(CommonCode.PARAM_LOSS_ERROR.getCode());
         result.setMsg(CommonCode.PARAM_LOSS_ERROR.getMessage());
@@ -126,7 +126,7 @@ public class ResultUtils {
      * 登录失败
      * @return
      */
-    public static Result<Object> login_failed() {
+    public static Result<Object> loginFailed() {
         Result<Object> result = new Result<Object>();
         result.setCode(CommonCode.LOGIN_FAILED.getCode());
         result.setMsg(CommonCode.LOGIN_FAILED.getMessage());
@@ -138,7 +138,7 @@ public class ResultUtils {
      * 用户名已存在
      * @return
      */
-    public static Result<Object> username_exist() {
+    public static Result<Object> usernameExist() {
         Result<Object> result = new Result<Object>();
         result.setCode(CommonCode.USERNAME_EXIST.getCode());
         result.setMsg(CommonCode.USERNAME_EXIST.getMessage());

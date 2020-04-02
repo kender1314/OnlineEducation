@@ -16,7 +16,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 @NoRepositoryBean
 public interface OrderManageRepository extends PagingAndSortingRepository<Order, Integer> {
     /**
-     *
+     * 查找所有的订单信息
      * @param spec spec
      * @param pageable pageable
      * @return Page<Order>

@@ -25,7 +25,7 @@ public class Result<T> {
     /**
      * 时间戳
      */
-    private Long time = new Date().getTime();
+    private Long time = System.currentTimeMillis();
 
 
     public Result() {

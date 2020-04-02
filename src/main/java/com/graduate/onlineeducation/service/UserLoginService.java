@@ -21,9 +21,9 @@ public interface UserLoginService {
     User login(Map<String, Object> params);
 
     /**
-     * getUsersList
-     *
-     * @return the list of users
+     * 查找所有用户
+     * @param params
+     * @return
      */
     Page<User> getUsersList(Map<String, Object> params);
 }

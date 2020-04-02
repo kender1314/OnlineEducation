@@ -67,14 +67,14 @@ public class EcxeptionAdvice{
     @ResponseBody
     public Result httprequestmethodnotsupportedexception(HttpRequestMethodNotSupportedException e){
         e.printStackTrace();
-        return ResultUtils.request_method_error();
+        return ResultUtils.requestMethodError();
     }
 
     @ExceptionHandler(UnsatisfiedServletRequestParameterException.class)
     @ResponseBody
     public Result unsatisfiedservletrequestparameterexception(UnsatisfiedServletRequestParameterException e){
         e.printStackTrace();
-        return ResultUtils.param_loss_error();
+        return ResultUtils.paramLossError();
     }
 
     @ExceptionHandler(NotLoginException.class)

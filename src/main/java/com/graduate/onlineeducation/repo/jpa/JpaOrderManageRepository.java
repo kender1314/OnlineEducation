@@ -14,8 +14,15 @@ import org.springframework.data.jpa.domain.Specification;
  * @Date 2020-02-18 20:41
  * @Description:
  */
+@SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 @Profile({"mysql"})
 public interface JpaOrderManageRepository extends OrderManageRepository {
+    /**
+     * 查找所有的订单信息
+     * @param spec spec
+     * @param pageable pageable
+     * @return
+     */
     @Override
     Page<Order> findAll(Specification<Order> spec, Pageable pageable);
 }

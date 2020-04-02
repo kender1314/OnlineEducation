@@ -18,30 +18,33 @@ import java.util.List;
 @NoRepositoryBean
 public interface UserManageRepository extends PagingAndSortingRepository<User, Integer> {
     /**
-     *
-     * @param spec spec
-     * @param pageable pageable
-     * @return Page<User>
+     * 查找所有用户
+     * @param spec
+     * @param pageable
+     * @return
      */
     Page<User> findAll(Specification<User> spec, Pageable pageable);
 
     /**
-     * 删除指定用户
+     * 删除用户
+     * @param id
      */
     @Override
     void deleteById(Integer id);
 
     /**
-     * 更新用户信息
-     * @param user user
+     * 新增和更新用户
+     * @param user
+     * @return
      */
     @Override
     User save(User user);
 
     /**
      * 查找用户信息
-     * @param query 查询条件
-     * @return 用户信息列表
+     * @param query
+     * @param pageable
+     * @return
      */
     Page<User> findByParam(String query, Pageable pageable);
 }

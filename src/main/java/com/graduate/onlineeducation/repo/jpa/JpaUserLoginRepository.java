@@ -28,6 +28,12 @@ public interface JpaUserLoginRepository extends UserLoginRepository {
     @Query(value = "select * from gp_user where user_name = ?1 and user_password = ?2", nativeQuery = true)
     User login(String userName, String password);
 
+    /**
+     * 查找所有的用户信息
+     * @param spec
+     * @param pageable
+     * @return
+     */
     @Override
     Page<User> findAll(Specification<User> spec, Pageable pageable);
 }

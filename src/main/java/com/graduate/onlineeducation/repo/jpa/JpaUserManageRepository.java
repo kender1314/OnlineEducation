@@ -18,18 +18,39 @@ import java.util.List;
  */
 @Profile({"mysql"})
 public interface JpaUserManageRepository extends UserManageRepository {
+    /**
+     * 查找所有的用户信息
+     * @param spec spec
+     * @param pageable pageable
+     * @return
+     */
     @Override
     Page<User> findAll(Specification<User> spec, Pageable pageable);
 
+    /**
+     * 删除用户
+     * @param id
+     */
     @Override
     void deleteById(Integer id);
 
+    /**
+     * 新增和更新用户
+     * @param user user
+     * @return
+     */
     @Override
     User save(User user);
 
-    //    or user_phone_number like %?1% or user_mail like %?1%\n" +
-//    or user_major like %?1% or user_address like %?1% or user_education like %?1% or convert(user_birth, DATETIME) like binary %?1%
-//            "
+
+    /**
+     * 用户模糊查询
+     *or user_phone_number like %?1% or user_mail like %?1%\n" +
+     *or user_major like %?1% or user_address like %?1% or user_education like %?1% or convert(user_birth, DATETIME) like binary %?1%
+     * @param query 查询条件
+     * @param pageable
+     * @return
+     */
     @Override
     @Query(value = "select * from gp_user where user_name like %?1% or user_phone_number like %?1% " +
             "or user_major like %?1% or user_mail like %?1% or user_address like %?1% " +

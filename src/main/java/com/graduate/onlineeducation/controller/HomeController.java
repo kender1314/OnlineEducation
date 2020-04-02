@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 
-//    @Education
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String homePage() {
         return "/views/admin_user";

@@ -26,9 +26,10 @@ public interface UserLoginRepository extends PagingAndSortingRepository<User, In
     User login(String userName, String password);
 
     /**
-     * find all user
-     *
-     * @return the list of users
+     * 查找所有用户信息
+     * @param spec
+     * @param pageable
+     * @return
      */
     Page<User> findAll(Specification<User> spec, Pageable pageable);
 }

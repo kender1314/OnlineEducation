@@ -22,19 +22,22 @@ public interface UserManageService {
 
     /**
      * 删除用户
-     * @param id id
+     * @param id
+     * @return
      */
     boolean deleteUser(Integer id);
 
     /**
      * 更新用户信息
-     * @param user 用户数据
+     * @param user
+     * @return
      */
     boolean updateUser(User user);
 
     /**
      * 查找用户信息
-     * @param query 条件
+     * @param query
+     * @param params
      * @return
      */
     Page<User> getUserList(String query, Map<String, Object> params);
