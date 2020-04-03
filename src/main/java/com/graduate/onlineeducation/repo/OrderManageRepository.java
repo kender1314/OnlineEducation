@@ -22,4 +22,19 @@ public interface OrderManageRepository extends PagingAndSortingRepository<Order,
      * @return Page<Order>
      */
     Page<Order> findAll(Specification<Order> spec, Pageable pageable);
+
+    /**
+     * 查找订单信息
+     * @param query
+     * @param pageable
+     * @return
+     */
+    Page<Order> findByQuery(String query, Pageable pageable);
+
+    /**
+     * 删除订单
+     * @param id
+     */
+    @Override
+    void deleteById(Integer id);
 }

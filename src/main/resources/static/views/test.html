@@ -10,8 +10,27 @@
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
-
-<table class="layui-hide" id="test" lay-filter="test"></table>
+<div class="layui-layout layui-layout-admin">
+    <div class="navigationAdmin" id="navAdmin">
+    </div>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <h2>用户管理</h2>
+        </div>
+        <div class="demoTable" style="margin-left: 75%">
+            <div class="layui-inline">
+                <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+            </div>
+            <button class="layui-btn" data-type="reload">搜索</button>
+        </div>
+        <table class="layui-hide" id="test" lay-filter="test"></table>
+    </div>
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        Copyright © 2020 qilu.com All Rights Reserved | 京ICP备 12003892号-11 京公网安备11010802030151号
+    </div>
+</div>
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
@@ -27,11 +46,11 @@
 
 <script src="../lib/layui/layui.js"></script>
 
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-
 <script>
-    layui.use('table', function(){
+    layui.use(['element', 'table', 'jquery', 'layer'], function(){
+        var $ = layui.$;
         var table = layui.table;
+        var layer = layui.layer;
 
         table.render({
             elem: '#test'
@@ -45,10 +64,10 @@
             ,method: 'post'
             ,parseData: function (res) {
                 return{
-                    "code": 0,
-                    "msg": "",
-                    "count": res.totalElements,
-                    "data": res.content
+                    "code": res.code,
+                    "msg": res.msg,
+                    "count": res.data.totalElements,
+                    "data": res.data.content
                 }
             }
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
@@ -115,6 +134,7 @@
                 });
             }
         });
+        $(".navigationAdmin").load('/views/admin_navigation.html');
     });
 </script>
 

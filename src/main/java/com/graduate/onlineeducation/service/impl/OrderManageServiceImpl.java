@@ -28,4 +28,15 @@ public class OrderManageServiceImpl implements OrderManageService {
         Specification<Order> specification = new ByOrderSpecification(params);
         return orderManageRepository.findAll(specification, PaginationBase.getPagination(params));
     }
+
+    @Override
+    public Page<Order> getUserList(String query, Map<String, Object> params) {
+        return orderManageRepository.findByQuery(query, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public boolean deleteOrder(Integer id) {
+        orderManageRepository.deleteById(id);
+        return true;
+    }
 }

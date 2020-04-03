@@ -32,4 +32,17 @@ public class OrderManageController {
         Page<Order> orders = orderManageService.getOrderList(params);
         return ResultUtils.success(orders);
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/search")
+    public Result<Object> getOrderList(String query, @RequestParam Map<String, Object> params){
+        Page<Order> orders = orderManageService.getUserList(query, params);
+        return ResultUtils.success(orders);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/deleteOrder")
+    public Result<Object> deleteOrder(Integer id){
+        return ResultUtils.success( orderManageService.deleteOrder(id));
+    }
 }

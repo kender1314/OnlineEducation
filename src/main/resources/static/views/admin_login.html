@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>后台首页</title>
+    <!--Layui-->
+    <link rel="stylesheet" href="../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/common.css">
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">启路在线教育</div>
+    </div>
+    <!--主题内容-->
+    <form class="layui-form" id="form" action="/admin/login" lay-filter="example" method="post"
+          style="margin: 200px 30%">
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号</label>
+            <div class="layui-input-block">
+                <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入账号"
+                       class="layui-input" style="width: 300px">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input"
+                       style="width: 300px">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" id="sub" class="layui-btn" lay-submit="" lay-filter="demo1" style="width: 300px">
+                    登录
+                </button>
+            </div>
+        </div>
+    </form>
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        Copyright © 2020 qilu.com All Rights Reserved | 京ICP备 1200324546892号-11 京公网安备110151号
+    </div>
+</div>
+</body>
+</html>
+<script src="../lib/jquery-2.1.4/jquery.min.js"></script>
+<script src="../lib/layui/layui.js"></script>
+<!--jquery-->
+<!--json-->
+<script src="../lib/json/json2.js" type="text/javascript"></script>
+<script src="../js/common.js"></script>
+<script src="../lib/jquery-2.1.4/jquery.form.js"></script>
+<script>
+    $("#sub").click(function () {
+        $("#form").ajaxSubmit(function (data) {
+            if (data.data === true) {
+                window.location.href = "/views/admin_index.html";
+            }else {
+                alert("输入账号或密码错误");
+            }
+        });
+    });
+</script>

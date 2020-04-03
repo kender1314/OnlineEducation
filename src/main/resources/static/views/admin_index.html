@@ -2,25 +2,55 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>后台首页</title>
+    <title>后台-首页</title>
     <!--Layui-->
     <link rel="stylesheet" href="../lib/layui/css/layui.css">
     <link rel="stylesheet" href="../css/common.css">
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
-    <div class="navigationAdmin">
+    <div class="layui-header">
+        <div class="layui-logo">启路在线教育</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="/views/admin_index.html">控制台</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="/views/admin_user_info.html">
+                    <img src="../images/user.png" class="layui-nav-img">
+                    <span th:text="${session.admin.adminName}"></span>
+                </a>
+            </li>
+            <li class="layui-nav-item"><a href="/admin/logout">注销</a></li>
+        </ul>
     </div>
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
-            <h2>订单管理</h2>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item"><a href="/views/admin_video.html">视频管理</a></li>
+                <li class="layui-nav-item"><a href="/views/admin_authority.html">权限管理</a></li>
+                <li class="layui-nav-item"><a href="/views/admin_question.html">问题管理</a></li>
+                <li class="layui-nav-item"><a href="/views/admin_order.html">订单管理</a></li>
+                <li class="layui-nav-item"><a href="/views/admin_user.html">用户管理</a></li>
+                <li class="layui-nav-item"><a href="/views/admin_commnent.html">评论管理</a></li>
+                <!--                <li class="layui-nav-item"><a href="">积分管理</a></li>-->
+            </ul>
         </div>
     </div>
 
+
+    <!--主题内容-->
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <h2>欢迎</h2>
+        </div>
+    </div>
     <div class="layui-footer">
         <!-- 底部固定区域 -->
-        Copyright © 2020 qilu.com All Rights Reserved | 京ICP备 12003892号-11 京公网安备11010802030151号
+        Copyright © 2020 qilu.com All Rights Reserved | 京ICP备 1200324546892号-11 京公网安备110151号
     </div>
 </div>
 </body>

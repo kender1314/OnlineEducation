@@ -18,4 +18,14 @@ public interface OrderManageService {
      * @return 订单信息
      */
     Page<Order> getOrderList(Map<String, Object> params);
+
+    /**
+     * 查询订单信息
+     * @param query
+     * @param params
+     * @return
+     */
+    Page<Order> getUserList(String query, Map<String, Object> params);
+
+    boolean deleteOrder(Integer id);
 }
