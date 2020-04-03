@@ -3,7 +3,6 @@ package com.graduate.onlineeducation.service;
 import com.graduate.onlineeducation.entity.User;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,6 +14,7 @@ import java.util.Map;
 public interface UserManageService {
     /**
      * 获取所有的用户数据
+     *
      * @param params 分页信息
      * @return 用户列表
      */
@@ -22,6 +22,7 @@ public interface UserManageService {
 
     /**
      * 删除用户
+     *
      * @param id
      * @return
      */
@@ -29,6 +30,7 @@ public interface UserManageService {
 
     /**
      * 更新用户信息
+     *
      * @param user
      * @return
      */
@@ -36,9 +38,9 @@ public interface UserManageService {
 
     /**
      * 查找用户信息
-     * @param query
+     *
      * @param params
      * @return
      */
-    Page<User> getUserList(String query, Map<String, Object> params);
+    Page<User> search(Map<String, Object> params);
 }

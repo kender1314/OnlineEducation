@@ -28,11 +28,17 @@ public interface JpaOrderManageRepository extends OrderManageRepository {
     Page<Order> findAll(Specification<Order> spec, Pageable pageable);
 
     @Override
-    @Query(value = "select * from gp_user where user_name like %?1% or user_phone_number like %?1% " +
-            "or user_major like %?1% or user_mail like %?1% or user_address like %?1% " +
-            "or user_education like %?1%", nativeQuery = true)
+    @Query(value = "select gp_order.order_id, gp_order.user_id, gp_order.series_id," +
+            "gp_order.video_id, gp_order.order_date, gp_order.order_status, gp_order.order_number from gp_order, gp_user, gp_video_series, gp_video " +
+            "where gp_order.user_id = gp_user.user_id\n" +
+            "and gp_order.series_id = gp_video_series.series_id and gp_order.video_id = gp_video.video_id AND" +
+            "(gp_user.user_name like %?1% or order_number like %?1% or\n" +
+            "gp_video_series.series_name like %?1% or gp_video.video_name like %?1%)", nativeQuery = true)
     Page<Order> findByQuery(String query, Pageable pageable);
 
     @Override
     void deleteById(Integer id);
+
+    @Override
+    Order save(Order order);
 }

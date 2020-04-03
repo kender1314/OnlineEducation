@@ -37,4 +37,12 @@ public interface OrderManageRepository extends PagingAndSortingRepository<Order,
      */
     @Override
     void deleteById(Integer id);
+
+    /**
+     * 修改订单
+     * @param order
+     * @return
+     */
+    @Override
+    Order save(Order order);
 }

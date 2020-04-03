@@ -30,7 +30,8 @@ public class OrderManageServiceImpl implements OrderManageService {
     }
 
     @Override
-    public Page<Order> getUserList(String query, Map<String, Object> params) {
+    public Page<Order> search(Map<String, Object> params) {
+        String query = (String) params.get("query");
         return orderManageRepository.findByQuery(query, PaginationBase.getPagination(params));
     }
 
@@ -38,5 +39,10 @@ public class OrderManageServiceImpl implements OrderManageService {
     public boolean deleteOrder(Integer id) {
         orderManageRepository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public void updateOrder(Order order) {
+        orderManageRepository.save(order);
     }
 }

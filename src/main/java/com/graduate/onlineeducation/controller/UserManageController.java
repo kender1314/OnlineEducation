@@ -1,21 +1,17 @@
 package com.graduate.onlineeducation.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.graduate.onlineeducation.common.Result;
 import com.graduate.onlineeducation.common.ResultUtils;
 import com.graduate.onlineeducation.entity.User;
 import com.graduate.onlineeducation.service.UserManageService;
-import com.graduate.onlineeducation.support.PaginationBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,38 +28,39 @@ public class UserManageController {
 
     /**
      * 获取所用的用户信息
+     *
      * @param params 分页数据
      * @return 用户信息列表
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/userList")
     public Result<Object> getUserList(@RequestParam Map<String, Object> params) {
-        Page<User> user =  userManageService.getUserList(params);
+        Page<User> user = userManageService.getUserList(params);
         return ResultUtils.success(user);
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/deleteUser")
-    public Result<Object> deleteUser(Integer id){
-        return ResultUtils.success( userManageService.deleteUser(id));
+    public Result<Object> deleteUser(Integer id) {
+        return ResultUtils.success(userManageService.deleteUser(id));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/updateUser")
-    public String updateUser(User user){
+    public String updateUser(User user) {
         userManageService.updateUser(user);
         return "/views/admin_user";
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/insertUser")
-    public Result<Object> insertUser(User user){
+    public Result<Object> insertUser(User user) {
         return ResultUtils.success(userManageService.updateUser(user));
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/search")
-    public Result<Object> getUserList(String query, @RequestParam Map<String, Object> params){
-        Page<User> users = userManageService.getUserList(query, params);
+    public Result<Object> search(@RequestParam Map<String, Object> params) {
+        Page<User> users = userManageService.search(params);
         return ResultUtils.success(users);
     }
 }

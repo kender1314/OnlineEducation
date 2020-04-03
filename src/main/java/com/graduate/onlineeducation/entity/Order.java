@@ -15,7 +15,7 @@ import java.util.List;
  * @Description:
  */
 @Entity
-@Table(name = "gp_order")
+@Table(name = "gp_order", uniqueConstraints = {@UniqueConstraint(columnNames = "order_number")})
 public class Order implements Serializable {
     private static final long serialVersionUID = 2514333989278491301L;
     /**
@@ -29,7 +29,7 @@ public class Order implements Serializable {
     @Column(name = "order_id")
     private Integer id;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull
     @Column(name = "order_date")
     private Date orderDate;
@@ -37,6 +37,10 @@ public class Order implements Serializable {
     @NotNull
     @Column(name = "order_status")
     private Integer orderStatus;
+
+    @NotNull
+    @Column(name = "order_number")
+    private String orderNumber;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
@@ -98,12 +102,21 @@ public class Order implements Serializable {
         this.video = video;
     }
 
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", orderDate=" + orderDate +
                 ", orderStatus=" + orderStatus +
+                ", orderNumber=" + orderNumber +
                 ", user=" + user +
                 ", videoSeries=" + videoSeries +
                 ", video=" + video +

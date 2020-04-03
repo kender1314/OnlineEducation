@@ -77,12 +77,11 @@
 </script>
 
 <script>
-    layui.use(['element', 'table', 'jquery', 'layer', 'form'], function () {
+    layui.use(['element', 'table', 'jquery', 'layer'], function () {
         var $ = layui.$;
         var table = layui.table;
         var layer = layui.layer;
         var element = layui.element;
-        var form = layui.form;
 
         // $(".navigationAdmin").load('/views/admin_navigation.html');
 
@@ -109,7 +108,7 @@
             , title: '用户数据表'
             , cols: [
                 [
-                    {field: 'id', title: 'ID', width: 60, fixed: 'left', unresize: true, sort: true}
+                    {type: 'numbers', title: '序号', width: 100, fixed: 'left'}
                     , {field: 'userName', title: '用户名', width: 100}
                     , {field: 'userPhoneNumber', title: '电话', width: 150}
                     , {field: 'userMail', title: '邮件', width: 120}
@@ -127,7 +126,7 @@
             , page: true
         });
 
-        //头工具栏事件
+        //新增用户
         table.on('toolbar(test)', function (obj) {
             if (obj.event === 'addUser') {
                 layer.open({

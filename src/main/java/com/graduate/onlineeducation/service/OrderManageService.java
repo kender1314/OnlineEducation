@@ -21,11 +21,21 @@ public interface OrderManageService {
 
     /**
      * 查询订单信息
-     * @param query
      * @param params
      * @return
      */
-    Page<Order> getUserList(String query, Map<String, Object> params);
+    Page<Order> search(Map<String, Object> params);
 
+    /**
+     * 删除订单
+     * @param id
+     * @return
+     */
     boolean deleteOrder(Integer id);
+
+    /**
+     * 修改订单
+     * @param order
+     */
+    void updateOrder(Order order);
 }
