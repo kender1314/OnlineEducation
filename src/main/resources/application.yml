@@ -11,7 +11,7 @@ spring:
     username: root
     password: 123456
   thymeleaf:
-    cache: false
+    cache: false #开发时关闭缓存,不然没法看到实时页面
     prefix: classpath:/static/
     suffix: .html
     encoding: UTF-8
@@ -19,8 +19,6 @@ spring:
     static-path-pattern: /**
   resources:
     static-locations: classpath:/static
-#  resources:
-#    static-locations: classpath:/static/
 #security:
 #  basic:
 #    enabled: false

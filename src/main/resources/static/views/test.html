@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Layui</title>
@@ -17,6 +17,7 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <h2>用户管理</h2>
+            <span th:text="user.userName"></span>
         </div>
         <div class="demoTable" style="margin-left: 75%">
             <div class="layui-inline">

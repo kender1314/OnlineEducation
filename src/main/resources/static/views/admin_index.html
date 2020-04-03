@@ -13,11 +13,11 @@
         <div class="layui-logo">启路在线教育</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="/views/admin_index.html">控制台</a></li>
+            <li class="layui-nav-item"><a href="/url/adminIndex">控制台</a></li>
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <a href="/views/admin_user_info.html">
+                <a href="/url/adminUserInfo">
                     <img src="../images/user.png" class="layui-nav-img">
                     <span th:text="${session.admin.adminName}"></span>
                 </a>
@@ -29,12 +29,12 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                <li class="layui-nav-item"><a href="/views/admin_video.html">视频管理</a></li>
-                <li class="layui-nav-item"><a href="/views/admin_authority.html">权限管理</a></li>
-                <li class="layui-nav-item"><a href="/views/admin_question.html">问题管理</a></li>
-                <li class="layui-nav-item"><a href="/views/admin_order.html">订单管理</a></li>
-                <li class="layui-nav-item"><a href="/views/admin_user.html">用户管理</a></li>
-                <li class="layui-nav-item"><a href="/views/admin_commnent.html">评论管理</a></li>
+                <li class="layui-nav-item"><a href="/url/adminVideo">视频管理</a></li>
+                <li class="layui-nav-item"><a href="/url/adminAuthority">权限管理</a></li>
+                <li class="layui-nav-item"><a href="/url/adminQuestion">问题管理</a></li>
+                <li class="layui-nav-item"><a href="/url/adminOrder">订单管理</a></li>
+                <li class="layui-nav-item"><a href="/url/adminUser">用户管理</a></li>
+                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>
                 <!--                <li class="layui-nav-item"><a href="">积分管理</a></li>-->
             </ul>
         </div>

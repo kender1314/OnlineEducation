@@ -31,10 +31,8 @@ public class AdminLoginController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public Result<Object> login(@RequestParam Map<String, Object> params, HttpServletRequest request, Model model) {
+    public Result<Object> login(@RequestParam Map<String, Object> params, HttpSession session) {
         Admin admin = adminLoginService.login(params);
-        HttpSession session = request.getSession();
-        model.addAttribute("msg", "123");
         if(admin != null) {
             session.setAttribute("admin", admin);
             return ResultUtils.success(true);
