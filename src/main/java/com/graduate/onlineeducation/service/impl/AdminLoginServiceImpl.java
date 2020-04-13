@@ -15,7 +15,7 @@ import java.util.Map;
  * @Description:
  */
 @Service
-public class AdminLoginServiceimpl implements AdminLoginService {
+public class AdminLoginServiceImpl implements AdminLoginService {
     @Autowired
     private AdminLoginRepository adminLoginRepository;
 

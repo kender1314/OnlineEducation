@@ -1,5 +1,7 @@
 package com.graduate.onlineeducation.controller;
 
+import com.graduate.onlineeducation.common.Result;
+import com.graduate.onlineeducation.common.ResultUtils;
 import com.graduate.onlineeducation.entity.User;
 import com.graduate.onlineeducation.service.UserLoginService;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -32,10 +35,15 @@ public class UserLoginController {
         this.userLoginService = userLoginService;
     }
 
+    @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public ModelAndView login(@RequestParam Map<String, Object> params) {
+    public Result<Object> login(@RequestParam Map<String, Object> params, HttpSession session) {
         User user = userLoginService.login(params);
-        return new ModelAndView("/views/admin_user", "user", user);
+        if(user != null) {
+            session.setAttribute("user", user);
+            return ResultUtils.success(true);
+        }
+        return ResultUtils.success(false);
     }
 
     @ResponseBody
