@@ -25,9 +25,9 @@ public class VideoSeries implements Serializable {
     @Column(name = "series_id")
     private Integer id;
 
-    @NotNull
-    @Column(name = "user_id")
-    private Integer userId;
+//    @NotNull
+//    @Column(name = "user_id")
+//    private Integer userId;
 
     @NotNull
     @Column(name = "series_name")
@@ -44,6 +44,10 @@ public class VideoSeries implements Serializable {
     @Column(name = "series_integral")
     private Integer seriesIntegral;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Integer getId() {
         return id;
     }
@@ -52,13 +56,20 @@ public class VideoSeries implements Serializable {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
+//    public Integer getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(Integer userId) {
+//        this.userId = userId;
+//    }
 
     public String getSeriesName() {
         return seriesName;
@@ -96,11 +107,11 @@ public class VideoSeries implements Serializable {
     public String toString() {
         return "VideoSeries{" +
                 "id=" + id +
-                ", userId=" + userId +
                 ", seriesName='" + seriesName + '\'' +
                 ", seriesNumber=" + seriesNumber +
                 ", introduction='" + introduction + '\'' +
                 ", seriesIntegral=" + seriesIntegral +
+                ", user=" + user +
                 '}';
     }
 }

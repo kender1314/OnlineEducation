@@ -50,7 +50,7 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <h2>视频管理</h2>
+            <h2>视频系列管理</h2>
             <div class="demoTable" style="margin-left: 75%">
                 <div class="layui-inline">
                     <input class="layui-input" name="id" id="demoReload" autocomplete="off">
@@ -97,7 +97,7 @@
 
         table.render({
             elem: '#test'
-            , url: '/videoManage/getVideoList'
+            , url: '/videoSeriesManage/getVideoSeriesList'
             , request: {
                 "pageSize": 'limit',
                 "page": 'curr',//当前页（必传参数，可改变参数名）
@@ -119,27 +119,16 @@
             , cols: [
                 [
                     {type: 'numbers', title: '序号', width: 100, fixed: 'left'}
-                    , {field: 'videoName', title: '视频名', unresize: true, sort: true}
+                    , {field: 'seriesName', title: '系列名', unresize: true, sort: true}
                     , {
-                    field: 'user', title: '用户名', templet: function (d) {
-                        return d.user.userName;
+                        field: 'user', title: '用户名', templet: function (d) {
+                            return d.user.userName;
+                        }
                     }
-                }
-                //     , {
-                //     field: 'series', title: '系列名', templet: function (d) {
-                //         if (d.series == null) {
-                //             return "[null]";
-                //         }
-                //         return d.series.seriesName;
-                //     }
-                // }
-                    , {field: 'videoDate', title: '视频时间'}
+                    , {field: 'seriesNumber', title: '总集数'}
                     // , {field: 'videoStatus', title: '视频状态', width: 100}
-                    , {field: 'videoClassification', title: '视频类别', width: 100}
-                    , {field: 'videoIntegral', title: '积分', width: 100}
-                    , {field: 'videoIntroduce', title: '视频简介', width: 100}
-                    , {field: 'playbackVolume', title: '播放量', width: 100}
-                    , {field: 'coverUrl', title: '视频地址', width: 100}
+                    , {field: 'introduction', title: '系列简介', width: 100}
+                    , {field: 'seriesIntegral', title: '积分', width: 100}
                     , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
                 ]
             ]

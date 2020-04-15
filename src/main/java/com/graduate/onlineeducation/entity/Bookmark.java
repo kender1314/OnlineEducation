@@ -27,7 +27,7 @@ public class Bookmark implements Serializable {
 
     @NotNull
     @Column(name = "bookmark_name")
-    private Integer bookmarkName;
+    private String bookmarkName;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
@@ -41,11 +41,11 @@ public class Bookmark implements Serializable {
         this.id = id;
     }
 
-    public Integer getBookmarkName() {
+    public String getBookmarkName() {
         return bookmarkName;
     }
 
-    public void setBookmarkName(Integer bookmarkName) {
+    public void setBookmarkName(String bookmarkName) {
         this.bookmarkName = bookmarkName;
     }
 

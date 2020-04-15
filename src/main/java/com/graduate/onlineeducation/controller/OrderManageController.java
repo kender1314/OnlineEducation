@@ -35,7 +35,7 @@ public class OrderManageController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/search")
-    public Result<Object> getOrderList(String query, @RequestParam Map<String, Object> params){
+    public Result<Object> search(@RequestParam Map<String, Object> params){
         Page<Order> orders = orderManageService.search(params);
         return ResultUtils.success(orders);
     }

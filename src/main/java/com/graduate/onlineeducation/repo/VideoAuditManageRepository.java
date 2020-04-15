@@ -1,6 +1,6 @@
 package com.graduate.onlineeducation.repo;
 
-import com.graduate.onlineeducation.entity.Bookmark;
+import com.graduate.onlineeducation.entity.Video;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -10,16 +10,18 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 /**
  * @Author hejiang
  * @Version 1.0.0 RELEASE
- * @Date 2020/4/12 20:14
+ * @Date 2020/4/15 13:22
  * @Description:
  */
 @NoRepositoryBean
-public interface BookmarkManageRepository extends PagingAndSortingRepository<Bookmark, Integer> {
+public interface VideoAuditManageRepository extends PagingAndSortingRepository<Video, Integer> {
     /**
-     * 查找所有的收藏夹信息
+     * 获取未审核的视频信息
      * @param spec spec
      * @param pageable pageable
      * @return Page<Order>
      */
-    Page<Bookmark> findAll(Specification<Bookmark> spec, Pageable pageable);
+    Page<Video> findVideoNoAudit(Specification<Video> spec, Pageable pageable);
+
+
 }

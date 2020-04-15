@@ -25,7 +25,7 @@ public class VideoSeriesManageController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/getVideoSeriesList")
-    public Result<Object> getVideoSeriesList(@RequestBody Map<String, Object> params){
+    public Result<Object> getVideoSeriesList(@RequestParam Map<String, Object> params){
         Page<VideoSeries> videoSeries = videoSeriesManageService.getVideoSeriesList(params);
         return ResultUtils.success(videoSeries);
     }

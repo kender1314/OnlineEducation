@@ -50,7 +50,7 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <h2>视频管理</h2>
+            <h2>视频审核管理</h2>
             <div class="demoTable" style="margin-left: 75%">
                 <div class="layui-inline">
                     <input class="layui-input" name="id" id="demoReload" autocomplete="off">
@@ -97,7 +97,7 @@
 
         table.render({
             elem: '#test'
-            , url: '/videoManage/getVideoList'
+            , url: '/videoAuditManage/getVideoAuditList'
             , request: {
                 "pageSize": 'limit',
                 "page": 'curr',//当前页（必传参数，可改变参数名）
@@ -125,16 +125,16 @@
                         return d.user.userName;
                     }
                 }
-                //     , {
-                //     field: 'series', title: '系列名', templet: function (d) {
-                //         if (d.series == null) {
-                //             return "[null]";
-                //         }
-                //         return d.series.seriesName;
-                //     }
-                // }
+                        , {
+                        field: 'series', title: '系列名', templet: function (d) {
+                            if (d.series == null) {
+                                return "[null]";
+                            }
+                            return d.series.seriesName;
+                        }
+                    }
                     , {field: 'videoDate', title: '视频时间'}
-                    // , {field: 'videoStatus', title: '视频状态', width: 100}
+                    , {field: 'videoStatus', title: '视频状态', width: 100}
                     , {field: 'videoClassification', title: '视频类别', width: 100}
                     , {field: 'videoIntegral', title: '积分', width: 100}
                     , {field: 'videoIntroduce', title: '视频简介', width: 100}

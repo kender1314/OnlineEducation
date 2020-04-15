@@ -1,7 +1,11 @@
 package com.graduate.onlineeducation.repo.jpa;
 
+import com.graduate.onlineeducation.entity.Bookmark;
 import com.graduate.onlineeducation.repo.BookmarkManageRepository;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 /**
  * @Author hejiang
@@ -11,4 +15,6 @@ import org.springframework.context.annotation.Profile;
  */
 @Profile({"mysql"})
 public interface JpaBookmarkManageRepository extends BookmarkManageRepository {
+    @Override
+    Page<Bookmark> findAll(Specification<Bookmark> spec, Pageable pageable);
 }

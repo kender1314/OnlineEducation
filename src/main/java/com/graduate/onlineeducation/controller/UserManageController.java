@@ -45,10 +45,10 @@ public class UserManageController {
         return ResultUtils.success(userManageService.deleteUser(id));
     }
 
+    @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/updateUser")
-    public String updateUser(User user) {
-        userManageService.updateUser(user);
-        return "/views/admin_user";
+    public Result<Object> updateUser(User user) {
+        return ResultUtils.success(userManageService.updateUser(user));
     }
 
     @ResponseBody
