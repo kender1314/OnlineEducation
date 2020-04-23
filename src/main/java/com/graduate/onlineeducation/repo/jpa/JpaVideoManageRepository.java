@@ -1,5 +1,6 @@
 package com.graduate.onlineeducation.repo.jpa;
 
+import com.graduate.onlineeducation.entity.DTO.VideoDTO;
 import com.graduate.onlineeducation.entity.Video;
 import com.graduate.onlineeducation.repo.VideoManageRepository;
 import org.springframework.context.annotation.Profile;
@@ -25,6 +26,9 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
 
     @Override
     Video save(Video video);
+
+    @Override
+    VideoDTO save(VideoDTO video);
 
     /**
      *视频模糊查询

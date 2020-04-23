@@ -25,7 +25,7 @@ public interface JpaUserLoginRepository extends UserLoginRepository {
      * @return UserE
      */
     @Override
-    @Query(value = "select * from gp_user where user_name = ?1 and user_password = ?2", nativeQuery = true)
+    @Query(value = "select * from gp_user where user_name = ?1 and user_password = ?2 and user_mail_active_status=1", nativeQuery = true)
     User login(String userName, String password);
 
     /**
@@ -36,4 +36,16 @@ public interface JpaUserLoginRepository extends UserLoginRepository {
      */
     @Override
     Page<User> findAll(Specification<User> spec, Pageable pageable);
+
+    /**
+     * 注册
+     * @param user
+     * @return
+     */
+    @Override
+    User save(User user);
+
+    @Override
+    @Query(value = "select * from gp_user where user_mail_active_code =  ?1", nativeQuery = true)
+    User selectUserByActiveCode(String activeCode);
 }

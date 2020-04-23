@@ -18,7 +18,7 @@ import java.util.Map;
  * @Description:
  */
 @Controller
-@RequestMapping("bookManage")
+@RequestMapping("/bookManage")
 public class BookmarkManageController {
     @Autowired
     private BookmarkManageService bookmarkManageService;

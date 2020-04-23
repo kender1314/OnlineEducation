@@ -33,7 +33,6 @@ public class User implements Serializable {
     @Column(name = "user_name")
     private String userName;
 
-    @NotNull
     @Column(name = "user_phone_number")
     private String userPhoneNumber;
 
@@ -58,15 +57,27 @@ public class User implements Serializable {
     @Column(name = "user_address")
     private String userAddress;
 
+    /**
+     * 激活状态 0 未激活 1 已激活
+     */
+    @Column(name = "user_mail_active_status")
+    private Integer activeStatus;
+
+    /**
+     * 激活码
+     */
+    @Column(name = "user_mail_active_code")
+    private String activeCode;
+
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "user_birth")
     private Date userBirth;
 
     @Column(name = "user_education")
     private String userEducation;
 
-    public User(){
+    public User() {
 
     }
 
@@ -156,6 +167,22 @@ public class User implements Serializable {
 
     public void setUserEducation(String userEducation) {
         this.userEducation = userEducation;
+    }
+
+    public Integer getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(Integer activeStatus) {
+        this.activeStatus = activeStatus;
+    }
+
+    public String getActiveCode() {
+        return activeCode;
+    }
+
+    public void setActiveCode(String activeCode) {
+        this.activeCode = activeCode;
     }
 
     @Override

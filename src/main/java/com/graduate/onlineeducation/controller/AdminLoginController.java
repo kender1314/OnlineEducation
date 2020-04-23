@@ -24,7 +24,7 @@ import java.util.Map;
  * @Description:
  */
 @Controller
-@RequestMapping("admin")
+@RequestMapping("/admin")
 public class AdminLoginController {
     @Autowired
     private AdminLoginService adminLoginService;

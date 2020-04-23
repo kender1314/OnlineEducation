@@ -1,5 +1,6 @@
 package com.graduate.onlineeducation.service.impl;
 
+import com.graduate.onlineeducation.entity.DTO.VideoDTO;
 import com.graduate.onlineeducation.entity.Video;
 import com.graduate.onlineeducation.repo.VideoManageRepository;
 import com.graduate.onlineeducation.service.VideoManageService;
@@ -37,8 +38,8 @@ public class VideoManageServiceImpl  implements VideoManageService {
     }
 
     @Override
-    public boolean updateVideo(Video video) {
-        Video videoTemp = videoManageRepository.save(video);
+    public boolean updateVideo(VideoDTO video) {
+        VideoDTO videoTemp = videoManageRepository.save(video);
         return videoTemp != null;
     }
 

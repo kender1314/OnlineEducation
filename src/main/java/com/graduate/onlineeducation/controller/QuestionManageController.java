@@ -18,7 +18,7 @@ import java.util.Map;
  * @Description:
  */
 @Controller
-@RequestMapping("questionManage")
+@RequestMapping("/questionManage")
 public class QuestionManageController {
     @Autowired
     private QuestionManageService questionManageService;

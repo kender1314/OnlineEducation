@@ -1,5 +1,6 @@
 package com.graduate.onlineeducation.repo;
 
+import com.graduate.onlineeducation.entity.DTO.VideoDTO;
 import com.graduate.onlineeducation.entity.Video;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,6 +38,13 @@ public interface VideoManageRepository extends PagingAndSortingRepository<Video,
      */
     @Override
     Video save(Video video);
+
+    /**
+     * 更新视频
+     * @param video
+     * @return
+     */
+    VideoDTO save(VideoDTO video);
 
     /**
      * 查找视频信息

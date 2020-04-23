@@ -38,23 +38,20 @@ public class InterceptAspect {
 
     }
 
-    @Before("educationPointCut()")
-    public void doAccessCheck(JoinPoint joinPoint) {
+    @Around("educationPointCut()")
+    public Object doAccessCheck(ProceedingJoinPoint pjp) throws Throwable {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert attributes != null;
         HttpServletRequest request = attributes.getRequest();
         HttpServletResponse response = attributes.getResponse();
-        try {
-            HttpSession session = request.getSession();
-            Object admin = session.getAttribute("admin");
-//            Object user = session.getAttribute("user");
-            if (admin == null) {
-                assert response != null;
-                response.sendRedirect(request.getContextPath() + "/views/admin_login");
-            }
-        } catch (Throwable e) {
-            logger.debug("error->>>" + e);
-        }
-    }
+        HttpSession session = request.getSession();
+        Object admin = session.getAttribute("admin");
 
+        if (admin == null) {
+            logger.info("-------------没有登录-------------");
+            return "/views/admin_login";
+        }
+        return pjp.proceed();
+
+    }
 }

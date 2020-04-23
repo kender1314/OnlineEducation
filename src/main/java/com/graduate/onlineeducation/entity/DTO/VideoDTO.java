@@ -1,6 +1,8 @@
-package com.graduate.onlineeducation.entity;
+package com.graduate.onlineeducation.entity.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.graduate.onlineeducation.entity.User;
+import com.graduate.onlineeducation.entity.VideoSeries;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,7 +18,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "gp_video")
-public class Video implements Serializable {
+public class VideoDTO implements Serializable {
     private static final long serialVersionUID = 2514333989278491301L;
 
     /**
@@ -55,18 +57,6 @@ public class Video implements Serializable {
 
     @Column(name = "video_playback_volume")
     private Integer playbackVolume;
-
-    @NotNull
-    @Column(name = "video_cover_url")
-    private String coverUrl;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "series_id")
-    private VideoSeries series;
 
     public Integer getId() {
         return id;
@@ -132,30 +122,6 @@ public class Video implements Serializable {
         this.playbackVolume = playbackVolume;
     }
 
-    public String getCoverUrl() {
-        return coverUrl;
-    }
-
-    public void setCoverUrl(String coverUrl) {
-        this.coverUrl = coverUrl;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public VideoSeries getSeries() {
-        return series;
-    }
-
-    public void setSeries(VideoSeries series) {
-        this.series = series;
-    }
-
     @Override
     public String toString() {
         return "Video{" +
@@ -167,9 +133,6 @@ public class Video implements Serializable {
                 ", videoIntegral=" + videoIntegral +
                 ", videoIntroduce='" + videoIntroduce + '\'' +
                 ", playbackVolume=" + playbackVolume +
-                ", coverUrl=" + coverUrl +
-                ", user=" + user +
-                ", series=" + series +
                 '}';
     }
 }

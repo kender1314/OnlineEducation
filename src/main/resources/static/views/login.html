@@ -7,11 +7,7 @@
     <link rel="stylesheet" href="../css/login.css">
     <!--Layui-->
     <link rel="stylesheet" href="../lib/layui/css/layui.css">
-    <script src="../lib/layui/layui.js"></script>
-    <!--json-->
-    <script src="../lib/json/json2.js" type="text/javascript"></script>
-    <!--jquery-->
-    <script src="../lib/jquery-2.1.4/jquery.min.js"></script>
+
 </head>
 <body>
 <ul class="layui-nav layui-bg-blue">
@@ -27,27 +23,29 @@
     </li>
 </ul>
 
-<form class="layui-form my-login-form" action="/user/login" lay-filter="example" method="post">
+<form class="layui-form my-login-form" action="/user/login" id="form" lay-filter="example" method="post">
     <div class="layui-form-item">
         <label class="layui-form-label">账号</label>
         <div class="layui-input-block">
-            <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入账号"
-                   class="layui-input" style="width: 300px">
+            <input type="text" name="username" id="username" lay-verify="title" autocomplete="off" placeholder="请输入账号"
+                   class="layui-input" style="width: 300px" onblur="checkUserName()">
+            <span id="username-tips"></span>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">密码</label>
         <div class="layui-input-block">
-            <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input"
-                   style="width: 300px">
+            <input type="password" name="password" id="password" placeholder="请输入密码" autocomplete="off" class="layui-input"
+                   style="width: 300px" onblur="checkPassword()">
+            <span id="password-tips"></span>
             <br>
             <a href="register.html"><span style="font-size: 12px">找回密码？</span></a>
         </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">登录</button>
-            <a href="register.html"><button type="button" class="layui-btn layui-btn-primary">注册</button></a>
+            <button type="button" id="sub" class="layui-btn" lay-submit="" lay-filter="demo1">登录</button>
+            <button type="button" id="register" class="layui-btn layui-btn-primary">注册</button>
         </div>
     </div>
 </form>
@@ -55,6 +53,13 @@
 </div>
 </body>
 </html>
+<script src="../lib/layui/layui.js"></script>
+<!--json-->
+<script src="../lib/json/json2.js" type="text/javascript"></script>
+<!--jquery-->
+<script src="../lib/jquery-2.1.4/jquery.min.js"></script>
+<script src="../lib/jquery-2.1.4/jquery.form.js"></script>
+
 <script>
     layui.use('element', function () {
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
@@ -65,5 +70,52 @@
             layer.msg(elem.text());
         });
     });
-    $(".my-footer").load('footer.html');
+    layui.use(['jquery', 'layer', 'laydate'], function () {
+        var $ = layui.$;
+        var laydate = layui.laydate;
+        var layer = layui.layer;
+
+        $(".my-footer").load('/views/footer.html');
+    });
+
+    $("#sub").click(function () {
+        $("#form").ajaxSubmit(function (data) {
+            if (data.data === true) {
+                window.location.href = "/userUrl/index";
+            } else {
+                alert("输入账号或密码错误");
+            }
+        });
+    });
+
+    $("#register").click(function () {
+        window.location.href = "/userUrl/register";
+    });
+
+    function checkUserName() {
+        var userName = document.getElementById("username").value;
+        if (userName === ""){
+            document.getElementById("username-tips").innerHTML = "<br><font color='red'>输入账号不能为空!</font>";
+            document.getElementById("submit").disabled = false;
+        }else if (userName.length < 5){
+            document.getElementById("username-tips").innerHTML = "<br><font color='red'>用户名至少得5个字符!</font>";
+            document.getElementById("submit").disabled = false;
+        }else {
+            document.getElementById("username-tips").innerHTML = "";
+            document.getElementById("submit").disabled = true;
+        }
+    }
+    function checkPassword() {
+        var userName = document.getElementById("password").value;
+        if (userName === ""){
+            document.getElementById("password-tips").innerHTML = "<br><font color='red'>输入密码不能为空!</font>";
+            document.getElementById("submit").disabled = false;
+        }else if (userName.length < 6){
+            document.getElementById("password-tips").innerHTML = "<br><font color='red'>密码名至少得6个字符!</font>";
+            document.getElementById("submit").disabled = false;
+        }else {
+            document.getElementById("password-tips").innerHTML = "";
+            document.getElementById("submit").disabled = true;
+        }
+    }
 </script>

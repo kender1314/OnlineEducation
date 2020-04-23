@@ -32,4 +32,19 @@ public interface UserLoginRepository extends PagingAndSortingRepository<User, In
      * @return
      */
     Page<User> findAll(Specification<User> spec, Pageable pageable);
+
+    /**
+     * 注册
+     * @param user
+     * @return
+     */
+    @Override
+    User save(User user);
+
+    /**
+     *  根据激活码查找用户
+     * @param activeCode
+     * @return
+     */
+    User selectUserByActiveCode(String activeCode);
 }

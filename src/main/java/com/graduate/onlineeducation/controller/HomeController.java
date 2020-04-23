@@ -15,6 +15,6 @@ public class HomeController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String homePage() {
-        return "/views/admin_login";
+        return "/views/login";
     }
 }

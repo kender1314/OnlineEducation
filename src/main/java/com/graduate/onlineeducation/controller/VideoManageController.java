@@ -2,6 +2,7 @@ package com.graduate.onlineeducation.controller;
 
 import com.graduate.onlineeducation.common.Result;
 import com.graduate.onlineeducation.common.ResultUtils;
+import com.graduate.onlineeducation.entity.DTO.VideoDTO;
 import com.graduate.onlineeducation.entity.Video;
 import com.graduate.onlineeducation.service.VideoManageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,10 @@ public class VideoManageController {
         return ResultUtils.success(videoManageService.deleteVideo(id));
     }
 
+    @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/updateVideo")
-    public String updateVideo(Video video) {
-        videoManageService.updateVideo(video);
-        return "/views/admin_video";
+    public Result<Object> updateVideo(VideoDTO video) {
+        return ResultUtils.success(videoManageService.updateVideo(video));
     }
 
     @ResponseBody

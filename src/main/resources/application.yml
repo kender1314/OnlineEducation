@@ -7,9 +7,19 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/onlineeducation?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://123.57.46.169:3306/onlineeducation?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
+  # 配置发送方信息
+  mail:
+    host: smtp.qq.com
+    username: 1421894128@qq.com  # 邮箱地址
+    password: ebzhjnufqoqwhghe # 授权码
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
   thymeleaf:
     cache: false #开发时关闭缓存,不然没法看到实时页面
     prefix: classpath:/static/

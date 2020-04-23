@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Intercept
 @Controller
-@RequestMapping("url")
+@RequestMapping("/url")
 public class UrlAdminController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/adminIndex")
@@ -26,7 +26,6 @@ public class UrlAdminController {
         return "/views/admin_user_info";
     }
 
-    @Intercept
     @RequestMapping(method = RequestMethod.GET, value = "/adminVideo")
     public String adminVideo() {
         return "/views/admin_video";

@@ -1,0 +1,30 @@
+POST http://localhost:8080/videoManage/getVideoList
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh_CN
+Connection: keep-alive
+Content-Type: application/json
+
+{"pageSize": 10, "page": 1, "sortKey": "", "limit": 10}
+
+###
+POST http://localhost:8080/user/register?userName=aaaaa&userPassword=111111&userMail=18715770814@163.com
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh_CN
+Connection: keep-alive
+Content-Type: application/json
+
+###
+POST http://localhost:8080/user/checkCode?code=93861f5f53f148179e87ca2ab52f8c02
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh_CN
+Connection: keep-alive
+Content-Type: application/json
+
+###
+
+
+
+

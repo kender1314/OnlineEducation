@@ -5,11 +5,7 @@
     <title>注册</title>
     <!--Layui-->
     <link rel="stylesheet" href="../lib/layui/css/layui.css">
-    <script src="../lib/layui/layui.js"></script>
-    <!--json-->
-    <script src="../lib/json/json2.js" type="text/javascript"></script>
-    <!--jquery-->
-    <script src="../lib/jquery-2.1.4/jquery.min.js"></script>
+
 </head>
 <body>
 <ul class="layui-nav layui-bg-blue">
@@ -24,39 +20,43 @@
         </dl>
     </li>
 </ul>
-<form class="layui-form" action="" style="margin-top: 100px">
+<form class="layui-form" id="form" action="/user/register" method="post"
+      style="width: 400px; margin: 200px auto 0;">
     <div class="layui-form-item">
         <label class="layui-form-label">用户名</label>
         <div class="layui-input-block">
-            <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入用户名"
-                   class="layui-input">
+            <input type="text" name="userName" id="userName" lay-verify="title" autocomplete="off" placeholder="请输入用户名"
+                   class="layui-input" onblur="checkUserName()">
+            <span id="userName-tips"></span>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">密码</label>
         <div class="layui-input-block">
-            <input type="text" name="password" lay-verify="required" lay-reqtext="请输入密码" placeholder="请输入密码"
-                   autocomplete="off" class="layui-input">
+            <input type="password" id="password" lay-verify="required" lay-reqtext="请输入长度为6-12位的密码"
+                   placeholder="请输入密码" autocomplete="off" class="layui-input" onblur="countPassword()">
+            <span id="password-tips"></span>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">确认密码</label>
         <div class="layui-input-block">
-            <input type="text" name="confirmPassword" lay-verify="required" lay-reqtext="请输入密码" placeholder="请再次输入密码"
-                   autocomplete="off" class="layui-input">
+            <input type="password" name="userPassword" id="confirmPassword" lay-verify="required" lay-reqtext="请输入长度为6-12位的密码"
+                   onblur="checkpassword()" placeholder="请再次输入密码" autocomplete="off" class="layui-input">
+            <span id="tips"></span>
         </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">验证邮箱</label>
             <div class="layui-input-inline">
-                <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+                <input type="text" name="userMail" lay-verify="email" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
     <div class="layui-form-item" style="margin-top: 50px">
         <div class="layui-input-block">
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即注册</button>
+            <button type="button" id="sub" class="layui-btn" lay-submit="">立即注册</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
@@ -65,6 +65,12 @@
 </div>
 </body>
 </html>
+<script src="../lib/layui/layui.js"></script>
+<!--json-->
+<script src="../lib/json/json2.js" type="text/javascript"></script>
+<!--jquery-->
+<script src="../lib/jquery-2.1.4/jquery.min.js"></script>
+<script src="../lib/jquery-2.1.4/jquery.form.js"></script>
 <script>
     layui.use('element', function () {
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
@@ -75,55 +81,70 @@
             layer.msg(elem.text());
         });
     });
+    layui.use(['jquery'], function () {
+        var $ = layui.$;
+
+        $(".my-footer").load('/views/footer.html');
+    });
     layui.use(['form', 'layedit', 'laydate'], function () {
         var form = layui.form
             , layer = layui.layer
             , layedit = layui.layedit
             , laydate = layui.laydate;
-
-        //日期
-        laydate.render({
-            elem: '#date'
-        });
-        laydate.render({
-            elem: '#date1'
-        });
-
-        //创建一个编辑器
-        var editIndex = layedit.build('LAY_demo_editor');
-
-        //自定义验证规则
-        form.verify({
-            title: function (value) {
-                if (value.length < 5) {
-                    return '标题至少得5个字符啊';
-                }
-            }
-            , pass: [
-                /^[\S]{6,12}$/
-                , '密码必须6到12位，且不能出现空格'
-            ]
-            , content: function (value) {
-                layedit.sync(editIndex);
-            }
-        });
-
-        //监听指定开关
-        form.on('switch(switchTest)', function (data) {
-            layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
-                offset: '6px'
-            });
-            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
-        });
-
-        //监听提交
-        form.on('submit(demo1)', function (data) {
-            layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息'
-            })
-            return false;
-        });
-
     });
-    $(".my-footer").load('footer.html');
+
+    $("#sub").click(function () {
+        $("#form").ajaxSubmit(function (data) {
+            if (data.data === true) {
+                console.log(data.data);
+                window.location.href = "/userUrl/login";
+            } else {
+                alert("输入账号或密码错误");
+            }
+        });
+    });
+
+    function checkUserName() {
+        var userName = document.getElementById("userName").value;
+        if (userName === ""){
+            document.getElementById("userName-tips").innerHTML = "<br><font color='red'>输入账号不能为空!</font>";
+            document.getElementById("submit").disabled = false;
+        }else if (userName.length < 5){
+            document.getElementById("userName-tips").innerHTML = "<br><font color='red'>用户名至少得5个字符!</font>";
+            document.getElementById("submit").disabled = false;
+        }else {
+            document.getElementById("userName-tips").innerHTML = "";
+            document.getElementById("submit").disabled = true;
+        }
+    }
+
+    function countPassword() {
+        var userName = document.getElementById("password").value;
+        if (userName === ""){
+            document.getElementById("password-tips").innerHTML = "<br><font color='red'>输入密码不能为空!</font>";
+            document.getElementById("submit").disabled = false;
+        }else if (userName.length < 6){
+            document.getElementById("password-tips").innerHTML = "<br><font color='red'>密码至少得6个字符!</font>";
+            document.getElementById("submit").disabled = false;
+        }else {
+            document.getElementById("password-tips").innerHTML = "";
+            document.getElementById("submit").disabled = false;
+        }
+    }
+
+    function checkpassword() {
+        var password = document.getElementById("password").value;
+        var repassword = document.getElementById("confirmPassword").value;
+        if (password === "" || repassword === ""){
+            document.getElementById("tips").innerHTML = "<br><font color='red'>输入密码不能为空!</font>";
+            document.getElementById("submit").disabled = false;
+        }else if (password === repassword) {
+            document.getElementById("tips").innerHTML = "<br><font color='green'>两次密码输入一致</font>";
+            document.getElementById("submit").disabled = false;
+
+        } else {
+            document.getElementById("tips").innerHTML = "<br><font color='red'>两次输入密码不一致!</font>";
+            document.getElementById("submit").disabled = true;
+        }
+    }
 </script>

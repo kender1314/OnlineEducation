@@ -1,5 +1,6 @@
 package com.graduate.onlineeducation.service;
 
+import com.graduate.onlineeducation.entity.DTO.VideoDTO;
 import com.graduate.onlineeducation.entity.Video;
 import org.springframework.data.domain.Page;
 
@@ -32,7 +33,7 @@ public interface VideoManageService {
      * @param video
      * @return
      */
-    boolean updateVideo(Video video);
+    boolean updateVideo(VideoDTO video);
 
     /**
      * 查找不属于系列的视频信息

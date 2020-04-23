@@ -9,7 +9,42 @@
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
-    <div class="navigationAdmin">
+    <div class="layui-header">
+        <div class="layui-logo">启路在线教育</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="/url/adminIndex">控制台</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="/url/adminUserInfo">
+                    <img src="../images/user.png" class="layui-nav-img">
+                    <span th:text="${session.admin.adminName}"></span>
+                </a>
+            </li>
+            <li class="layui-nav-item"><a href="/admin/logout">注销</a></li>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">视频管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/url/adminVideo">视频管理</a></dd>
+                        <dd><a href="/url/adminVideoSeries">视频系列管理</a></dd>
+                        <dd><a href="/url/adminVideoAudit">视频审核管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/url/adminAuthority">权限管理</a></li>
+                <li class="layui-nav-item"><a href="/url/adminQuestion">问题管理</a></li>
+                <li class="layui-nav-item"><a href="/url/adminOrder">订单管理</a></li>
+                <li class="layui-nav-item"><a href="/url/adminUser">用户管理</a></li>
+                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>
+                <!--                <li class="layui-nav-item"><a href="">积分管理</a></li>-->
+            </ul>
+        </div>
     </div>
     <div class="layui-body">
         <!-- 内容主体区域 -->
@@ -26,6 +61,14 @@
 </body>
 </html>
 <script src="../js/common.js"></script>
-<script src="../lib/json/json2.js" type="text/javascript"></script>
+<!--<script src="../lib/json/json2.js" type="text/javascript"></script>-->
 <script src="../lib/layui/layui.js"></script>
-<script src="../lib/jquery-2.1.4/jquery.min.js"></script>
+<script>
+    layui.use(['element', 'table', 'jquery', 'layer', 'laydate'], function () {
+        var $ = layui.$;
+        var laydate = layui.laydate;
+        var table = layui.table;
+        var layer = layui.layer;
+        var element = layui.element;
+    });
+</script>
