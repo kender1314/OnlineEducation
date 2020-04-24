@@ -41,12 +41,7 @@ public class UserLoginController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public Result<Object> login(@RequestParam Map<String, Object> params, HttpSession session) {
-        User user = userLoginService.login(params);
-        if (user != null) {
-            session.setAttribute("user", user);
-            return ResultUtils.success(true);
-        }
-        return ResultUtils.success(false);
+        return ResultUtils.success(userLoginService.login(params, session));
     }
 
     @ResponseBody
@@ -99,4 +94,36 @@ public class UserLoginController {
         return "/views/email_register";
     }
 
+    /**
+     * 重置密码
+     *
+     * @param code
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/reCheckCode")
+    public String reCheckCode(String code, Model model) {
+        User user = userLoginService.getUserByActiveCode(code);
+        //如果用户不等于null，把用户状态修改status=1
+        if (user != null) {
+            //把code验证码清空，已经不需要了
+            user.setActiveCode("");
+            userLoginService.modify(user);
+            model.addAttribute("mail", user.getUserMail());
+
+            return "/views/reset_password";
+        }
+        return "/views/reset_password_failure";
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/rePassword")
+    public Result<Object> rePassword(String mail) {
+        return ResultUtils.success(userLoginService.rePassword(mail));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/updatePassword")
+    public Result<Object> updatePassword(@RequestParam Map<String, Object> params) {
+        return ResultUtils.success(userLoginService.updatePassword(params));
+    }
 }

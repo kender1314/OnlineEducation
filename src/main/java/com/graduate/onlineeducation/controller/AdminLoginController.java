@@ -32,12 +32,7 @@ public class AdminLoginController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public Result<Object> login(@RequestParam Map<String, Object> params, HttpSession session) {
-        Admin admin = adminLoginService.login(params);
-        if(admin != null) {
-            session.setAttribute("admin", admin);
-            return ResultUtils.success(true);
-        }
-        return ResultUtils.success(false);
+        return ResultUtils.success(adminLoginService.login(params, session));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/logout")

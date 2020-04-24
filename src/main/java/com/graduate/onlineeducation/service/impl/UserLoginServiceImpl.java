@@ -6,13 +6,21 @@ import com.graduate.onlineeducation.service.MailService;
 import com.graduate.onlineeducation.service.UserLoginService;
 import com.graduate.onlineeducation.support.ByUserSpecification;
 import com.graduate.onlineeducation.support.PaginationBase;
+import com.graduate.onlineeducation.utils.IDUtils;
+import com.graduate.onlineeducation.utils.SaltEncryptUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import java.util.Map;
 
 /**
@@ -37,10 +45,16 @@ public class UserLoginServiceImpl implements UserLoginService {
     }
 
     @Override
-    public User login(Map<String, Object> params) {
+    public boolean login(Map<String, Object> params, HttpSession session) {
         String username = (String) params.get("username");
         String password = (String) params.get("password");
-        return userLoginRepository.login(username, password);
+        User user = userLoginRepository.login(username);
+        if (SaltEncryptUtil.stringToDecode(user.getUserPassword()).
+                equals(SaltEncryptUtil.stringToDecode(password))) {
+            session.setAttribute("user", user);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -74,6 +88,27 @@ public class UserLoginServiceImpl implements UserLoginService {
     @Override
     public void modify(User user) {
         userLoginRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public boolean rePassword(String mail) {
+        String activeCode = IDUtils.getUUID();
+        int temp  = userLoginRepository.updateActiveCode(activeCode, mail);
+            logger.info("激活码:" + activeCode);
+            String subject = "来自启路在线网站的激活邮件";
+            String context = "<a href=\"http://localhost:8080/user/reCheckCode?code=" + activeCode + "\">密码重置请点击这里</a>";
+            mailService.sendMimeMail(mail, subject, context);
+        return temp == 1;
+    }
+
+    @Override
+    @Transactional
+    public boolean updatePassword(Map<String, Object> params) {
+        String mail = (String) params.get("mail");
+        String password = (String) params.get("password");
+        int temp = userLoginRepository.updatePassword(password, mail);
+        return temp == 1;
     }
 
 }

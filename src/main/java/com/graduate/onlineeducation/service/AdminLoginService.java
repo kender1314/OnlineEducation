@@ -2,6 +2,7 @@ package com.graduate.onlineeducation.service;
 
 import com.graduate.onlineeducation.entity.Admin;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -14,7 +15,8 @@ public interface AdminLoginService {
     /**
      * 管理员登录接口
      * @param params
+     * @param session
      * @return
      */
-    Admin login(Map<String, Object> params);
+    boolean login(Map<String, Object> params, HttpSession session);
 }

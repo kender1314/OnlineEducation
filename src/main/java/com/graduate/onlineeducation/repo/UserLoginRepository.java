@@ -20,10 +20,9 @@ public interface UserLoginRepository extends PagingAndSortingRepository<User, In
      * login
      *
      * @param userName userName
-     * @param password userName
      * @return UserE
      */
-    User login(String userName, String password);
+    User login(String userName);
 
     /**
      * 查找所有用户信息
@@ -47,4 +46,20 @@ public interface UserLoginRepository extends PagingAndSortingRepository<User, In
      * @return
      */
     User selectUserByActiveCode(String activeCode);
+
+    /**
+     * 更新激活码，实现密码找回
+     * @param activeCode
+     * @param mail
+     * @return
+     */
+    int updateActiveCode(String activeCode, String mail);
+
+    /**
+     * 根据邮件更新密码（重置密码）
+     * @param mail
+     * @param password
+     * @return
+     */
+    int updatePassword(String mail, String password);
 }

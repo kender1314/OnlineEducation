@@ -16,8 +16,7 @@ public interface AdminLoginRepository  extends PagingAndSortingRepository<Admin,
      * login
      *
      * @param userName userName
-     * @param password userName
      * @return UserE
      */
-    Admin login(String userName, String password);
+    Admin login(String userName);
 }

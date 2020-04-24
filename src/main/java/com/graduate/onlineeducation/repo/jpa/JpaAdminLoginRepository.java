@@ -14,6 +14,6 @@ import org.springframework.data.jpa.repository.Query;
 @Profile({"mysql"})
 public interface JpaAdminLoginRepository extends AdminLoginRepository {
     @Override
-    @Query(value = "select * from gp_admin where admin_name = ?1 and admin_password = ?2", nativeQuery = true)
-    Admin login(String userName, String password);
+    @Query(value = "select * from gp_admin where admin_name = ?1", nativeQuery = true)
+    Admin login(String userName);
 }

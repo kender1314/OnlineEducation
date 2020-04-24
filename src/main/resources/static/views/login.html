@@ -39,7 +39,7 @@
                    style="width: 300px" onblur="checkPassword()">
             <span id="password-tips"></span>
             <br>
-            <a href="register.html"><span style="font-size: 12px">找回密码？</span></a>
+            <a href="/userUrl/retrievePassword"><span style="font-size: 12px">找回密码？</span></a>
         </div>
     </div>
     <div class="layui-form-item">
@@ -59,6 +59,8 @@
 <!--jquery-->
 <script src="../lib/jquery-2.1.4/jquery.min.js"></script>
 <script src="../lib/jquery-2.1.4/jquery.form.js"></script>
+<!--加密-->
+<script src="../js/obscure.js"></script>
 
 <script>
     layui.use('element', function () {
@@ -96,26 +98,27 @@
         var userName = document.getElementById("username").value;
         if (userName === ""){
             document.getElementById("username-tips").innerHTML = "<br><font color='red'>输入账号不能为空!</font>";
-            document.getElementById("submit").disabled = false;
+            document.getElementById("submit").disabled = true;
         }else if (userName.length < 5){
             document.getElementById("username-tips").innerHTML = "<br><font color='red'>用户名至少得5个字符!</font>";
-            document.getElementById("submit").disabled = false;
+            document.getElementById("submit").disabled = true;
         }else {
             document.getElementById("username-tips").innerHTML = "";
-            document.getElementById("submit").disabled = true;
+            document.getElementById("submit").disabled = false;
         }
     }
     function checkPassword() {
-        var userName = document.getElementById("password").value;
-        if (userName === ""){
+        var password = document.getElementById("password").value;
+        if (password === ""){
             document.getElementById("password-tips").innerHTML = "<br><font color='red'>输入密码不能为空!</font>";
-            document.getElementById("submit").disabled = false;
-        }else if (userName.length < 6){
+            document.getElementById("submit").disabled = true;
+        }else if (password.length < 6){
             document.getElementById("password-tips").innerHTML = "<br><font color='red'>密码名至少得6个字符!</font>";
-            document.getElementById("submit").disabled = false;
+            document.getElementById("submit").disabled = true;
         }else {
             document.getElementById("password-tips").innerHTML = "";
-            document.getElementById("submit").disabled = true;
+            document.getElementById("password").value = obscure(password, 10);
+            document.getElementById("submit").disabled = false;
         }
     }
 </script>
