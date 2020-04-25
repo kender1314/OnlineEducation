@@ -50,14 +50,14 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <h2>视频系列管理</h2>
+            <h2>视频管理</h2>
             <div class="demoTable" style="margin-left: 75%">
                 <div class="layui-inline">
                     <input class="layui-input" name="id" id="demoReload" autocomplete="off">
                 </div>
                 <button class="layui-btn" data-type="reload">搜索</button>
             </div>
-            <table class="layui-hide" id="test" lay-filter="test"></table>
+            <table class="layui-hide" id="tables" lay-filter="tables"></table>
         </div>
     </div>
 
@@ -81,7 +81,6 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    <a class="layui-btn layui-btn-xs" href="/url/adminVideoSeriesList">列表</a>
 </script>
 
 <script src="../lib/layui/layui.js"></script>
@@ -97,13 +96,14 @@
         var element = layui.element;
 
         table.render({
-            elem: '#test'
-            , url: '/videoSeriesManage/getVideoSeriesList'
-            , request: {
+            elem: '#tables'
+            , url: '/videoManage/getVideoBySeriesId'
+            , where: {
                 "pageSize": 'limit',
-                "page": 'curr',//当前页（必传参数，可改变参数名）
-                "sortKey": 'videoName',
-                "sortDesc": false
+                // "page": 'curr',//当前页（必传参数，可改变参数名）
+                "sortKey": 'video_number',
+                "sortDesc": false,
+                "seriesId" : 1
             }
             , method: 'post'
             , parseData: function (res) {
@@ -119,18 +119,30 @@
             , title: '视频数据表'
             , cols: [
                 [
-                    {type: 'numbers', title: '序号', width: 100, fixed: 'left'}
-                    , {field: 'seriesName', title: '系列名', unresize: true, sort: true}
+                    {type: 'numbers', title: '序号', width: 80, fixed: 'left'}
+                    , {field: 'videoName', title: '视频名', unresize: true, sort: true}
                     , {
-                        field: 'user', title: '用户名', templet: function (d) {
-                            return d.user.userName;
-                        }
+                    field: 'user', title: '用户名', templet: function (d) {
+                        return d.user.userName;
                     }
-                    , {field: 'seriesNumber', title: '总集数'}
-                    // , {field: 'videoStatus', title: '视频状态', width: 100}
-                    , {field: 'introduction', title: '系列简介', width: 100}
-                    , {field: 'seriesIntegral', title: '积分', width: 100}
-                    , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
+                }
+                    , {
+                    field: 'series', title: '系列名', templet: function (d) {
+                        if (d.series == null) {
+                            return "[null]";
+                        }
+                        return d.series.seriesName;
+                    }
+                }
+                    , {field: 'videoDate', title: '上传时间'}
+                    , {field: 'videoNumber', title: '视频集', width: 80}
+                    , {field: 'videoClassification', title: '视频类别', width: 100}
+                    , {field: 'classificationLittle', title: '二级分类', width: 100}
+                    // , {field: 'videoIntegral', title: '积分', width: 100}
+                    , {field: 'videoIntroduce', title: '视频简介', width: 100}
+                    , {field: 'playbackVolume', title: '播放量', width: 100}
+                    , {field: 'coverUrl', title: '视频地址', width: 100}
+                    , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
                 ]
             ]
             , id: 'testReload'
@@ -138,7 +150,7 @@
         });
 
         //监听行工具事件
-        table.on('tool(test)', function (obj) {
+        table.on('tool(tables)', function (obj) {
             //日期时间选择器
             var data = obj.data;
             //console.log(obj)
@@ -189,7 +201,7 @@
                         + '<div class="layui-form-item" style="margin-top: 20px">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">用户名</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="userMail" id="userMail" placeholder="请输入用户名" readonly="readonly" value="' +  data.user.userName + '" autocomplete="off" class="layui-input" '
+                        + '      <input type="tel" name="userName" id="userName" readonly="readonly" value="' +  data.user.userName + '" autocomplete="off" class="layui-input" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
                         + '    </div>\n'
                         + '  </div>'
@@ -222,7 +234,7 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">视频地址</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="coverUrl" id="coverUrl" placeholder="请输入地址" value="' + data.coverUrl + '" autocomplete="off" class="layui-input" '
+                        + '      <input type="tel" name="coverUrl" id="coverUrl" readonly="readonly" value="' + data.coverUrl + '" autocomplete="off" class="layui-input" '
                         + 'style="width: 410px; height: 30px; margin-top: 5px">\n'
                         + '    </div>\n'
                         + '  </div>'
@@ -242,7 +254,7 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">上传日期</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '        <input type="text" class="layui-input" id="videoDate" name="videoDate" id="test5" value="'+ data.videoDate +'" placeholder="yyyy-MM-dd HH:mm:ss"' +
+                        + '        <input type="date" class="layui-input" id="videoDate" name="videoDate" id="test5" value="'+ data.videoDate +'" placeholder="yyyy-MM-dd HH:mm:ss"' +
                         'style="width: 150px; height: 30px; margin-top: 5px">'
                         + '    </div>\n'
                         + '  </div>'
@@ -265,29 +277,29 @@
                     btn1: function (index, layero) {
                         var formData = new FormData();
                         var id = document.getElementById("id").value;
-                        var userName = document.getElementById("userName").value;
-                        var userPhoneNumber = document.getElementById("userPhoneNumber").value;
-                        var userMail = document.getElementById("userMail").value;
-                        var userPassword = document.getElementById("userPassword").value;
-                        var userIntegral = document.getElementById("userIntegral").value;
-                        var userEducation = document.getElementById("userEducation").value;
-                        var userAddress = document.getElementById("userAddress").value;
-                        var major = document.getElementById("major").value;
-                        var userBirth = document.getElementById("userBirth").value;
-                        var introduction = document.getElementById("introduction").value;
+                        var videoName = document.getElementById("videoName").value;
+                        var videoStatus = document.getElementById("videoStatus").value;
+                        var user = document.getElementById("user").value;
+                        var series = document.getElementById("series").value;
+                        var videoClassification = document.getElementById("videoClassification").value;
+                        var videoIntegral = document.getElementById("videoIntegral").value;
+                        var coverUrl = document.getElementById("coverUrl").value;
+                        var playbackVolume = document.getElementById("playbackVolume").value;
+                        var videoDate = document.getElementById("videoDate").value;
+                        var videoIntroduce = document.getElementById("videoIntroduce").value;
                         formData.append("id", id);
-                        formData.append("userName", userName);
-                        formData.append("userPhoneNumber", userPhoneNumber);
-                        formData.append("userMail", userMail);
-                        formData.append("userPassword", userPassword);
-                        formData.append("userIntegral", userIntegral);
-                        formData.append("userEducation", userEducation);
-                        formData.append("userAddress", userAddress);
-                        formData.append("major", major);
-                        formData.append("userBirth", userBirth);
-                        formData.append("introduction", introduction);
+                        formData.append("videoName", videoName);
+                        formData.append("videoStatus", videoStatus);
+                        // formData.append("user", user);
+                        // formData.append("series", series);
+                        formData.append("videoClassification", videoClassification);
+                        formData.append("videoIntegral", videoIntegral);
+                        formData.append("coverUrl", coverUrl);
+                        formData.append("playbackVolume", playbackVolume);
+                        formData.append("videoDate", videoDate);
+                        formData.append("videoIntroduce", videoIntroduce);
                         $.ajax({
-                            url: "/userManage/updateUser",
+                            url: "/videoManage/updateVideo",
                             type: "post",
                             dataType: "json",
                             data: formData,
@@ -307,19 +319,15 @@
 
                     },
                 });
-                laydate.render({
-                    elem: '#test5'
-                    ,type: 'datetime'
-                });
             }
         });
 
         //上传视频
-        table.on('toolbar(test)', function (obj) {
+        table.on('toolbar(tables)', function (obj) {
             if (obj.event === 'addVideo') {
                 layer.open({
                     type: 6,
-                    title: '新增用户信息',
+                    title: '上传视频',
                     // skin:'layui-layer-rim',
                     area: ['600px', 'auto'],
 

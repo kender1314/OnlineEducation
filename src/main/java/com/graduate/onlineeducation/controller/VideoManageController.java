@@ -49,4 +49,11 @@ public class VideoManageController {
         Page<Video> users = videoManageService.search(params);
         return ResultUtils.success(users);
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getVideoBySeriesId")
+    public Result<Object> getVideoBySeriesId(@RequestParam Map<String, Object> params){
+        Page<Video> videos = videoManageService.getVideoBySeriesId(params);
+        return ResultUtils.success(videos);
+    }
 }

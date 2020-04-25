@@ -44,21 +44,31 @@ public class Video implements Serializable {
     @Column(name = "video_status")
     private Integer videoStatus;
 
+    @NotNull
     @Column(name = "video_classification")
     private String videoClassification;
 
+    @NotNull
     @Column(name = "video_integral")
     private Integer videoIntegral;
 
     @Column(name = "video_introduce")
     private String videoIntroduce;
 
+    @NotNull
     @Column(name = "video_playback_volume")
     private Integer playbackVolume;
 
     @NotNull
     @Column(name = "video_cover_url")
     private String coverUrl;
+
+    @NotNull
+    @Column(name = "video_classification_little")
+    private String classificationLittle;
+
+    @Column(name = "video_number")
+    private Integer videoNumber;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
@@ -156,6 +166,22 @@ public class Video implements Serializable {
         this.series = series;
     }
 
+    public String getClassificationLittle() {
+        return classificationLittle;
+    }
+
+    public void setClassificationLittle(String classificationLittle) {
+        this.classificationLittle = classificationLittle;
+    }
+
+    public Integer getVideoNumber() {
+        return videoNumber;
+    }
+
+    public void setVideoNumber(Integer videoNumber) {
+        this.videoNumber = videoNumber;
+    }
+
     @Override
     public String toString() {
         return "Video{" +
@@ -167,7 +193,9 @@ public class Video implements Serializable {
                 ", videoIntegral=" + videoIntegral +
                 ", videoIntroduce='" + videoIntroduce + '\'' +
                 ", playbackVolume=" + playbackVolume +
-                ", coverUrl=" + coverUrl +
+                ", coverUrl='" + coverUrl + '\'' +
+                ", classificationLittle='" + classificationLittle + '\'' +
+                ", videoNumber=" + videoNumber +
                 ", user=" + user +
                 ", series=" + series +
                 '}';

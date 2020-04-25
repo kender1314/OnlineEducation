@@ -70,4 +70,9 @@ public class UrlAdminController {
     public String adminVideoAudit() {
         return "/views/admin_video_audit";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/adminVideoSeriesList")
+    public String adminVideoSeriesList() {
+        return "/views/admin_video_series_list";
+    }
 }

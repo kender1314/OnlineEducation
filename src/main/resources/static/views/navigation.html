@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>导航栏</title>
@@ -7,15 +7,15 @@
 <body>
 <ul class="layui-nav layui-bg-blue">
     <a href="index.html"><img src="../images/logo.png" height="42" width="250" style="margin-right: 50px"/></a>
-    <li class="layui-nav-item layui-this"><a href="">首页</a></li>
+    <li class="layui-nav-item layui-this"><a href="/userUrl/index">首页</a></li>
     <li class="layui-nav-item">
         <a href="javascript:;">分类</a>
         <dl class="layui-nav-child">
-            <dd><a href="">IT.互联网</a></dd>
-            <dd><a href="">设计.创作</a></dd>
-            <dd><a href="">电商.平台</a></dd>
-            <dd><a href="">语言.留学</a></dd>
-            <dd><a href="">升学.考研</a></dd>
+            <dd><a href="">编程语言</a></dd>
+            <dd><a href="">云计算大数据</a></dd>
+            <dd><a href="">计算机基础</a></dd>
+            <dd><a href="">移动开发</a></dd>
+            <dd><a href="">前沿技术</a></dd>
         </dl>
     </li>
     <div class="layui-input-inline" id="showSearch" style="margin-left: 50%">
@@ -26,22 +26,30 @@
                     style="display: none; background-color:rgba(0,0,255,0); border:none">
                 <img src="../images/search.png" height="25" width="25"/>
             </button>
-            <a href="javascript:void(0);" onClick="showsearch()"><img src="../images/search.png" id="images" height="25" width="25"/></a>
+            <a href="javascript:void(0);" onClick="showsearch()">
+                <img src="../images/search.png" id="images" height="25" width="25"/>
+            </a>
         </form>
     </div>
     <li class="layui-nav-item" style="margin-left: 20px">
         <a href=""><img src="../images/news.png" height="25" width="25"/><span class="layui-badge-dot"></span></a>
     </li>
     <li class="layui-nav-item" style="margin-left: 10px">
-        <a href="javascript:;"><img src="../images/user.png" height="25" width="25"/></a>
+        <a href="javascript:;">
+            <img src="../images/user.png" height="25" width="25"/>
+        </a>
         <dl class="layui-nav-child">
             <dd><a href="">基本资料</a></dd>
             <dd><a href="">修改密码</a></dd>
             <dd><a href="">我的收藏</a></dd>
             <dd><a href="">购物车</a></dd>
             <hr>
-            <dd><a href="">退出</a></dd>
+            <dd><a href="/user/logout">退出</a></dd>
         </dl>
+    </li>
+    <li class="layui-nav-item" style="margin-left: 10px">
+        <span th:if="${session.user} == null"><a href="/userUrl/login">登录</a></span>
+        <span th:if="${session.user} != null"><span th:text="${session.user.userName}"></span></span>
     </li>
 </ul>
 </body>

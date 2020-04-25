@@ -40,4 +40,8 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
     @Query(value = "select gp_video.* from gp_user, gp_video where gp_video.user_id = gp_user.user_id AND (\n" +
             "gp_user.user_name like %?1% or video_name like %?1% or video_introduce like %?1%)", nativeQuery = true)
     Page<Video> findVideoNoSeriesByParam(String query, Pageable pageable);
+
+    @Override
+    @Query(value = "select * from gp_video where series_id = ?1", nativeQuery = true)
+    Page<Video> getVideoBySeriesId(Integer seriesId, Pageable pageable);
 }

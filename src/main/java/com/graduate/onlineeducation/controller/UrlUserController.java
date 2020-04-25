@@ -33,4 +33,9 @@ public class UrlUserController {
     public String retrievePassword() {
         return "/views/retrieve_password";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/navigation")
+    public String navigation() {
+        return "/views/navigation";
+    }
 }
