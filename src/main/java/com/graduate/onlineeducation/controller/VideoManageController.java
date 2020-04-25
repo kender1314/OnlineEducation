@@ -46,8 +46,8 @@ public class VideoManageController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/search")
     public Result<Object> search(@RequestParam Map<String, Object> params) {
-        Page<Video> users = videoManageService.search(params);
-        return ResultUtils.success(users);
+        Page<Video> videos = videoManageService.search(params);
+        return ResultUtils.success(videos);
     }
 
     @ResponseBody

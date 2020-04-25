@@ -1,5 +1,6 @@
 package com.graduate.onlineeducation.service;
 
+import com.graduate.onlineeducation.entity.DTO.VideoSeriesDTO;
 import com.graduate.onlineeducation.entity.VideoSeries;
 import org.springframework.data.domain.Page;
 
@@ -18,4 +19,26 @@ public interface VideoSeriesManageService {
      * @return
      */
     Page<VideoSeries> getVideoSeriesList(Map<String, Object> params);
+
+    /**
+     * 根据id删除系列
+     * @param id
+     * @return
+     */
+    boolean deleteSeries(Integer id);
+
+    /**
+     * 更新视频系列信息
+     * @param videoSeriesDTO
+     * @return
+     */
+    boolean updateVideoSeries(VideoSeriesDTO videoSeriesDTO);
+
+    /**
+     * 查找系列信息
+     *
+     * @param params
+     * @return
+     */
+    Page<VideoSeries> search(Map<String, Object> params);
 }

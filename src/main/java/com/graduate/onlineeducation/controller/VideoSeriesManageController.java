@@ -2,6 +2,7 @@ package com.graduate.onlineeducation.controller;
 
 import com.graduate.onlineeducation.common.Result;
 import com.graduate.onlineeducation.common.ResultUtils;
+import com.graduate.onlineeducation.entity.DTO.VideoSeriesDTO;
 import com.graduate.onlineeducation.entity.VideoSeries;
 import com.graduate.onlineeducation.service.VideoSeriesManageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,30 @@ public class VideoSeriesManageController {
     public Result<Object> getVideoSeriesList(@RequestParam Map<String, Object> params){
         Page<VideoSeries> videoSeries = videoSeriesManageService.getVideoSeriesList(params);
         return ResultUtils.success(videoSeries);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/deleteSeries")
+    public Result<Object> deleteSeries(Integer id){
+        return ResultUtils.success(videoSeriesManageService.deleteSeries(id));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/updateVideoSeries")
+    public Result<Object> updateVideoSeries(VideoSeriesDTO videoSeriesDTO) {
+        return ResultUtils.success(videoSeriesManageService.updateVideoSeries(videoSeriesDTO));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/search")
+    public Result<Object> search(@RequestParam Map<String, Object> params) {
+        Page<VideoSeries> videoSeries = videoSeriesManageService.search(params);
+        return ResultUtils.success(videoSeries);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/insertVideoSeries")
+    public Result<Object> insertVideoSeries(VideoSeriesDTO videoSeriesDTO) {
+        return ResultUtils.success(videoSeriesManageService.updateVideoSeries(videoSeriesDTO));
     }
 }

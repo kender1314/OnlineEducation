@@ -1,4 +1,6 @@
-package com.graduate.onlineeducation.entity;
+package com.graduate.onlineeducation.entity.DTO;
+
+import com.graduate.onlineeducation.entity.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,7 +14,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "gp_video_series")
-public class VideoSeries implements Serializable {
+public class VideoSeriesDTO implements Serializable {
     private static final long serialVersionUID = 2514333989278491301L;
     /**
      * TABLE：使用一个特定的数据库表格来保存主键。
@@ -40,24 +42,12 @@ public class VideoSeries implements Serializable {
     @Column(name = "series_integral")
     private Integer seriesIntegral;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getSeriesName() {
@@ -100,7 +90,6 @@ public class VideoSeries implements Serializable {
                 ", seriesNumber=" + seriesNumber +
                 ", introduction='" + introduction + '\'' +
                 ", seriesIntegral=" + seriesIntegral +
-                ", user=" + user +
                 '}';
     }
 }

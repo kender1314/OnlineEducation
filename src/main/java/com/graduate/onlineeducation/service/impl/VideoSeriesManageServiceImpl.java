@@ -1,5 +1,6 @@
 package com.graduate.onlineeducation.service.impl;
 
+import com.graduate.onlineeducation.entity.DTO.VideoSeriesDTO;
 import com.graduate.onlineeducation.entity.VideoSeries;
 import com.graduate.onlineeducation.repo.VideoSeriesManageRepository;
 import com.graduate.onlineeducation.service.VideoSeriesManageService;
@@ -27,5 +28,23 @@ public class VideoSeriesManageServiceImpl implements VideoSeriesManageService {
     public Page<VideoSeries> getVideoSeriesList(Map<String, Object> params) {
         Specification<VideoSeries> specification = new ByVideoSeriesSpecification(params);
         return videoSeriesManageRepository.findAll(specification, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public boolean deleteSeries(Integer id) {
+        videoSeriesManageRepository.deleteById(id);
+        return true;
+    }
+
+    @Override
+    public boolean updateVideoSeries(VideoSeriesDTO videoSeriesDTO) {
+        VideoSeriesDTO videoSeriesTemp = videoSeriesManageRepository.save(videoSeriesDTO);
+        return videoSeriesTemp != null;
+    }
+
+    @Override
+    public Page<VideoSeries> search(Map<String, Object> params) {
+        String query = (String) params.get("query");
+        return videoSeriesManageRepository.findVideoSeriesByParam(query, PaginationBase.getPagination(params));
     }
 }
