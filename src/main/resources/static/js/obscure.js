@@ -107,6 +107,11 @@ window.obscure = function (pwd, exceeded) {
     return pwd;
 };
 
+window.stringToDecode = function (pwd, exceeded) {
+    var temp = decrypt(pwd, exceeded);
+    return new Base64().decode(temp);
+};
+
 window.loginObscure = function () {
     if ($('obscureEnable').val() === 'true') {
         loginForm.password.value = obscure(loginForm.password.value, $('obscureSalt').val());
@@ -151,9 +156,51 @@ function encrypt(s, salt) {
     return chars.join("");
 }
 
+function decrypt(pwd, exceeded) {
+    var salt = randomSalt(exceeded + (pwd.length - exceeded) / 2);
+    if(pwd.length > 2 * salt.length){
+        return decrypting(pwd, salt);
+    }
+    return decrypting0(pwd, salt);
+}
 
+function decrypting(str, salt) {
+    var sum = str.length;
+    var saltLen = salt.length;
+    var strLen = sum - saltLen;
+    var chars = [];
+    var step = Math.floor(strLen / saltLen + 1);
+    for (var i = 1, j = 0; i <= sum; i++) {
+        if (i % step === 0 && salt.length > j) {
+            i++;
+            j++;
+        }
+        if (i <= sum) {
+            chars[i - 1 - j] = str.charAt(i - 1);
+        }
+    }
+    debugger;
+    return chars.join("");
+}
 
-
+function decrypting0(str, salt) {
+    var sum = str.length;
+    var saltLen = salt.length;
+    var strLen = sum - saltLen;
+    if (strLen === 0) {
+        return "";
+    }
+    var chars = [];
+    var step = Math.floor(saltLen / strLen + 1);
+    for (var i = 1, j = 0; i <= step * strLen; i++) {
+        if (i % step === 0 && salt.length > j) {
+            chars[j] = str.charAt(i - 1);
+            i++;
+            j++;
+        }
+    }
+    return chars.join("");
+}
 
 
 

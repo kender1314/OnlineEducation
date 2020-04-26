@@ -32,6 +32,15 @@ Connection: keep-alive
 Content-Type: application/json
 
 ###
+POST http://localhost:8080/adminManage/getAdminList
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh_CN
+Connection: keep-alive
+Content-Type: application/json
 
+{"pageSize": 10, "page": 1, "sortKey": "", "limit": 10}
+
+###
 
 

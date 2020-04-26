@@ -25,7 +25,7 @@ public interface JpaUserLoginRepository extends UserLoginRepository {
      * @return UserE
      */
     @Override
-    @Query(value = "select * from gp_user where user_name = ?1 and user_mail_active_status=1", nativeQuery = true)
+    @Query(value = "select * from gp_user where (user_name = ?1 or user_mail = ?1) and user_mail_active_status=1", nativeQuery = true)
     User login(String userName);
 
     /**
