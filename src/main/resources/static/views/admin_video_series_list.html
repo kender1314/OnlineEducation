@@ -51,6 +51,7 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <h2>视频管理</h2>
+            <input type="hidden" id="seriesId" name="id" th:value="${id}">
             <div class="demoTable" style="margin-left: 75%">
                 <div class="layui-inline">
                     <input class="layui-input" name="id" id="demoReload" autocomplete="off">
@@ -76,7 +77,7 @@
 <script src="../js/common.js"></script>
 <!--<script src="../lib/json/json2.js" type="text/javascript"></script>-->
 <script src="../lib/layui/layui.js"></script>
-<!--<script src="../lib/jquery-2.1.4/jquery.min.js"></script>-->
+<script src="../lib/jquery-2.1.4/jquery.min.js"></script>
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -88,6 +89,44 @@
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
 <script>
+    function selectSeries(){
+        var select=document.getElementById("videoClassification");
+        var c=select.value;
+        var area=document.getElementById("classificationLittle");
+        switch(c)
+        {
+            case "编程语言": area.innerHTML="" +
+                "<option value=\"Java\">Java</option>" +
+                "<option value=\"C++\">C++</option>" +
+                "<option value=\"Python\">Python</option>" +
+                "<option value=\"C\">C</option>";
+                break;
+            case "云计算大数据":area.innerHTML="" +
+                "<option value=\"Hadoop\">Hadoop</option>" +
+                "<option value=\"Spark\">Spark</option>" +
+                "<option value=\"Hbase\">Hbase</option>" +
+                "<option value=\"阿里云\">阿里云</option>" +
+                "<option value=\"Docker\">Docker</option>";
+                break;
+            case "计算机基础":area.innerHTML="" +
+                "<option value=\"计算机网络\">计算机网络</option>" +
+                "<option value=\"算法与数据结构\">算法与数据结构</option>";
+                break;
+            case "移动开发":area.innerHTML="" +
+                "<option value=\"Android\">Android</option>" +
+                "<option value=\"iOS\">iOS</option>" +
+                "<option value=\"React native\">React native</option>";
+                break;
+            case "前沿技术":area.innerHTML="" +
+                "<option value=\"微服务\">微服务</option>" +
+                "<option value=\"区块链\">区块链</option>" +
+                "<option value=\"机器学习\">机器学习</option>" +
+                "<option value=\"深度学习\">深度学习</option>" +
+                "<option value=\"计算机视觉\">计算机视觉</option>";
+                break;
+            default:alert("error");
+        }
+    };
     layui.use(['element', 'table', 'jquery', 'layer', 'laydate'], function () {
         var $ = layui.$;
         var laydate = layui.laydate;
@@ -103,7 +142,7 @@
                 // "page": 'curr',//当前页（必传参数，可改变参数名）
                 "sortKey": 'video_number',
                 "sortDesc": false,
-                "seriesId" : 1
+                "seriesId" : document.getElementById("seriesId").value
             }
             , method: 'post'
             , parseData: function (res) {
@@ -203,6 +242,7 @@
                         + '    <div class="layui-input-block">\n'
                         + '      <input type="tel" name="userName" id="userName" readonly="readonly" value="' +  data.user.userName + '" autocomplete="off" class="layui-input" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '<span style="color:red; font-size: 4px">(不可修改)</span>'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -212,8 +252,36 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">类别</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="videoClassification" id="videoClassification" placeholder="请输入类别" value="' + data.videoClassification + '" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        // + '      <input type="tel" name="videoClassification" id="videoClassification" placeholder="请输入类别" value="' + data.videoClassification + '" autocomplete="off" class="layui-input" '
+                        // + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + ' <div class="layui-inline" style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '      <div class="layui-input-inline">\n'
+                        + '        <select name="modules" name="videoClassification" id="videoClassification" '
+                        + 'style="width: 150px; height: 30px; margin-top: 5px" onchange="selectSeries()" lay-verify="required" lay-search="">\n'
+                        + '          <option value="'+ data.videoClassification + '">默认：'+ data.videoClassification + '</option>\n'
+                        + '          <option value="编程语言">编程语言</option>\n'
+                        + '          <option value="云计算大数据">云计算大数据</option>\n'
+                        + '          <option value="计算机基础">计算机基础</option>\n'
+                        + '          <option value="移动开发">移动开发</option>\n'
+                        + '          <option value="前沿技术">前沿技术</option>\n'
+                        + '        </select>\n'
+                        + '      </div>\n'
+                        + '    </div>'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '<td>'
+                        + '<div class="layui-form-item">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">二级分类</label>\n'
+                        + '    <div class="layui-input-block">\n'
+                        + ' <div class="layui-inline" style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '      <div class="layui-input-inline">\n'
+                        + '        <select name="modules" name="classificationLittle" id="classificationLittle" '
+                        + 'style="width: 150px; height: 30px; margin-top: 5px" lay-verify="required" lay-search="">\n'
+                        + '          <option value="'+ data.classificationLittle + '">默认：'+ data.classificationLittle + '</option>\n'
+                        +           '</select>\n'
+                        + '      </div>\n'
+                        + '    </div>'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -221,9 +289,9 @@
                         + '<tr>'
                         + '<td>'
                         + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">积分</label>\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">视频集</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="videoIntegral" id="videoIntegral" placeholder="请输入积分" value="' + data.videoIntegral + '" autocomplete="off" class="layui-input" '
+                        + '      <input type="number" min="1" name="videoNumber" id="videoNumber" placeholder="请输入视频集" value="' + data.videoNumber + '" autocomplete="off" class="layui-input" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
                         + '    </div>\n'
                         + '  </div>'
@@ -236,6 +304,7 @@
                         + '    <div class="layui-input-block">\n'
                         + '      <input type="tel" name="coverUrl" id="coverUrl" readonly="readonly" value="' + data.coverUrl + '" autocomplete="off" class="layui-input" '
                         + 'style="width: 410px; height: 30px; margin-top: 5px">\n'
+                        + '<span style="color:red; font-size: 4px">(不可修改)</span>'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -245,7 +314,7 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">播放量</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="playbackVolume" id="playbackVolume" placeholder="请输入播放量" value="' + data.playbackVolume + '" autocomplete="off" class="layui-input" '
+                        + '      <input type="number"  min="0" name="playbackVolume" id="playbackVolume" placeholder="请输入播放量" value="' + data.playbackVolume + '" autocomplete="off" class="layui-input" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
                         + '    </div>\n'
                         + '  </div>'
@@ -254,7 +323,7 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">上传日期</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '        <input type="date" class="layui-input" id="videoDate" name="videoDate" id="test5" value="'+ data.videoDate +'" placeholder="yyyy-MM-dd HH:mm:ss"' +
+                        + '        <input type="date" class="layui-input" id="videoDate" name="videoDate" value="'+ data.videoDate +'" placeholder="yyyy-MM-dd HH:mm:ss"' +
                         'style="width: 150px; height: 30px; margin-top: 5px">'
                         + '    </div>\n'
                         + '  </div>'
@@ -263,7 +332,7 @@
                         + '<tr>'
                         + '<td colspan="2">'
                         + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">视频介绍</label>\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">视频简介</label>\n'
                         + '    <div style="margin-left: 110px; width: 410px; ">\n'
                         + '      <textarea placeholder="请输入内容" name="videoIntroduce" id="videoIntroduce" class="layui-textarea">' + data.videoIntroduce + '</textarea>\n'
                         + '    </div>\n'
@@ -279,10 +348,9 @@
                         var id = document.getElementById("id").value;
                         var videoName = document.getElementById("videoName").value;
                         var videoStatus = document.getElementById("videoStatus").value;
-                        var user = document.getElementById("user").value;
-                        var series = document.getElementById("series").value;
                         var videoClassification = document.getElementById("videoClassification").value;
-                        var videoIntegral = document.getElementById("videoIntegral").value;
+                        var classificationLittle = document.getElementById("classificationLittle").value;
+                        var videoNumber = document.getElementById("videoNumber").value;
                         var coverUrl = document.getElementById("coverUrl").value;
                         var playbackVolume = document.getElementById("playbackVolume").value;
                         var videoDate = document.getElementById("videoDate").value;
@@ -290,10 +358,9 @@
                         formData.append("id", id);
                         formData.append("videoName", videoName);
                         formData.append("videoStatus", videoStatus);
-                        // formData.append("user", user);
-                        // formData.append("series", series);
                         formData.append("videoClassification", videoClassification);
-                        formData.append("videoIntegral", videoIntegral);
+                        formData.append("classificationLittle", classificationLittle);
+                        formData.append("videoNumber", videoNumber);
                         formData.append("coverUrl", coverUrl);
                         formData.append("playbackVolume", playbackVolume);
                         formData.append("videoDate", videoDate);

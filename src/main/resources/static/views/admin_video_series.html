@@ -81,7 +81,7 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    <a class="layui-btn layui-btn-xs" href="/url/adminVideoSeriesList">列表</a>
+    <a class="layui-btn layui-btn-xs" lay-event="list">列表</a>
 </script>
 
 <script src="../lib/layui/layui.js"></script>
@@ -259,6 +259,8 @@
                     elem: '#test5'
                     ,type: 'datetime'
                 });
+            } else if (obj.event === 'list') {
+                window.location.href ="/url/adminVideoSeriesList?id=" + data.id;
             }
         });
 

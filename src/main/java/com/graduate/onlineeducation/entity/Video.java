@@ -48,7 +48,6 @@ public class Video implements Serializable {
     @Column(name = "video_classification")
     private String videoClassification;
 
-    @NotNull
     @Column(name = "video_integral")
     private Integer videoIntegral;
 

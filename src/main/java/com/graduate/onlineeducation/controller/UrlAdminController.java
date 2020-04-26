@@ -2,6 +2,7 @@ package com.graduate.onlineeducation.controller;
 
 import com.graduate.onlineeducation.autoconfigure.annotations.Intercept;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -72,7 +73,8 @@ public class UrlAdminController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/adminVideoSeriesList")
-    public String adminVideoSeriesList() {
+    public String adminVideoSeriesList(Integer id, Model model) {
+        model.addAttribute("id", id);
         return "/views/admin_video_series_list";
     }
 }

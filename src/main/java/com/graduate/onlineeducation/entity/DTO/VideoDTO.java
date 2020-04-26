@@ -46,6 +46,7 @@ public class VideoDTO implements Serializable {
     @Column(name = "video_status")
     private Integer videoStatus;
 
+    @NotNull
     @Column(name = "video_classification")
     private String videoClassification;
 
@@ -55,8 +56,20 @@ public class VideoDTO implements Serializable {
     @Column(name = "video_introduce")
     private String videoIntroduce;
 
+    @NotNull
     @Column(name = "video_playback_volume")
     private Integer playbackVolume;
+
+    @NotNull
+    @Column(name = "video_cover_url")
+    private String coverUrl;
+
+    @NotNull
+    @Column(name = "video_classification_little")
+    private String classificationLittle;
+
+    @Column(name = "video_number")
+    private Integer videoNumber;
 
     public Integer getId() {
         return id;
@@ -122,9 +135,33 @@ public class VideoDTO implements Serializable {
         this.playbackVolume = playbackVolume;
     }
 
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
+    }
+
+    public String getClassificationLittle() {
+        return classificationLittle;
+    }
+
+    public void setClassificationLittle(String classificationLittle) {
+        this.classificationLittle = classificationLittle;
+    }
+
+    public Integer getVideoNumber() {
+        return videoNumber;
+    }
+
+    public void setVideoNumber(Integer videoNumber) {
+        this.videoNumber = videoNumber;
+    }
+
     @Override
     public String toString() {
-        return "Video{" +
+        return "VideoDTO{" +
                 "id=" + id +
                 ", videoName='" + videoName + '\'' +
                 ", videoDate=" + videoDate +
@@ -133,6 +170,9 @@ public class VideoDTO implements Serializable {
                 ", videoIntegral=" + videoIntegral +
                 ", videoIntroduce='" + videoIntroduce + '\'' +
                 ", playbackVolume=" + playbackVolume +
+                ", coverUrl='" + coverUrl + '\'' +
+                ", classificationLittle='" + classificationLittle + '\'' +
+                ", videoNumber=" + videoNumber +
                 '}';
     }
 }
