@@ -146,7 +146,7 @@
             var data = obj.data;
             //console.log(obj)
             if (obj.event === 'del') {
-                layer.confirm('真的删除行么', function (index) {
+                layer.confirm('是否删除', function (index) {
                     $.ajax({
                         url: "/videoSeriesManage/deleteSeries?id=" + data.id,
                         type: "POST",

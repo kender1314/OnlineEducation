@@ -66,11 +66,6 @@
         Copyright © 2020 qilu.com All Rights Reserved | 京ICP备 12003892号-11 京公网安备11010802030151号
     </div>
 </div>
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="addVideo">上传视频</button>
-    </div>
-</script>
 </body>
 </html>
 <script src="../js/common.js"></script>
@@ -79,8 +74,8 @@
 <!--<script src="../lib/jquery-2.1.4/jquery.min.js"></script>-->
 
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="pass">通过</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="fail">不通过</a>
 </script>
 
 <script src="../lib/layui/layui.js"></script>
@@ -119,23 +114,25 @@
             , cols: [
                 [
                     {type: 'numbers', title: '序号', width: 100, fixed: 'left'}
-                    , {field: 'videoName', title: '视频名', unresize: true, sort: true}
+                    , {field: 'videoName', title: '视频名', sort: true}
                     , {
                     field: 'user', title: '用户名', templet: function (d) {
                         return d.user.userName;
                     }
                 }
-                        , {
-                        field: 'series', title: '系列名', templet: function (d) {
-                            if (d.series == null) {
-                                return "[null]";
-                            }
-                            return d.series.seriesName;
+                    , {
+                    field: 'series', title: '系列名', templet: function (d) {
+                        if (d.series == null) {
+                            return "[null]";
                         }
+                        return d.series.seriesName;
                     }
+                }
                     , {field: 'videoDate', title: '视频时间'}
                     , {field: 'videoStatus', title: '视频状态', width: 100}
+                    , {field: 'videoNumber', title: '视频集', width: 80}
                     , {field: 'videoClassification', title: '视频类别', width: 100}
+                    , {field: 'classificationLittle', title: '二级分类', width: 100}
                     , {field: 'videoIntegral', title: '积分', width: 100}
                     , {field: 'videoIntroduce', title: '视频简介', width: 100}
                     , {field: 'playbackVolume', title: '播放量', width: 100}
@@ -152,8 +149,8 @@
             //日期时间选择器
             var data = obj.data;
             //console.log(obj)
-            if (obj.event === 'del') {
-                layer.confirm('真的删除行么', function (index) {
+            if (obj.event === 'fail') {
+                layer.confirm('请确认操作', function (index) {
                     $.ajax({
                         url: "/videoManage/deleteVideo?id=" + data.id,
                         type: "POST",
@@ -163,328 +160,29 @@
                                 obj.del();
                                 //关闭弹框
                                 layer.close(index);
-                                layer.msg("删除成功", {icon: 6});
+                                layer.msg("操作成功", {icon: 6});
                             } else {
-                                layer.msg("删除失败", {icon: 5});
+                                layer.msg("操作失败", {icon: 5});
                             }
                         }
                     });
                     obj.del();
                     layer.close(index);
                 });
-            } else if (obj.event === 'edit') {
-                layer.open({
-                    type: 6,
-                    title: '修改信息',
-                    // skin:'layui-layer-rim',
-                    area: ['600px', 'auto'],
-
-                    content: '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
-                        + '<input type="hidden" id="id" name="id" value="' + data.id + '">'
-                        + '<input type="hidden" id="videoStatus" name="videoStatus" value="' + data.videoStatus + '">'
-                        + '<input type="hidden" id="user" name="user" value="' + data.user + '">'
-                        + '<input type="hidden" id="series" name="series" value="' + data.series + '">'
-                        + '<table>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div class="layui-form-item" style="margin-top: 20px">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">视频名</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="videoName" id="videoName" placeholder="请输入视频名" value="' + data.videoName + '" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '<td>'
-                        + '<div class="layui-form-item" style="margin-top: 20px">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">用户名</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="userMail" id="userMail" placeholder="请输入用户名" readonly="readonly" value="' +  data.user.userName + '" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">类别</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="videoClassification" id="videoClassification" placeholder="请输入类别" value="' + data.videoClassification + '" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">积分</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="videoIntegral" id="videoIntegral" placeholder="请输入积分" value="' + data.videoIntegral + '" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td colspan="2">'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">视频地址</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="coverUrl" id="coverUrl" placeholder="请输入地址" value="' + data.coverUrl + '" autocomplete="off" class="layui-input" '
-                        + 'style="width: 410px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">播放量</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="playbackVolume" id="playbackVolume" placeholder="请输入播放量" value="' + data.playbackVolume + '" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '<td>'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">上传日期</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '        <input type="text" class="layui-input" id="videoDate" name="videoDate" id="test5" value="'+ data.videoDate +'" placeholder="yyyy-MM-dd HH:mm:ss"' +
-                        'style="width: 150px; height: 30px; margin-top: 5px">'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td colspan="2">'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">视频介绍</label>\n'
-                        + '    <div style="margin-left: 110px; width: 410px; ">\n'
-                        + '      <textarea placeholder="请输入内容" name="videoIntroduce" id="videoIntroduce" class="layui-textarea">' + data.videoIntroduce + '</textarea>\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '</table>'
-                        + '</div>'
-                    ,
-                    btn: ['保存', '取消'],
-                    btn1: function (index, layero) {
-                        var formData = new FormData();
-                        var id = document.getElementById("id").value;
-                        var userName = document.getElementById("userName").value;
-                        var userPhoneNumber = document.getElementById("userPhoneNumber").value;
-                        var userMail = document.getElementById("userMail").value;
-                        var userPassword = document.getElementById("userPassword").value;
-                        var userIntegral = document.getElementById("userIntegral").value;
-                        var userEducation = document.getElementById("userEducation").value;
-                        var userAddress = document.getElementById("userAddress").value;
-                        var major = document.getElementById("major").value;
-                        var userBirth = document.getElementById("userBirth").value;
-                        var introduction = document.getElementById("introduction").value;
-                        formData.append("id", id);
-                        formData.append("userName", userName);
-                        formData.append("userPhoneNumber", userPhoneNumber);
-                        formData.append("userMail", userMail);
-                        formData.append("userPassword", userPassword);
-                        formData.append("userIntegral", userIntegral);
-                        formData.append("userEducation", userEducation);
-                        formData.append("userAddress", userAddress);
-                        formData.append("major", major);
-                        formData.append("userBirth", userBirth);
-                        formData.append("introduction", introduction);
-                        $.ajax({
-                            url: "/userManage/updateUser",
-                            type: "post",
-                            dataType: "json",
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            success: function (msg) {
-                                console.log(msg);
-                                if (msg.data === true) {
-                                    //关闭弹框
-                                    layer.close(index);
-                                    layer.msg("更新成功", {icon: 6});
-                                } else {
-                                    layer.msg("更新失败", {icon: 5});
-                                }
+            } else if (obj.event === 'pass') {
+                layer.confirm('请确认操作', function (index) {
+                    $.ajax({
+                        url: "/videoAuditManage/updateVideoAuditPass?id=" + data.id,
+                        type: "POST",
+                        success: function (msg) {
+                            if (msg.data === true) {
+                                layer.close(index);
+                                layer.msg("操作成功", {icon: 6});
+                            } else {
+                                layer.msg("操作失败", {icon: 5});
                             }
-                        });
-
-                    },
-                });
-                laydate.render({
-                    elem: '#test5'
-                    ,type: 'datetime'
-                });
-            }
-        });
-
-        //上传视频
-        table.on('toolbar(test)', function (obj) {
-            if (obj.event === 'addVideo') {
-                layer.open({
-                    type: 6,
-                    title: '新增用户信息',
-                    // skin:'layui-layer-rim',
-                    area: ['600px', 'auto'],
-
-                    content: '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
-                        + '<table>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div class="layui-form-item" style="margin-top: 20px">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">用户名</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" id="userName" placeholder="请输入用户名" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '<td>'
-                        + '<div class="layui-form-item" style="margin-top: 20px">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">电话</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" id="userPhoneNumber" placeholder="请输入电话" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">邮件</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" id="userMail" placeholder="请输入邮件" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '<td>'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">密码</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" id="userPassword" placeholder="请输入密码" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">积分</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" id="userIntegral" placeholder="请输入积分" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '<td >'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">最高学历</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" id="userEducation" placeholder="请输入最高学历" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td colspan="2">'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">地址</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" id="userAddress" placeholder="请输入地址" autocomplete="off" class="layui-input" '
-                        + 'style="width: 410px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">专业方向</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" id="major" placeholder="请输入专业方向" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '<td>'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">出生日期</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '    <input type="date" id="userBirth" class="layui-input" placeholder="yyyy-MM-dd"'
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td colspan="2">'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">介绍</label>\n'
-                        + '    <div style="margin-left: 110px; width: 410px; ">\n'
-                        + '      <textarea placeholder="请输入内容" id="introduction" class="layui-textarea"></textarea>\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '</table>'
-                        + '</div>'
-                    ,
-                    btn: ['保存', '取消'],
-                    btn1: function (index, layero) {
-                        var formData = new FormData();
-                        var userName = document.getElementById("userName").value;
-                        var userPhoneNumber = document.getElementById("userPhoneNumber").value;
-                        var userMail = document.getElementById("userMail").value;
-                        var userPassword = document.getElementById("userPassword").value;
-                        var userIntegral = document.getElementById("userIntegral").value;
-                        var userEducation = document.getElementById("userEducation").value;
-                        var userAddress = document.getElementById("userAddress").value;
-                        var major = document.getElementById("major").value;
-                        var userBirth = document.getElementById("userBirth").value;
-                        var introduction = document.getElementById("introduction").value;
-                        formData.append("userName", userName);
-                        formData.append("userPhoneNumber", userPhoneNumber);
-                        formData.append("userMail", userMail);
-                        formData.append("userPassword", userPassword);
-                        formData.append("userIntegral", userIntegral);
-                        formData.append("userEducation", userEducation);
-                        formData.append("userAddress", userAddress);
-                        formData.append("major", major);
-                        formData.append("userBirth", userBirth);
-                        formData.append("introduction", introduction);
-                        $.ajax({
-                            url: "/userManage/insertUser",
-                            type: "post",
-                            dataType: "json",
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            success: function (msg) {
-                                console.log(msg);
-                                if (msg.data === true) {
-                                    //关闭弹框
-                                    layer.close(index);
-                                    layer.msg("添加成功", {icon: 6});
-                                } else {
-                                    layer.msg("添加失败", {icon: 5});
-                                }
-                            }
-                        });
-
-                    },
-                    btn2: function (index, layero) {
-                        layer.close(index);
-                    }
+                        }
+                    });
                 });
             }
         });
@@ -495,7 +193,7 @@
                 var demoReload = $('#demoReload');
                 //执行重载
                 table.reload('testReload', {
-                    url: '/videoManage/search'
+                    url: '/videoAuditManage/search'
                     , where: {
                         query: demoReload.val(),
                     }

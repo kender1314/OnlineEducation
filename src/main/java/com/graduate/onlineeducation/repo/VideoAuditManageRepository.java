@@ -23,5 +23,17 @@ public interface VideoAuditManageRepository extends PagingAndSortingRepository<V
      */
     Page<Video> findVideoNoAudit(Specification<Video> spec, Pageable pageable);
 
+    /**
+     * 视频通过审核
+     * @param id
+     * @return
+     */
+    int updateVideoAuditPass(Integer id);
 
+    /**
+     * 查找未审核的视频信息
+     * @param query
+     * @return
+     */
+    Page<Video> findVideoNoPassByParam(String query, Pageable pageable);
 }

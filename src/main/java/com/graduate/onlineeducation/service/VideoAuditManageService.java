@@ -19,4 +19,20 @@ public interface VideoAuditManageService {
      * @return
      */
     Page<Video> getVideoNoAuditList(Map<String, Object> params);
+
+    /**
+     * 视频通过审核
+     * @param id
+     * @return
+     */
+    boolean updateVideoAuditPass(Integer id);
+
+    /**
+     * 查找未审核的视频信息
+     *
+     * @param params
+     * @return
+     */
+    Page<Video> search(Map<String, Object> params);
+
 }

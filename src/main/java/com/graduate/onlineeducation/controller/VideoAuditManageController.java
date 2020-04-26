@@ -29,4 +29,17 @@ public class VideoAuditManageController {
         Page<Video> videos = videoAuditManageService.getVideoNoAuditList(params);
         return ResultUtils.success(videos);
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/updateVideoAuditPass")
+    public Result<Object> updateVideoAuditPass(Integer id){
+        return ResultUtils.success(videoAuditManageService.updateVideoAuditPass(id));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/search")
+    public Result<Object> search(@RequestParam Map<String, Object> params) {
+        Page<Video> videos = videoAuditManageService.search(params);
+        return ResultUtils.success(videos);
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Map;
 
 /**
@@ -27,5 +28,18 @@ public class VideoAuditManageServiceImpl implements VideoAuditManageService {
     public Page<Video> getVideoNoAuditList(Map<String, Object> params) {
         Specification<Video> specification = new ByVideoSpecification(params);
         return videoAuditManageRepository.findVideoNoAudit(specification, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    @Transactional
+    public boolean updateVideoAuditPass(Integer id) {
+        int temp = videoAuditManageRepository.updateVideoAuditPass(id);
+        return temp == 1;
+    }
+
+    @Override
+    public Page<Video> search(Map<String, Object> params) {
+        String query = (String) params.get("query");
+        return videoAuditManageRepository.findVideoNoPassByParam(query, PaginationBase.getPagination(params));
     }
 }

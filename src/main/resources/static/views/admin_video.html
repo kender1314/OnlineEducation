@@ -88,6 +88,44 @@
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
 <script>
+    function selectSeries(){
+        var select=document.getElementById("videoClassification");
+        var c=select.value;
+        var area=document.getElementById("classificationLittle");
+        switch(c)
+        {
+            case "编程语言": area.innerHTML="" +
+                "<option value=\"Java\">Java</option>" +
+                "<option value=\"C++\">C++</option>" +
+                "<option value=\"Python\">Python</option>" +
+                "<option value=\"C\">C</option>";
+                break;
+            case "云计算大数据":area.innerHTML="" +
+                "<option value=\"Hadoop\">Hadoop</option>" +
+                "<option value=\"Spark\">Spark</option>" +
+                "<option value=\"Hbase\">Hbase</option>" +
+                "<option value=\"阿里云\">阿里云</option>" +
+                "<option value=\"Docker\">Docker</option>";
+                break;
+            case "计算机基础":area.innerHTML="" +
+                "<option value=\"计算机网络\">计算机网络</option>" +
+                "<option value=\"算法与数据结构\">算法与数据结构</option>";
+                break;
+            case "移动开发":area.innerHTML="" +
+                "<option value=\"Android\">Android</option>" +
+                "<option value=\"iOS\">iOS</option>" +
+                "<option value=\"React native\">React native</option>";
+                break;
+            case "前沿技术":area.innerHTML="" +
+                "<option value=\"微服务\">微服务</option>" +
+                "<option value=\"区块链\">区块链</option>" +
+                "<option value=\"机器学习\">机器学习</option>" +
+                "<option value=\"深度学习\">深度学习</option>" +
+                "<option value=\"计算机视觉\">计算机视觉</option>";
+                break;
+            default:alert("error");
+        }
+    };
     layui.use(['element', 'table', 'jquery', 'layer', 'laydate'], function () {
         var $ = layui.$;
         var laydate = layui.laydate;
@@ -136,6 +174,7 @@
                     , {field: 'videoDate', title: '视频时间'}
                     // , {field: 'videoStatus', title: '视频状态', width: 100}
                     , {field: 'videoClassification', title: '视频类别', width: 100}
+                    , {field: 'classificationLittle', title: '二级分类', width: 100}
                     , {field: 'videoIntegral', title: '积分', width: 100}
                     , {field: 'videoIntroduce', title: '视频简介', width: 100}
                     , {field: 'playbackVolume', title: '播放量', width: 100}
@@ -153,7 +192,7 @@
             var data = obj.data;
             //console.log(obj)
             if (obj.event === 'del') {
-                layer.confirm('真的删除行么', function (index) {
+                layer.confirm('是否删除', function (index) {
                     $.ajax({
                         url: "/videoManage/deleteVideo?id=" + data.id,
                         type: "POST",
@@ -210,8 +249,36 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">类别</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="videoClassification" id="videoClassification" placeholder="请输入类别" value="' + data.videoClassification + '" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        // + '      <input type="tel" name="videoClassification" id="videoClassification" placeholder="请输入类别" value="' + data.videoClassification + '" autocomplete="off" class="layui-input" '
+                        // + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + ' <div class="layui-inline" style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '      <div class="layui-input-inline">\n'
+                        + '        <select name="modules" name="videoClassification" id="videoClassification" '
+                        + 'style="width: 150px; height: 30px; margin-top: 5px" onchange="selectSeries()" lay-verify="required" lay-search="">\n'
+                        + '          <option value="'+ data.videoClassification + '">默认：'+ data.videoClassification + '</option>\n'
+                        + '          <option value="编程语言">编程语言</option>\n'
+                        + '          <option value="云计算大数据">云计算大数据</option>\n'
+                        + '          <option value="计算机基础">计算机基础</option>\n'
+                        + '          <option value="移动开发">移动开发</option>\n'
+                        + '          <option value="前沿技术">前沿技术</option>\n'
+                        + '        </select>\n'
+                        + '      </div>\n'
+                        + '    </div>'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '<td>'
+                        + '<div class="layui-form-item">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">二级分类</label>\n'
+                        + '    <div class="layui-input-block">\n'
+                        + ' <div class="layui-inline" style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '      <div class="layui-input-inline">\n'
+                        + '        <select name="modules" name="classificationLittle" id="classificationLittle" '
+                        + 'style="width: 150px; height: 30px; margin-top: 5px" lay-verify="required" lay-search="">\n'
+                        + '          <option value="'+ data.classificationLittle + '">默认：'+ data.classificationLittle + '</option>\n'
+                        +           '</select>\n'
+                        + '      </div>\n'
+                        + '    </div>'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -277,9 +344,8 @@
                         var id = document.getElementById("id").value;
                         var videoName = document.getElementById("videoName").value;
                         var videoStatus = document.getElementById("videoStatus").value;
-                        var user = document.getElementById("user").value;
-                        var series = document.getElementById("series").value;
                         var videoClassification = document.getElementById("videoClassification").value;
+                        var classificationLittle = document.getElementById("classificationLittle").value;
                         var videoIntegral = document.getElementById("videoIntegral").value;
                         var coverUrl = document.getElementById("coverUrl").value;
                         var playbackVolume = document.getElementById("playbackVolume").value;
@@ -288,9 +354,8 @@
                         formData.append("id", id);
                         formData.append("videoName", videoName);
                         formData.append("videoStatus", videoStatus);
-                        // formData.append("user", user);
-                        // formData.append("series", series);
                         formData.append("videoClassification", videoClassification);
+                        formData.append("classificationLittle", classificationLittle);
                         formData.append("videoIntegral", videoIntegral);
                         formData.append("coverUrl", coverUrl);
                         formData.append("playbackVolume", playbackVolume);
