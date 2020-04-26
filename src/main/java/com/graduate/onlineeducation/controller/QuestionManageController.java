@@ -31,16 +31,22 @@ public class QuestionManageController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/getQuestionList")
-    public Result<Object> getQuestionList(@RequestBody Map<String, Object> params){
+    public Result<Object> getQuestionList(@RequestParam Map<String, Object> params){
         Page<Question> questions = questionManageService.getQuestionList(params);
         return ResultUtils.success(questions);
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/search")
-    public Result<Object> search(@RequestBody Map<String, Object> params){
+    public Result<Object> search(@RequestParam Map<String, Object> params){
         Page<Question> questions = questionManageService.search(params);
         return ResultUtils.success(questions);
    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/updateQuestion")
+    public Result<Object> updateQuestion(Question question) {
+        return ResultUtils.success(questionManageService.updateQuestion(question));
+    }
 
 }

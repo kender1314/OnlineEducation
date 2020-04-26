@@ -40,4 +40,10 @@ public class QuestionManageServiceImpl implements QuestionManageService {
         String query = (String) params.get("query");
         return questionManageRepository.findByParam(query, PaginationBase.getPagination(params));
     }
+
+    @Override
+    public boolean updateQuestion(Question question) {
+        Question questionTemp = questionManageRepository.save(question);
+        return questionTemp != null;
+    }
 }

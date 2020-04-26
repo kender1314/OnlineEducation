@@ -33,4 +33,11 @@ public interface QuestionManageService {
      * @return
      */
     Page<Question> search(Map<String, Object> params);
+
+    /**
+     * 更新问题
+     * @param question
+     * @return
+     */
+    boolean updateQuestion(Question question);
 }

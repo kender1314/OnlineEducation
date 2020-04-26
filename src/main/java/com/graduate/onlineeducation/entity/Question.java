@@ -1,6 +1,7 @@
 package com.graduate.onlineeducation.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -37,7 +38,8 @@ public class Question implements Serializable {
     @Column(name = "question_content")
     private String questionContent;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @NotNull
     @Column(name = "question_date")
     private Date questionDate;
