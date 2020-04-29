@@ -111,13 +111,18 @@
             , cols: [
                 [
                     {type: 'numbers', title: '序号', width: 100, fixed: 'left'}
+                    , {
+                        field: 'user', title: '用户名', templet: function (d) {
+                            return d.user.userName;
+                        }
+                    }
                     , {field: 'questionName', title: '问题题目'}
                     , {field: 'questionContent', title: '问题内容'}
                     , {field: 'questionDate', title: '发表日期'}
                     , {field: 'questionIntegral', title: '悬赏积分'}
                     , {field: 'classification', title: '类别'}
                     , {field: 'viewNumber', title: '查看人数'}
-                    , {fixed: 'right', title: '操作', toolbar: '#barDemo'}
+                    , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
                 ]
             ]
             , id: 'testReload'

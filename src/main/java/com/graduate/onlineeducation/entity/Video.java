@@ -69,6 +69,12 @@ public class Video implements Serializable {
     @Column(name = "video_number")
     private Integer videoNumber;
 
+    @Column(name = "video_image")
+    private String videoImage;
+
+    @Column(name = "video_image_url")
+    private String videoImageUrl;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
@@ -179,6 +185,22 @@ public class Video implements Serializable {
 
     public void setVideoNumber(Integer videoNumber) {
         this.videoNumber = videoNumber;
+    }
+
+    public String getVideoImage() {
+        return videoImage;
+    }
+
+    public void setVideoImage(String videoImage) {
+        this.videoImage = videoImage;
+    }
+
+    public String getVideoImageUrl() {
+        return videoImageUrl;
+    }
+
+    public void setVideoImageUrl(String videoImageUrl) {
+        this.videoImageUrl = videoImageUrl;
     }
 
     @Override

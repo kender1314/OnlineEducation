@@ -54,6 +54,7 @@
         <div style="padding: 15px;">
             <h2>问题回复管理</h2>
         </div>
+        <input type="hidden" id="questionId" name="id" th:value="${id}">
         <div class="demoTable" style="margin-left: 75%">
             <div class="layui-inline">
                 <input class="layui-input" name="id" id="demoReload" autocomplete="off">
@@ -76,7 +77,6 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="answerList">回复</a>
 </script>
 
 <script>
@@ -89,12 +89,13 @@
 
         table.render({
             elem: '#tables'
-            , url: '/questionManage/getQuestionList'
-            , request: {
+            , url: '/answerManage/getAnswerList'
+            , where: {
                 "pageSize": 'limit',
-                "page": 'curr',//当前页（必传参数，可改变参数名）
+                // "page": 'curr',//当前页（必传参数，可改变参数名）
                 "sortKey": '',
-                "sortDesc": false
+                "sortDesc": false,
+                "questionId" : document.getElementById("questionId").value
             }
             , method: 'post'
             , parseData: function (res) {
@@ -107,16 +108,18 @@
             }
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , defaultToolbar: ['filter']
-            , title: '用户数据表'
+            , title: '问题回复数据表'
             , cols: [
                 [
                     {type: 'numbers', title: '序号', width: 100, fixed: 'left'}
-                    , {field: 'questionName', title: '问题题目'}
-                    , {field: 'questionContent', title: '问题内容'}
-                    , {field: 'questionDate', title: '发表日期'}
-                    , {field: 'questionIntegral', title: '悬赏积分'}
-                    , {field: 'classification', title: '类别'}
-                    , {field: 'viewNumber', title: '查看人数'}
+                    , {
+                    field: 'user', title: '用户名', templet: function (d) {
+                        return d.user.userName;
+                    }
+                }
+                    , {field: 'answerContent', title: '回答内容'}
+                    , {field: 'answerDate', title: '回答日期'}
+                    , {field: 'answerLike', title: '点赞'}
                     , {fixed: 'right', title: '操作', toolbar: '#barDemo'}
                 ]
             ]
