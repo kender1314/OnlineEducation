@@ -1,6 +1,7 @@
 package com.graduate.onlineeducation.repo;
 
 import com.graduate.onlineeducation.entity.Admin;
+import com.graduate.onlineeducation.entity.DTO.AdminDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.NoRepositoryBean;
@@ -44,4 +45,11 @@ public interface AdminManageRepository extends PagingAndSortingRepository<Admin,
      * @return
      */
     Page<Admin> findByParam(String query, Pageable pageable);
+
+    /**
+     * 更新管理员信息，不更新密码
+     * @param adminDTO
+     * @return
+     */
+    AdminDTO save(AdminDTO adminDTO);
 }

@@ -1,6 +1,7 @@
 package com.graduate.onlineeducation.service.impl;
 
 import com.graduate.onlineeducation.entity.Admin;
+import com.graduate.onlineeducation.entity.DTO.AdminDTO;
 import com.graduate.onlineeducation.repo.AdminManageRepository;
 import com.graduate.onlineeducation.service.AdminManageService;
 import com.graduate.onlineeducation.support.PaginationBase;
@@ -30,10 +31,17 @@ public class AdminManageServiceImpl implements AdminManageService {
 
     @Override
     public boolean updateAdmin(Admin admin) {
-        admin.setAdminPassword(SaltEncryptUtil.encrypt(Base64.getEncoder()
-                .encodeToString(admin.getAdminPassword().getBytes())));
-        Admin temp = adminManageRepository.save(admin);
-        return temp != null;
+        if (admin.getAdminPassword() != null && !"".equals(admin.getAdminPassword())) {
+            admin.setAdminPassword(SaltEncryptUtil.encrypt(Base64.getEncoder()
+                    .encodeToString(admin.getAdminPassword().getBytes())));
+            Admin adminTemp = adminManageRepository.save(admin);
+            return adminTemp != null;
+        }
+        AdminDTO adminDTO = new AdminDTO(admin.getId(), admin.getAdminName(), admin.getAdminAuthority(),
+                admin.getAdminPosition(), admin.getUserName());
+        adminDTO.toString();
+        AdminDTO adminDtoTemp = adminManageRepository.save(adminDTO);
+        return adminDtoTemp != null;
     }
 
     @Override
@@ -46,5 +54,13 @@ public class AdminManageServiceImpl implements AdminManageService {
     public Page<Admin> search(Map<String, Object> params) {
         String query = (String) params.get("query");
         return adminManageRepository.findByParam(query, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public boolean insertAdmin(Admin admin) {
+        admin.setAdminPassword(SaltEncryptUtil.encrypt(Base64.getEncoder()
+                .encodeToString(admin.getAdminPassword().getBytes())));
+        Admin temp = adminManageRepository.save(admin);
+        return temp != null;
     }
 }

@@ -21,7 +21,7 @@ public interface AdminManageService {
     Page<Admin> getAdminList(Map<String, Object> params);
 
     /**
-     * 更新或新增管理员
+     * 更新管理员
      * @return
      */
     boolean updateAdmin(Admin admin);
@@ -39,4 +39,11 @@ public interface AdminManageService {
      * @return
      */
     Page<Admin> search(Map<String, Object> params);
+
+    /**
+     * 新增管理员
+     * @param admin
+     * @return
+     */
+    boolean insertAdmin(Admin admin);
 }

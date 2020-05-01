@@ -33,7 +33,7 @@ public class AdminManageController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/insertAdmin")
     public Result<Object> insertAdmin(Admin admin) {
-        return ResultUtils.success(adminManageService.updateAdmin(admin));
+        return ResultUtils.success(adminManageService.insertAdmin(admin));
     }
 
     @ResponseBody
