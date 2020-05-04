@@ -41,7 +41,7 @@
                 <li class="layui-nav-item"><a href="/url/adminQuestion">问题管理</a></li>
                 <li class="layui-nav-item"><a href="/url/adminOrder">订单管理</a></li>
                 <li class="layui-nav-item"><a href="/url/adminUser">用户管理</a></li>
-                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>
+<!--                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>-->
                 <!--                <li class="layui-nav-item"><a href="">积分管理</a></li>-->
             </ul>
         </div>
@@ -82,6 +82,8 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="comment">对话回复</a>
+
 </script>
 
 <script src="../lib/layui/layui.js"></script>
@@ -181,7 +183,7 @@
                     , {field: 'videoIntroduce', title: '视频简介', width: 100}
                     , {field: 'playbackVolume', title: '播放量', width: 100}
                     , {field: 'coverUrl', title: '视频地址', width: 100}
-                    , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                    , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
                 ]
             ]
             , id: 'testReload'
@@ -386,6 +388,8 @@
 
                     },
                 });
+            }else if (obj.event === 'comment') {
+                window.location.href ="/url/adminVideoComment?id=" + data.id;
             }
         });
 

@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.List;
+
 /**
  * @Author hejiang
  * @Version 1.0.0 RELEASE
@@ -15,9 +17,22 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 @NoRepositoryBean
 public interface AnswerManageRepository extends PagingAndSortingRepository<Answer, Integer> {
     /**
-     * 查找所有用户
+     * 根据问题查找回复
      * @param pageable
      * @return
      */
     Page<Answer> findAll(Integer questionId, Pageable pageable);
+
+    /**
+     * 删除问题回答
+     * @param id
+     */
+    @Override
+    void deleteById(Integer id);
+
+    /**
+     * 回复对话
+     * @return
+     */
+    Page<Answer> getAnswerReply(Integer replyId, Pageable pageable);
 }

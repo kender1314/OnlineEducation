@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,6 +31,20 @@ public class AnswerManageController {
     @RequestMapping(method = RequestMethod.POST, value = "/getAnswerList")
     public Result<Object> getAnswerList(@RequestParam Map<String, Object> params) {
         Page<Answer> answers = answerManageService.getAnswerListByQuestionId(params);
+        return ResultUtils.success(answers);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/deleteAnswer")
+    public Result<Object> deleteAnswer(Integer id) {
+        return ResultUtils.success(answerManageService.deleteAnswer(id));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getAnswerReply")
+    public Result<Object> getAnswerReply(@RequestParam Map<String, Object> params) {
+        Page<Answer> answers = answerManageService.getAnswerReply(params);
         return ResultUtils.success(answers);
     }
 }

@@ -42,5 +42,13 @@ Content-Type: application/json
 {"pageSize": 10, "page": 1, "sortKey": "", "limit": 10}
 
 ###
+POST http://localhost:8080/answerManage/getAnswerReply?replyId=1
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh_CN
+Connection: keep-alive
+Content-Type: application/json
+
+###
 
 

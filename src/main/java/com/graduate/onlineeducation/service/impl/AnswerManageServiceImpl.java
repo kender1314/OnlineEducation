@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,5 +26,17 @@ public class AnswerManageServiceImpl implements AnswerManageService {
     public Page<Answer> getAnswerListByQuestionId(Map<String, Object> params) {
         Integer questionId = Integer.parseInt(params.get("questionId").toString()) ;
         return answerManageRepository.findAll(questionId, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public boolean deleteAnswer(Integer id) {
+        answerManageRepository.deleteById(id);
+        return true;
+    }
+
+    @Override
+    public Page<Answer> getAnswerReply(Map<String, Object> params) {
+        Integer replyId = Integer.parseInt(params.get("replyId").toString()) ;
+        return answerManageRepository.getAnswerReply(replyId, PaginationBase.getPagination(params));
     }
 }

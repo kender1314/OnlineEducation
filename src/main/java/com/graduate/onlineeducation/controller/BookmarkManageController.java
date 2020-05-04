@@ -18,7 +18,7 @@ import java.util.Map;
  * @Description:
  */
 @Controller
-@RequestMapping("/bookManage")
+@RequestMapping("/bookmarkManage")
 public class BookmarkManageController {
     @Autowired
     private BookmarkManageService bookmarkManageService;
@@ -33,5 +33,25 @@ public class BookmarkManageController {
         Page<Bookmark> bookmarks = bookmarkManageService.getBookmarksList(params);
         return ResultUtils.success(bookmarks);
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/insertBookmark")
+    public Result<Object> insertBookmark(){
+        return ResultUtils.success(true);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/updateBookmark")
+    public Result<Object> updateBookmark(){
+        return ResultUtils.success(true);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/deleteBookmark")
+    public Result<Object> deleteBookmark(){
+        return ResultUtils.success(true);
+    }
+
+
 
 }

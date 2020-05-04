@@ -14,13 +14,13 @@ import java.util.UUID;
 public class IDUtils {
     public static final Logger logger = LoggerFactory.getLogger(IDUtils.class);
 
-    public static String getUUID(){
+    public static String getUuid(){
         return UUID.randomUUID().toString().replace("-","");
     }
 
     public static void main(String[] args) {
 
-        System.out.println(getUUID());
+        System.out.println(getUuid());
         logger.debug("test");
     }
 }

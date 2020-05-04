@@ -44,7 +44,7 @@
                 <li class="layui-nav-item"><a href="/url/adminQuestion">问题管理</a></li>
                 <li class="layui-nav-item"><a href="/url/adminOrder">订单管理</a></li>
                 <li class="layui-nav-item"><a href="/url/adminUser">用户管理</a></li>
-                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>
+<!--                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>-->
                 <!--                <li class="layui-nav-item"><a href="">积分管理</a></li>-->
             </ul>
         </div>
@@ -52,15 +52,9 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <h2>问题回复管理</h2>
+            <h2 id="title">问题回复管理</h2>
         </div>
         <input type="hidden" id="questionId" name="id" th:value="${id}">
-        <div class="demoTable" style="margin-left: 75%">
-            <div class="layui-inline">
-                <input class="layui-input" name="id" id="demoReload" autocomplete="off">
-            </div>
-            <button class="layui-btn" data-type="reload">搜索</button>
-        </div>
         <table class="layui-hide" id="tables" lay-filter="tables"></table>
     </div>
     <div class="layui-footer">
@@ -75,8 +69,8 @@
 <!--加密解密-->
 <script src="../js/obscure.js"></script>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="answer">对话回复</a>
 </script>
 
 <script>
@@ -95,7 +89,7 @@
                 // "page": 'curr',//当前页（必传参数，可改变参数名）
                 "sortKey": '',
                 "sortDesc": false,
-                "questionId" : document.getElementById("questionId").value
+                "questionId": document.getElementById("questionId").value
             }
             , method: 'post'
             , parseData: function (res) {
@@ -108,7 +102,7 @@
             }
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , defaultToolbar: ['filter']
-            , title: '问题回复数据表'
+            , title: '问题回答数据表'
             , cols: [
                 [
                     {type: 'numbers', title: '序号', width: 100, fixed: 'left'}
@@ -118,8 +112,8 @@
                     }
                 }
                     , {field: 'answerContent', title: '回答内容'}
-                    , {field: 'answerDate', title: '回答日期'}
-                    , {field: 'answerLike', title: '点赞'}
+                    , {field: 'answerDate', title: '回答日期', sort: true}
+                    , {field: 'answerLike', title: '点赞', sort: true}
                     , {fixed: 'right', title: '操作', toolbar: '#barDemo'}
                 ]
             ]
@@ -133,7 +127,7 @@
             if (obj.event === 'del') {
                 layer.confirm('是否删除', function (index) {
                     $.ajax({
-                        url: "/questionManage/deleteQuestion?id=" + data.id,
+                        url: "/answerManage/deleteAnswer?id=" + data.id,
                         type: "POST",
                         success: function (msg) {
                             if (msg.data === true) {
@@ -150,138 +144,13 @@
                     obj.del();
                     layer.close(index);
                 });
-            } else if (obj.event === 'edit') {
-                layer.open({
-                    type: 6,
-                    title: '修改管理员信息',
-                    area: ['600px', 'auto'],
-
-                    content: '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
-                        + '<input type="hidden" name="id" id="id" value="' + data.id + '">'
-                        + '<table>'
-                        + '<tr>'
-                        + '<td colspan="2">'
-                        + '<div class="layui-form-item" style="margin-top: 20px">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">问题题目</label>\n'
-                        + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; ">\n'
-                        + '      <textarea placeholder="请输入问题题目" name="questionName" id="questionName" class="layui-textarea">' + data.questionName + '</textarea>\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">悬赏积分</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="number" min="0" id="questionIntegral" value="' + data.questionIntegral +'" placeholder="请输入悬赏积分" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '<td >'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">类别</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + ' <div class="layui-inline" style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '      <div class="layui-input-inline">\n'
-                        + '        <select name="modules" name="classification" id="classification" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px" lay-verify="required" lay-search="">\n'
-                        + '          <option value="'+ data.classification + '">默认：'+ data.classification + '</option>\n'
-                        + '          <option value="编程语言">编程语言</option>\n'
-                        + '          <option value="云计算大数据">云计算大数据</option>\n'
-                        + '          <option value="计算机基础">计算机基础</option>\n'
-                        + '          <option value="移动开发">移动开发</option>\n'
-                        + '          <option value="前沿技术">前沿技术</option>\n'
-                        + '        </select>\n'
-                        + '      </div>\n'
-                        + '    </div>'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">查看人数</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="number" min="0" id="viewNumber" value="' + data.viewNumber +'" placeholder="请输入查看人数" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '<td >'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">发表日期</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + ' <input type="date" class="layui-input" id="questionDate" placeholder="yyyy-MM-dd HH:mm:ss" value="' + data.questionDate +'"'
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td colspan="2">'
-                        + '<div class="layui-form-item" style="margin-top: 20px">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">问题内容</label>\n'
-                        + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; ">\n'
-                        + '      <textarea placeholder="请输入内容" name="questionContent" id="questionContent" class="layui-textarea">' + data.questionContent + '</textarea>\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '</table>'
-                        + '</div>'
-                    ,
-                    btn: ['保存', '取消'],
-                    btn1: function (index, layero) {
-                        var formData = new FormData();
-                        var id = document.getElementById("id").value;
-                        var questionName = document.getElementById("questionName").value;
-                        var questionIntegral = document.getElementById("questionIntegral").value;
-                        var classification = document.getElementById("classification").value;
-                        var viewNumber = document.getElementById("viewNumber").value;
-                        var questionDate = document.getElementById("questionDate").value;
-                        var questionContent = document.getElementById("questionContent").value;
-                        formData.append("id", id);
-                        formData.append("questionName", questionName);
-                        formData.append("questionIntegral", questionIntegral);
-                        formData.append("classification", classification);
-                        formData.append("viewNumber", viewNumber);
-                        formData.append("questionDate", questionDate);
-                        formData.append("questionContent", questionContent);
-                        $.ajax({
-                            url: "/questionManage/updateQuestion",
-                            type: "post",
-                            dataType: "json",
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            success: function (msg) {
-                                console.log(msg);
-                                if (msg.data === true) {
-                                    //关闭弹框
-                                    layer.close(index);
-                                    layer.msg("更新成功", {icon: 6});
-                                } else {
-                                    layer.msg("更新失败", {icon: 5});
-                                }
-                            }
-                        });
-
-                    }
-                });
-            }
-        });
-
-        var $ = layui.$, active = {
-            reload: function () {
-                var demoReload = $('#demoReload');
+            } else if (obj.event === 'answer') {
+                document.getElementById("title").innerHTML = "“" +data.answerContent + "”的消息回复";
                 //执行重载
                 table.reload('testReload', {
-                    url: '/questionManage/search'
+                    url: "/answerManage/getAnswerReply"
                     , where: {
-                        query: demoReload.val(),
+                        replyId: data.id,
                     }
                     , method: 'post'
                     , page: {
@@ -289,7 +158,7 @@
                     }
                 });
             }
-        };
+        });
         $('.demoTable .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
