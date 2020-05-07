@@ -1,5 +1,91 @@
-layui.use(['layer', 'table', 'flow'], function () { //独立版的layer无需执行这一句
+layui.use(['layer', 'table', 'flow', 'tree', 'util'], function () { //独立版的layer无需执行这一句
     var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+    var tree = layui.tree
+        , layer = layui.layer
+        , util = layui.util
+
+        //模拟数据1
+        , data1 = [{
+            title: 'java'
+            , id: 1
+            , children: [{
+                title: 'Java架构师体系课：跟随千万级项目从0到100全过程高效成长'
+                , id: 1001
+            }, {
+                title: 'Spring Cloud + Vue 前后端分离 开发企业级在线视频课程系统'
+                , id: 1002
+            }]
+        }, {
+            title: 'c++'
+            , id: 2
+            , children: [{
+                title: '大学计算机必修课新讲--编译原理+操作系统+图形学'
+                , id: 2000
+            }, {
+                title: '2020 重学C++ 重构你的C++知识体系'
+                , id: 2001
+            }]
+        }, {
+            title: 'python'
+            , id: 3
+            , children: [{
+                title: 'Python3入门人工智能 掌握机器学习+深度学习 提升实战能力'
+                , id: 3000
+            }, {
+                title: 'Python Flask快速入门与进阶'
+                , id: 3001
+            }]
+        }]
+        , data2 = [{
+            title: 'html'
+            , id: 1
+            , children: [{
+                title: 'css自适应布局：css宽度自适应如何实现？'
+                , id: 1001
+            }, {
+                title: '怎么让div的高度自适应屏幕的高度?'
+                , id: 1002
+            }]
+        }, {
+            title: 'java'
+            , id: 2
+            , children: [{
+                title: '如何安装jdk？'
+                , id: 2000
+            }, {
+                title: '如何进行前后端分页？'
+                , id: 2001
+            }]
+        }, {
+            title: 'python'
+            , id: 3
+            , children: [{
+                title: '如何安装Python3？'
+                , id: 3000
+            }, {
+                title: 'Python有什么作用'
+                , id: 3001
+            }]
+        }];
+
+    //开启节点操作图标
+    tree.render({
+        elem: '#test9'
+        , data: data1
+        , edit: ['add', 'update', 'del'] //操作节点的图标
+        , click: function (obj) {
+            layer.msg(JSON.stringify(obj.data));
+        }
+    });
+
+    tree.render({
+        elem: '#test10'
+        , data: data2
+        , edit: ['add', 'update', 'del'] //操作节点的图标
+        , click: function (obj) {
+            layer.msg(JSON.stringify(obj.data));
+        }
+    });
 
     //触发事件
     var active = {

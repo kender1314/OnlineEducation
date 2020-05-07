@@ -38,4 +38,19 @@ public class UrlUserController {
     public String navigation() {
         return "/views/navigation";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/search")
+    public String search() {
+        return "/views/search";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/question")
+    public String question() {
+        return "/views/question";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/personalInformation")
+    public String personalInformation() {
+        return "/views/personal_information";
+    }
 }

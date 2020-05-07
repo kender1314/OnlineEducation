@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>消息中心</title>
+    <!--Layui-->
+    <link rel="stylesheet" href="../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/news.css">
+</head>
+<body>
+
+<div class="navigation">
+</div>
+    <ul class="layui-nav layui-nav-tree layui-inline my-ul" lay-filter="demo">
+        <a href="javascript:void(0);" onclick="fun(1)">
+            <li class="my-li"><span>回复我的</span></li>
+        </a>
+        <a href="javascript:void(0);" onclick="fun(2)">
+            <li class="my-li"><span>收到的赞</span></li>
+        </a>
+        <a href="javascript:void(0);" onclick="fun(3)">
+            <li class="my-li"><span>系统通知</span></li>
+        </a>
+    </ul>
+<div class="my-content">
+    <div class="my-content-reply" id="my-content-reply">
+        <div class="comment" id="commentReply">
+            <div class="comment-catalog">
+                <h2>回复我的</h2>
+            </div>
+            <div class="comment-content">
+                <div class="comment-content-img">
+                    <a href="#"><img style="width: 30px; height: 30px;" src="../images/users.png"></a>
+                </div>
+                <div class="comment-content-user">
+                    <span class="comment-content-user-username"><b><a href="#">科学声音</a></b></span>
+                    <span class="comment-content-response"><span style="color: #00a65a">回复我:</span>
+                        民间抽样调查的方法，且不说样本很可能缺乏随机性的问题。更重要的是，它无法成为科学依据。
+                    </span>
+                    <br>
+                    <span class="comment-content-user-time">2019年3月19日&nbsp;09:18</span>
+                    <span class="comment-content-user-reply"><a href="#">回复</a></span>
+                    <span class="comment-content-user-delete"><a href="#">删除</a> </span>
+                </div>
+                <div class="comment-content-remark">
+                        <span style="font-size: 13px">
+                            不科学，1.百度了一下，没找到全国有机大米促进会，2.据研究，没有表明研究出处，
+                            3.被长期赞美大米比普通大米更有益健康，违反常识，没有科学依据，4.95％未标明
+                        </span>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-content-like" id="my-content-like">
+        <div class="comment" id="commentLike">
+            <div class="comment-catalog">
+                <h2>收到的赞</h2>
+            </div>
+            <div class="comment-content">
+                <div class="comment-content-img">
+                    <a href="#"><img style="width: 30px; height: 30px;" src="../images/users.png"></a>
+                </div>
+                <div class="comment-content-user">
+                    <span class="comment-content-user-username"><b><a href="#">科学声音</a></b></span>
+                    <span class="comment-content-response"><span style="color: #00a65a">赞了我。</span>
+                    </span>
+                    <br>
+                    <span class="comment-content-user-time">2019年3月19日&nbsp;09:18</span>
+                </div>
+                <div class="comment-content-remark">
+                        <span style="font-size: 13px">
+                            不科学，1.百度了一下，没找到全国有机大米促进会，2.据研究，没有表明研究出处，
+                            3.被长期赞美大米比普通大米更有益健康，违反常识，没有科学依据，4.95％未标明
+                        </span>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-content-notice" id="my-content-notice">
+        <div class="comment" id="commentNotice">
+            <div class="comment-catalog">
+                <h2>系统通知</h2>
+            </div>
+            <div class="comment-content">
+                <div class="comment-content-img">
+                    <a href="#"><img style="width: 30px; height: 30px;" src="../images/users.png"></a>
+                </div>
+                <div class="comment-content-user">
+                    <span class="comment-content-user-username"><b><a href="#">科学声音</a></b></span>
+                    <span class="comment-content-response">
+                        民间抽样调查的方法，且不说样本很可能缺乏随机性的问题。更重要的是，它无法成为科学依据。
+                        民间抽样调查的方法，且不说样本很可能缺乏随机性的问题。更重要的是，它无法成为科学依据。
+                        民间抽样调查的方法，且不说样本很可能缺乏随机性的问题。更重要的是，它无法成为科学依据。
+                    </span>
+                    <br>
+                    <span class="comment-content-user-time">2019年3月19日&nbsp;09:18</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div class="my-footer">
+</div>
+</body>
+</html>
+<script src="../lib/jquery-2.1.4/jquery.min.js"></script>
+<script src="../lib/layui/layui.js"></script>
+<!--json-->
+<script src="../lib/json/json2.js" type="text/javascript"></script>
+<script src="../js/common.js"></script>
+<script src="../lib/jquery-2.1.4/jquery.form.js"></script>
+<script src="../js/news.js"></script>
+
+

@@ -44,4 +44,8 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
     @Override
     @Query(value = "select * from gp_video where series_id = ?1", nativeQuery = true)
     Page<Video> getVideoBySeriesId(Integer seriesId, Pageable pageable);
+
+    @Override
+    @Query(value = "select * from gp_video where video_classification = ?1", nativeQuery = true)
+    Page<Video> searchByClassification(String query, Pageable pageable);
 }

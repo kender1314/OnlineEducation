@@ -54,4 +54,10 @@ public class VideoManageServiceImpl  implements VideoManageService {
         Integer seriesId = Integer.parseInt(params.get("seriesId").toString()) ;
         return videoManageRepository.getVideoBySeriesId(seriesId, PaginationBase.getPagination(params));
     }
+
+    @Override
+    public Page<Video> searchByClassification(Map<String, Object> params) {
+        String query = (String) params.get("query");
+        return videoManageRepository.searchByClassification(query, PaginationBase.getPagination(params));
+    }
 }

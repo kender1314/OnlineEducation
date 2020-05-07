@@ -51,8 +51,53 @@
         <div style="padding: 15px;">
             <h2>个人中心</h2>
         </div>
+        <div style="background-color: #F2F2F2; padding: 40px">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            账号名
+                        </div>
+                        <div class="layui-card-body">
+                            <span th:text="${session.admin.adminName}"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            姓名
+                        </div>
+                        <div class="layui-card-body">
+                            <span th:text="${session.admin.userName}"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            权限等级
+                        </div>
+                        <div class="layui-card-body">
+                            <span th:if="${session.admin.adminAuthority} == 1"><a href="/userUrl/login">业务管理员</a></span>
+                            <span th:if="${session.admin.adminAuthority} == 2"><a href="/userUrl/login">视频管理员</a></span>
+                            <span th:if="${session.admin.adminAuthority} == 3"><a href="/userUrl/login">超级管理员</a></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            职位
+                        </div>
+                        <div class="layui-card-body">
+                            <span th:text="${session.admin.adminPosition}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
     <div class="layui-footer">
         <!-- 底部固定区域 -->
         Copyright © 2020 qilu.com All Rights Reserved | 京ICP备 12003892号-11 京公网安备11010802030151号

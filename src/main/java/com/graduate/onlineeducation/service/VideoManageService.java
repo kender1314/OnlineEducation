@@ -49,4 +49,11 @@ public interface VideoManageService {
      * @return
      */
     Page<Video> getVideoBySeriesId(Map<String, Object> params);
+
+    /**
+     * 根据分类获取视频列表
+     * @param params
+     * @return
+     */
+    Page<Video> searchByClassification(Map<String, Object> params);
 }

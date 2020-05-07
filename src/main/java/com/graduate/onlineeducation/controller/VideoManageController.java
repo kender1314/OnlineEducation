@@ -56,4 +56,11 @@ public class VideoManageController {
         Page<Video> videos = videoManageService.getVideoBySeriesId(params);
         return ResultUtils.success(videos);
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/searchByClassification")
+    public Result<Object> searchByClassification(@RequestParam Map<String, Object> params) {
+        Page<Video> videos = videoManageService.searchByClassification(params);
+        return ResultUtils.success(videos);
+    }
 }

@@ -62,4 +62,13 @@ public interface VideoManageRepository extends PagingAndSortingRepository<Video,
      * @return
      */
     Page<Video> getVideoBySeriesId(Integer seriesId, Pageable pageable);
+
+    /**
+     * 查找视频信息
+     * 查找不属于系列的视频信息
+     * @param query
+     * @param pageable
+     * @return
+     */
+    Page<Video> searchByClassification(String query, Pageable pageable);
 }
