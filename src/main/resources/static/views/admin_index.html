@@ -41,7 +41,7 @@
                 <li class="layui-nav-item"><a href="/url/adminQuestion">问题管理</a></li>
                 <li class="layui-nav-item"><a href="/url/adminOrder">订单管理</a></li>
                 <li class="layui-nav-item"><a href="/url/adminUser">用户管理</a></li>
-<!--                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>-->
+                <!--                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>-->
                 <!--                <li class="layui-nav-item"><a href="">积分管理</a></li>-->
             </ul>
         </div>
@@ -49,11 +49,94 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
-            <h2>首页</h2>
+        <div style="width: 50%; float: left">
+            <div style="padding: 20px; background-color: #F2F2F2;">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">总访问量</div>
+                            <div class="layui-card-body">
+                                <span style="font-size: 25px">9644</span>
+                                <br>
+                                <hr>
+                                <div style="float: left">
+                                    <span style="font-size: 12px; color: #999">昨日新增</span>
+                                </div>
+                                <div style="float: right">
+                                    <span>+125</span>
+                                </div>
+                                <div style="clear: both"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">总视频数量</div>
+                            <div class="layui-card-body">
+                                <span style="font-size: 25px">199602</span>
+                                <br>
+                                <hr>
+                                <div style="float: left">
+                                    <span style="font-size: 12px; color: #999">昨日新增</span>
+                                </div>
+                                <div style="float: right">
+                                    <span>+125</span>
+                                </div>
+                                <div style="clear: both"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div style="width: 50%; float: left">
+            <div style="padding: 20px 20px 20px 0px; background-color: #F2F2F2;">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">总视频系列数</div>
+                            <div class="layui-card-body">
+                                <span style="font-size: 25px">
+                                    199
+                                </span>
+                                <br>
+                                <hr>
+                                <div style="float: left">
+                                    <span style="font-size: 12px; color: #999">昨日新增</span>
+                                </div>
+                                <div style="float: right">
+                                    <span>+125</span>
+                                </div>
+                                <div style="clear: both"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">总用户数</div>
+                            <div class="layui-card-body">
+                                <span style="font-size: 25px">199602</span>
+                                <br>
+                                <hr>
+                                <div style="float: left">
+                                    <span style="font-size: 12px; color: #999">昨日新增</span>
+                                </div>
+                                <div style="float: right">
+                                    <span>+125</span>
+                                </div>
+                                <div style="clear: both"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="container" style="height: 50%; width: 50%; float: left"></div>
+        <div id="containerHistogram" style="height: 50%; width: 50%; float: left"></div>
+        <div style="width: 50%; text-align: center; float: left">订单曲线图</div>
+        <div style="width: 50%; text-align: center; float: left">订单曲线图</div>
+        <div style="clear: both"></div>
     </div>
-
     <div class="layui-footer">
         <!-- 底部固定区域 -->
         Copyright © 2020 qilu.com All Rights Reserved | 京ICP备 12003892号-11 京公网安备11010802030151号
@@ -66,13 +149,108 @@
 <script src="../lib/layui/layui.js"></script>
 
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-
-<script>
-    layui.use(['element', 'table', 'jquery', 'layer', 'laydate'], function () {
-        var $ = layui.$;
-        var laydate = layui.laydate;
-        var table = layui.table;
-        var layer = layui.layer;
-        var element = layui.element;
-    });
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+<script type="text/javascript"
+        src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['视频成交订单', '系列成交订单']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '视频成交订单',
+                type: 'line',
+                stack: '总量',
+                data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 210]
+            },
+            {
+                name: '系列成交订单',
+                type: 'line',
+                stack: '总量',
+                data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 210]
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+</script>
+<script type="text/javascript">
+    var dom = document.getElementById("containerHistogram");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        color: ['#3398DB'],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '直接访问',
+                type: 'bar',
+                barWidth: '60%',
+                data: [10, 52, 200, 334, 390, 330, 220]
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
 </script>

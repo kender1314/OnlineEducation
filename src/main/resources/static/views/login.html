@@ -24,33 +24,36 @@
         </dl>
     </li>
 </ul>
-
-<form class="layui-form my-login-form" action="/user/login" id="form" lay-filter="example" method="post">
-    <div class="layui-form-item">
-        <label class="layui-form-label">账号</label>
-        <div class="layui-input-block">
-            <input type="text" name="username" id="username" lay-verify="title" autocomplete="off" placeholder="请输入账号或邮箱"
-                   class="layui-input" style="width: 300px" onblur="checkUserName()">
-            <span id="username-tips"></span>
+<div style="min-height: 400px">
+    <form class="layui-form my-login-form" action="/user/login" id="form" lay-filter="example" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号</label>
+            <div class="layui-input-block">
+                <input type="text" name="username" id="username" lay-verify="title" autocomplete="off"
+                       placeholder="请输入账号或邮箱"
+                       class="layui-input" style="width: 300px" onblur="checkUserName()">
+                <span id="username-tips"></span>
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">密码</label>
-        <div class="layui-input-block">
-            <input type="password" name="password" id="password" placeholder="请输入密码" autocomplete="off" class="layui-input"
-                   style="width: 300px" onblur="checkPassword()">
-            <span id="password-tips"></span>
-            <br>
-            <a href="/userUrl/retrievePassword"><span style="font-size: 12px">找回密码？</span></a>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" id="password" placeholder="请输入密码" autocomplete="off"
+                       class="layui-input"
+                       style="width: 300px" onblur="checkPassword()">
+                <span id="password-tips"></span>
+                <br>
+                <a href="/userUrl/retrievePassword"><span style="font-size: 12px">找回密码？</span></a>
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button type="button" id="sub" class="layui-btn" lay-submit="" lay-filter="demo1">登录</button>
-            <button type="button" id="register" class="layui-btn layui-btn-primary">注册</button>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" id="sub" class="layui-btn" lay-submit="" lay-filter="demo1">登录</button>
+                <button type="button" id="register" class="layui-btn layui-btn-primary">注册</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
 <div class="my-footer">
 </div>
 </body>
@@ -98,26 +101,27 @@
 
     function checkUserName() {
         var userName = document.getElementById("username").value;
-        if (userName === ""){
+        if (userName === "") {
             document.getElementById("username-tips").innerHTML = "<br><font color='red'>输入账号不能为空!</font>";
             document.getElementById("submit").disabled = true;
-        }else if (userName.length < 5){
-        document.getElementById("username-tips").innerHTML = "<br><font color='red'>用户名至少得5个字符!</font>";
-        document.getElementById("submit").disabled = true;
-    }else {
-        document.getElementById("username-tips").innerHTML = "";
-        document.getElementById("submit").disabled = false;
+        } else if (userName.length < 5) {
+            document.getElementById("username-tips").innerHTML = "<br><font color='red'>用户名至少得5个字符!</font>";
+            document.getElementById("submit").disabled = true;
+        } else {
+            document.getElementById("username-tips").innerHTML = "";
+            document.getElementById("submit").disabled = false;
+        }
     }
-    }
+
     function checkPassword() {
         var password = document.getElementById("password").value;
-        if (password === ""){
+        if (password === "") {
             document.getElementById("password-tips").innerHTML = "<br><font color='red'>输入密码不能为空!</font>";
             document.getElementById("submit").disabled = true;
-        }else if (password.length < 6){
+        } else if (password.length < 6) {
             document.getElementById("password-tips").innerHTML = "<br><font color='red'>密码名至少得6个字符!</font>";
             document.getElementById("submit").disabled = true;
-        }else {
+        } else {
             document.getElementById("password-tips").innerHTML = "";
             document.getElementById("password").value = obscure(password, 10);
             document.getElementById("submit").disabled = false;

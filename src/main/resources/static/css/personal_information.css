@@ -23,7 +23,7 @@
 }
 .my-content{
     width: 60%;
-    height: 700px;
+    min-height: 600px;
     /*background-color: white;*/
     float: left;
     margin-top: 20px;
@@ -41,7 +41,10 @@
 .my-content-collect{
     display: none;
 }
-.my-content-integral{
+.my-content-video{
+    display: none;
+}
+.my-content-question{
     display: none;
 }
 .my-content-video-management{
@@ -64,7 +67,7 @@
 }
 .order{
     width: 98%;
-    height: 150px;
+    min-height: 150px;
     background-color: #dee3e2;
     margin-bottom: 20px;
     padding: 10px;

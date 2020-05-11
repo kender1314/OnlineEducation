@@ -1,6 +1,7 @@
 package com.graduate.onlineeducation.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -52,5 +53,11 @@ public class UrlUserController {
     @RequestMapping(method = RequestMethod.GET, value = "/personalInformation")
     public String personalInformation() {
         return "/views/personal_information";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/videoList")
+    public String videoList(String videoClassification, Model model) {
+        model.addAttribute("videoClassification", videoClassification);
+        return "/views/video_list";
     }
 }
