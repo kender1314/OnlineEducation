@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>搜索</title>
+    <title>视频系列</title>
     <!--Layui-->
     <link rel="stylesheet" href="../lib/layui/css/layui.css">
     <link rel="stylesheet" href="../css/common.css">
@@ -11,175 +11,120 @@
 <div class="navigation">
 </div>
 <input type="hidden" id="videoClassification" name="videoClassification" th:value="${videoClassification}">
-<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+<div class="layui-tab layui-tab-card" style="margin-top: 0px; margin-bottom: 0px">
     <ul class="layui-tab-title" style="text-align: center;">
-        <li class="layui-this my-li"><h2>编程语言</h2></li>
-        <li class="my-li"><h2>云计算大数据</h2></li>
-        <li class="my-li"><h2>计算机基础</h2></li>
-        <li class="my-li"><h2>移动开发</h2></li>
-        <li class="my-li"><h2>前沿技术</h2></li>
+        <li class="my-li" id="videoClass1" th:classappend="${videoClassification == '编程语言'} ? 'layui-this' : ''"><h2>
+            编程语言</h2></li>
+        <li class="my-li" id="videoClass2" th:classappend="${videoClassification == '云计算大数据'} ? 'layui-this' : ''"><h2>
+            云计算大数据</h2></li>
+        <li class="my-li" id="videoClass3" th:classappend="${videoClassification == '计算机基础'} ? 'layui-this' : ''"><h2>
+            计算机基础</h2></li>
+        <li class="my-li" id="videoClass4" th:classappend="${videoClassification == '移动开发'} ? 'layui-this' : ''"><h2>
+            移动开发</h2></li>
+        <li class="my-li" id="videoClass5" th:classappend="${videoClassification == '前沿技术'} ? 'layui-this' : ''"><h2>
+            前沿技术</h2></li>
     </ul>
-    <div class="layui-tab-content" style="height: 100px;">
+    <div class="layui-tab-content" style="min-height: 50px; width: 80%; margin-left: 10%; background-color: white">
         <div class="layui-tab-item layui-show">
             <div class="layui-row layui-col-space15 my-layui-row">
                 <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
                     <ul class="layui-tab-title" style="text-align: center;">
                         <li style="pointer-events: none"><h3>热门分类</h3></li>
-                        <li class="layui-this">不限</li>
-                        <li>Java</li>
-                        <li>C++</li>
-                        <li>Python</li>
-                        <li>C</li>
+                        <li class="layui-this" id="videoClass1_limitless">不限</li>
+                        <li id="videoClass1_Java">Java</li>
+                        <li id="videoClass1_c1">C++</li>
+                        <li id="videoClass1_python">Python</li>
+                        <li id="videoClass1_c2">C</li>
                     </ul>
-                    <div class="layui-tab-content" style="height: 100px;">
-                        <div class="layui-tab-item"></div>
-                        <div class="layui-tab-item layui-show">
-                            <ul class="flow-default" id="LAY_demo1_1"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo1_2"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo1_3"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo1_4"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo1_5"></ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="layui-tab-item">
-            <div class="layui-row layui-col-space15 my-layui-row" >
-                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-                    <ul class="layui-tab-title"  style="text-align: center;">
-                        <li style="pointer-events: none"><h3>热门分类</h3></li>
-                        <li class="layui-this">不限</li>
-                        <li>Java</li>
-                        <li>C++</li>
-                        <li>Python</li>
-                        <li>C</li>
-                    </ul>
-                    <div class="layui-tab-content" style="height: 100px;">
-                        <div class="layui-tab-item"></div>
-                        <div class="layui-tab-item layui-show">
-                            <ul class="flow-default" id="LAY_demo2_1"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo2_2"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo2_3"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo2_4"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo2_5"></ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="layui-tab-item">
-            <div class="layui-row layui-col-space15 my-layui-row" >
-                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-                    <ul class="layui-tab-title"  style="text-align: center;">
-                        <li style="pointer-events: none"><h3>热门分类</h3></li>
-                        <li class="layui-this">不限</li>
-                        <li>Java</li>
-                        <li>C++</li>
-                        <li>Python</li>
-                        <li>C</li>
-                    </ul>
-                    <div class="layui-tab-content" style="height: 100px;">
-                        <div class="layui-tab-item"></div>
-                        <div class="layui-tab-item layui-show">
-                            <ul class="flow-default" id="LAY_demo3_1"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo3_2"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo3_3"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo3_4"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo3_5"></ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
         <div class="layui-tab-item">
             <div class="layui-row layui-col-space15 my-layui-row">
                 <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-                    <ul class="layui-tab-title"  style="text-align: center;">
+                    <ul class="layui-tab-title" style="text-align: center;">
                         <li style="pointer-events: none"><h3>热门分类</h3></li>
                         <li class="layui-this">不限</li>
-                        <li>Java</li>
-                        <li>C++</li>
-                        <li>Python</li>
-                        <li>C</li>
+                        <li>Hadoop</li>
+                        <li>Spark</li>
+                        <li>Hbase</li>
+                        <li>阿里云</li>
+                        <li>Docker</li>
                     </ul>
-                    <div class="layui-tab-content" style="height: 100px;">
-                        <div class="layui-tab-item"></div>
-                        <div class="layui-tab-item layui-show">
-                            <ul class="flow-default" id="LAY_demo4_1"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo4_2"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo4_3"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo4_4"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo4_5"></ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
         <div class="layui-tab-item">
             <div class="layui-row layui-col-space15 my-layui-row">
                 <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-                    <ul class="layui-tab-title"  style="text-align: center;">
+                    <ul class="layui-tab-title" style="text-align: center;">
                         <li style="pointer-events: none"><h3>热门分类</h3></li>
                         <li class="layui-this">不限</li>
-                        <li>Java</li>
-                        <li>C++</li>
-                        <li>Python</li>
-                        <li>C</li>
+                        <li>计算机网络</li>
+                        <li>算法与数据结构</li>
                     </ul>
-                    <div class="layui-tab-content" style="height: 100px;">
-                        <div class="layui-tab-item"></div>
-                        <div class="layui-tab-item layui-show">
-                            <ul class="flow-default" id="LAY_demo5_1"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo5_2"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo5_3"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo5_4"></ul>
-                        </div>
-                        <div class="layui-tab-item">
-                            <ul class="flow-default" id="LAY_demo5_5"></ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
+        <div class="layui-tab-item">
+            <div class="layui-row layui-col-space15 my-layui-row">
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title" style="text-align: center;">
+                        <li style="pointer-events: none"><h3>热门分类</h3></li>
+                        <li class="layui-this">不限</li>
+                        <li>Android</li>
+                        <li>iOS</li>
+                        <li>React native</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-row layui-col-space15 my-layui-row">
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title" style="text-align: center;">
+                        <li style="pointer-events: none"><h3>热门分类</h3></li>
+                        <li class="layui-this">不限</li>
+                        <li>微服务</li>
+                        <li>区块链</li>
+                        <li>机器学习</li>
+                        <li>深度学习</li>
+                        <li>计算机视觉</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-tab-content" style="height: 450px; width: 80%; margin-left: 10%; padding: 10px; background-color: white">
+        <div class="layui-tab-item"></div>
+        <div class="layui-tab-item layui-show" style="height: 400px">
+            <div id="videoClass_limitless_item" style="width: 100%; height: 400px">
+<!--                <div class="layui-col-md6" style="width: 222px; padding: 5px; margin-left: 10px">-->
+<!--                    <div class="layui-card">-->
+<!--                        <a href=""><img-->
+<!--                                src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"-->
+<!--                                width="212">-->
+<!--                            <div style="height: 40px">-->
+<!--                                <span style="margin-left: 15px; font-size: 12px">Java性能调优全解2.5</span>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                        <div class="layui-card-body">-->
+<!--                            <div class="layui-input-inline" style="float: left">-->
+<!--                                <img src="../images/play.png" style="width: 16px; height: 16px"/>-->
+<!--                                <span style="font-size: 10px; color:#999;">1222</span>-->
+<!--                            </div>-->
+<!--                            <div class="layui-input-inline" style="float: right">-->
+<!--                                <span style="font-size: 10px; color:#999;">2020-02-16</span>-->
+<!--                            </div>-->
+<!--                            <div style="clear: both"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+        </div>
+    </div>
+    <div style="width: 80%; height: 50px; margin-left: 10%; background-color: white; padding: 10px">
+        <div id="demo7" style="text-align: center"></div>
     </div>
 </div>
 <div class="my-footer">

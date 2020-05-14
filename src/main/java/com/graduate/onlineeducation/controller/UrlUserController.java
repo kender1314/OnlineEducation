@@ -1,5 +1,8 @@
 package com.graduate.onlineeducation.controller;
 
+import com.graduate.onlineeducation.entity.Video;
+import com.graduate.onlineeducation.service.VideoManageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/userUrl")
 public class UrlUserController {
+    @Autowired
+    private VideoManageService videoManageService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/index")
     public String index() {
@@ -59,5 +64,12 @@ public class UrlUserController {
     public String videoList(String videoClassification, Model model) {
         model.addAttribute("videoClassification", videoClassification);
         return "/views/video_list";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/playVideo")
+    public String playVideo(Integer id, Model model) {
+        Video video = videoManageService.getVideoById(id);
+        model.addAttribute("video", video);
+        return "/views/play_video";
     }
 }

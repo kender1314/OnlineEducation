@@ -8,6 +8,7 @@ import com.graduate.onlineeducation.service.VideoManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -59,8 +60,33 @@ public class VideoManageController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/searchByClassification")
-    public Result<Object> searchByClassification(@RequestParam Map<String, Object> params) {
+    public Result<Object> searchByClassification(@RequestParam Map<String, Object> params, Model model) {
         Page<Video> videos = videoManageService.searchByClassification(params);
         return ResultUtils.success(videos);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountByClassification")
+    public Result<Object> getCountByClassification(String videoClassification){
+        return ResultUtils.success(videoManageService.getCountByClassification(videoClassification));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountByLittleClassification")
+    public Result<Object> getCountByLittleClassification(String classificationLittle){
+        return ResultUtils.success(videoManageService.getCountByLittleClassification(classificationLittle));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/searchByLittleClassification")
+    public Result<Object> searchByLittleClassification(@RequestParam Map<String, Object> params, Model model) {
+        Page<Video> videos = videoManageService.searchByLittleClassification(params);
+        return ResultUtils.success(videos);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getVideoById")
+    public Result<Object> getVideoById(Integer id) {
+        return ResultUtils.success(videoManageService.getVideoById(id));
     }
 }

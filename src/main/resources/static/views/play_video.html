@@ -11,13 +11,13 @@
 <div class="navigation">
 </div>
 <div style="margin-left: 10%; width: 80%; min-height: 700px; background-color: white; padding: 10px; margin-top: 10px">
-    <h2>课程介绍及学习指导建议</h2>
+    <h2 th:text="${video.videoName}">课程介绍及学习指导建议</h2>
     <br>
-    <span style="font-size: 10px; color: #999;">分类：科技科学科普</span>
+    <span style="font-size: 10px; color: #999;">分类：<span th:text="${video.videoClassification}"></span></span>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <span style="font-size: 10px; color: #999;">上传时间：2020-05-06 13:25:37</span>
+    <span style="font-size: 10px; color: #999;">上传时间：</span>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <span style="font-size: 10px; color: #999;">播放量：1</span>
+    <span style="font-size: 10px; color: #999;">播放量：<span th:text="${video.playbackVolume}"></span></span>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <span style="font-size: 10px; color: #999;">收藏量：</span>
     <a href="#">
@@ -27,7 +27,7 @@
     <div style="margin-top: 15px">
         <div style="width: 70%; height: 500px; float: left">
             <video width="100%" height="480" controls="controls">
-                <source src="../video/信誓蛋蛋宣布他要去火星了.mp4" type="video/mp4">
+                <source th:src="${video.coverUrl}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>

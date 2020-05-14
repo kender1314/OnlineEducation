@@ -42,10 +42,25 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
     Page<Video> findVideoNoSeriesByParam(String query, Pageable pageable);
 
     @Override
-    @Query(value = "select * from gp_video where series_id = ?1", nativeQuery = true)
+    @Query(value = "select * from gp_video where series_id = ?1 and video_status = 1 ", nativeQuery = true)
     Page<Video> getVideoBySeriesId(Integer seriesId, Pageable pageable);
 
     @Override
-    @Query(value = "select * from gp_video where video_classification = ?1", nativeQuery = true)
+    @Query(value = "select * from gp_video where video_classification = ?1 and video_status = 1 ", nativeQuery = true)
     Page<Video> searchByClassification(String query, Pageable pageable);
+
+    @Override
+    Video getVideoById(Integer id);
+
+    @Override
+    @Query(value = "select count(*) from gp_video where video_classification = ?1 and video_status = 1 ", nativeQuery = true)
+    Integer getCountByClassification(String videoClassification);
+
+    @Override
+    @Query(value = "select count(*) from gp_video where video_classification_little = ?1 and video_status = 1 ", nativeQuery = true)
+    Integer getCountByLittleClassification(String classificationLittle);
+
+    @Override
+    @Query(value = "select * from gp_video where video_classification_little = ?1 and video_status = 1  ", nativeQuery = true)
+    Page<Video> searchByLittleClassification(String query, Pageable pageable);
 }

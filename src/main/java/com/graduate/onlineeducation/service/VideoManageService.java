@@ -56,4 +56,32 @@ public interface VideoManageService {
      * @return
      */
     Page<Video> searchByClassification(Map<String, Object> params);
+
+    /**
+     * 根据id获取视频，此处用于获取视频信息播放视频
+     * @param id
+     * @return
+     */
+    Video getVideoById(Integer id);
+
+    /**
+     * 根据分类获取视频的数量
+     * @param videoClassification
+     * @return
+     */
+    Integer getCountByClassification(String videoClassification);
+
+    /**
+     * 根据二级分类获取视频的数量
+     * @param classificationLittle
+     * @return
+     */
+    Integer getCountByLittleClassification(String classificationLittle);
+
+    /**
+     * 根据二级分类获取视频列表
+     * @param params
+     * @return
+     */
+    Page<Video> searchByLittleClassification(Map<String, Object> params);
 }

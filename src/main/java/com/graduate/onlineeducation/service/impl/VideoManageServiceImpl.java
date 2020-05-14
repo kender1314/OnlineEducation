@@ -60,4 +60,25 @@ public class VideoManageServiceImpl  implements VideoManageService {
         String query = (String) params.get("query");
         return videoManageRepository.searchByClassification(query, PaginationBase.getPagination(params));
     }
+
+    @Override
+    public Video getVideoById(Integer id) {
+        return videoManageRepository.getVideoById(id);
+    }
+
+    @Override
+    public Integer getCountByClassification(String videoClassification) {
+        return videoManageRepository.getCountByClassification(videoClassification);
+    }
+
+    @Override
+    public Integer getCountByLittleClassification(String classificationLittle) {
+        return videoManageRepository.getCountByLittleClassification(classificationLittle);
+    }
+
+    @Override
+    public Page<Video> searchByLittleClassification(Map<String, Object> params) {
+        String query = (String) params.get("query");
+        return videoManageRepository.searchByLittleClassification(query, PaginationBase.getPagination(params));
+    }
 }
