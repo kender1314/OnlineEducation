@@ -46,4 +46,15 @@ public class UserManageServiceImpl implements UserManageService {
         String query = (String) params.get("query");
         return userManageRepository.findByParam(query, PaginationBase.getPagination(params));
     }
+
+    @Override
+    public Page<User> searchByQuery(Map<String, Object> params) {
+        String query = (String) params.get("query");
+        return userManageRepository.searchByQuery(query, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public Integer getCountByQuery(String query) {
+        return userManageRepository.getCountByQuery(query);
+    }
 }

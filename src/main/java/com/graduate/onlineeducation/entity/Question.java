@@ -54,6 +54,9 @@ public class Question implements Serializable {
     @Column(name = "question_view_number")
     private Integer viewNumber;
 
+    @Column(name = "question_is_solve")
+    private Integer questionIsSolve;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
@@ -122,6 +125,14 @@ public class Question implements Serializable {
         this.user = user;
     }
 
+    public Integer getQuestionIsSolve() {
+        return questionIsSolve;
+    }
+
+    public void setQuestionIsSolve(Integer questionIsSolve) {
+        this.questionIsSolve = questionIsSolve;
+    }
+
     @Override
     public String toString() {
         return "Question{" +
@@ -132,6 +143,7 @@ public class Question implements Serializable {
                 ", questionIntegral=" + questionIntegral +
                 ", classification='" + classification + '\'' +
                 ", viewNumber=" + viewNumber +
+                ", questionIsSolve=" + questionIsSolve +
                 ", user=" + user +
                 '}';
     }

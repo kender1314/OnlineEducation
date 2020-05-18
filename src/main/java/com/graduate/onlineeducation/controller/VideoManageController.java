@@ -52,6 +52,12 @@ public class VideoManageController {
     }
 
     @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountByQuery")
+    public Result<Object> getCountByQuery(String query) {
+        return ResultUtils.success(videoManageService.getCountByQuery(query));
+    }
+
+    @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/getVideoBySeriesId")
     public Result<Object> getVideoBySeriesId(@RequestParam Map<String, Object> params){
         Page<Video> videos = videoManageService.getVideoBySeriesId(params);
@@ -88,5 +94,11 @@ public class VideoManageController {
     @RequestMapping(method = RequestMethod.POST, value = "/getVideoById")
     public Result<Object> getVideoById(Integer id) {
         return ResultUtils.success(videoManageService.getVideoById(id));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountVideoByUserId")
+    public Result<Object> getCountVideoByUserId(Integer id){
+        return ResultUtils.success(videoManageService.getCountVideoByUserId(id));
     }
 }

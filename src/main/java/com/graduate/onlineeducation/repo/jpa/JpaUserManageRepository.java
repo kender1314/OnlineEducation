@@ -56,4 +56,12 @@ public interface JpaUserManageRepository extends UserManageRepository {
             "or user_major like %?1% or user_mail like %?1% or user_address like %?1% " +
             "or user_education like %?1%", nativeQuery = true)
     Page<User> findByParam(String query, Pageable pageable);
+
+    @Override
+    @Query(value = "select * from gp_user where user_name like %?1%", nativeQuery = true)
+    Page<User> searchByQuery(String query, Pageable pageable);
+
+    @Override
+    @Query(value = "select count(*) from gp_user where user_name like %?1%", nativeQuery = true)
+    Integer getCountByQuery(String query);
 }

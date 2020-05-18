@@ -35,6 +35,13 @@ public interface QuestionManageService {
     Page<Question> search(Map<String, Object> params);
 
     /**
+     * 根据查询关键字，获取查询的问题数量
+     * @param query
+     * @return
+     */
+    Integer getCountByQuery(String query);
+
+    /**
      * 更新问题
      * @param question
      * @return

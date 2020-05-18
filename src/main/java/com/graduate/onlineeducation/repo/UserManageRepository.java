@@ -7,8 +7,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import java.util.List;
-
 /**
  * @Author hejiang
  * @Version 1.0.0 RELEASE
@@ -47,4 +45,20 @@ public interface UserManageRepository extends PagingAndSortingRepository<User, I
      * @return
      */
     Page<User> findByParam(String query, Pageable pageable);
+
+    /**
+     * 前台查找用户信息方法
+     *
+     * @param query
+     * @param pageable
+     * @return
+     */
+    Page<User> searchByQuery(String query, Pageable pageable);
+
+    /**
+     * 根据查询关键字，获取查询的用户数量
+     * @param query
+     * @return
+     */
+    Integer getCountByQuery(String query);
 }

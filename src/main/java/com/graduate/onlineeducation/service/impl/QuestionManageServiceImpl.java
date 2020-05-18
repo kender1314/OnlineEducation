@@ -42,6 +42,11 @@ public class QuestionManageServiceImpl implements QuestionManageService {
     }
 
     @Override
+    public Integer getCountByQuery(String query) {
+        return questionManageRepository.getCountByQuery(query);
+    }
+
+    @Override
     public boolean updateQuestion(Question question) {
         Question questionTemp = questionManageRepository.save(question);
         return questionTemp != null;

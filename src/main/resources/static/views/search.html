@@ -11,170 +11,63 @@
 <body>
 <div class="navigation">
 </div>
+<input type="hidden" id="query" name="query" th:value="${query}">
 <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
     <ul class="layui-tab-title" style="text-align: center">
-        <li class="layui-this">视频</li>
-        <li>问题</li>
-        <li>用户</li>
+        <li class="layui-this" id="searchVideo">视频</li>
+        <li id="searchSeries">系列</li>
+        <li id="searchQuestion">问题</li>
+        <li id="searchUser">用户</li>
     </ul>
-    <div class="layui-tab-content" style="height: 100px;">
-        <div class="layui-tab-item layui-show">
-            <a href=""></a>
-            <div id="test10" style="margin-left: 10%; width: 81%; min-height: 700px;">
-                <div class="layui-col-md6" style="width: 300px; padding: 5px">
-                    <div class="layui-card">
-                        <a href="">
-                            <img src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"
-                                 width="290">
-                        </a>
-                        <a href="">
-                            <div class="layui-card-header">Java性能调优全解2.5</div>
-                        </a>
-                        <div class="layui-card-body">
-                            <span>8978人已报名</span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>评分：6.81</span><br>
-                            <span style="color: red">￥299.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-md6" style="width: 300px; padding: 5px">
-                    <div class="layui-card">
-                        <a href=""><img
-                                src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"
-                                width="290"></a>
-                        <a href="">
-                            <div class="layui-card-header">Java性能调优全解2.5</div>
-                        </a>
-                        <div class="layui-card-body">
-                            <span>8978人已报名</span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>评分：6.81</span><br>
-                            <span style="color: red">￥299.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-md6" style="width: 300px; padding: 5px">
-                    <div class="layui-card">
-                        <a href=""><img
-                                src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"
-                                width="290"></a>
-                        <a href="">
-                            <div class="layui-card-header">Java性能调优全解2.5</div>
-                        </a>
-                        <div class="layui-card-body">
-                            <span>8978人已报名</span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>评分：6.81</span><br>
-                            <span style="color: red">￥299.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-md6" style="width: 300px; padding: 5px">
-                    <div class="layui-card">
-                        <a href=""><img
-                                src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"
-                                width="290"></a>
-                        <a href="">
-                            <div class="layui-card-header">Java性能调优全解2.5</div>
-                        </a>
-                        <div class="layui-card-body">
-                            <span>8978人已报名</span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>评分：6.81</span><br>
-                            <span style="color: red">￥299.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-md6" style="width: 300px; padding: 5px">
-                    <div class="layui-card">
-                        <a href=""><img
-                                src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"
-                                width="290"></a>
-                        <a href="">
-                            <div class="layui-card-header">Java性能调优全解2.5</div>
-                        </a>
-                        <div class="layui-card-body">
-                            <span>8978人已报名</span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>评分：6.81</span><br>
-                            <span style="color: red">￥299.00</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style="bottom: 0px; width: 100%; height: 80px; background-color: #F2F2F2"></div>
+<!--    <div class="layui-tab-content" style="height: 100px;">-->
+<!--        <div class="layui-tab-item">-->
+<!--            <div style="margin-left: 10%; width: 81%; min-height: 700px;">-->
+<!--                <div style="padding: 20px; background-color: #F2F2F2;">-->
+<!--                    <div class="layui-row layui-col-space15">-->
+<!--                        <div class="layui-col-md12">-->
+<!--                            <div class="layui-card">-->
+<!--                                <div class="layui-card-header">-->
+<!--                                    <div class="layui-input-inline" style="float: left;">-->
+<!--                                        <a href="">-->
+<!--                                            <img src="../images/user1.png" height="35" width="35"/>-->
+<!--                                            <span style="margin-left: 20px"><b>kender</b></span>-->
+<!--                                        </a>-->
+<!--                                        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" style="margin-left: 20px">关注</button>-->
+<!--                                    </div>-->
+<!--                                    <div class="layui-input-inline" style="float: right">-->
+<!--                                        <span style="font-size: 10px; color:#999;margin-right: 40px">稿件：62</span>-->
+<!--                                        <span style="font-size: 10px; color:#999;margin-right: 40px">粉丝：1976</span>-->
+<!--                                    </div>-->
+<!--                                    <div style="clear: both"></div>-->
+<!--                                </div>-->
+<!--                                <div style="padding: 10px; margin-left: 55px">-->
+<!--                                    <span style="font-size: 14px; color:#999">-->
+<!--                                        <b>个人简介：</b>本人是老番茄和大祥哥的粉丝，经常鬼畜那二位，嘻嘻-->
+<!--                                        本人是老番茄和大祥哥的粉丝，经常鬼畜那二位，嘻嘻-->
+<!--                                        本人是老番茄和大祥哥的粉丝，经常鬼畜那二位，嘻嘻-->
+<!--                                        本人是老番茄和大祥哥的粉丝，经常鬼畜那二位，嘻嘻-->
+<!--                                    </span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div id="demo9" style="text-align:center;"></div>-->
+<!--            <div style="bottom: 0px; width: 100%; height: 80px; background-color: #F2F2F2"></div>-->
+<!--        </div>-->
+<!--        <div class="layui-tab-item">内容3</div>-->
+<!--    </div>-->
+</div>
+<div class="layui-tab-content" style="min-height: 450px; width: 80%; margin-left: 10%; padding: 10px;">
+    <div class="layui-tab-item"></div>
+    <div class="layui-tab-item layui-show" style="min-height: 400px">
+        <div id="videoClass_limitless_item" style="width: 100%; min-height: 400px">
         </div>
-        <div class="layui-tab-item">
-            <div style="margin-left: 10%; width: 81%; min-height: 700px;">
-                <div style="padding: 20px; background-color: #F2F2F2;">
-                    <div class="layui-row layui-col-space15">
-                        <div class="layui-col-md12">
-                            <div class="layui-card">
-                                <div class="layui-card-header">
-                                    <a href="">为什么这用了JQuery就不能用自己写的JS了</a>
-                                </div>
-                                <div class="layui-card-body">
-                                    问：我用的是dwz的框架，首先将一个html文件加载到首页的div中，这个html文...
-                                    <br>
-                                    答：您好:这种情况很简单,动态添加进去的tr不能应用js和css,在tr添加进页面后,再调用一下$("tr").addClass("样式名");
-                                    重新给他添加一下样式即可.至于js的话,在绑定事件的时候用:$("tr").live(funtion(){ }) 这样就可以了.因为绑定事件的时候live就...
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-row layui-col-space15">
-                        <div class="layui-col-md12">
-                            <div class="layui-card">
-                                <div class="layui-card-header">
-                                    <a href="">为什么这用了JQuery就不能用自己写的JS了</a>
-                                </div>
-                                <div class="layui-card-body">
-                                    问：我用的是dwz的框架，首先将一个html文件加载到首页的div中，这个html文...
-                                    <br>
-                                    答：您好:这种情况很简单,动态添加进去的tr不能应用js和css,在tr添加进页面后,再调用一下$("tr").addClass("样式名");
-                                    重新给他添加一下样式即可.至于js的话,在绑定事件的时候用:$("tr").live(funtion(){ }) 这样就可以了.因为绑定事件的时候live就...
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-row layui-col-space15">
-                        <div class="layui-col-md12">
-                            <div class="layui-card">
-                                <div class="layui-card-header">
-                                    <a href="">为什么这用了JQuery就不能用自己写的JS了</a>
-                                </div>
-                                <div class="layui-card-body">
-                                    问：我用的是dwz的框架，首先将一个html文件加载到首页的div中，这个html文...
-                                    <br>
-                                    答：您好:这种情况很简单,动态添加进去的tr不能应用js和css,在tr添加进页面后,再调用一下$("tr").addClass("样式名");
-                                    重新给他添加一下样式即可.至于js的话,在绑定事件的时候用:$("tr").live(funtion(){ }) 这样就可以了.因为绑定事件的时候live就...
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-row layui-col-space15">
-                        <div class="layui-col-md12">
-                            <div class="layui-card">
-                                <div class="layui-card-header">
-                                    <a href="">为什么这用了JQuery就不能用自己写的JS了</a>
-                                </div>
-                                <div class="layui-card-body">
-                                    问：我用的是dwz的框架，首先将一个html文件加载到首页的div中，这个html文...
-                                    <br>
-                                    答：您好:这种情况很简单,动态添加进去的tr不能应用js和css,在tr添加进页面后,再调用一下$("tr").addClass("样式名");
-                                    重新给他添加一下样式即可.至于js的话,在绑定事件的时候用:$("tr").live(funtion(){ }) 这样就可以了.因为绑定事件的时候live就...
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="demo9" style="text-align:center;"></div>
-            <div style="bottom: 0px; width: 100%; height: 80px; background-color: #F2F2F2"></div>
-        </div>
-        <div class="layui-tab-item">内容3</div>
     </div>
+</div>
+<div style="width: 80%; height: 50px; margin-left: 10%; padding: 10px">
+    <div id="demo7" style="text-align: center"></div>
 </div>
 <div style="clear:both"></div>
 <div class="my-footer">

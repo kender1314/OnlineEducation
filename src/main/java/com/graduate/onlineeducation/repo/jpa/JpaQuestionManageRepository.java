@@ -23,7 +23,12 @@ public interface JpaQuestionManageRepository extends QuestionManageRepository {
     Page<Question> findAll(Specification<Question> spec, Pageable pageable);
 
     @Override
-    @Query(value = "select * from gp_question where " +
-            "question_name like %?1% or question_content like %?1%", nativeQuery = true)
+    @Query(value = "select gp_question.* from gp_user, gp_question where gp_question.user_id = gp_user.user_id and(" +
+            "gp_user.user_name like %?1% or question_name like %?1% or question_content like %?1%)", nativeQuery = true)
     Page<Question> findByParam(String query, Pageable pageable);
+
+    @Override
+    @Query(value = "select count(*) from gp_user, gp_question where gp_question.user_id = gp_user.user_id and(" +
+            "gp_user.user_name like %?1% or question_name like %?1% or question_content like %?1%)", nativeQuery = true)
+    Integer getCountByQuery(String query);
 }

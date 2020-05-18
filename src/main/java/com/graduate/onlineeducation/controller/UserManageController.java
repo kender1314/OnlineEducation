@@ -63,5 +63,19 @@ public class UserManageController {
         Page<User> users = userManageService.search(params);
         return ResultUtils.success(users);
     }
+
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/searchByQuery")
+    public Result<Object> searchByQuery(@RequestParam Map<String, Object> params) {
+        Page<User> users = userManageService.searchByQuery(params);
+        return ResultUtils.success(users);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountByQuery")
+    public Result<Object> getCountByQuery(String query) {
+        return ResultUtils.success(userManageService.getCountByQuery(query));
+    }
 }
 

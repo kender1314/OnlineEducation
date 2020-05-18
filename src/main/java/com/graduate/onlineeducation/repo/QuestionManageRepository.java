@@ -37,4 +37,11 @@ public interface QuestionManageRepository extends PagingAndSortingRepository<Que
      * @return
      */
     Page<Question> findByParam(String query, Pageable pageable);
+
+    /**
+     * 根据查询关键字，获取查询的系列数量
+     * @param query
+     * @return
+     */
+    Integer getCountByQuery(String query);
 }

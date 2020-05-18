@@ -45,11 +45,6 @@ public class UrlUserController {
         return "/views/navigation";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/search")
-    public String search() {
-        return "/views/search";
-    }
-
     @RequestMapping(method = RequestMethod.GET, value = "/question")
     public String question() {
         return "/views/question";
@@ -71,5 +66,11 @@ public class UrlUserController {
         Video video = videoManageService.getVideoById(id);
         model.addAttribute("video", video);
         return "/views/play_video";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/search")
+    public String search(String query, Model model) {
+        model.addAttribute("query", query);
+        return "/views/search";
     }
 }

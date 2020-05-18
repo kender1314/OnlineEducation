@@ -37,10 +37,25 @@ public interface UserManageService {
     boolean updateUser(User user);
 
     /**
-     * 查找用户信息
+     * 后台查找用户信息方法
      *
      * @param params
      * @return
      */
     Page<User> search(Map<String, Object> params);
+
+    /**
+     * 前台查找用户信息方法
+     *
+     * @param params
+     * @return
+     */
+    Page<User> searchByQuery(Map<String, Object> params);
+
+    /**
+     * 根据查询关键字，获取查询的用户数量
+     * @param query
+     * @return
+     */
+    Integer getCountByQuery(String query);
 }

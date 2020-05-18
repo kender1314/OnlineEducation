@@ -50,6 +50,11 @@ public class VideoManageServiceImpl  implements VideoManageService {
     }
 
     @Override
+    public Integer getCountByQuery(String query) {
+        return videoManageRepository.getCountByQuery(query);
+    }
+
+    @Override
     public Page<Video> getVideoBySeriesId(Map<String, Object> params) {
         Integer seriesId = Integer.parseInt(params.get("seriesId").toString()) ;
         return videoManageRepository.getVideoBySeriesId(seriesId, PaginationBase.getPagination(params));
@@ -80,5 +85,10 @@ public class VideoManageServiceImpl  implements VideoManageService {
     public Page<Video> searchByLittleClassification(Map<String, Object> params) {
         String query = (String) params.get("query");
         return videoManageRepository.searchByLittleClassification(query, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public Integer getCountVideoByUserId(Integer id) {
+        return videoManageRepository.getCountVideoByUserId(id);
     }
 }

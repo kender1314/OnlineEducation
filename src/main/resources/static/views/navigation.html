@@ -19,17 +19,15 @@
         </dl>
     </li>
     <div class="layui-input-inline" id="showSearch" style="margin-left: 50%">
-        <form action="">
-            <input type="tel" name="search" id="search"
-                   style="display: none; width: 200px; border-radius:10px; height: 30px; border: white 1px solid; padding-left: 10px">
-            <button id="searchSubmit" type="submit"
-                    style="display: none; background-color:rgba(0,0,255,0); border:none">
-                <img src="../images/search.png" height="25" width="25"/>
-            </button>
-            <a href="javascript:void(0);" onClick="showsearch()">
-                <img src="../images/search.png" id="images" height="25" width="25"/>
-            </a>
-        </form>
+        <input type="tel" name="search" id="search"
+               style="display: none; width: 190px; border-radius:10px; height: 30px; border: white 1px solid; padding-left: 10px">
+        <button id="searchSubmit" onClick="searchSubmit()" type="submit"
+                style="display: none; background-color:rgba(0,0,255,0); border:none">
+            <img src="../images/search.png" height="25" width="25"/>
+        </button>
+        <a href="javascript:void(0);" onClick="showsearch()">
+            <img src="../images/search.png" id="images" height="25" width="25"/>
+        </a>
     </div>
     <li class="layui-nav-item" style="margin-left: 20px">
         <a href=""><img src="../images/news.png" height="25" width="25"/><span class="layui-badge-dot"></span></a>
@@ -52,8 +50,9 @@
 </body>
 </html>
 <script>
-    layui.use('element', function () {
+    layui.use(['element', 'layer', 'jquery'], function () {
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+        var $ = layui.$;
 
         //监听导航点击
         element.on('nav(demo)', function (elem) {
@@ -61,6 +60,11 @@
             layer.msg(elem.text());
         });
     });
+
+    function searchSubmit() {
+        var query = document.getElementById("search").value;
+        window.location.href = "/userUrl/search?query=" + query;
+    }
 
     function showsearch() {
         var value = document.getElementById("search").style.display;

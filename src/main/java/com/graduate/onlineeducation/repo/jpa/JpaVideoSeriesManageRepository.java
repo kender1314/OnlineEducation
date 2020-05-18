@@ -30,4 +30,9 @@ public interface JpaVideoSeriesManageRepository extends VideoSeriesManageReposit
     @Query(value = "select gp_video_series.* from gp_user, gp_video_series where gp_video_series.user_id = gp_user.user_id" +
             " AND (gp_user.user_name like %?1% or series_name like %?1% or series_brief_introduction like %?1%)", nativeQuery = true)
     Page<VideoSeries> findVideoSeriesByParam(String query, Pageable pageable);
+
+    @Override
+    @Query(value = "select count(*) from gp_user, gp_video_series where gp_video_series.user_id = gp_user.user_id" +
+            " AND (gp_user.user_name like %?1% or series_name like %?1% or series_brief_introduction like %?1%)", nativeQuery = true)
+    Integer getCountByQuery(String query);
 }

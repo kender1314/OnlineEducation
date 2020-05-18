@@ -41,4 +41,12 @@ public interface VideoSeriesManageService {
      * @return
      */
     Page<VideoSeries> search(Map<String, Object> params);
+
+
+    /**
+     * 根据查询关键字，获取查询的系列数量
+     * @param query
+     * @return
+     */
+    Integer getCountByQuery(String query);
 }

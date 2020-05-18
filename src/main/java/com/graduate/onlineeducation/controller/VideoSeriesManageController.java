@@ -51,6 +51,12 @@ public class VideoSeriesManageController {
     }
 
     @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountByQuery")
+    public Result<Object> getCountByQuery(String query) {
+        return ResultUtils.success(videoSeriesManageService.getCountByQuery(query));
+    }
+
+    @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/insertVideoSeries")
     public Result<Object> insertVideoSeries(VideoSeriesDTO videoSeriesDTO) {
         return ResultUtils.success(videoSeriesManageService.updateVideoSeries(videoSeriesDTO));

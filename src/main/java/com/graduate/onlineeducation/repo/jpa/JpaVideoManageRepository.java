@@ -37,30 +37,39 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
      * @return
      */
     @Override
-    @Query(value = "select gp_video.* from gp_user, gp_video where gp_video.user_id = gp_user.user_id AND (\n" +
-            "gp_user.user_name like %?1% or video_name like %?1% or video_introduce like %?1%)", nativeQuery = true)
+    @Query(value = "select gp_video.* from gp_user, gp_video where gp_video.user_id = gp_user.user_id and (\n" +
+            "gp_user.user_name like %?1% or video_name like %?1% or video_introduce like %?1%) and video_status = 1 and ISNULL(series_id)", nativeQuery = true)
     Page<Video> findVideoNoSeriesByParam(String query, Pageable pageable);
+
+    @Override
+    @Query(value = "select count(*) from gp_user, gp_video where gp_video.user_id = gp_user.user_id and (\n" +
+            "gp_user.user_name like %?1% or video_name like %?1% or video_introduce like %?1%) and video_status = 1 and ISNULL(series_id)", nativeQuery = true)
+    Integer getCountByQuery(String query);
 
     @Override
     @Query(value = "select * from gp_video where series_id = ?1 and video_status = 1 ", nativeQuery = true)
     Page<Video> getVideoBySeriesId(Integer seriesId, Pageable pageable);
 
     @Override
-    @Query(value = "select * from gp_video where video_classification = ?1 and video_status = 1 ", nativeQuery = true)
+    @Query(value = "select * from gp_video where video_classification = ?1 and video_status = 1 and ISNULL(series_id)", nativeQuery = true)
     Page<Video> searchByClassification(String query, Pageable pageable);
 
     @Override
     Video getVideoById(Integer id);
 
     @Override
-    @Query(value = "select count(*) from gp_video where video_classification = ?1 and video_status = 1 ", nativeQuery = true)
+    @Query(value = "select count(*) from gp_video where video_classification = ?1 and video_status = 1 and ISNULL(series_id)", nativeQuery = true)
     Integer getCountByClassification(String videoClassification);
 
     @Override
-    @Query(value = "select count(*) from gp_video where video_classification_little = ?1 and video_status = 1 ", nativeQuery = true)
+    @Query(value = "select count(*) from gp_video where video_classification_little = ?1 and video_status = 1 and ISNULL(series_id)", nativeQuery = true)
     Integer getCountByLittleClassification(String classificationLittle);
 
     @Override
-    @Query(value = "select * from gp_video where video_classification_little = ?1 and video_status = 1  ", nativeQuery = true)
+    @Query(value = "select * from gp_video where video_classification_little = ?1 and video_status = 1 and ISNULL(series_id)", nativeQuery = true)
     Page<Video> searchByLittleClassification(String query, Pageable pageable);
+
+    @Override
+    @Query(value = "select count(*) from gp_video where user_id = ?1", nativeQuery = true)
+    Integer getCountVideoByUserId(Integer id);
 }

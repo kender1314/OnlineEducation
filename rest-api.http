@@ -58,4 +58,11 @@ Connection: keep-alive
 Content-Type: application/json
 
 ###
+POST http://localhost:8080/followManage/getCountFanById?id=9
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh_CN
+Connection: keep-alive
+Content-Type: application/json
 
+###

@@ -56,6 +56,13 @@ public interface VideoManageRepository extends PagingAndSortingRepository<Video,
     Page<Video> findVideoNoSeriesByParam(String query, Pageable pageable);
 
     /**
+     * 根据查询关键字，获取查询的视频数量
+     * @param query
+     * @return
+     */
+    Integer getCountByQuery(String query);
+
+    /**
      * 根据系列id获取对应的视频列表
      * @param seriesId
      * @param pageable
@@ -99,4 +106,11 @@ public interface VideoManageRepository extends PagingAndSortingRepository<Video,
      * @return
      */
     Page<Video> searchByLittleClassification(String query, Pageable pageable);
+
+    /**
+     * 根据用户的id，统计该用户的视频数量
+     * @param id
+     * @return
+     */
+    Integer getCountVideoByUserId(Integer id);
 }

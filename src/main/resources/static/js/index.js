@@ -1,4 +1,6 @@
-layui.use(['carousel', 'form', 'flow'], function () {
+var videoClassification = "编程语言";
+var classificationLittle;
+layui.use(['carousel', 'form'], function () {
     var carousel = layui.carousel
         , form = layui.form;
 
@@ -44,143 +46,365 @@ layui.use(['carousel', 'form', 'flow'], function () {
         active[type] ? active[type].call(this, othis) : '';
     });
 
-    //滚动加载
-    var flow = layui.flow;
-
-    //编程语言-不限
-    flow.load({
-        elem: '#LAY_demo1_1' //流加载容器
-        ,done: function(page, next){ //执行下一页的回调
-            //模拟数据插入
-            setTimeout(function(){
-                var lis = [];
-                for(var i = 0; i < 8; i++){
-                    lis.push('<div class="layui-col-md6" style="width: 300px; padding: 5px"> ' +
-                        '<div class="layui-card"> ' +
-                        '<a href=""><img src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356" width="290"></a> ' +
-                        '<a href=""><div class="layui-card-header">Java性能调优全解2.5</div></a> ' +
-                        '<div class="layui-card-body"> ' +
-                        '<span>8978人已报名</span> ' +
-                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ' +
-                        '<span>评分：6.81</span><br> ' +
-                        '<span style="color: red">￥299.00</span> ' +
-                        '</div> ' +
-                        '</div> ' +
-                        '</div>')
-                }
-                //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
-                //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
-                next(lis.join(''), page < 10); //假设总页数为 10
-            }, 500);
-        }
-    });
-    //编程语言-java
-    flow.load({
-        elem: '#LAY_demo1_2' //流加载容器
-        ,done: function(page, next){ //执行下一页的回调
-            //模拟数据插入
-            setTimeout(function(){
-                var lis = [];
-                for(var i = 0; i < 8; i++){
-                    lis.push('<div class="layui-col-md6" style="width: 300px; padding: 5px"> ' +
-                        '<div class="layui-card"> ' +
-                        '<a href=""><img src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLAbmOdIJ1HHhFdK32Yy7hJgNyMm7PWs8ZSaxJPia0j2FoNSice6qXfdSPS5UkvgRx8hg/356" width="290"></a> ' +
-                        '<a href=""><div class="layui-card-header">Java性能调优全解2.5</div></a> ' +
-                        '<div class="layui-card-body"> ' +
-                        '<span>8978人已报名</span> ' +
-                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ' +
-                        '<span>评分：6.81</span><br> ' +
-                        '<span style="color: red">￥299.00</span> ' +
-                        '</div> ' +
-                        '</div> ' +
-                        '</div>')
-                }
-                //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
-                //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
-                next(lis.join(''), page < 10); //假设总页数为 10
-            }, 500);
-        }
-    });
-    //编程语言-C++
-    flow.load({
-        elem: '#LAY_demo1_3' //流加载容器
-        ,done: function(page, next){ //执行下一页的回调
-            //模拟数据插入
-            setTimeout(function(){
-                var lis = [];
-                for(var i = 0; i < 8; i++){
-                    lis.push('<div class="layui-col-md6" style="width: 300px; padding: 5px"> ' +
-                        '<div class="layui-card"> ' +
-                        '<a href=""><img src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLAbmOdIJ1HHhFdK32Yy7hJgNyMm7PWs8ZSaxJPia0j2FoNSice6qXfdSPS5UkvgRx8hg/356" width="290"></a> ' +
-                        '<a href=""><div class="layui-card-header">Java性能调优全解2.5</div></a> ' +
-                        '<div class="layui-card-body"> ' +
-                        '<span>8978人已报名</span> ' +
-                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ' +
-                        '<span>评分：6.81</span><br> ' +
-                        '<span style="color: red">￥299.00</span> ' +
-                        '</div> ' +
-                        '</div> ' +
-                        '</div>')
-                }
-                //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
-                //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
-                next(lis.join(''), page < 10); //假设总页数为 10
-            }, 500);
-        }
-    });
-    //编程语言-Python
-    flow.load({
-        elem: '#LAY_demo1_4' //流加载容器
-        ,done: function(page, next){ //执行下一页的回调
-            //模拟数据插入
-            setTimeout(function(){
-                var lis = [];
-                for(var i = 0; i < 8; i++){
-                    lis.push('<div class="layui-col-md6" style="width: 300px; padding: 5px"> ' +
-                        '<div class="layui-card"> ' +
-                        '<a href=""><img src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLAjuJdictnIwVmC0KMia4sfNvnZ9OXkSzpMU4Ag4ZsAI66cicoSoLLhcKCeuIyHh3d5ico/356" width="290"></a> ' +
-                        '<a href=""><div class="layui-card-header">Java性能调优全解2.5</div></a> ' +
-                        '<div class="layui-card-body"> ' +
-                        '<span>8978人已报名</span> ' +
-                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ' +
-                        '<span>评分：6.81</span><br> ' +
-                        '<span style="color: red">￥299.00</span> ' +
-                        '</div> ' +
-                        '</div> ' +
-                        '</div>')
-                }
-                //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
-                //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
-                next(lis.join(''), page < 10); //假设总页数为 10
-            }, 500);
-        }
-    });
-    //编程语言-C
-    flow.load({
-        elem: '#LAY_demo1_5' //流加载容器
-        ,done: function(page, next){ //执行下一页的回调
-            //模拟数据插入
-            setTimeout(function(){
-                var lis = [];
-                for(var i = 0; i < 8; i++){
-                    lis.push('<div class="layui-col-md6" style="width: 300px; padding: 5px"> ' +
-                        '<div class="layui-card"> ' +
-                        '<a href=""><img src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356" width="290"></a> ' +
-                        '<a href=""><div class="layui-card-header">Java性能调优全解2.5</div></a> ' +
-                        '<div class="layui-card-body"> ' +
-                        '<span>8978人已报名</span> ' +
-                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ' +
-                        '<span>评分：6.81</span><br> ' +
-                        '<span style="color: red">￥299.00</span> ' +
-                        '</div> ' +
-                        '</div> ' +
-                        '</div>')
-                }
-                //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
-                //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
-                next(lis.join(''), page < 10); //假设总页数为 10
-            }, 500);
-        }
-    });
-
 });
+layui.use(['laypage', 'layer', 'jquery'], function () {
+    var laypage = layui.laypage
+        , layer = layui.layer;
+    var $ = layui.$;
+
+    $.ajax({
+        url: "/videoManage/getCountByClassification?videoClassification=" + videoClassification,
+        type: "post",
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            laypage.render({
+                elem: 'demo7'
+                , count: data.data
+                // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                , limit: 10
+                , jump: function (obj) {
+                    //调用加载函数加载数据
+                    showByClassification(obj.curr, obj.limit, videoClassification);
+                }
+            });
+        }
+    });
+
+    /**
+     * 根据一级分类获取视频列表
+     */
+    $('#videoClass1, #videoClass1_limitless').on('click', function () {
+        videoClassification = "编程语言";
+        $.ajax({
+            url: "/videoManage/getCountByClassification?videoClassification=" + videoClassification,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo7'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showByClassification(obj.curr, obj.limit, videoClassification);
+                    }
+                });
+            }
+        });
+    });
+    $('#videoClass2, #videoClass2_limitless').on('click', function () {
+        videoClassification = "云计算大数据";
+        $.ajax({
+            url: "/videoManage/getCountByClassification?videoClassification=" + videoClassification,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo7'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showByClassification(obj.curr, obj.limit, videoClassification);
+                    }
+                });
+            }
+        });
+    });
+
+    $('#videoClass3, #videoClass3_limitless').on('click', function () {
+        videoClassification = "计算机基础";
+        $.ajax({
+            url: "/videoManage/getCountByClassification?videoClassification=" + videoClassification,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo7'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showByClassification(obj.curr, obj.limit, videoClassification);
+                    }
+                });
+            }
+        });
+    });
+
+    $('#videoClass4, #videoClass4_limitless').on('click', function () {
+        videoClassification = "移动开发";
+        $.ajax({
+            url: "/videoManage/getCountByClassification?videoClassification=" + videoClassification,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo7'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showByClassification(obj.curr, obj.limit, videoClassification);
+                    }
+                });
+            }
+        });
+    });
+
+    $('#videoClass5, #videoClass5_limitless').on('click', function () {
+        videoClassification = "前沿技术";
+        $.ajax({
+            url: "/videoManage/getCountByClassification?videoClassification=" + videoClassification,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo7'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showByClassification(obj.curr, obj.limit, videoClassification);
+                    }
+                });
+            }
+        });
+    });
+
+    /**
+     * 根据二级分类获取视频列表
+     */
+    //编程语言
+    function showClassificationLittle(classificationLittle) {
+        $.ajax({
+            url: "/videoManage/getCountByLittleClassification?classificationLittle=" + classificationLittle,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo7'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showByClassificationLittle(obj.curr, obj.limit, classificationLittle);
+                    }
+                });
+            }
+        });
+    }
+
+    $('#videoClass1_Java').on('click', function () {
+        classificationLittle = "Java";
+        showClassificationLittle(classificationLittle);
+    });
+    $('#videoClass1_c1').on('click', function () {
+        classificationLittle = "C++";
+        showClassificationLittle(classificationLittle);
+    });
+    $('#videoClass1_python').on('click', function () {
+        classificationLittle = "Python";
+        showClassificationLittle(classificationLittle);
+    });
+    $('#videoClass1_c2').on('click', function () {
+        classificationLittle = "C";
+        showClassificationLittle(classificationLittle);
+    });
+    //云计算大数据
+    $('#videoClass2_Hadoop').on('click', function () {
+        classificationLittle = "Hadoop";
+        showClassificationLittle(classificationLittle);
+    });
+    $('#videoClass2_Spark').on('click', function () {
+        classificationLittle = "Spark";
+        showClassificationLittle(classificationLittle);
+    });
+    $('#videoClass2_Hbase').on('click', function () {
+        classificationLittle = "Hbase";
+        showClassificationLittle(classificationLittle);
+    });
+    $('#videoClass2_Aliyun').on('click', function () {
+        classificationLittle = "阿里云";
+        showClassificationLittle(classificationLittle);
+    });
+    $('#videoClass2_Docker').on('click', function () {
+        classificationLittle = "Docker";
+        showClassificationLittle(classificationLittle);
+    });
+    //计算机基础
+    $('#videoClass3_network').on('click', function () {
+        classificationLittle = "计算机网络";
+        showClassificationLittle(classificationLittle);
+    });
+    $('#videoClass3_algorithm').on('click', function () {
+        classificationLittle = "算法与数据结构";
+        showClassificationLittle(classificationLittle);
+    });
+    //移动开发
+    $('#videoClass4_Android').on('click', function () {
+        classificationLittle = "Android";
+        showClassificationLittle(classificationLittle);
+    });
+    $('#videoClass4_iOS').on('click', function () {
+        classificationLittle = "iOS";
+        showClassificationLittle(classificationLittle);
+    });
+    $('#videoClass4_react_natives').on('click', function () {
+        classificationLittle = "React native";
+        showClassificationLittle(classificationLittle);
+    });
+    //前沿技术
+    $('#videoClass5_microservice').on('click', function () {
+        classificationLittle = "微服务";
+        showClassificationLittle(classificationLittle);
+    });
+    $('#videoClass5_blockchain').on('click', function () {
+        classificationLittle = "区块链";
+        showClassificationLittle(classificationLittle);
+    });
+    $('#videoClass5_machine_learning').on('click', function () {
+        classificationLittle = "机器学习";
+        showClassificationLittle(classificationLittle);
+    });
+    $('#videoClass5_deep_learning').on('click', function () {
+        classificationLittle = "深度学习";
+        showClassificationLittle(classificationLittle);
+    });
+    $('#videoClass5_computer_vision').on('click', function () {
+        classificationLittle = "计算机视觉";
+        showClassificationLittle(classificationLittle);
+    });
+});
+
+function showByClassification(pageNo, pageSize, videoClassification) {
+    var formData = new FormData();
+    formData.append("query", videoClassification);
+    formData.append("limit", pageSize);
+    formData.append("page", pageNo);
+    $.ajax({
+        url: "/videoManage/searchByClassification",
+        type: "post",
+        dataType: "json",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $("#videoClass_limitless_item").empty();
+            if (data.data.numberOfElements === 0) {
+                document.getElementById("demo7").style.display = "none";
+                var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                    "<div>" +
+                    "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                    "<span>暂无相关信息，请查看其它分类！</span>" +
+                    "</div>" +
+                    "</div>";
+                $("#videoClass_limitless_item").append(appendhtml);
+            } else {
+                document.getElementById("demo7").style.display = "block";
+                for (var i = 0; i < data.data.numberOfElements; i++) {
+                    var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
+                        "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
+                        "                                    <div class=\"layui-card\">\n" +
+                        "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "\">" +
+                        "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
+                        "                                            <div style=\"height: 40px\">\n" +
+                        "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                        </a>\n" +
+                        "                                        <div class=\"layui-card-body\">\n" +
+                        "                                            <div class=\"layui-input-inline\" style=\"float: left\">\n" +
+                        "                                                <img src=\"../images/integral.png\" style=\"width: 16px; height: 16px\"/>\n" +
+                        "                                                <span style=\"color: red; font-size: 10px\">" + data.data.content[i].videoIntegral + "</span>&nbsp;&nbsp;" +
+                        "                                                <img src=\"../images/play.png\" style=\"width: 16px; height: 16px\"/>\n" +
+                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].playbackVolume + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                            <div class=\"layui-input-inline\" style=\"float: right\">\n" +
+                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].videoDate + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                            <div style=\"clear: both\"></div>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>";
+                    $("#videoClass_limitless_item").append(appendhtml);
+                }
+            }
+        }
+    });
+}
+
+function showByClassificationLittle(pageNo, pageSize, classificationLittle) {
+    var formData = new FormData();
+    formData.append("query", classificationLittle);
+    formData.append("limit", pageSize);
+    formData.append("page", pageNo);
+    $.ajax({
+        url: "/videoManage/searchByLittleClassification",
+        type: "post",
+        dataType: "json",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $("#videoClass_limitless_item").empty();
+            if (data.data.numberOfElements === 0) {
+                document.getElementById("demo7").style.display = "none";
+                var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                    "<div>" +
+                    "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                    "<span>暂无相关信息，请查看其它分类！</span>" +
+                    "</div>" +
+                    "</div>";
+                $("#videoClass_limitless_item").append(appendhtml);
+            } else {
+                document.getElementById("demo7").style.display = "block";
+                for (var i = 0; i < data.data.numberOfElements; i++) {
+                    var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
+                        "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
+                        "                                    <div class=\"layui-card\">\n" +
+                        "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "\">" +
+                        "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
+                        "                                            <div style=\"height: 40px\">\n" +
+                        "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                        </a>\n" +
+                        "                                        <div class=\"layui-card-body\">\n" +
+                        "                                            <div class=\"layui-input-inline\" style=\"float: left\">\n" +
+                        "                                                <img src=\"../images/integral.png\" style=\"width: 16px; height: 16px\"/>\n" +
+                        "                                                <span style=\"color: red; font-size: 10px\">" + data.data.content[i].videoIntegral + "</span>&nbsp;&nbsp;" +
+                        "                                                <img src=\"../images/play.png\" style=\"width: 16px; height: 16px\"/>\n" +
+                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].playbackVolume + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                            <div class=\"layui-input-inline\" style=\"float: right\">\n" +
+                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].videoDate + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                            <div style=\"clear: both\"></div>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>";
+                    $("#videoClass_limitless_item").append(appendhtml);
+                }
+            }
+        }
+    });
+}

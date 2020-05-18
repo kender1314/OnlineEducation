@@ -44,6 +44,12 @@ public class QuestionManageController {
    }
 
     @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountByQuery")
+    public Result<Object> getCountByQuery(String query){
+        return ResultUtils.success(questionManageService.getCountByQuery(query));
+    }
+
+    @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/updateQuestion")
     public Result<Object> updateQuestion(Question question) {
         return ResultUtils.success(questionManageService.updateQuestion(question));

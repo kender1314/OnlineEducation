@@ -1,10 +1,13 @@
 package com.graduate.onlineeducation.entity.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.graduate.onlineeducation.entity.User;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Author hejiang
@@ -41,6 +44,25 @@ public class VideoSeriesDTO implements Serializable {
     @NotNull
     @Column(name = "series_integral")
     private Integer seriesIntegral;
+
+    @Column(name = "series_image")
+    private String seriesImage;
+
+    @Column(name = "series_image_url")
+    private String seriesImageUrl;
+
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @Column(name = "series_date")
+    private Date seriesDate;
+
+    @NotNull
+    @Column(name = "series_classification")
+    private String seriesClassification;
+
+    @NotNull
+    @Column(name = "series_classification_little")
+    private String classificationLittle;
 
     public Integer getId() {
         return id;
@@ -82,14 +104,59 @@ public class VideoSeriesDTO implements Serializable {
         this.seriesIntegral = seriesIntegral;
     }
 
+    public String getSeriesImage() {
+        return seriesImage;
+    }
+
+    public void setSeriesImage(String seriesImage) {
+        this.seriesImage = seriesImage;
+    }
+
+    public String getSeriesImageUrl() {
+        return seriesImageUrl;
+    }
+
+    public void setSeriesImageUrl(String seriesImageUrl) {
+        this.seriesImageUrl = seriesImageUrl;
+    }
+
+    public Date getSeriesDate() {
+        return seriesDate;
+    }
+
+    public void setSeriesDate(Date seriesDate) {
+        this.seriesDate = seriesDate;
+    }
+
+    public String getSeriesClassification() {
+        return seriesClassification;
+    }
+
+    public void setSeriesClassification(String seriesClassification) {
+        this.seriesClassification = seriesClassification;
+    }
+
+    public String getClassificationLittle() {
+        return classificationLittle;
+    }
+
+    public void setClassificationLittle(String classificationLittle) {
+        this.classificationLittle = classificationLittle;
+    }
+
     @Override
     public String toString() {
-        return "VideoSeries{" +
+        return "VideoSeriesDTO{" +
                 "id=" + id +
                 ", seriesName='" + seriesName + '\'' +
                 ", seriesNumber=" + seriesNumber +
                 ", introduction='" + introduction + '\'' +
                 ", seriesIntegral=" + seriesIntegral +
+                ", seriesImage='" + seriesImage + '\'' +
+                ", seriesImageUrl='" + seriesImageUrl + '\'' +
+                ", seriesDate=" + seriesDate +
+                ", seriesClassification='" + seriesClassification + '\'' +
+                ", classificationLittle='" + classificationLittle + '\'' +
                 '}';
     }
 }
