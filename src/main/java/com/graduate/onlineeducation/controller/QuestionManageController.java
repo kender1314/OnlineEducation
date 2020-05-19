@@ -55,4 +55,16 @@ public class QuestionManageController {
         return ResultUtils.success(questionManageService.updateQuestion(question));
     }
 
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/insertQuestion")
+    public Result<Object> insertQuestion(Question question) {
+        return ResultUtils.success(questionManageService.updateQuestion(question));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getQuestionById")
+    public Result<Object> getQuestionById(Integer id) {
+        return ResultUtils.success(questionManageService.getQuestionById(id));
+    }
+
 }

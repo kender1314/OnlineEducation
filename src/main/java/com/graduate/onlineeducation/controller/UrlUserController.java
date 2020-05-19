@@ -1,7 +1,12 @@
 package com.graduate.onlineeducation.controller;
 
+import com.graduate.onlineeducation.autoconfigure.annotations.InterceptUser;
+import com.graduate.onlineeducation.entity.Question;
 import com.graduate.onlineeducation.entity.Video;
+import com.graduate.onlineeducation.entity.VideoSeries;
+import com.graduate.onlineeducation.service.QuestionManageService;
 import com.graduate.onlineeducation.service.VideoManageService;
+import com.graduate.onlineeducation.service.VideoSeriesManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +19,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @Date 2020/4/21 11:17
  * @Description:
  */
+@InterceptUser
 @Controller
 @RequestMapping("/userUrl")
 public class UrlUserController {
     @Autowired
     private VideoManageService videoManageService;
+
+    @Autowired
+    private VideoSeriesManageService videoSeriesManageService;
+
+    @Autowired
+    private QuestionManageService questionManageService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/index")
     public String index() {
@@ -45,9 +57,9 @@ public class UrlUserController {
         return "/views/navigation";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/question")
-    public String question() {
-        return "/views/question";
+    @RequestMapping(method = RequestMethod.GET, value = "/footer")
+    public String footer() {
+        return "/views/footer";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/personalInformation")
@@ -72,5 +84,23 @@ public class UrlUserController {
     public String search(String query, Model model) {
         model.addAttribute("query", query);
         return "/views/search";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/showSeries")
+    public String showSeries(Integer id, Model model) {
+        VideoSeries videoSeries = videoSeriesManageService.getVideoSeriesById(id);
+        model.addAttribute("videoSeries", videoSeries);
+        if(videoSeries.getSeriesIntegral() == 0){
+            return "/views/play_series";
+        }else {
+            return "/views/buy";
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/question")
+    public String question(Integer id, Model model) {
+        Question question = questionManageService.getQuestionById(id);
+        model.addAttribute("question", question);
+        return "/views/question";
     }
 }

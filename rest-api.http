@@ -66,3 +66,11 @@ Connection: keep-alive
 Content-Type: application/json
 
 ###
+POST http://localhost:8080/answerManage/getCountAnswerByQuestionId?questionId=14
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh_CN
+Connection: keep-alive
+Content-Type: application/json
+
+###

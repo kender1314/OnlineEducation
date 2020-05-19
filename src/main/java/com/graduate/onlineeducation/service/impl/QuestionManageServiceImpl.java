@@ -51,4 +51,9 @@ public class QuestionManageServiceImpl implements QuestionManageService {
         Question questionTemp = questionManageRepository.save(question);
         return questionTemp != null;
     }
+
+    @Override
+    public Question getQuestionById(Integer id) {
+        return questionManageRepository.getQuestionById(id);
+    }
 }

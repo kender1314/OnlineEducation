@@ -44,4 +44,11 @@ public interface QuestionManageRepository extends PagingAndSortingRepository<Que
      * @return
      */
     Integer getCountByQuery(String query);
+
+    /**
+     * 根据id获取问题信息
+     * @param id
+     * @return
+     */
+    Question getQuestionById(Integer id);
 }

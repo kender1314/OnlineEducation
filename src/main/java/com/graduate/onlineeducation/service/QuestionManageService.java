@@ -47,4 +47,11 @@ public interface QuestionManageService {
      * @return
      */
     boolean updateQuestion(Question question);
+
+    /**
+     * 根据id获取问题信息
+     * @param id
+     * @return
+     */
+    Question getQuestionById(Integer id);
 }

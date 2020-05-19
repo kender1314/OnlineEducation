@@ -1,6 +1,8 @@
-package com.graduate.onlineeducation.entity;
+package com.graduate.onlineeducation.entity.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.graduate.onlineeducation.entity.Question;
+import com.graduate.onlineeducation.entity.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,7 +18,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "gp_answer")
-public class Answer implements Serializable {
+public class AnswerDTO implements Serializable {
     private static final long serialVersionUID = 2514333989278491301L;
     /**
      * TABLE：使用一个特定的数据库表格来保存主键。
@@ -43,16 +45,16 @@ public class Answer implements Serializable {
     @Column(name = "answer_like")
     private Integer answerLike;
 
+    @NotNull
+    @Column(name = "user_id")
+    private Integer userId;
+
     @Column(name = "answer_reply_id")
     private Integer answerReplyId;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "question_id")
-    private Question question;
+    @NotNull
+    @Column(name = "question_id")
+    private Integer questionId;
 
     public Integer getId() {
         return id;
@@ -86,20 +88,20 @@ public class Answer implements Serializable {
         this.answerLike = answerLike;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Question getQuestion() {
-        return question;
+    public Integer getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
     }
 
     public Integer getAnswerReplyId() {
@@ -112,14 +114,14 @@ public class Answer implements Serializable {
 
     @Override
     public String toString() {
-        return "Answer{" +
+        return "AnswerDTO{" +
                 "id=" + id +
                 ", answerDate=" + answerDate +
                 ", answerContent='" + answerContent + '\'' +
                 ", answerLike=" + answerLike +
+                ", userId=" + userId +
                 ", answerReplyId=" + answerReplyId +
-                ", user=" + user +
-                ", question=" + question +
+                ", questionId=" + questionId +
                 '}';
     }
 }

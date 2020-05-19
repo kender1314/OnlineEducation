@@ -3,6 +3,7 @@ package com.graduate.onlineeducation.controller;
 import com.graduate.onlineeducation.common.Result;
 import com.graduate.onlineeducation.common.ResultUtils;
 import com.graduate.onlineeducation.entity.Answer;
+import com.graduate.onlineeducation.entity.DTO.AnswerDTO;
 import com.graduate.onlineeducation.service.AnswerManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,7 +35,6 @@ public class AnswerManageController {
         return ResultUtils.success(answers);
     }
 
-
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/deleteAnswer")
     public Result<Object> deleteAnswer(Integer id) {
@@ -46,5 +46,23 @@ public class AnswerManageController {
     public Result<Object> getAnswerReply(@RequestParam Map<String, Object> params) {
         Page<Answer> answers = answerManageService.getAnswerReply(params);
         return ResultUtils.success(answers);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/insertAnswer")
+    public Result<Object> insertAnswer(AnswerDTO answer) {
+        return ResultUtils.success(answerManageService.insertAnswer(answer));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountAnswerByQuestionId")
+    public Result<Object> getCountAnswerByQuestionId(Integer questionId){
+        return ResultUtils.success(answerManageService.getCountAnswerByQuestionId(questionId));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountReplyByAnswerId")
+    public Result<Object> getCountReplyByAnswerId(Integer answerId){
+        return ResultUtils.success(answerManageService.getCountReplyByAnswerId(answerId));
     }
 }

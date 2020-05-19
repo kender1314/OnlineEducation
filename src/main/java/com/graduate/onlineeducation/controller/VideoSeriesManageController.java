@@ -61,4 +61,10 @@ public class VideoSeriesManageController {
     public Result<Object> insertVideoSeries(VideoSeriesDTO videoSeriesDTO) {
         return ResultUtils.success(videoSeriesManageService.updateVideoSeries(videoSeriesDTO));
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getVideoSeriesById")
+    public Result<Object> getVideoSeriesById(Integer id) {
+        return ResultUtils.success(videoSeriesManageService.getVideoSeriesById(id));
+    }
 }

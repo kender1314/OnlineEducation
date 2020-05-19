@@ -1,75 +1,149 @@
+//左侧导航栏切换条
+function card(i) {
+    switch (i) {
+        case 1:
+            document.getElementById("my-content-course").style.display = "block";
+            document.getElementById("my-content-info").style.display = "none";
+            document.getElementById("my-content-order").style.display = "none";
+            document.getElementById("my-content-collect").style.display = "none";
+            document.getElementById("my-content-video").style.display = "none";
+            document.getElementById("my-content-question").style.display = "none";
+            break;
+        case 2:
+            document.getElementById("my-content-course").style.display = "none";
+            document.getElementById("my-content-info").style.display = "block";
+            document.getElementById("my-content-order").style.display = "none";
+            document.getElementById("my-content-collect").style.display = "none";
+            document.getElementById("my-content-video").style.display = "none";
+            document.getElementById("my-content-question").style.display = "none";
+            break;
+        case 3:
+            document.getElementById("my-content-course").style.display = "none";
+            document.getElementById("my-content-info").style.display = "none";
+            document.getElementById("my-content-order").style.display = "block";
+            document.getElementById("my-content-collect").style.display = "none";
+            document.getElementById("my-content-video").style.display = "none";
+            document.getElementById("my-content-question").style.display = "none";
+            break;
+        case 4:
+            document.getElementById("my-content-course").style.display = "none";
+            document.getElementById("my-content-info").style.display = "none";
+            document.getElementById("my-content-order").style.display = "none";
+            document.getElementById("my-content-collect").style.display = "block";
+            document.getElementById("my-content-video").style.display = "none";
+            document.getElementById("my-content-question").style.display = "none";
+            break;
+        case 5:
+            document.getElementById("my-content-course").style.display = "none";
+            document.getElementById("my-content-info").style.display = "none";
+            document.getElementById("my-content-order").style.display = "none";
+            document.getElementById("my-content-collect").style.display = "none";
+            document.getElementById("my-content-video").style.display = "block";
+            document.getElementById("my-content-question").style.display = "none";
+            break;
+        case 6:
+            document.getElementById("my-content-course").style.display = "none";
+            document.getElementById("my-content-info").style.display = "none";
+            document.getElementById("my-content-order").style.display = "none";
+            document.getElementById("my-content-collect").style.display = "none";
+            document.getElementById("my-content-video").style.display = "none";
+            document.getElementById("my-content-question").style.display = "block";
+            break;
+    }
+}
+
 layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'upload'], function () { //独立版的layer无需执行这一句
     var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
     var laypage = layui.laypage;
     var upload = layui.upload;
     var table = layui.table;
     var tree = layui.tree
-        , util = layui.util
+        , util = layui.util;
+
+    $.ajax({
+        url: "/videoManage/getCountByClassification?videoClassification=" + videoClassification,
+        type: "post",
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            laypage.render({
+                elem: 'demo7'
+                , count: data.data
+                // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                , limit: 10
+                , jump: function (obj) {
+                    //调用加载函数加载数据
+                    showByClassification(obj.curr, obj.limit, videoClassification);
+                }
+            });
+        }
+    });
 
 
-        //模拟数据1
-        , data1 = [{
-            title: 'java'
-            , id: 1
-            , children: [{
-                title: 'Java架构师体系课：跟随千万级项目从0到100全过程高效成长'
-                , id: 1001
-            }, {
-                title: 'Spring Cloud + Vue 前后端分离 开发企业级在线视频课程系统'
-                , id: 1002
-            }]
+    //模拟数据1
+    var data1 = [{
+        title: 'java'
+        , id: 1
+        , children: [{
+            title: 'Java架构师体系课：跟随千万级项目从0到100全过程高效成长'
+            , id: 1001
         }, {
-            title: 'c++'
-            , id: 2
-            , children: [{
-                title: '大学计算机必修课新讲--编译原理+操作系统+图形学'
-                , id: 2000
-            }, {
-                title: '2020 重学C++ 重构你的C++知识体系'
-                , id: 2001
-            }]
-        }, {
-            title: 'python'
-            , id: 3
-            , children: [{
-                title: 'Python3入门人工智能 掌握机器学习+深度学习 提升实战能力'
-                , id: 3000
-            }, {
-                title: 'Python Flask快速入门与进阶'
-                , id: 3001
-            }]
+            title: 'Spring Cloud + Vue 前后端分离 开发企业级在线视频课程系统'
+            , id: 1002
         }]
-        , data2 = [{
-            title: 'html'
-            , id: 1
-            , children: [{
-                title: 'css自适应布局：css宽度自适应如何实现？'
-                , id: 1001
-            }, {
-                title: '怎么让div的高度自适应屏幕的高度?'
-                , id: 1002
-            }]
+    }, {
+        title: 'c++'
+        , id: 2
+        , children: [{
+            title: '大学计算机必修课新讲--编译原理+操作系统+图形学'
+            , id: 2000
         }, {
-            title: 'java'
-            , id: 2
-            , children: [{
-                title: '如何安装jdk？'
-                , id: 2000
-            }, {
-                title: '如何进行前后端分页？'
-                , id: 2001
-            }]
+            title: '2020 重学C++ 重构你的C++知识体系'
+            , id: 2001
+        }]
+    }, {
+        title: 'python'
+        , id: 3
+        , children: [{
+            title: 'Python3入门人工智能 掌握机器学习+深度学习 提升实战能力'
+            , id: 3000
         }, {
-            title: 'python'
-            , id: 3
-            , children: [{
-                title: '如何安装Python3？'
-                , id: 3000
-            }, {
-                title: 'Python有什么作用'
-                , id: 3001
-            }]
-        }];
+            title: 'Python Flask快速入门与进阶'
+            , id: 3001
+        }]
+    }];
+    var data2 = [{
+        title: 'html'
+        , id: 1
+        , children: [{
+            title: 'css自适应布局：css宽度自适应如何实现？'
+            , id: 1001
+        }, {
+            title: '怎么让div的高度自适应屏幕的高度?'
+            , id: 1002
+        }]
+    }, {
+        title: 'java'
+        , id: 2
+        , children: [{
+            title: '如何安装jdk？'
+            , id: 2000
+        }, {
+            title: '如何进行前后端分页？'
+            , id: 2001
+        }]
+    }, {
+        title: 'python'
+        , id: 3
+        , children: [{
+            title: '如何安装Python3？'
+            , id: 3000
+        }, {
+            title: 'Python有什么作用'
+            , id: 3001
+        }]
+    }];
 
     //开启节点操作图标
     tree.render({
@@ -80,8 +154,6 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
             layer.msg(JSON.stringify(obj.data));
         }
     });
-
-    var table = layui.table;
 
     table.render({
         elem: '#test'
@@ -99,7 +171,6 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
             , {field: 'wealth', width: 137, title: '财富', sort: true}
         ]]
     });
-
 
     tree.render({
         elem: '#test10'
@@ -744,59 +815,6 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
         }
     });
 });
-
-function fun(i) {
-    switch (i) {
-        case 1:
-            document.getElementById("my-content-course").style.display = "block";
-            document.getElementById("my-content-info").style.display = "none";
-            document.getElementById("my-content-order").style.display = "none";
-            document.getElementById("my-content-collect").style.display = "none";
-            document.getElementById("my-content-video").style.display = "none";
-            document.getElementById("my-content-question").style.display = "none";
-            break;
-        case 2:
-            document.getElementById("my-content-course").style.display = "none";
-            document.getElementById("my-content-info").style.display = "block";
-            document.getElementById("my-content-order").style.display = "none";
-            document.getElementById("my-content-collect").style.display = "none";
-            document.getElementById("my-content-video").style.display = "none";
-            document.getElementById("my-content-question").style.display = "none";
-            break;
-        case 3:
-            document.getElementById("my-content-course").style.display = "none";
-            document.getElementById("my-content-info").style.display = "none";
-            document.getElementById("my-content-order").style.display = "block";
-            document.getElementById("my-content-collect").style.display = "none";
-            document.getElementById("my-content-video").style.display = "none";
-            document.getElementById("my-content-question").style.display = "none";
-            break;
-        case 4:
-            document.getElementById("my-content-course").style.display = "none";
-            document.getElementById("my-content-info").style.display = "none";
-            document.getElementById("my-content-order").style.display = "none";
-            document.getElementById("my-content-collect").style.display = "block";
-            document.getElementById("my-content-video").style.display = "none";
-            document.getElementById("my-content-question").style.display = "none";
-            break;
-        case 5:
-            document.getElementById("my-content-course").style.display = "none";
-            document.getElementById("my-content-info").style.display = "none";
-            document.getElementById("my-content-order").style.display = "none";
-            document.getElementById("my-content-collect").style.display = "none";
-            document.getElementById("my-content-video").style.display = "block";
-            document.getElementById("my-content-question").style.display = "none";
-            break;
-        case 6:
-            document.getElementById("my-content-course").style.display = "none";
-            document.getElementById("my-content-info").style.display = "none";
-            document.getElementById("my-content-order").style.display = "none";
-            document.getElementById("my-content-collect").style.display = "none";
-            document.getElementById("my-content-video").style.display = "none";
-            document.getElementById("my-content-question").style.display = "block";
-            break;
-    }
-}
 
 function selectSeries() {
     var select = document.getElementById("videoClassification");

@@ -49,4 +49,11 @@ public interface VideoSeriesManageService {
      * @return
      */
     Integer getCountByQuery(String query);
+
+    /**
+     * 根据id获取视频系列
+     * @param id
+     * @return
+     */
+   VideoSeries getVideoSeriesById(Integer id);
 }

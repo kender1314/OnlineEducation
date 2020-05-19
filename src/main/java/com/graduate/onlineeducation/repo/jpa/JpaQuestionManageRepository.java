@@ -31,4 +31,7 @@ public interface JpaQuestionManageRepository extends QuestionManageRepository {
     @Query(value = "select count(*) from gp_user, gp_question where gp_question.user_id = gp_user.user_id and(" +
             "gp_user.user_name like %?1% or question_name like %?1% or question_content like %?1%)", nativeQuery = true)
     Integer getCountByQuery(String query);
+
+    @Override
+    Question getQuestionById(Integer id);
 }

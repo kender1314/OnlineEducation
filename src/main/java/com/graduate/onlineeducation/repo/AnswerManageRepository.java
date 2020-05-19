@@ -1,6 +1,7 @@
 package com.graduate.onlineeducation.repo;
 
 import com.graduate.onlineeducation.entity.Answer;
+import com.graduate.onlineeducation.entity.DTO.AnswerDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.NoRepositoryBean;
@@ -35,4 +36,25 @@ public interface AnswerManageRepository extends PagingAndSortingRepository<Answe
      * @return
      */
     Page<Answer> getAnswerReply(Integer replyId, Pageable pageable);
+
+    /**
+     * 储存回答信息
+     * @param answerDTO
+     * @return
+     */
+    AnswerDTO save(AnswerDTO answerDTO);
+
+    /**
+     * 根据问题id获取回答评论的数量
+     * @param questionId
+     * @return
+     */
+    Integer getCountAnswerByQuestionId(Integer questionId);
+
+    /**
+     * 根据评论id获取回复该评论的评论的数量
+     * @param answerId
+     * @return
+     */
+    Integer getCountReplyByAnswerId(Integer answerId);
 }

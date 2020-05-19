@@ -52,4 +52,9 @@ public class VideoSeriesManageServiceImpl implements VideoSeriesManageService {
     public Integer getCountByQuery(String query) {
         return videoSeriesManageRepository.getCountByQuery(query);
     }
+
+    @Override
+    public VideoSeries getVideoSeriesById(Integer id) {
+        return videoSeriesManageRepository.getVideoSeriesById(id);
+    }
 }

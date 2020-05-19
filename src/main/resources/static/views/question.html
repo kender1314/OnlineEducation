@@ -10,91 +10,93 @@
 <body>
 <div class="navigation">
 </div>
-<div style="margin-left: 10%; width: 80%; min-height: 700px;">
+<input type="hidden" id="userId" name="userId" th:value="${session.user.id}">
+<input type="hidden" id="questionId" name="questionId" th:value="${question.id}">
+<div style="margin-left: 20%; width: 60%; min-height: 600px;">
     <div style="padding: 20px; background-color: #F2F2F2;">
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <div class="layui-card">
-                    <div class="layui-card-header">
-                        关于通过jquery将html代码写入后，这些代码不能应用js和css的问题。
+                    <div class="layui-card-header" style="min-height: 90px">
+                        <span style="font-size: 18px" th:text="${question.questionName}">aa</span>
+                        <div>
+                            <img src="../images/user1.png" style="width: 16px; height: 16px"/>
+                            <span style="font-size: 12px; color: #999" th:text="${question.user.userName}"></span>
+                        </div>
                     </div>
                     <div class="layui-card-body">
-                        一直以来，jquery都不能使用。本以为是其他原因，今天我彻底晕了。
-                        如果我自己的js代码是这样，就可以使用（我就定义了一个function，change）
-                        function change(){
-
-                        document.getElementById("a").innerText="aaa";
-                        } 有一个button,一点之后一段文本就会成为aaa.
-                        但是如果使用的是jquery，如下
-                        function change(){
-                        $("#a").text("aaaaaa");
-                        }就不会有任何反应，我在html里导入了jquery.js.
-                        请大神帮我看看我到底哪里错了。谢谢
+                        <span th:text="${question.questionContent}">aaa</span>
                     </div>
                 </div>
-                <button type="button" id="my-answer" onclick="answer()" class="layui-btn">我来答</button>
+                <div style="text-align: right">
+                    <img src="../images/integral.png" style="width: 16px; height: 16px"/>
+                    <span style="font-size: 10px; color:#999; margin-right: 20px"
+                          th:text="${question.questionIntegral}"></span>
+                    <span style="font-size: 10px; color: #999; margin-right: 20px">分类：<span
+                            th:text="${question.classification}"></span></span>
+                    <span style="font-size: 10px; color: #999; margin-right: 20px">时间：<span
+                            th:text="${question.questionDate}"></span></span>
+                </div>
+                <button type="button" id="my-answer" onclick="answer()" style="margin-top: 20px" class="layui-btn">我来答
+                </button>
             </div>
             <div id="my-answer-content" style="display: none">
-                <form class="layui-form" action="">
-                    <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
-                    <button type="submit" class="layui-btn" style="margin-left: 90%; margin-top: 20px">提交作答</button>
-                </form>
+                <textarea placeholder="请输入内容" class="layui-textarea" id="answer-content"></textarea>
+                <br>
+                <span style="color: red; font-size: 12px; display: none" id="content-warm">评论不能不为空！</span>
+                <button type="button" class="layui-btn" id="answer-submit" style="margin-left: 90%; margin-top: 20px">
+                    提交作答
+                </button>
             </div>
             <fieldset class="layui-elem-field" style="padding: 20px">
                 <legend>回答</legend>
-                <div class="layui-col-md12">
-                    <div class="layui-card">
-                        <div class="layui-card-header">
-                            用户：<b>会飞的猪</b>
-                        </div>
-                        <div class="layui-card-body">
-                            是不是JQ路径错了？
-                        </div>
-                        <div style="margin-left: 80%; padding-bottom: 20px">
-                            <a href=""><img src="../images/like.png" height="20" width="20"/></a>
-                            <a href=""><img src="../images/comment.png" height="20" width="20"
-                                            style="margin-left: 20px"/></a>
-                        </div>
-                    </div>
-                    <div class="layui-card">
-                        <div class="layui-card-header">
-                            用户：<b>会飞的猪</b>
-                        </div>
-                        <div class="layui-card-body">
-                            是不是JQ路径错了？
-                        </div>
-                        <div style="margin-left: 80%; padding-bottom: 20px">
-                            <a href=""><img src="../images/like.png" height="20" width="20"/></a>
-                            <a href=""><img src="../images/comment.png" height="20" width="20"
-                                            style="margin-left: 20px"/></a>
-                        </div>
-                    </div>
-                    <div class="layui-card">
-                        <div class="layui-card-header">
-                            用户：<b>会飞的猪</b>
-                        </div>
-                        <div class="layui-card-body">
-                            是不是JQ路径错了？
-                        </div>
-                        <div style="margin-left: 80%; padding-bottom: 20px">
-                            <a href=""><img src="../images/like.png" height="20" width="20"/></a>
-                            <a href=""><img src="../images/comment.png" height="20" width="20"
-                                            style="margin-left: 20px"/></a>
-                        </div>
-                    </div>
-                    <div class="layui-card">
-                        <div class="layui-card-header">
-                            用户：<b>会飞的猪</b>
-                        </div>
-                        <div class="layui-card-body">
-                            是不是JQ路径错了？
-                        </div>
-                        <div style="margin-left: 80%; padding-bottom: 20px">
-                            <a href=""><img src="../images/like.png" height="20" width="20"/></a>
-                            <a href=""><img src="../images/comment.png" height="20" width="20"
-                                            style="margin-left: 20px"/></a>
-                        </div>
-                    </div>
+                <div id="answer-list">
+<!--                    <div class="layui-col-md12">-->
+<!--                        <div class="layui-card">-->
+<!--                            <div class="layui-card-header">-->
+<!--                                <img src="../images/user1.png" style="width: 30px; height: 30px"/><b>会飞的猪</b>-->
+<!--                            </div>-->
+<!--                            <div class="layui-card-body">-->
+<!--                                是不是JQ路径错了？-->
+<!--                            </div>-->
+<!--                            <div style="padding-bottom: 20px">-->
+<!--                                <div style="margin-left: 15px">-->
+<!--                                    <span style="font-size: 10px; color: #999">时间：<span-->
+<!--                                            th:text="${question.questionDate}">2020-02-01</span></span>-->
+<!--                                    <a style="margin-left: 20px" href=""><img src="../images/like.png" height="15"-->
+<!--                                                                              width="15"/></a>-->
+<!--                                    <span style="font-size: 14px; color: #999">12</span>-->
+<!--                                    <a href=""><img src="../images/comment.png" height="15" width="15"-->
+<!--                                                    style="margin-left: 20px"/></a>-->
+<!--                                    <div style="min-height: 50px; margin-left: 50px;margin-top: 10px; ">-->
+<!--                                        <textarea placeholder="请输入内容" class="layui-textarea" style="width: 80%"></textarea>-->
+<!--                                        <div style="width: 80%; text-align: right; margin-top: 5px">-->
+<!--                                            <button type="button" class="layui-btn layui-btn-sm">回复</button>-->
+<!--                                        </div>-->
+<!--                                        <div>-->
+<!--                                            <div style="margin-top: 10px">-->
+<!--                                                <img src="../images/user1.png" height="15" width="15"/>-->
+<!--                                                <span style="font-size: 10px; color: #2E2D3C">科学声音：</span>-->
+<!--                                                <span style="font-size: 12px">21世纪，一直以来隐藏在历史暗处的兽人们的存在开始为人所知。</span>-->
+<!--                                                <div style="margin-top: 5px">-->
+<!--                                                    <span style="font-size: 10px; color: #999;">2020-05-05 23:57</span>-->
+<!--                                                    &nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--                                                    <a href="#">-->
+<!--                                                        <img src="../images/like.png"-->
+<!--                                                             style="width: 15px; height: 15px"/>-->
+<!--                                                    </a>-->
+<!--                                                    <span style="font-size: 10px; color: #999;">12</span>-->
+<!--                                                    &nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--                                                    <a href="#" style="font-size: 10px; color: #999;">回复</a>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div id="demo7" style="text-align: center"></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
                 <div id="demo8" style="text-align:center;"></div>
             </fieldset>
