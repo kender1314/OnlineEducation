@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
@@ -45,13 +46,14 @@ public class UserLoginServiceImpl implements UserLoginService {
     }
 
     @Override
-    public boolean login(Map<String, Object> params, HttpSession session) {
+    public boolean login(Map<String, Object> params, HttpSession session, Model model) {
         String username = (String) params.get("username");
         String password = (String) params.get("password");
         User user = userLoginRepository.login(username);
         if (SaltEncryptUtil.stringToDecode(user.getUserPassword()).
                 equals(SaltEncryptUtil.stringToDecode(password))) {
             session.setAttribute("user", user);
+            model.addAttribute("user", user);
             return true;
         }
         return false;

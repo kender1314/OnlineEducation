@@ -2,7 +2,10 @@ package com.graduate.onlineeducation.controller;
 
 import com.graduate.onlineeducation.common.Result;
 import com.graduate.onlineeducation.common.ResultUtils;
+import com.graduate.onlineeducation.entity.DTO.QuestionDTO;
 import com.graduate.onlineeducation.entity.Question;
+import com.graduate.onlineeducation.service.AnswerManageService;
+import com.graduate.onlineeducation.service.BookmarkManageService;
 import com.graduate.onlineeducation.service.QuestionManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,10 +26,19 @@ public class QuestionManageController {
     @Autowired
     private QuestionManageService questionManageService;
 
+    @Autowired
+    private AnswerManageService answerManageService;
+
+    @Autowired
+    private BookmarkManageService bookmarkManageService;
+
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/deleteQuestion")
     public Result<Object> deleteQuestion(Integer id){
-        return ResultUtils.success(questionManageService.deleteQuestion(id));
+        answerManageService.deleteAnswerByQuestionId(id);
+        bookmarkManageService.deleteBookmarkByQuestionId(id);
+        boolean flag = questionManageService.deleteQuestion(id);
+        return ResultUtils.success(flag);
     }
 
     @ResponseBody
@@ -57,14 +69,26 @@ public class QuestionManageController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/insertQuestion")
-    public Result<Object> insertQuestion(Question question) {
-        return ResultUtils.success(questionManageService.updateQuestion(question));
+    public Result<Object> insertQuestion(QuestionDTO question) {
+        return ResultUtils.success(questionManageService.insertQuestion(question));
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/getQuestionById")
     public Result<Object> getQuestionById(Integer id) {
         return ResultUtils.success(questionManageService.getQuestionById(id));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getQuestionByUserId")
+    public Result<Object> getQuestionByUserId(@RequestParam Map<String, Object> params) {
+        return ResultUtils.success(questionManageService.getQuestionByUserId(params));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountQuestionByUserId")
+    public Result<Object> getCountQuestionByUserId(Integer id) {
+        return ResultUtils.success(questionManageService.getCountQuestionByUserId(id));
     }
 
 }

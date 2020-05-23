@@ -2,9 +2,11 @@ package com.graduate.onlineeducation.controller;
 
 import com.graduate.onlineeducation.autoconfigure.annotations.InterceptUser;
 import com.graduate.onlineeducation.entity.Question;
+import com.graduate.onlineeducation.entity.User;
 import com.graduate.onlineeducation.entity.Video;
 import com.graduate.onlineeducation.entity.VideoSeries;
 import com.graduate.onlineeducation.service.QuestionManageService;
+import com.graduate.onlineeducation.service.UserManageService;
 import com.graduate.onlineeducation.service.VideoManageService;
 import com.graduate.onlineeducation.service.VideoSeriesManageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class UrlUserController {
 
     @Autowired
     private QuestionManageService questionManageService;
+
+    @Autowired
+    private UserManageService userManageService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/index")
     public String index() {
@@ -63,7 +68,9 @@ public class UrlUserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/personalInformation")
-    public String personalInformation() {
+    public String personalInformation(Integer userId, Model model) {
+        User user = userManageService.getUserInfoByUserId(userId);
+        model.addAttribute("user", user);
         return "/views/personal_information";
     }
 

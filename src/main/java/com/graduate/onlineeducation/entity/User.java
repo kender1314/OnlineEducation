@@ -77,6 +77,9 @@ public class User implements Serializable {
     @Column(name = "user_education")
     private String userEducation;
 
+    @Column(name = "user_is_delete")
+    private Integer isDelete;
+
     public User() {
 
     }
@@ -185,6 +188,14 @@ public class User implements Serializable {
         this.activeCode = activeCode;
     }
 
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -197,8 +208,11 @@ public class User implements Serializable {
                 ", introduction='" + introduction + '\'' +
                 ", major='" + major + '\'' +
                 ", userAddress='" + userAddress + '\'' +
+                ", activeStatus=" + activeStatus +
+                ", activeCode='" + activeCode + '\'' +
                 ", userBirth=" + userBirth +
                 ", userEducation='" + userEducation + '\'' +
+                ", isDelete=" + isDelete +
                 '}';
     }
 }

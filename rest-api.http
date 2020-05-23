@@ -74,3 +74,22 @@ Connection: keep-alive
 Content-Type: application/json
 
 ###
+POST http://localhost:8080/userManage/getUserInfo
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh_CN
+Connection: keep-alive
+Content-Type: application/json
+Cookie: Idea-7eb51924=43c35a15-1c3d-4731-8c35-616f7061ee75; JSESSIONID=54B03B000DE77A8676E1E11CFFD6B788
+
+###
+POST http://localhost:8080/bookmarkManage/getVideoBookmarksList
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh_CN
+Connection: keep-alive
+Content-Type: application/json
+
+{"pageSize": 10, "page": 1, "sortKey": "", "limit": 10, "userId": 1}
+
+###

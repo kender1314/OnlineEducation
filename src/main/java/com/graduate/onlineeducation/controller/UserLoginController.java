@@ -40,8 +40,8 @@ public class UserLoginController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public Result<Object> login(@RequestParam Map<String, Object> params, HttpSession session) {
-        return ResultUtils.success(userLoginService.login(params, session));
+    public Result<Object> login(@RequestParam Map<String, Object> params, HttpSession session, Model model) {
+        return ResultUtils.success(userLoginService.login(params, session, model));
     }
 
     @ResponseBody

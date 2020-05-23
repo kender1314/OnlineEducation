@@ -6,7 +6,9 @@ import com.graduate.onlineeducation.repo.AnswerManageRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,4 +42,10 @@ public interface JpaAnswerManageRepository extends AnswerManageRepository {
     @Override
     @Query(value = "select count(*) from gp_answer where answer_reply_id = ?1", nativeQuery = true)
     Integer getCountReplyByAnswerId(Integer answerId);
+
+    @Override
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM gp_answer where question_id = ?1", nativeQuery = true)
+    void deleteAnswerByQuestionId(Integer question);
 }

@@ -30,6 +30,13 @@ public interface AnswerManageService {
     boolean deleteAnswer(Integer id);
 
     /**
+     * 根据问题id删除问题回答
+     * @param question
+     * @return
+     */
+    boolean deleteAnswerByQuestionId(Integer question);
+
+    /**
      * 获取问题回复对话
      * @param params
      * @return

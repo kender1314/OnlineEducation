@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -76,6 +77,18 @@ public class UserManageController {
     @RequestMapping(method = RequestMethod.POST, value = "/getCountByQuery")
     public Result<Object> getCountByQuery(String query) {
         return ResultUtils.success(userManageService.getCountByQuery(query));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getUserInfoByUserId")
+    public Result<Object> getUserInfoByUserId(Integer userId) {
+        return ResultUtils.success(userManageService.getUserInfoByUserId(userId));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/updateUserByParam")
+    public Result<Object> updateUserByParam(@RequestParam Map<String, Object> param) {
+        return ResultUtils.success(userManageService.updateUserByParam(param));
     }
 }
 

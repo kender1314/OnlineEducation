@@ -46,6 +46,9 @@ public class VideoDTO implements Serializable {
     @Column(name = "video_status")
     private Integer videoStatus;
 
+    @Column(name = "video_is_delete")
+    private Integer isDelete;
+
     @NotNull
     @Column(name = "video_classification")
     private String videoClassification;
@@ -159,6 +162,14 @@ public class VideoDTO implements Serializable {
         this.videoNumber = videoNumber;
     }
 
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
         return "VideoDTO{" +
@@ -166,6 +177,7 @@ public class VideoDTO implements Serializable {
                 ", videoName='" + videoName + '\'' +
                 ", videoDate=" + videoDate +
                 ", videoStatus=" + videoStatus +
+                ", isDelete=" + isDelete +
                 ", videoClassification='" + videoClassification + '\'' +
                 ", videoIntegral=" + videoIntegral +
                 ", videoIntroduce='" + videoIntroduce + '\'' +

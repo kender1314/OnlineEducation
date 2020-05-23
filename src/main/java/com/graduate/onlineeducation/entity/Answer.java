@@ -46,6 +46,9 @@ public class Answer implements Serializable {
     @Column(name = "answer_reply_id")
     private Integer answerReplyId;
 
+    @Column(name = "answer_is_delete")
+    private Integer isDelete;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
@@ -110,6 +113,14 @@ public class Answer implements Serializable {
         this.answerReplyId = answerReplyId;
     }
 
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
         return "Answer{" +
@@ -118,6 +129,7 @@ public class Answer implements Serializable {
                 ", answerContent='" + answerContent + '\'' +
                 ", answerLike=" + answerLike +
                 ", answerReplyId=" + answerReplyId +
+                ", isDelete=" + isDelete +
                 ", user=" + user +
                 ", question=" + question +
                 '}';

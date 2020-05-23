@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <!--Layui-->
+    <link rel="stylesheet" href="../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/personal_information.css">
+</head>
+<body>
+<div class="navigation">
+</div>
+<ul class="layui-nav layui-nav-tree layui-inline my-ul" lay-filter="demo">
+    <a href="javascript:void(0);" onclick="card(1)">
+        <li class="my-li"><span>课程表</span></li>
+    </a>
+    <a href="javascript:void(0);" onclick="card(2)">
+        <li class="my-li"><span>基本资料</span></li>
+    </a>
+    <a href="javascript:void(0);" onclick="card(3)">
+        <li class="my-li"><span>全部订单</span></li>
+    </a>
+    <a href="javascript:void(0);" onclick="card(4)">
+        <li class="my-li"><span>收藏</span></li>
+    </a>
+    <a href="javascript:void(0);" onclick="card(5)">
+        <li class="my-li"><span>视频管理</span></li>
+    </a>
+    <a href="javascript:void(0);" onclick="card(6)">
+        <li class="my-li"><span>问题管理</span></li>
+    </a>
+    <a href="#" data-method="offset" data-type="auto" id="password_edit">
+        <li class="my-li"><span>密码修改</span></li>
+    </a>
+</ul>
+<div class="my-content">
+    <div class="my-content-course" id="my-content-course">
+        <h2 style="margin-bottom: 10px">课程表</h2>
+        <div class="course">
+            <table>
+                <tr>
+                    <td>
+                        <div class="course-img">
+                            <img src="https://img.mukewang.com/574678bd00010a7206000338-360-202.jpg" height="150"
+                                 width="250"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="my-course-introduce">
+                            <div class="layui-card-header">JavaScript进阶篇</div>
+                            <div class="layui-card-body">
+                                学习到第5节
+                            </div>
+                            <div class="layui-card-body">
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius"
+                                        style="margin-left: 300px">继续学习
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-warm layui-btn-radius"
+                                        style="margin-left: 50px">删除课程
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="course">
+            <table>
+                <tr>
+                    <td>
+                        <div class="course-img">
+                            <img src="https://img.mukewang.com/574678bd00010a7206000338-360-202.jpg" height="150"
+                                 width="250"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="my-course-introduce">
+                            <div class="layui-card-header">JavaScript进阶篇</div>
+                            <div class="layui-card-body">
+                                学习到第5节
+                            </div>
+                            <div class="layui-card-body">
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius"
+                                        style="margin-left: 300px">继续学习
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-warm layui-btn-radius"
+                                        style="margin-left: 50px">删除课程
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="my-content-info" id="my-content-info">
+        <h2 style="margin-bottom: 10px">基本资料</h2>
+        <div style="background-color: #F2F2F2;">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            用户名
+                            <a href="#" data-method="offset" data-type="auto" id="userName"
+                               style="color: #369bff; margin-left: 70%">修改</a>
+                        </div>
+                        <div class="layui-card-body">
+                            <span>无为不齐路</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            手机号
+                        </div>
+                        <div class="layui-card-body">
+                            <span>18715770182</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            邮&nbsp;&nbsp;&nbsp;&nbsp;箱
+                            <a href="#" data-method="offset" data-type="auto" id="mail"
+                               style="color: #369bff; margin-left: 70%">修改</a>
+                        </div>
+                        <div class="layui-card-body">
+                            <span>1421784128@qq.com</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            专业兴趣
+                            <a href="#" data-method="offset" data-type="auto" id="hobby"
+                               style="color: #369bff; margin-left: 70%">修改</a>
+                        </div>
+                        <div class="layui-card-body">
+                            <span>Java</span>&nbsp;&nbsp;
+                            <span>web前端</span>&nbsp;&nbsp;
+                            <span>MySQL</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            积分
+                        </div>
+                        <div class="layui-card-body">
+                            520
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            个人简介
+                            <a href="#" data-method="offset" data-type="auto" id="introduce"
+                               style="color: #369bff; margin-left: 85%">修改</a>
+                        </div>
+                        <div class="layui-card-body">
+                            《Spring5核心原理》作者。 10余年Java从业经验，在大型IT公司担任过CTO、系统架构师。
+                            精通Java、JS、CSS、AS、PHP等；负责过多个大型分布式系统的微服务架构技术改造；多年以来对Spring框架有深入研究及独特见解；开发过多套企业内部UI框架和ORM框架，热衷于分享经验，共同进步。
+                            不只做一个技术者，更要做一个思考者。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-content-order" id="my-content-order">
+        <h2 style="margin-bottom: 10px">订单</h2>
+        <div style="background-color: #F2F2F2;">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-tab layui-tab-card">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">全部</li>
+                                <li>未支付</li>
+                                <li>已完成</li>
+                                <li>已失效</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <div class="order">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="order-img">
+                                                        <img src="https://img.mukewang.com/574678bd00010a7206000338-360-202.jpg"
+                                                             height="150"
+                                                             width="250"/>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="my-order-introduce">
+                                                        <div class="layui-card-header">
+                                                            JavaScript进阶篇
+                                                            <span style="font-size: 10px; margin-left: 50%">下单日期：2019-08-17</span>
+                                                        </div>
+                                                        <div class="layui-card-body">
+                                                            价格：<span style="color: red">￥299</span>
+                                                            <span style="margin-left: 320px">状态：<span
+                                                                    style="color: green; ">已支付</span></span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="order">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="order-img">
+                                                        <img src="https://img.mukewang.com/574678bd00010a7206000338-360-202.jpg"
+                                                             height="150"
+                                                             width="250"/>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="my-order-introduce">
+                                                        <div class="layui-card-header">
+                                                            JavaScript进阶篇
+                                                            <span style="font-size: 10px; margin-left: 50%">下单日期：2019-08-17</span>
+                                                        </div>
+                                                        <div class="layui-card-body">
+                                                            价格：<span style="color: red">￥299</span>
+                                                            <span style="margin-left: 320px">状态：<span
+                                                                    style="color: green; ">已支付</span></span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="order">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="order-img">
+                                                        <img src="https://img.mukewang.com/574678bd00010a7206000338-360-202.jpg"
+                                                             height="150"
+                                                             width="250"/>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="my-order-introduce">
+                                                        <div class="layui-card-header">
+                                                            JavaScript进阶篇
+                                                            <span style="font-size: 10px; margin-left: 50%">下单日期：2019-08-17</span>
+                                                        </div>
+                                                        <div class="layui-card-body">
+                                                            价格：<span style="color: red">￥299</span>
+                                                            <span style="margin-left: 320px">状态：<span
+                                                                    style="color: green; ">未支付</span></span>
+                                                        </div>
+                                                        <div class="layui-card-body">
+                                                            <button type="button"
+                                                                    class="layui-btn layui-btn-danger layui-btn-radius"
+                                                                    style="margin-left: 400px">立即支付
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="order">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="order-img">
+                                                        <img src="https://img.mukewang.com/574678bd00010a7206000338-360-202.jpg"
+                                                             height="150"
+                                                             width="250"/>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="my-order-introduce">
+                                                        <div class="layui-card-header">
+                                                            JavaScript进阶篇
+                                                            <span style="font-size: 10px; margin-left: 50%">下单日期：2019-08-17</span>
+                                                        </div>
+                                                        <div class="layui-card-body">
+                                                            价格：<span style="color: red">￥299</span>
+                                                            <span style="margin-left: 320px">状态：<span
+                                                                    style="color: green; ">已支付</span></span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <div class="order">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="order-img">
+                                                        <img src="https://img.mukewang.com/574678bd00010a7206000338-360-202.jpg"
+                                                             height="150"
+                                                             width="250"/>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="my-order-introduce">
+                                                        <div class="layui-card-header">
+                                                            JavaScript进阶篇
+                                                            <span style="font-size: 10px; margin-left: 50%">下单日期：2019-08-17</span>
+                                                        </div>
+                                                        <div class="layui-card-body">
+                                                            价格：<span style="color: red">￥299</span>
+                                                            <span style="margin-left: 320px">状态：<span
+                                                                    style="color: green; ">未支付</span></span>
+                                                        </div>
+                                                        <div class="layui-card-body">
+                                                            <button type="button"
+                                                                    class="layui-btn layui-btn-danger layui-btn-radius"
+                                                                    style="margin-left: 400px">立即支付
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="order">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="order-img">
+                                                        <img src="https://img.mukewang.com/574678bd00010a7206000338-360-202.jpg"
+                                                             height="150"
+                                                             width="250"/>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="my-order-introduce">
+                                                        <div class="layui-card-header">
+                                                            JavaScript进阶篇
+                                                            <span style="font-size: 10px; margin-left: 50%">下单日期：2019-08-17</span>
+                                                        </div>
+                                                        <div class="layui-card-body">
+                                                            价格：<span style="color: red">￥299</span>
+                                                            <span style="margin-left: 320px">状态：<span
+                                                                    style="color: green; ">未支付</span></span>
+                                                        </div>
+                                                        <div class="layui-card-body">
+                                                            <button type="button"
+                                                                    class="layui-btn layui-btn-danger layui-btn-radius"
+                                                                    style="margin-left: 400px">立即支付
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <div class="order">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="order-img">
+                                                        <img src="https://img.mukewang.com/574678bd00010a7206000338-360-202.jpg"
+                                                             height="150"
+                                                             width="250"/>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="my-order-introduce">
+                                                        <div class="layui-card-header">
+                                                            JavaScript进阶篇
+                                                            <span style="font-size: 10px; margin-left: 50%">下单日期：2019-08-17</span>
+                                                        </div>
+                                                        <div class="layui-card-body">
+                                                            价格：<span style="color: red">￥299</span>
+                                                            <span style="margin-left: 320px">状态：<span
+                                                                    style="color: green; ">已支付</span></span>
+                                                        </div>
+                                                        <div class="layui-card-body">
+                                                            <button type="button"
+                                                                    class="layui-btn layui-btn-primary layui-btn-radius"
+                                                                    style="margin-left: 400px">评价课程
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <div class="order">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="order-img">
+                                                        <img src="https://img.mukewang.com/574678bd00010a7206000338-360-202.jpg"
+                                                             height="150"
+                                                             width="250"/>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="my-order-introduce">
+                                                        <div class="layui-card-header">
+                                                            JavaScript进阶篇
+                                                            <span style="font-size: 10px; margin-left: 50%">下单日期：2019-08-17</span>
+                                                        </div>
+                                                        <div class="layui-card-body">
+                                                            价格：<span style="color: red">￥299</span>
+                                                            <span style="margin-left: 320px">状态：<span
+                                                                    style="color: green; ">已失效</span></span>
+                                                        </div>
+                                                        <div class="layui-card-body">
+                                                            <button type="button"
+                                                                    class="layui-btn layui-btn-primary layui-btn-radius"
+                                                                    style="margin-left: 400px">删除订单
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-content-collect" id="my-content-collect">
+        <h2 style="margin-bottom: 10px">收藏</h2>
+        <div style="background-color: #F2F2F2;">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-tab layui-tab-card">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">视频</li>
+                                <li>问题</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <div class="order">
+                                        <div id="test9" class="demo-tree demo-tree-box"
+                                             style="width: 200px; min-height: 300px"></div>
+                                    </div>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <div class="order">
+                                        <div id="test10" class="demo-tree demo-tree-box"
+                                             style="width: 200px; height: 300px"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-content-video" id="my-content-video">
+        <h2 style="margin-bottom: 10px">视频管理</h2>
+        <div style="background-color: #F2F2F2;">
+            <div class="layui-tab layui-tab-card">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">独立视频</li>
+                    <li>系列视频</li>
+                    <li>视频投稿</li>
+                </ul>
+                <div class="layui-tab-content" style="background-color: white">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-tab-item layui-show">
+                            <!--                            <ul class="flow-default" id="LAY_demo1_1"></ul>-->
+                            <div style="background-color: #f2f2f2; width: 100%; height: 500px">
+                                <div class="layui-col-md6" style="width: 222px; padding: 5px">
+                                    <div class="layui-card">
+                                        <a href=""><img
+                                                src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"
+                                                width="212">
+                                            <span style="margin-left: 15px; font-size: 12px">Java性能调优全解2.5</span>
+                                        </a>
+                                        <div class="layui-card-body">
+                                            <img src="../images/play.png" style="width: 16px; height: 16px"/>
+                                            <span style="font-size: 10px; color:#999;">1222</span>
+                                            <span style="font-size: 10px; color:#999; margin-left: 40px">2020-02-16</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md6" style="width: 222px; padding: 5px">
+                                    <div class="layui-card">
+                                        <a href=""><img
+                                                src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"
+                                                width="212">
+                                            <span style="margin-left: 15px; font-size: 12px">Java性能调优全解2.5</span>
+                                        </a>
+                                        <div class="layui-card-body">
+                                            <img src="../images/play.png" style="width: 16px; height: 16px"/>
+                                            <span style="font-size: 10px; color:#999;">1222</span>
+                                            <span style="font-size: 10px; color:#999; margin-left: 40px">2020-02-16</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md6" style="width: 222px; padding: 5px">
+                                    <div class="layui-card">
+                                        <a href=""><img
+                                                src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"
+                                                width="212">
+                                            <span style="margin-left: 15px; font-size: 12px">Java性能调优全解2.5</span>
+                                        </a>
+                                        <div class="layui-card-body">
+                                            <img src="../images/play.png" style="width: 16px; height: 16px"/>
+                                            <span style="font-size: 10px; color:#999;">1222</span>
+                                            <span style="font-size: 10px; color:#999; margin-left: 40px">2020-02-16</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md6" style="width: 222px; padding: 5px">
+                                    <div class="layui-card">
+                                        <a href=""><img
+                                                src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"
+                                                width="212">
+                                            <span style="margin-left: 15px; font-size: 12px">Java性能调优全解2.5</span>
+                                        </a>
+                                        <div class="layui-card-body">
+                                            <img src="../images/play.png" style="width: 16px; height: 16px"/>
+                                            <span style="font-size: 10px; color:#999;">1222</span>
+                                            <span style="font-size: 10px; color:#999; margin-left: 40px">2020-02-16</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md6" style="width: 222px; padding: 5px">
+                                    <div class="layui-card">
+                                        <a href=""><img
+                                                src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"
+                                                width="212">
+                                            <span style="margin-left: 15px; font-size: 12px">Java性能调优全解2.5</span>
+                                        </a>
+                                        <div class="layui-card-body">
+                                            <img src="../images/play.png" style="width: 16px; height: 16px"/>
+                                            <span style="font-size: 10px; color:#999;">1222</span>
+                                            <span style="font-size: 10px; color:#999; margin-left: 40px">2020-02-16</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md6" style="width: 222px; padding: 5px">
+                                    <div class="layui-card">
+                                        <a href=""><img
+                                                src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"
+                                                width="212">
+                                            <span style="margin-left: 15px; font-size: 12px">Java性能调优全解2.5</span>
+                                        </a>
+                                        <div class="layui-card-body">
+                                            <img src="../images/play.png" style="width: 16px; height: 16px"/>
+                                            <span style="font-size: 10px; color:#999;">1222</span>
+                                            <span style="font-size: 10px; color:#999; margin-left: 40px">2020-02-16</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md6" style="width: 222px; padding: 5px">
+                                    <div class="layui-card">
+                                        <a href=""><img
+                                                src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"
+                                                width="212">
+                                            <span style="margin-left: 15px; font-size: 12px">Java性能调优全解2.5</span>
+                                        </a>
+                                        <div class="layui-card-body">
+                                            <img src="../images/play.png" style="width: 16px; height: 16px"/>
+                                            <span style="font-size: 10px; color:#999;">1222</span>
+                                            <span style="font-size: 10px; color:#999; margin-left: 40px">2020-02-16</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md6" style="width: 222px; padding: 5px">
+                                    <div class="layui-card">
+                                        <a href=""><img
+                                                src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"
+                                                width="212">
+                                            <span style="margin-left: 15px; font-size: 12px">Java性能调优全解2.5</span>
+                                        </a>
+                                        <div class="layui-card-body">
+                                            <img src="../images/play.png" style="width: 16px; height: 16px"/>
+                                            <span style="font-size: 10px; color:#999;">1222</span>
+                                            <span style="font-size: 10px; color:#999; margin-left: 40px">2020-02-16</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="width: 100%; text-align: center">
+                                    <div id="demo2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-collapse" lay-accordion="">
+                            <div class="layui-colla-item">
+                                <h2 class="layui-colla-title">layui 更适合哪些开发者？</h2>
+                                <div class="layui-colla-content">
+                                    <button type="button" class="layui-btn layui-btn-sm">上传视频</button>
+                                    <table class="layui-hide" id="test"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="row">
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend style="font-size: 13px">上传视频</legend>
+                            </fieldset>
+
+                            <div class="layui-upload">
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"
+                                        id="testList">选择视频
+                                </button>
+                                <div class="layui-upload-list">
+                                    <table class="layui-table">
+                                        <thead>
+                                        <tr>
+                                            <th style="font-size: 10px">视频名</th>
+                                            <th style="font-size: 10px">大小</th>
+                                            <th style="font-size: 10px">状态</th>
+                                            <th style="font-size: 10px">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="demoList"></tbody>
+                                    </table>
+                                </div>
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"
+                                        id="testListAction">开始上传
+                                </button>
+                            </div>
+                            <div style="width: 100%">
+                                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                    <legend style="font-size: 13px">上传封面</legend>
+                                </fieldset>
+
+                                <div class="layui-upload" style="margin-left: 33%">
+                                    <div class="layui-inline">
+                                        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"
+                                                id="test1">上传图片
+                                        </button>
+                                    </div>
+                                    <div class="layui-inline" style="margin-left: 100px">
+                                        <div class="layui-upload-list">
+                                            <img class="layui-upload-img" id="demo1" width="100" height="70">
+                                            <p id="demoText"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div style="margin-left: 20%">
+                                    <div class="layui-form-item" style="margin-top: 20px">
+                                        <label class="layui-form-label" style="font-size: 13px">视频名字</label>
+                                        <div class="layui-input-block">
+                                            <input type="tel" id="videoName" name="videoName" placeholder="请输入视频名字"
+                                                   autocomplete="off"
+                                                   class="layui-input"
+                                                   style="width: 150px; height: 30px; margin-top: 5px">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="font-size: 13px">类别</label>
+                                            <div class="layui-input-block">
+                                                <select name="modules" name="videoClassification"
+                                                        id="videoClassification"
+                                                        style="width: 150px; height: 30px; margin-top: 5px"
+                                                        onchange="selectSeries()" lay-verify="required" lay-search="">
+                                                    <option value="编程语言">编程语言</option>
+                                                    <option value="云计算大数据">云计算大数据</option>
+                                                    <option value="计算机基础">计算机基础</option>
+                                                    <option value="移动开发">移动开发</option>
+                                                    <option value="前沿技术">前沿技术</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="font-size: 13px">二级类别</label>
+                                            <div class="layui-input-block">
+                                                <select name="modules" name="classificationLittle"
+                                                        id="classificationLittle"
+                                                        style="width: 150px; height: 30px; margin-top: 5px"
+                                                        lay-verify="required" lay-search="">
+                                                    <option value="Java">Java</option>
+                                                    <option value="C++">C++</option>
+                                                    <option value="Python">Python</option>
+                                                    <option value="C">C</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label" style="font-size: 13px">积分</label>
+                                        <div class="layui-input-block">
+                                            <input type="number" id="userIntegral" placeholder="请输入积分"
+                                                   autocomplete="off" class="layui-input"
+                                                   style="width: 150px; height: 30px; margin-top: 5px">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label" style="font-size: 13px">视频简介</label>
+                                        <div style="margin-left: 110px; width: 410px; ">
+                                                <textarea placeholder="请输入简介" id="introduction"
+                                                          class="layui-textarea"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div style="margin-left: 110px; width: 410px; ">
+                                            <button type="button" class="layui-btn">提交</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-content-question" id="my-content-question">
+        <h2 style="margin-bottom: 10px">我的问题</h2>
+        <div style="background-color: #F2F2F2; ">
+            <button type="button" class="layui-btn layui-btn-normal" data-method="offset" data-type="auto" id="addQuestion">
+                提问
+            </button>
+            <div class="layui-collapse" lay-accordion=""
+                 style="background-color: white; padding: 10px; margin-top: 10px">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">layui 更适合哪些开发者？</h2>
+                    <div class="layui-colla-content" style="border: solid #97b3ff 1px; border-radius: 5px;">
+                        <p>在前端技术快速变革的今天，layui 仍然坚持语义化的组织模式，甚至于模块理念都是采用类AMD组织形式，并非是有意与时代背道而驰。layui
+                            认为以jQuery为核心的开发方式还没有到完全消亡的时候，而早期市面上基于jQuery的UI都普通做得差强人意，所以需要有一个新的UI去重新为这一领域注入活力，并采用一些更科学的架构方式。
+                            <br>
+                            因此准确地说，layui 更多是面向那些追求开发简单的前端工程师们，以及所有层次的服务端程序员。</p>
+                        <div style="float: right">
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">详情</button>
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" data-method="offset" data-type="auto" id="editQuestion"><i
+                                        class="layui-icon"></i></button>
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                        class="layui-icon"></i></button>
+                            </div>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+                </div>
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">为什么JS社区大量采用未发布或者未广泛支持的语言特性？</h2>
+                    <div class="layui-colla-content" style="border: solid #97b3ff 1px; border-radius: 5px;">
+                        <p>
+                            有不少其他答案说是因为JS太差。我下面的答案已经说了，这不是根本性的原因。但除此之外，我还要纠正一些对JS具体问题的误解。JS当初是被作为脚本语言设计的，所以某些问题并不是JS设计得差或者是JS设计者的失误。比如var的作用域问题，并不是“错误”，而是当时绝大部分脚本语言都是这样的，如perl/php/sh等。模块的问题也是，脚本语言几乎都没有模块/命名空间功能。弱类型、for-in之类的问题也是，只不过现在用那些老的脚本语言的人比较少，所以很多人都误以为是JS才有的坑。另外有人说JS是半残语言，满足不了开发需求，1999年就该死。半残这个嘛，就夸张了。JS虽然有很多问题，但是设计总体还是优秀的。——来自知乎@贺师俊</p>
+                        <div style="float: right">
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">详情</button>
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                        class="layui-icon"></i></button>
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                        class="layui-icon"></i></button>
+                            </div>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+                </div>
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">为什么前端工程师多不愿意用 Bootstrap 框架？</h2>
+                    <div class="layui-colla-content" style="border: solid #97b3ff 1px; border-radius: 5px;">
+                        <p>
+                            因为不适合。如果希望开发长期的项目或者制作产品类网站，那么就需要实现特定的设计，为了在维护项目中可以方便地按设计师要求快速修改样式，肯定会逐步编写出各种业务组件、工具类，相当于为项目自行开发一套框架。——来自知乎@Kayo</p>
+                        <div style="float: right">
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">详情</button>
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                        class="layui-icon"></i></button>
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                        class="layui-icon"></i></button>
+                            </div>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+                </div>
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">贤心是男是女？</h2>
+                    <div class="layui-colla-content" style="border: solid #97b3ff 1px; border-radius: 5px;">
+                        <p>man！ 所以这个问题不要再出现了。。。</p>
+                        <div style="float: right">
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">详情</button>
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                        class="layui-icon"></i></button>
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                        class="layui-icon"></i></button>
+                            </div>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="clear:both"></div>
+<div class="my-footer">
+</div>
+</body>
+</html>
+<script src="../lib/jquery-2.1.4/jquery.min.js"></script>
+<script src="../lib/layui/layui.js"></script>
+<!--jquery-->
+<!--json-->
+<script src="../lib/json/json2.js" type="text/javascript"></script>
+<script src="../js/common.js"></script>
+<script src="../js/personal_information.js" type="text/javascript"></script>
+<!--<script type="text/html" id="barDemo">-->
+<!--    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+<!--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+<!--</script>-->

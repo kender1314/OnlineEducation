@@ -1,3 +1,5 @@
+var userId = document.getElementById("userId").value;
+
 //左侧导航栏切换条
 function card(i) {
     switch (i) {
@@ -60,101 +62,6 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
     var tree = layui.tree
         , util = layui.util;
 
-    $.ajax({
-        url: "/videoManage/getCountByClassification?videoClassification=" + videoClassification,
-        type: "post",
-        dataType: "json",
-        contentType: false,
-        processData: false,
-        success: function (data) {
-            laypage.render({
-                elem: 'demo7'
-                , count: data.data
-                // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
-                , limit: 10
-                , jump: function (obj) {
-                    //调用加载函数加载数据
-                    showByClassification(obj.curr, obj.limit, videoClassification);
-                }
-            });
-        }
-    });
-
-
-    //模拟数据1
-    var data1 = [{
-        title: 'java'
-        , id: 1
-        , children: [{
-            title: 'Java架构师体系课：跟随千万级项目从0到100全过程高效成长'
-            , id: 1001
-        }, {
-            title: 'Spring Cloud + Vue 前后端分离 开发企业级在线视频课程系统'
-            , id: 1002
-        }]
-    }, {
-        title: 'c++'
-        , id: 2
-        , children: [{
-            title: '大学计算机必修课新讲--编译原理+操作系统+图形学'
-            , id: 2000
-        }, {
-            title: '2020 重学C++ 重构你的C++知识体系'
-            , id: 2001
-        }]
-    }, {
-        title: 'python'
-        , id: 3
-        , children: [{
-            title: 'Python3入门人工智能 掌握机器学习+深度学习 提升实战能力'
-            , id: 3000
-        }, {
-            title: 'Python Flask快速入门与进阶'
-            , id: 3001
-        }]
-    }];
-    var data2 = [{
-        title: 'html'
-        , id: 1
-        , children: [{
-            title: 'css自适应布局：css宽度自适应如何实现？'
-            , id: 1001
-        }, {
-            title: '怎么让div的高度自适应屏幕的高度?'
-            , id: 1002
-        }]
-    }, {
-        title: 'java'
-        , id: 2
-        , children: [{
-            title: '如何安装jdk？'
-            , id: 2000
-        }, {
-            title: '如何进行前后端分页？'
-            , id: 2001
-        }]
-    }, {
-        title: 'python'
-        , id: 3
-        , children: [{
-            title: '如何安装Python3？'
-            , id: 3000
-        }, {
-            title: 'Python有什么作用'
-            , id: 3001
-        }]
-    }];
-
-    //开启节点操作图标
-    tree.render({
-        elem: '#test9'
-        , data: data1
-        , edit: ['add', 'update', 'del'] //操作节点的图标
-        , click: function (obj) {
-            layer.msg(JSON.stringify(obj.data));
-        }
-    });
-
     table.render({
         elem: '#test'
         , url: '/demo/table/user/'
@@ -170,15 +77,6 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
             , {field: 'classify', title: '职业'}
             , {field: 'wealth', width: 137, title: '财富', sort: true}
         ]]
-    });
-
-    tree.render({
-        elem: '#test10'
-        , data: data2
-        , edit: ['add', 'update', 'del'] //操作节点的图标
-        , click: function (obj) {
-            layer.msg(JSON.stringify(obj.data));
-        }
     });
 
     //普通图片上传
@@ -276,22 +174,26 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 ,
                 title: '信息修改'
                 ,
-                id: 'layerDemo' + type //防止重复弹出
+                id: 'edit-userName' + type //防止重复弹出
                 ,
                 content: '   <div class="layui-inline" style="margin-top: 20px; margin-right: 40px">\n' +
                     '       <label class="layui-form-label" style="font-size: 13px">用户名</label>\n' +
                     '       <div class="layui-input-inline">\n' +
-                    '        <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input"' +
+                    '        <input type="tel" name="userName" id="userName" class="layui-input"' +
                     'style="width: 200px; height: 30px; margin-top: 5px">\n' +
                     '       </div>\n' +
                     '   </div>'
                 ,
-                btn: ['保存', '取消']
+                btn: ['保存', '取消'],
+                btn1: function (index, layero) {
+                    var param = document.getElementById("userName").value;
+                    updateUser("userName", param, index);
+                }
             });
         }
     };
 
-    $('#userName').on('click', function () {
+    $('#edit-userName').on('click', function () {
         var othis = $(this), method = othis.data('method');
         active[method] ? active[method].call(this, othis) : '';
     });
@@ -307,26 +209,29 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 ,
                 title: '信息修改'
                 ,
-                id: 'mail' + type //防止重复弹出
+                id: 'edit-mail' + type //防止重复弹出
                 ,
                 content: '   <div class="layui-inline" style="margin-top: 20px; margin-right: 40px">\n' +
                     '       <label class="layui-form-label" style="font-size: 13px">邮件</label>\n' +
                     '       <div class="layui-input-inline">\n' +
-                    '        <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input"' +
+                    '        <input type="tel" name="mail" id="mail" class="layui-input"' +
                     'style="width: 200px; height: 30px; margin-top: 5px">\n' +
                     '       </div>\n' +
                     '   </div>'
                 ,
                 btn: ['保存', '取消']
+                , btn1: function (index, layero) {
+                    var param = document.getElementById("mail").value;
+                    updateUser("mail", param, index);
+                }
             });
         }
     };
 
-    $('#mail').on('click', function () {
+    $('#edit-mail').on('click', function () {
         var othis = $(this), method = othis.data('method');
         active1[method] ? active1[method].call(this, othis) : '';
     });
-
 
 //自定义样式
     laypage.render({
@@ -346,24 +251,98 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 ,
                 title: '信息修改'
                 ,
-                id: 'hobby' + type //防止重复弹出
+                id: 'edit-hobby' + type //防止重复弹出
                 ,
                 content: '   <div class="layui-inline" style="margin-top: 20px; margin-right: 40px">\n' +
                     '       <label class="layui-form-label" style="font-size: 13px">专业兴趣</label>\n' +
                     '       <div class="layui-input-inline">\n' +
-                    '        <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input"' +
+                    '        <input type="tel" name="major" id="major" class="layui-input"' +
                     'style="width: 200px; height: 30px; margin-top: 5px">\n' +
                     '       </div>\n' +
                     '   </div>'
                 ,
                 btn: ['保存', '取消']
+                , btn1: function (index, layero) {
+                    var param = document.getElementById("major").value;
+                    updateUser("major", param, index);
+                }
             });
         }
     };
 
-    $('#hobby').on('click', function () {
+    $('#edit-hobby').on('click', function () {
         var othis = $(this), method = othis.data('method');
         active2[method] ? active2[method].call(this, othis) : '';
+    });
+
+    var active7 = {
+        offset: function (othis) {
+            var type = othis.data('type');
+
+            layer.open({
+                type: 1
+                ,
+                offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                ,
+                title: '信息修改'
+                ,
+                id: 'edit-address' + type //防止重复弹出
+                ,
+                content: '   <div class="layui-inline" style="margin-top: 20px; margin-right: 40px">\n' +
+                    '       <label class="layui-form-label" style="font-size: 13px">家庭住址</label>\n' +
+                    '       <div class="layui-input-inline">\n' +
+                    '        <input type="tel" name="address" id="address" class="layui-input"' +
+                    'style="width: 200px; height: 30px; margin-top: 5px">\n' +
+                    '       </div>\n' +
+                    '   </div>'
+                ,
+                btn: ['保存', '取消']
+                , btn1: function (index, layero) {
+                    var param = document.getElementById("address").value;
+                    updateUser("address", param, index);
+                }
+            });
+        }
+    };
+
+    $('#edit-address').on('click', function () {
+        var othis = $(this), method = othis.data('method');
+        active7[method] ? active7[method].call(this, othis) : '';
+    });
+
+    var active8 = {
+        offset: function (othis) {
+            var type = othis.data('type');
+
+            layer.open({
+                type: 1
+                ,
+                offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                ,
+                title: '信息修改'
+                ,
+                id: 'edit-education' + type //防止重复弹出
+                ,
+                content: '   <div class="layui-inline" style="margin-top: 20px; margin-right: 40px">\n' +
+                    '       <label class="layui-form-label" style="font-size: 13px">学历</label>\n' +
+                    '       <div class="layui-input-inline">\n' +
+                    '        <input type="tel" name="education" id="education" class="layui-input"' +
+                    'style="width: 200px; height: 30px; margin-top: 5px">\n' +
+                    '       </div>\n' +
+                    '   </div>'
+                ,
+                btn: ['保存', '取消']
+                , btn1: function (index, layero) {
+                    var param = document.getElementById("education").value;
+                    updateUser("education", param, index);
+                }
+            });
+        }
+    };
+
+    $('#edit-education').on('click', function () {
+        var othis = $(this), method = othis.data('method');
+        active8[method] ? active8[method].call(this, othis) : '';
     });
 
     var active3 = {
@@ -377,21 +356,25 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 ,
                 title: '信息修改'
                 ,
-                id: 'introduce' + type //防止重复弹出
+                id: 'edit-introduce' + type //防止重复弹出
                 ,
                 content: '  <div style="margin-top: 20px; margin-right: 40px ">\n' +
                     '    <label class="layui-form-label">个人简介</label>\n' +
                     '    <div style="margin-left: 35px; width: 300px; ">\n' +
-                    '      <textarea placeholder="请输入内容" class="layui-textarea"></textarea>\n' +
+                    '      <textarea placeholder="请输入内容"  name="introduce" id="introduce" class="layui-textarea"></textarea>\n' +
                     '    </div>\n' +
                     '  </div>'
                 ,
                 btn: ['保存', '取消']
+                , btn1: function (index, layero) {
+                    var param = document.getElementById("introduce").value;
+                    updateUser("introduce", param, index);
+                }
             });
         }
     };
 
-    $('#introduce').on('click', function () {
+    $('#edit-introduce').on('click', function () {
         var othis = $(this), method = othis.data('method');
         active3[method] ? active3[method].call(this, othis) : '';
     });
@@ -412,34 +395,118 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 content: '<div class="layui-form-item" style="margin-top: 20px; margin-right: 40px">\n' +
                     '    <label class="layui-form-label" style="font-size: 13px">原始密码</label>\n' +
                     '    <div class="layui-input-block">\n' +
-                    '      <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input" ' +
+                    '      <input type="password" name="password" id="password"  onblur="checkPasswordA()" placeholder="请输入密码" autocomplete="off" class="layui-input" ' +
                     'style="width: 200px; height: 30px; margin-top: 5px">\n' +
+                    '<span id="password-na" style="color:red; font-size: 4px"></span>' +
                     '    </div>\n' +
                     '  </div>' +
                     '<div class="layui-form-item" style="margin-top: 20px; margin-right: 40px">\n' +
-                    '    <label class="layui-form-label" style="font-size: 13px">输入新密码</label>\n' +
+                    '    <label class="layui-form-label" style="font-size: 13px" >输入新密码</label>\n' +
                     '    <div class="layui-input-block">\n' +
-                    '      <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input" ' +
+                    '      <input type="password" name="newPassword1" id="newPassword1"  onblur="countPassword()"  lay-verify="required" lay-reqtext="请输入长度为6-12位的密码"placeholder="请输入密码" autocomplete="off" class="layui-input" ' +
                     'style="width: 200px; height: 30px; margin-top: 5px">\n' +
+                    '<span id="password-tips" style="color:red; font-size: 4px"></span>' +
                     '    </div>\n' +
                     '  </div>' +
                     '<div class="layui-form-item" style="margin-top: 20px; margin-right: 40px">\n' +
                     '    <label class="layui-form-label" style="font-size: 13px">确认新密码</label>\n' +
                     '    <div class="layui-input-block">\n' +
-                    '      <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input" ' +
+                    '      <input type="password" name="newPassword2" id="newPassword2" placeholder="请输入密码"  lay-verify="required" lay-reqtext="请输入长度为6-12位的密码" onblur="checkPassword()" autocomplete="off" class="layui-input" ' +
                     'style="width: 200px; height: 30px; margin-top: 5px">\n' +
+                    '<span id="tips" style="color:red; font-size: 4px"></span>' +
                     '    </div>\n' +
                     '  </div>'
                 ,
                 btn: ['保存', '取消']
+                , btn1: function (index, layero) {
+                    var param = document.getElementById("newPassword2").value;
+                    updateUser("passsword", param, index);
+                },
+                btn2: function (index, layero) {
+                    layer.close(index);
+                }
             });
         }
     };
+
 
     $('#password_edit').on('click', function () {
         var othis = $(this), method = othis.data('method');
         active4[method] ? active4[method].call(this, othis) : '';
     });
+
+    window.checkPasswordA = function () {
+        var password = document.getElementById("password").value;
+        $.ajax({
+            url: "/userManage/getUserInfoByUserId?userId=" + userId,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (password === "") {
+                    document.getElementById("password-na").innerHTML = "<br><font color='red'>请输入密码!</font>";
+                } else {
+                    if (data.data !== null) {
+                        if (password === stringToDecode(data.data.userPassword, 10)) {
+                            document.getElementById("password-na").innerHTML = "<br><font color='green'>输入密码正确!</font>";
+                        } else {
+                            document.getElementById("password-na").innerHTML = "<br><font color='red'>输入密码错误!</font>";
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    window.countPassword = function () {
+        var password = document.getElementById("newPassword1").value;
+        if (password === "") {
+            document.getElementById("password-tips").innerHTML = "<br><font color='red'>输入密码不能为空!</font>";
+        } else if (password.length < 6) {
+            document.getElementById("password-tips").innerHTML = "<br><font color='red'>密码至少得6个字符!</font>";
+        } else {
+            document.getElementById("password-tips").innerHTML = "";
+        }
+    }
+
+    window.checkPassword = function () {
+        var password = document.getElementById("newPassword1").value;
+        var repassword = document.getElementById("newPassword2").value;
+        if (password === "" || repassword === "") {
+            document.getElementById("tips").innerHTML = "<br><font color='red'>输入密码不能为空!</font>";
+        } else if (password === repassword) {
+            document.getElementById("tips").innerHTML = "<br><font color='green'>两次密码输入一致</font>";
+            document.getElementById("newPassword1").value = obscure(repassword, 10);
+            document.getElementById("newPassword2").value = obscure(repassword, 10);
+        } else {
+            document.getElementById("tips").innerHTML = "<br><font color='red'>两次输入密码不一致!</font>";
+        }
+    }
+
+    function updateUser(string, param, index) {
+        var formData = new FormData();
+        formData.append(string, param);
+        formData.append("userId", userId);
+        $.ajax({
+            url: "/userManage/updateUserByParam",
+            type: "post",
+            dataType: "json",
+            async: false,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.data === true) {
+                    //关闭弹框
+                    layer.close(index);
+                    layer.msg("更新成功", {icon: 6});
+                } else {
+                    layer.msg("更新失败", {icon: 5});
+                }
+            }
+        });
+    }
 
     var active5 = {
         offset: function (othis) {
@@ -510,8 +577,48 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     + '</tr>'
                     + '</table>'
                     + '</div>'
-                ,
-                btn: ['保存', '取消']
+                , btn: ['保存', '取消']
+                , btn1: function (index, layero) {
+                    var formData = new FormData();
+                    var myDate = new Date();
+                    var questionName = document.getElementById("questionName").value;
+                    var questionIntegral = document.getElementById("questionIntegral").value;
+                    var classification = document.getElementById("classification").value;
+                    var questionContent = document.getElementById("questionContent").value;
+                    var questionDate = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+                    var questionIsSolve = 0;
+                    var isDelete = 0;
+                    formData.append("userId", userId);
+                    formData.append("questionName", questionName);
+                    formData.append("questionIntegral", questionIntegral);
+                    formData.append("classification", classification);
+                    formData.append("questionContent", questionContent);
+                    formData.append("questionDate", questionDate);
+                    formData.append("questionIsSolve", questionIsSolve);
+                    formData.append("isDelete", isDelete);
+                    $.ajax({
+                        url: "/questionManage/insertQuestion",
+                        type: "post",
+                        dataType: "json",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (msg) {
+                            console.log(msg);
+                            if (msg.data === true) {
+                                //关闭弹框
+                                layer.close(index);
+                                layer.msg("添加成功", {icon: 6});
+                            } else {
+                                layer.msg("添加失败", {icon: 5});
+                            }
+                        }
+                    });
+
+                },
+                btn2: function (index, layero) {
+                    layer.close(index);
+                }
             });
         }
     };
@@ -614,248 +721,1456 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
         ]]
     });
 
-    //监听行工具事件
-    table.on('tool(tables)', function (obj) {
-        //日期时间选择器
-        var data = obj.data;
-        //console.log(obj)
-        if (obj.event === 'del') {
-            layer.confirm('是否删除', function (index) {
+    /**
+     * 展示已购买的视频
+     */
+    $.ajax({
+        url: "/orderManage/getCountListOfVideo?userId=" + userId,
+        type: "post",
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            laypage.render({
+                elem: 'demo7'
+                , count: data.data
+                // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                , limit: 8
+                , jump: function (obj) {
+                    //调用加载函数加载数据
+                    showVideoByOrder(obj.curr, obj.limit, userId);
+                }
+            });
+        }
+    });
+
+    /**
+     * 点击展示已购买的视频
+     */
+    $('#boughtVideo').on('click', function () {
+        $.ajax({
+            url: "/orderManage/getCountListOfVideo?userId=" + userId,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo7'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , limit: 8
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showVideoByOrder(obj.curr, obj.limit, userId);
+                    }
+                });
+            }
+        });
+    });
+    $('#boughtSeries').on('click', function () {
+        $.ajax({
+            url: "/orderManage/getCountListOfSeries?userId=" + userId,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo7'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showSeriesByOrder(obj.curr, obj.limit, userId);
+                    }
+                });
+            }
+        });
+    });
+
+    $('#video-card').on('click', function () {
+        $.ajax({
+            url: "/orderManage/getCountListOfVideo?userId=" + userId,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo7'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , limit: 8
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showVideoByOrder(obj.curr, obj.limit, userId);
+                    }
+                });
+            }
+        });
+    });
+
+    $('#order-card').on('click', function () {
+        $.ajax({
+            url: "/orderManage/getCountOrderList?userId=" + userId,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo8'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showAllOrder(obj.curr, obj.limit, userId);
+                    }
+                });
+            }
+        });
+    });
+
+    $('#order-non-payment').on('click', function () {
+        $.ajax({
+            url: "/orderManage/getCountNonPayment?userId=" + userId,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo8'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showNonPaymentOrder(obj.curr, obj.limit, userId);
+                    }
+                });
+            }
+        });
+    });
+    $('#order-payment').on('click', function () {
+        $.ajax({
+            url: "/orderManage/getCountPayment?userId=" + userId,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo8'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showPaymentOrder(obj.curr, obj.limit, userId);
+                    }
+                });
+            }
+        });
+    });
+    $('#order-lose-efficacy').on('click', function () {
+        $.ajax({
+            url: "/orderManage/getCountLoseEfficacy?userId=" + userId,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo8'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showLoseEfficacOrder(obj.curr, obj.limit, userId);
+                    }
+                });
+            }
+        });
+    });
+
+    $('#collect-card').on('click', function () {
+        $.ajax({
+            url: "/bookmarkManage/getCountVideoBookmarks?userId=" + userId,
+            type: "post",
+            dataType: "json",
+            async: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo9'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        showCollectVideo(obj.curr, obj.limit, userId)
+                    }
+                });
+            }
+        });
+    });
+
+    $('#collect-question').on('click', function () {
+        $.ajax({
+            url: "/bookmarkManage/getCountQuestionBookmarks?userId=" + userId,
+            type: "post",
+            dataType: "json",
+            async: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo9'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        showCollectQuestion(obj.curr, obj.limit, userId)
+                    }
+                });
+            }
+        });
+    });
+
+    function showCollectVideo(pageNo, pageSize, userId) {
+        var formData = new FormData();
+        formData.append("userId", userId);
+        formData.append("limit", pageSize);
+        formData.append("page", pageNo);
+        $.ajax({
+            url: "/bookmarkManage/getVideoBookmarksList",
+            type: "post",
+            dataType: "json",
+            async: false,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $("#book-mark-video").empty();
+                if (data.data.numberOfElements === 0) {
+                    document.getElementById("demo9").style.display = "none";
+                    var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                        "<div>" +
+                        "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                        "<span>暂无相关信息！</span>" +
+                        "</div>" +
+                        "</div>"
+                    $("#book-mark-video").append(appendhtml);
+                } else {
+                    document.getElementById("demo9").style.display = "block";
+                    for (var i = 0; i < data.data.numberOfElements; i++) {
+                        var appendhtml = "<div class=\"layui-collapse\" lay-filter=\"test\">\n" +
+                            "                                        <div class=\"layui-colla-item\">\n" +
+                            "                                            <h2 class=\"layui-colla-title\">" +
+                            "                                            <span onclick='showCollectVideoListA(\"" + data.data.content[i].bookmarkName + "\")'>" + data.data.content[i].bookmarkName + "" +
+                            "                                            </span>" +
+                            "                                            <div class=\"layui-btn-group\" style=\"float: right\">\n" +
+                            "                                                    <button type=\"button\"\n" +
+                            "                                                            class=\"layui-btn layui-btn-primary layui-btn-sm\"><i\n" +
+                            "                                                            class=\"layui-icon\" onclick='updateBookmarkOfVideo(\"" + data.data.content[i].bookmarkName + "\")'></i></button>\n" +
+                            "                                                    <button type=\"button\"\n" +
+                            "                                                            class=\"layui-btn layui-btn-primary layui-btn-sm\"><i\n" +
+                            "                                                            class=\"layui-icon\"  onclick='deleteBookmarkOfVideo(\"" + data.data.content[i].bookmarkName + "\")'></i></button>\n" +
+                            "                                                </div>\n" +
+                            "                                                <div style=\"clear: both\"></div>" +
+                            "                                            </h2>\n" +
+                            "                                            <div class=\"layui-colla-content\" id=\"book-mark-video-list" + i + "\">\n" +
+                            "                                            </div>\n" +
+                            "                                        </div>\n" +
+                            "                                    </div>";
+                        $("#book-mark-video").append(appendhtml);
+                    }
+                }
+            }
+        });
+    }
+
+    function showCollectQuestion(pageNo, pageSize, userId) {
+        var formData = new FormData();
+        formData.append("userId", userId);
+        formData.append("limit", pageSize);
+        formData.append("page", pageNo);
+        $.ajax({
+            url: "/bookmarkManage/getQuestionBookmarksList",
+            type: "post",
+            dataType: "json",
+            async: false,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $("#book-mark-question").empty();
+                if (data.data.numberOfElements === 0) {
+                    document.getElementById("demo9").style.display = "none";
+                    var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                        "<div>" +
+                        "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                        "<span>暂无相关信息！</span>" +
+                        "</div>" +
+                        "</div>"
+                    $("#book-mark-question").append(appendhtml);
+                } else {
+                    document.getElementById("demo9").style.display = "block";
+                    for (var i = 0; i < data.data.numberOfElements; i++) {
+                        var appendhtml = "<div class=\"layui-collapse\" lay-filter=\"test\">\n" +
+                            "                                        <div class=\"layui-colla-item\">\n" +
+                            "                                            <h2 class=\"layui-colla-title\">" +
+                            "                                            <span onclick='showCollectQuestionListA(\"" + data.data.content[i].bookmarkName + "\")'>" + data.data.content[i].bookmarkName + "" +
+                            "                                            </span>" +
+                            "                                            <div class=\"layui-btn-group\" style=\"float: right\">\n" +
+                            "                                                    <button type=\"button\"\n" +
+                            "                                                            class=\"layui-btn layui-btn-primary layui-btn-sm\"><i\n" +
+                            "                                                            class=\"layui-icon\" onclick='updateBookmarkOfQuestion(\"" + data.data.content[i].bookmarkName + "\")'></i></button>\n" +
+                            "                                                    <button type=\"button\"\n" +
+                            "                                                            class=\"layui-btn layui-btn-primary layui-btn-sm\"><i\n" +
+                            "                                                            class=\"layui-icon\" onclick='deleteBookmarkOfQuestion(\"" + data.data.content[i].bookmarkName + "\")'></i></button>\n" +
+                            "                                                </div>\n" +
+                            "                                                <div style=\"clear: both\"></div>" +
+                            "                                            </h2>\n" +
+                            "                                            <div class=\"layui-colla-content\" id=\"book-mark-video-list" + i + "\">\n" +
+                            "                                            </div>\n" +
+                            "                                        </div>\n" +
+                            "                                    </div>";
+                        $("#book-mark-question").append(appendhtml);
+                    }
+                }
+            }
+        });
+    }
+
+    window.showCollectVideoListA = function (bookmarkName) {
+        var formData = new FormData();
+        formData.append("userId", userId);
+        formData.append("bookmarkName", bookmarkName);
+        $.ajax({
+            url: "/bookmarkManage/getVideoBookmarksCount",
+            type: "post",
+            dataType: "json",
+            async: false,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo9'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showCollectVideoList(obj.curr, obj.limit, userId, bookmarkName);
+                    }
+                });
+            }
+        });
+    }
+
+    window.showCollectQuestionListA = function (bookmarkName) {
+        var formData = new FormData();
+        formData.append("userId", userId);
+        formData.append("bookmarkName", bookmarkName);
+        $.ajax({
+            url: "/bookmarkManage/getQuestionBookmarksCount",
+            type: "post",
+            dataType: "json",
+            async: false,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo9'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showCollectQuestionList(obj.curr, obj.limit, userId, bookmarkName);
+                    }
+                });
+            }
+        });
+    }
+
+    window.deleteBookmarkOfVideo = function (bookmarkName) {
+        var formData = new FormData();
+        formData.append("userId", userId);
+        formData.append("bookmarkName", bookmarkName);
+        layer.confirm('是否删除', function (index) {
+            $.ajax({
+                url: "/bookmarkManage/deleteBookmarkOfVideo",
+                type: "post",
+                dataType: "json",
+                async: false,
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.data === true) {
+                        //关闭弹框
+                        layer.close(index);
+                        layer.msg("删除成功", {icon: 6});
+                    } else {
+                        layer.msg("删除失败", {icon: 5});
+                    }
+                }
+            });
+        });
+    }
+
+    window.deleteBookmarkOfQuestion = function (bookmarkName) {
+        var formData = new FormData();
+        formData.append("userId", userId);
+        formData.append("bookmarkName", bookmarkName);
+        layer.confirm('是否删除', function (index) {
+            $.ajax({
+                url: "/bookmarkManage/deleteBookmarkOfQuestion",
+                type: "post",
+                dataType: "json",
+                async: false,
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.data === true) {
+                        //关闭弹框
+                        layer.close(index);
+                        layer.msg("删除成功", {icon: 6});
+                    } else {
+                        layer.msg("删除失败", {icon: 5});
+                    }
+                }
+            });
+        });
+    }
+
+    window.deleteBookmakById = function (id) {
+        layer.confirm('是否删除', function (index) {
+            $.ajax({
+                url: "/bookmarkManage/deleteBookmarkById?id=" + id,
+                type: "post",
+                dataType: "json",
+                async: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.data === true) {
+                        //关闭弹框
+                        layer.close(index);
+                        layer.msg("删除成功", {icon: 6});
+                    } else {
+                        layer.msg("删除失败", {icon: 5});
+                    }
+                }
+            });
+        });
+    }
+
+    window.updateBookmarkOfVideo = function (bookmarkName) {
+        layer.open({
+            type: 6,
+            title: '修改信息',
+            // skin:'layui-layer-rim',
+            area: ['auto', 'auto'],
+
+            content: '  <div class="layui-inline" style="margin-top: 20px; margin-right: 40px">\n' +
+                '       <label class="layui-form-label" style="font-size: 13px">收藏夹</label>\n' +
+                '       <div class="layui-input-inline">\n' +
+                '        <input type="tel" name="newBookmarkName" id="newBookmarkName" class="layui-input"' +
+                'style="width: 200px; height: 30px; margin-top: 5px">\n' +
+                '       </div>\n' +
+                '   </div>'
+            ,
+            btn: ['保存', '取消'],
+            btn1: function (index, layero) {
+                var formData = new FormData();
+                var newBookmarkName = document.getElementById("newBookmarkName").value;
+                formData.append("newBookmarkName", newBookmarkName);
+                formData.append("bookmarkName", bookmarkName);
+                formData.append("userId", userId);
                 $.ajax({
-                    url: "/videoManage/deleteVideo?id=" + data.id,
-                    type: "POST",
+                    url: "/bookmarkManage/updateBookmarkOfVideo",
+                    type: "post",
+                    dataType: "json",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     success: function (msg) {
                         if (msg.data === true) {
-                            //删除这一行
-                            obj.del();
                             //关闭弹框
                             layer.close(index);
-                            layer.msg("删除成功", {icon: 6});
+                            layer.msg("更新成功", {icon: 6});
                         } else {
-                            layer.msg("删除失败", {icon: 5});
+                            layer.msg("更新失败", {icon: 5});
                         }
                     }
                 });
-                obj.del();
-                layer.close(index);
-            });
-        } else if (obj.event === 'edit') {
-            layer.open({
-                type: 6,
-                title: '修改信息',
-                // skin:'layui-layer-rim',
-                area: ['600px', 'auto'],
 
-                content: '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
-                    + '<input type="hidden" id="id" name="id" value="' + data.id + '">'
-                    + '<input type="hidden" id="videoStatus" name="videoStatus" value="' + data.videoStatus + '">'
-                    + '<input type="hidden" id="user" name="user" value="' + data.user + '">'
-                    + '<input type="hidden" id="series" name="series" value="' + data.series + '">'
-                    + '<table>'
-                    + '<tr>'
-                    + '<td>'
-                    + '<div class="layui-form-item" style="margin-top: 20px">\n'
-                    + '    <label class="layui-form-label" style="font-size: 13px">视频名</label>\n'
-                    + '    <div class="layui-input-block">\n'
-                    + '      <input type="tel" name="videoName" id="videoName" placeholder="请输入视频名" value="' + data.videoName + '" autocomplete="off" class="layui-input" '
-                    + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                    + '    </div>\n'
-                    + '  </div>'
-                    + '</td>'
-                    + '<td>'
-                    + '<div class="layui-form-item" style="margin-top: 20px">\n'
-                    + '    <label class="layui-form-label" style="font-size: 13px">用户名</label>\n'
-                    + '    <div class="layui-input-block">\n'
-                    + '      <input type="tel" name="userName" id="userName" readonly="readonly" value="' + data.user.userName + '" autocomplete="off" class="layui-input" '
-                    + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                    + '    </div>\n'
-                    + '  </div>'
-                    + '</td>'
-                    + '</tr>'
-                    + '<tr>'
-                    + '<td>'
-                    + '<div class="layui-form-item">\n'
-                    + '    <label class="layui-form-label" style="font-size: 13px">类别</label>\n'
-                    + '    <div class="layui-input-block">\n'
-                    // + '      <input type="tel" name="videoClassification" id="videoClassification" placeholder="请输入类别" value="' + data.videoClassification + '" autocomplete="off" class="layui-input" '
-                    // + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                    + ' <div class="layui-inline" style="width: 150px; height: 30px; margin-top: 5px">\n'
-                    + '      <div class="layui-input-inline">\n'
-                    + '        <select name="modules" name="videoClassification" id="videoClassification" '
-                    + 'style="width: 150px; height: 30px; margin-top: 5px" onchange="selectSeries()" lay-verify="required" lay-search="">\n'
-                    + '          <option value="' + data.videoClassification + '">默认：' + data.videoClassification + '</option>\n'
-                    + '          <option value="编程语言">编程语言</option>\n'
-                    + '          <option value="云计算大数据">云计算大数据</option>\n'
-                    + '          <option value="计算机基础">计算机基础</option>\n'
-                    + '          <option value="移动开发">移动开发</option>\n'
-                    + '          <option value="前沿技术">前沿技术</option>\n'
-                    + '        </select>\n'
-                    + '      </div>\n'
-                    + '    </div>'
-                    + '    </div>\n'
-                    + '  </div>'
-                    + '</td>'
-                    + '<td>'
-                    + '<div class="layui-form-item">\n'
-                    + '    <label class="layui-form-label" style="font-size: 13px">二级分类</label>\n'
-                    + '    <div class="layui-input-block">\n'
-                    + ' <div class="layui-inline" style="width: 150px; height: 30px; margin-top: 5px">\n'
-                    + '      <div class="layui-input-inline">\n'
-                    + '        <select name="modules" name="classificationLittle" id="classificationLittle" '
-                    + 'style="width: 150px; height: 30px; margin-top: 5px" lay-verify="required" lay-search="">\n'
-                    + '          <option value="' + data.classificationLittle + '">默认：' + data.classificationLittle + '</option>\n'
-                    + '</select>\n'
-                    + '      </div>\n'
-                    + '    </div>'
-                    + '    </div>\n'
-                    + '  </div>'
-                    + '</td>'
-                    + '</tr>'
-                    + '<tr>'
-                    + '<td>'
-                    + '<div class="layui-form-item">\n'
-                    + '    <label class="layui-form-label" style="font-size: 13px">积分</label>\n'
-                    + '    <div class="layui-input-block">\n'
-                    + '      <input type="tel" name="videoIntegral" id="videoIntegral" placeholder="请输入积分" value="' + data.videoIntegral + '" autocomplete="off" class="layui-input" '
-                    + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                    + '    </div>\n'
-                    + '  </div>'
-                    + '</td>'
-                    + '</tr>'
-                    + '<tr>'
-                    + '<td colspan="2">'
-                    + '<div class="layui-form-item">\n'
-                    + '    <label class="layui-form-label" style="font-size: 13px">视频地址</label>\n'
-                    + '    <div class="layui-input-block">\n'
-                    + '      <input type="tel" name="coverUrl" id="coverUrl" readonly="readonly" value="' + data.coverUrl + '" autocomplete="off" class="layui-input" '
-                    + 'style="width: 410px; height: 30px; margin-top: 5px">\n'
-                    + '    </div>\n'
-                    + '  </div>'
-                    + '</td>'
-                    + '</tr>'
-                    + '<tr>'
-                    + '<td>'
-                    + '<div class="layui-form-item">\n'
-                    + '    <label class="layui-form-label" style="font-size: 13px">播放量</label>\n'
-                    + '    <div class="layui-input-block">\n'
-                    + '      <input type="tel" name="playbackVolume" id="playbackVolume" placeholder="请输入播放量" value="' + data.playbackVolume + '" autocomplete="off" class="layui-input" '
-                    + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                    + '    </div>\n'
-                    + '  </div>'
-                    + '</td>'
-                    + '<td>'
-                    + '<div class="layui-form-item">\n'
-                    + '    <label class="layui-form-label" style="font-size: 13px">上传日期</label>\n'
-                    + '    <div class="layui-input-block">\n'
-                    + '        <input type="date" class="layui-input" id="videoDate" name="videoDate" id="test5" value="' + data.videoDate + '" placeholder="yyyy-MM-dd HH:mm:ss"' +
-                    'style="width: 150px; height: 30px; margin-top: 5px">'
-                    + '    </div>\n'
-                    + '  </div>'
-                    + '</td>'
-                    + '</tr>'
-                    + '<tr>'
-                    + '<td colspan="2">'
-                    + '<div class="layui-form-item">\n'
-                    + '    <label class="layui-form-label" style="font-size: 13px">视频介绍</label>\n'
-                    + '    <div style="margin-left: 110px; width: 410px; ">\n'
-                    + '      <textarea placeholder="请输入内容" name="videoIntroduce" id="videoIntroduce" class="layui-textarea">' + data.videoIntroduce + '</textarea>\n'
-                    + '    </div>\n'
-                    + '  </div>'
-                    + '</td>'
-                    + '</tr>'
-                    + '</table>'
-                    + '</div>'
-                ,
-                btn: ['保存', '取消'],
-                btn1: function (index, layero) {
-                    var formData = new FormData();
-                    var id = document.getElementById("id").value;
-                    var videoName = document.getElementById("videoName").value;
-                    var videoStatus = document.getElementById("videoStatus").value;
-                    var videoClassification = document.getElementById("videoClassification").value;
-                    var classificationLittle = document.getElementById("classificationLittle").value;
-                    var videoIntegral = document.getElementById("videoIntegral").value;
-                    var coverUrl = document.getElementById("coverUrl").value;
-                    var playbackVolume = document.getElementById("playbackVolume").value;
-                    var videoDate = document.getElementById("videoDate").value;
-                    var videoIntroduce = document.getElementById("videoIntroduce").value;
-                    formData.append("id", id);
-                    formData.append("videoName", videoName);
-                    formData.append("videoStatus", videoStatus);
-                    formData.append("videoClassification", videoClassification);
-                    formData.append("classificationLittle", classificationLittle);
-                    formData.append("videoIntegral", videoIntegral);
-                    formData.append("coverUrl", coverUrl);
-                    formData.append("playbackVolume", playbackVolume);
-                    formData.append("videoDate", videoDate);
-                    formData.append("videoIntroduce", videoIntroduce);
-                    $.ajax({
-                        url: "/videoManage/updateVideo",
-                        type: "post",
-                        dataType: "json",
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        success: function (msg) {
-                            console.log(msg);
-                            if (msg.data === true) {
-                                //关闭弹框
-                                layer.close(index);
-                                layer.msg("更新成功", {icon: 6});
-                            } else {
-                                layer.msg("更新失败", {icon: 5});
-                            }
+            },
+        });
+    }
+
+    window.updateBookmarkOfQuestion = function (bookmarkName) {
+        layer.open({
+            type: 6,
+            title: '修改信息',
+            // skin:'layui-layer-rim',
+            area: ['auto', 'auto'],
+
+            content: '  <div class="layui-inline" style="margin-top: 20px; margin-right: 40px">\n' +
+                '       <label class="layui-form-label" style="font-size: 13px">收藏夹</label>\n' +
+                '       <div class="layui-input-inline">\n' +
+                '        <input type="tel" name="newBookmarkName1" id="newBookmarkName1" class="layui-input"' +
+                'style="width: 200px; height: 30px; margin-top: 5px">\n' +
+                '       </div>\n' +
+                '   </div>'
+            ,
+            btn: ['保存', '取消'],
+            btn1: function (index, layero) {
+                var formData = new FormData();
+                var newBookmarkName1 = document.getElementById("newBookmarkName1").value;
+                formData.append("newBookmarkName", newBookmarkName1);
+                formData.append("bookmarkName", bookmarkName);
+                formData.append("userId", userId);
+                $.ajax({
+                    url: "/bookmarkManage/updateBookmarkOfQuestion",
+                    type: "post",
+                    dataType: "json",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (msg) {
+                        if (msg.data === true) {
+                            //关闭弹框
+                            layer.close(index);
+                            layer.msg("更新成功", {icon: 6});
+                        } else {
+                            layer.msg("更新失败", {icon: 5});
+                        }
+                    }
+                });
+
+            },
+        });
+    }
+
+    $('#question-card').on('click', function () {
+        $.ajax({
+            url: "/questionManage/getCountQuestionByUserId?id=" + userId,
+            type: "post",
+            dataType: "json",
+            async: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demo10'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , limit: 10
+                    , jump: function (obj) {
+                        getQuestionByUserId(obj.curr, obj.limit, userId)
+                    }
+                });
+            }
+        });
+    });
+
+    window.getQuestionByUserId = function (pageNo, pageSize, userId) {
+        var formData = new FormData();
+        formData.append("userId", userId);
+        formData.append("limit", pageSize);
+        formData.append("page", pageNo);
+        $.ajax({
+            url: "/questionManage/getQuestionByUserId",
+            type: "post",
+            dataType: "json",
+            async: false,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $("#question-list").empty();
+                if (data.data.numberOfElements === 0) {
+                    document.getElementById("demo10").style.display = "none";
+                    var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                        "<div>" +
+                        "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                        "<span>暂无相关信息！</span>" +
+                        "</div>" +
+                        "</div>"
+                    $("#question-list").append(appendhtml);
+                } else {
+                    document.getElementById("demo10").style.display = "block";
+                    for (var i = 0; i < data.data.numberOfElements; i++) {
+                        var appendhtml = "<div class=\"layui-colla-item\">\n" +
+                            "                    <h2 class=\"layui-colla-title\">" + data.data.content[i].questionName + "</h2>\n" +
+                            "                    <div style=\"border: solid #97b3ff 1px; border-radius: 5px; padding: 10px\">\n" +
+                            "                        <span style=\"font-size: 13px; color: #999\">" + data.data.content[i].questionContent + "</span>\n" +
+                            "                        <div style=\"float: right\">\n" +
+                            "                            <div class=\"layui-btn-group\">\n" +
+                            "                                <button type=\"button\" class=\"layui-btn layui-btn-primary layui-btn-sm\" onclick='toQuestionDetail(" + data.data.content[i].id + ")'>详情</button>\n" +
+                            "                                <button type=\"button\" class=\"layui-btn layui-btn-primary layui-btn-sm\"\n" +
+                            "                                        data-method=\"offset\" data-type=\"auto\" id=\"editQuestion\"><i\n" +
+                            "                                        class=\"layui-icon\" onclick='updateQuestion(" + data.data.content[i].id + ")'></i></button>\n" +
+                            "                                <button type=\"button\" class=\"layui-btn layui-btn-primary layui-btn-sm\"><i\n" +
+                            "                                        class=\"layui-icon\" onclick='deleteQuestionById(" + data.data.content[i].id + ")'></i></button>\n" +
+                            "                            </div>\n" +
+                            "                        </div>\n" +
+                            "                        <div style=\"clear: both\"></div>\n" +
+                            "                    </div>\n" +
+                            "                </div>";
+                        $("#question-list").append(appendhtml);
+                    }
+                }
+            }
+        })
+    }
+
+    window.updateQuestion = function (id) {
+        $.ajax({
+            url: "/questionManage/getQuestionById?id=" + id,
+            type: "post",
+            dataType: "json",
+            async: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.data !== null) {
+                    layer.open({
+                        type: 6
+                        ,
+                        title: '修改问题'
+                        ,
+                        area: ['600px', 'auto']
+                        ,
+                        content: '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
+                            + '<input type="hidden" id="questionDate" name="questionDate" value="' + data.data.questionDate + '">'
+                            + '<input type="hidden" id="questionIsSolve" name="questionIsSolve" value="' + data.data.questionIsSolve + '">'
+                            + '<input type="hidden" id="isDelete" name="isDelete" value="' + data.data.isDelete + '">'
+                            + '<input type="hidden" id="viewNumber" name="viewNumber" value="' + data.data.viewNumber + '">'
+                            + '<table>'
+                            + '<tr>'
+                            + '<td colspan="2">'
+                            + '<div class="layui-form-item" style="margin-top: 20px">\n'
+                            + '    <label class="layui-form-label" style="font-size: 13px">问题题目</label>\n'
+                            + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; ">\n'
+                            + '      <textarea placeholder="请输入问题题目" name="questionName" id="questionName" class="layui-textarea">' + data.data.questionName + '</textarea>\n'
+                            + '    </div>\n'
+                            + '  </div>'
+                            + '</td>'
+                            + '</tr>'
+                            + '<tr>'
+                            + '<td>'
+                            + '<div class="layui-form-item">\n'
+                            + '    <label class="layui-form-label" style="font-size: 13px">悬赏积分</label>\n'
+                            + '    <div class="layui-input-block">\n'
+                            + '      <input type="number" min="0" id="questionIntegral" value="' + data.data.questionIntegral + '" placeholder="请输入悬赏积分" autocomplete="off" class="layui-input" '
+                            + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                            + '    </div>\n'
+                            + '  </div>'
+                            + '</td>'
+                            + '<td >'
+                            + '<div class="layui-form-item">\n'
+                            + '    <label class="layui-form-label" style="font-size: 13px">类别</label>\n'
+                            + '    <div class="layui-input-block">\n'
+                            + ' <div class="layui-inline" style="width: 150px; height: 30px; margin-top: 5px">\n'
+                            + '      <div class="layui-input-inline">\n'
+                            + '        <select name="modules" name="classification" id="classification" '
+                            + 'style="width: 150px; height: 30px" lay-verify="required" lay-search="">\n'
+                            + '          <option value="' + data.classification + '">默认：' + data.data.classification + '</option>\n'
+                            + '          <option value="编程语言">编程语言</option>\n'
+                            + '          <option value="云计算大数据">云计算大数据</option>\n'
+                            + '          <option value="计算机基础">计算机基础</option>\n'
+                            + '          <option value="移动开发">移动开发</option>\n'
+                            + '          <option value="前沿技术">前沿技术</option>\n'
+                            + '        </select>\n'
+                            + '      </div>\n'
+                            + '    </div>'
+                            + '    </div>\n'
+                            + '  </div>'
+                            + '</td>'
+                            + '</tr>'
+                            + '<tr>'
+                            + '<td colspan="2">'
+                            + '<div class="layui-form-item">\n'
+                            + '    <label class="layui-form-label" style="font-size: 13px">问题内容</label>\n'
+                            + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; ">\n'
+                            + '      <textarea placeholder="请输入内容" name="questionContent" id="questionContent" class="layui-textarea">' + data.data.questionContent + '</textarea>\n'
+                            + '    </div>\n'
+                            + '  </div>'
+                            + '</td>'
+                            + '</tr>'
+                            + '</table>'
+                            + '</div>'
+                        , btn: ['保存', '取消']
+                        , btn1: function (index, layero) {
+
+                            var formData = new FormData();
+                            var myDate = new Date();
+                            var questionName = document.getElementById("questionName").value;
+                            var questionIntegral = document.getElementById("questionIntegral").value;
+                            var classification = document.getElementById("classification").value;
+                            var questionContent = document.getElementById("questionContent").value;
+                            var questionDate = document.getElementById("questionDate").value;
+                            var questionIsSolve = document.getElementById("questionIsSolve").value;
+                            var isDelete = document.getElementById("isDelete").value;
+                            var viewNumber = document.getElementById("viewNumber").value;
+                            formData.append("id", id);
+                            formData.append("userId", userId);
+                            formData.append("questionName", questionName);
+                            formData.append("questionIntegral", questionIntegral);
+                            formData.append("classification", classification);
+                            formData.append("questionContent", questionContent);
+                            formData.append("questionDate", questionDate);
+                            formData.append("questionIsSolve", questionIsSolve);
+                            formData.append("isDelete", isDelete);
+                            formData.append("viewNumber", viewNumber);
+                            $.ajax({
+                                url: "/questionManage/insertQuestion",
+                                type: "post",
+                                dataType: "json",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function (msg) {
+                                    console.log(msg);
+                                    if (msg.data === true) {
+                                        //关闭弹框
+                                        layer.close(index);
+                                        layer.msg("修改成功", {icon: 6});
+                                    } else {
+                                        layer.msg("修改失败", {icon: 5});
+                                    }
+                                }
+                            });
+
+                        },
+                        btn2: function (index, layero) {
+                            layer.close(index);
                         }
                     });
+                }
+            }
+        })
+    }
 
-                },
+    window.deleteQuestionById = function (id) {
+        layer.confirm('是否删除', function (index) {
+            $.ajax({
+                url: "/questionManage/deleteQuestion?id=" + id,
+                type: "post",
+                dataType: "json",
+                async: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.data === true) {
+                        //关闭弹框
+                        layer.close(index);
+                        layer.msg("删除成功", {icon: 6});
+                    } else {
+                        layer.msg("删除失败", {icon: 5});
+                    }
+                }
             });
-        } else if (obj.event === 'comment') {
-            window.location.href = "/url/adminVideoComment?id=" + data.id;
-        }
-    });
+        });
+    }
+
+    window.toQuestionDetail = function (id) {
+        window.location.href = "/userUrl/question?id=" + id;
+    }
 });
 
-function selectSeries() {
-    var select = document.getElementById("videoClassification");
-    var c = select.value;
-    var area = document.getElementById("classificationLittle");
-    switch (c) {
-        case "编程语言":
-            area.innerHTML = "" +
-                "<option value=\"Java\">Java</option>" +
-                "<option value=\"C++\">C++</option>" +
-                "<option value=\"Python\">Python</option>" +
-                "<option value=\"C\">C</option>";
-            break;
-        case "云计算大数据":
-            area.innerHTML = "" +
-                "<option value=\"Hadoop\">Hadoop</option>" +
-                "<option value=\"Spark\">Spark</option>" +
-                "<option value=\"Hbase\">Hbase</option>" +
-                "<option value=\"阿里云\">阿里云</option>" +
-                "<option value=\"Docker\">Docker</option>";
-            break;
-        case "计算机基础":
-            area.innerHTML = "" +
-                "<option value=\"计算机网络\">计算机网络</option>" +
-                "<option value=\"算法与数据结构\">算法与数据结构</option>";
-            break;
-        case "移动开发":
-            area.innerHTML = "" +
-                "<option value=\"Android\">Android</option>" +
-                "<option value=\"iOS\">iOS</option>" +
-                "<option value=\"React native\">React native</option>";
-            break;
-        case "前沿技术":
-            area.innerHTML = "" +
-                "<option value=\"微服务\">微服务</option>" +
-                "<option value=\"区块链\">区块链</option>" +
-                "<option value=\"机器学习\">机器学习</option>" +
-                "<option value=\"深度学习\">深度学习</option>" +
-                "<option value=\"计算机视觉\">计算机视觉</option>";
-            break;
-        default:
-            alert("error");
-    }
-};
+function showVideoByOrder(pageNo, pageSize, userId) {
+    var formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("limit", pageSize);
+    formData.append("page", pageNo);
+    $.ajax({
+        url: "/orderManage/getOrderListOfVideo",
+        type: "post",
+        dataType: "json",
+        async: false,
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $("#boughtVideoList").empty();
+            if (data.data.numberOfElements === 0) {
+                document.getElementById("demo7").style.display = "none";
+                var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                    "<div>" +
+                    "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                    "<span>暂无相关信息！</span>" +
+                    "</div>" +
+                    "</div>"
+                $("#boughtVideoList").append(appendhtml);
+            } else {
+                document.getElementById("demo7").style.display = "block";
+                for (var i = 0; i < data.data.numberOfElements; i++) {
+                    var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].video.id + ">\n " +
+                        "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px;\">\n" +
+                        "                                    <div class=\"layui-card\">\n" +
+                        "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].video.id + "\">" +
+                        "                                           <img src=" + data.data.content[i].video.videoImageUrl + " width=\"212\">\n" +
+                        "                                            <div style=\"min-height: 30px; margin-left: 15px; \">\n" +
+                        "                                                <span style=\"font-size: 12px\">" + data.data.content[i].video.videoName + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                        </a>\n" +
+                        "                                        <div class=\"layui-card-body\">\n" +
+                        "                                            <div class=\"layui-input-inline\" style=\"float: left\">\n" +
+                        "                                                <img src=\"../images/integral.png\" style=\"width: 16px; height: 16px\"/>\n" +
+                        "                                                <span style=\"color: red; font-size: 10px\">" + data.data.content[i].video.videoIntegral + "</span>&nbsp;&nbsp;" +
+                        "                                                <img src=\"../images/play.png\" style=\"width: 16px; height: 16px\"/>\n" +
+                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].video.playbackVolume + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                            <div class=\"layui-input-inline\" style=\"float: right\">\n" +
+                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].video.videoDate + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                            <div style=\"clear: both\"></div>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>";
+                    $("#boughtVideoList").append(appendhtml);
+                }
+            }
+
+        }
+    });
+}
+
+function showSeriesByOrder(pageNo, pageSize, userId) {
+    var formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("limit", pageSize);
+    formData.append("page", pageNo);
+    $.ajax({
+        url: "/orderManage/getOrderListOfSeries",
+        type: "post",
+        dataType: "json",
+        async: false,
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $("#boughtSeriesList").empty();
+            $("#boughtVideoList").empty();
+            if (data.data.numberOfElements === 0) {
+                document.getElementById("demo7").style.display = "none";
+                var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                    "<div>" +
+                    "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                    "<span>暂无相关信息！</span>" +
+                    "</div>" +
+                    "</div>"
+                $("#boughtSeriesList").append(appendhtml);
+            } else {
+                document.getElementById("demo7").style.display = "block";
+                for (var i = 0; i < data.data.numberOfElements; i++) {
+                    var appendhtml = "<div class=\"course\">\n" +
+                        "                                    <div class=\"course-img layui-input-inline\">\n" +
+                        "                                        <img src=" + data.data.content[i].videoSeries.seriesImageUrl + "\n" +
+                        "                                             height=\"150\"\n" +
+                        "                                             width=\"250\"/>\n" +
+                        "                                    </div>\n" +
+                        "                                    <div class=\"my-course-introduce layui-input-inline\">\n" +
+                        "                                        <div class=\"layui-card-header\">" + data.data.content[i].videoSeries.seriesName + "</div>\n" +
+                        "                                        <div class=\"layui-card-body\">\n" +
+                        "                                             <span style=\"font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                总集数：" + data.data.content[i].videoSeries.seriesNumber + "\n" +
+                        "                                            </span>\n" +
+                        "                                            <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                分类：" + data.data.content[i].videoSeries.seriesClassification + "\n" +
+                        "                                            </span>\n" +
+                        "                                            <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                二级分类：" + data.data.content[i].videoSeries.classificationLittle + "\n" +
+                        "                                            </span>\n" +
+                        "                                            <span style=\"margin-left: 20px; font-size: 12px; color: green; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                <img src=\"../images/integral.png\" style=\"width: 13px; height: 13px\"/>\n" +
+                        "                                                " + data.data.content[i].videoSeries.seriesIntegral + "（已购买）\n" +
+                        "                                            </span>" +
+                        "                                        </div>\n" +
+                        "                                        <div class=\"layui-card-body\">\n" +
+                        "                                            <button type=\"button\" class=\"layui-btn layui-btn-sm layui-btn-radius\"\n" +
+                        "                                                    style=\"margin-left: 300px\">继续学习\n" +
+                        "                                            </button>\n" +
+                        "                                            <button type=\"button\" class=\"layui-btn layui-btn-sm layui-btn-danger layui-btn-radius\"\n" +
+                        "                                                    style=\"margin-left: 50px\">删除课程\n" +
+                        "                                            </button>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>";
+                    $("#boughtSeriesList").append(appendhtml);
+                }
+            }
+
+        }
+    });
+}
+
+function deleteOrder(orderId) {
+    layer.confirm('是否删除', function (index) {
+        $.ajax({
+            url: "/orderManage/deleteOrder?id=" + orderId,
+            type: "post",
+            dataType: "json",
+            async: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.data === true) {
+                    layer.close(index);
+                    layer.msg("删除成功", {icon: 6});
+                    location.reload();
+                } else {
+                    layer.msg("删除失败", {icon: 5});
+                }
+            }
+        });
+    });
+}
+
+function showAllOrder(pageNo, pageSize, userId) {
+    var formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("limit", pageSize);
+    formData.append("page", pageNo);
+    $.ajax({
+        url: "/orderManage/getOrderListByUserId",
+        type: "post",
+        dataType: "json",
+        async: false,
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $("#order-all").empty();
+            if (data.data.numberOfElements === 0) {
+                document.getElementById("demo8").style.display = "none";
+                var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                    "<div>" +
+                    "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                    "<span>暂无相关信息！</span>" +
+                    "</div>" +
+                    "</div>"
+                $("#order-all").append(appendhtml);
+            } else {
+                document.getElementById("demo8").style.display = "block";
+                for (var i = 0; i < data.data.numberOfElements; i++) {
+                    var appendhtml1 = "";
+                    var appendhtml2 = "";
+                    if (data.data.content[i].videoSeries === null) {
+                        appendhtml1 = "<div class=\"course\">\n" +
+                            "                                        <div class=\"course-img layui-input-inline\">\n" +
+                            "                                            <img src=" + data.data.content[i].video.videoImageUrl + "\n" +
+                            "                                                 height=\"150\"\n" +
+                            "                                                 width=\"250\"/>\n" +
+                            "                                        </div>\n" +
+                            "                                        <div class=\"my-course-introduce layui-input-inline\">\n" +
+                            "                                            <div class=\"layui-card-header\">\n" +
+                            "                                                " + data.data.content[i].video.videoName + "\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                                <span style=\"font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                分类：" + data.data.content[i].video.videoClassification + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                二级分类：" + data.data.content[i].video.classificationLittle + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: green; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                积分：" + data.data.content[i].video.videoIntegral + "\n" +
+                            "                                            </span>\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                                <div class=\"layui-input-inline\">\n" +
+                            "                                            <span style=\"font-size: 10px; color: #999;\">下单日期：" + data.data.content[i].orderDate + "</span>\n" +
+                            "                                                    <span style=\"margin-left: 50px\">订单类型：<span\n" +
+                            "                                                            style=\"color: red\">视频</span></span>\n";
+                    } else {
+                        appendhtml1 = "<div class=\"course\">\n" +
+                            "                                        <div class=\"course-img layui-input-inline\">\n" +
+                            "                                            <img src=" + data.data.content[i].videoSeries.seriesImageUrl + "\n" +
+                            "                                                 height=\"150\"\n" +
+                            "                                                 width=\"250\"/>\n" +
+                            "                                        </div>\n" +
+                            "                                        <div class=\"my-course-introduce layui-input-inline\">\n" +
+                            "                                            <div class=\"layui-card-header\">\n" +
+                            "                                                " + data.data.content[i].videoSeries.seriesName + "\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                            <span style=\"font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                总集数：" + data.data.content[i].videoSeries.seriesNumber + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                分类：" + data.data.content[i].videoSeries.seriesClassification + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                二级分类：" + data.data.content[i].videoSeries.classificationLittle + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: green; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                积分：" + data.data.content[i].videoSeries.seriesIntegral + "\n" +
+                            "                                            </span>\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                                <div class=\"layui-input-inline\">\n" +
+                            "                                            <span style=\"font-size: 10px; color: #999;\">下单日期：" + data.data.content[i].orderDate + "</span>\n" +
+                            "                                                    <span style=\"margin-left: 50px\">订单类型：<span\n" +
+                            "                                                            style=\"color: red\">系列</span></span>\n";
+
+                    }
+                    if (data.data.content[i].orderStatus === 2) {
+                        appendhtml2 = "                                                    <span style=\"margin-left: 100px\">状态：<span\n" +
+                            "                                                            style=\"color: green; \">已支付</span></span>\n" +
+                            "                                                </div>\n" +
+                            "                                            </div>\n" +
+                            "                                        </div>\n" +
+                            "                                    </div>";
+                    } else if (data.data.content[i].orderStatus === 1) {
+                        appendhtml2 = "                                                    <span style=\"margin-left: 100px\">状态：<span\n" +
+                            "                                                            style=\"color: green; \">未支付</span></span>\n" +
+                            "                                                </div>\n" +
+                            "                                                <div class=\"layui-input-inline\">\n" +
+                            "                                                    <button type=\"button\"\n" +
+                            "                                                            class=\"layui-btn layui-btn-sm layui-btn-danger  layui-btn-radius\"\n" +
+                            "                                                            style=\"margin-left: 20px\">立即支付\n" +
+                            "                                                    </button>\n" +
+                            "                                                </div>\n" +
+                            "                                            </div>\n" +
+                            "                                        </div>\n" +
+                            "                                    </div>";
+                    } else {
+                        appendhtml2 = "                                                    <span style=\"margin-left: 100px\">状态：<span\n" +
+                            "                                                            style=\"color: green; \">已失效</span></span>\n" +
+                            "                                                </div>\n" +
+                            "                                                <div class=\"layui-input-inline\">\n" +
+                            "                                                    <button type=\"button\"\n" +
+                            "                                                            class=\"layui-btn layui-btn-sm layui-btn-primary  layui-btn-radius\"\n" +
+                            "                                                            style=\"margin-left: 20px\" onclick='deleteOrder(" + data.data.content[i].id + ")'>删除订单\n" +
+                            "                                                    </button>\n" +
+                            "                                                </div>\n" +
+                            "                                            </div>\n" +
+                            "                                        </div>\n" +
+                            "                                    </div>";
+                    }
+                    $("#order-all").append(appendhtml1 + appendhtml2);
+                }
+            }
+        }
+    });
+}
+
+function showNonPaymentOrder(pageNo, pageSize, userId) {
+    var formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("limit", pageSize);
+    formData.append("page", pageNo);
+    $.ajax({
+        url: "/orderManage/getNonPaymentList",
+        type: "post",
+        dataType: "json",
+        async: false,
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $("#order-non-payment-list").empty();
+            if (data.data.numberOfElements === 0) {
+                document.getElementById("demo8").style.display = "none";
+                var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                    "<div>" +
+                    "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                    "<span>暂无相关信息！</span>" +
+                    "</div>" +
+                    "</div>"
+                $("#order-non-payment-list").append(appendhtml);
+            } else {
+                document.getElementById("demo8").style.display = "block";
+                for (var i = 0; i < data.data.numberOfElements; i++) {
+                    var appendhtml1 = "";
+                    var appendhtml2 = "";
+                    if (data.data.content[i].videoSeries === null) {
+                        appendhtml1 = "<div class=\"course\">\n" +
+                            "                                        <div class=\"course-img layui-input-inline\">\n" +
+                            "                                            <img src=" + data.data.content[i].video.videoImageUrl + "\n" +
+                            "                                                 height=\"150\"\n" +
+                            "                                                 width=\"250\"/>\n" +
+                            "                                        </div>\n" +
+                            "                                        <div class=\"my-course-introduce layui-input-inline\">\n" +
+                            "                                            <div class=\"layui-card-header\">\n" +
+                            "                                                " + data.data.content[i].video.videoName + "\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                                <span style=\"font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                分类：" + data.data.content[i].video.videoClassification + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                二级分类：" + data.data.content[i].video.classificationLittle + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: green; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                积分：" + data.data.content[i].video.videoIntegral + "\n" +
+                            "                                            </span>\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                                <div class=\"layui-input-inline\">\n" +
+                            "                                            <span style=\"font-size: 10px; color: #999;\">下单日期：" + data.data.content[i].orderDate + "</span>\n" +
+                            "                                                    <span style=\"margin-left: 50px\">订单类型：<span\n" +
+                            "                                                            style=\"color: red\">视频</span></span>\n";
+                    } else {
+                        appendhtml1 = "<div class=\"course\">\n" +
+                            "                                        <div class=\"course-img layui-input-inline\">\n" +
+                            "                                            <img src=" + data.data.content[i].videoSeries.seriesImageUrl + "\n" +
+                            "                                                 height=\"150\"\n" +
+                            "                                                 width=\"250\"/>\n" +
+                            "                                        </div>\n" +
+                            "                                        <div class=\"my-course-introduce layui-input-inline\">\n" +
+                            "                                            <div class=\"layui-card-header\">\n" +
+                            "                                                " + data.data.content[i].videoSeries.seriesName + "\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                            <span style=\"font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                总集数：" + data.data.content[i].videoSeries.seriesNumber + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                分类：" + data.data.content[i].videoSeries.seriesClassification + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                二级分类：" + data.data.content[i].videoSeries.classificationLittle + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: green; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                积分：" + data.data.content[i].videoSeries.seriesIntegral + "\n" +
+                            "                                            </span>\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                                <div class=\"layui-input-inline\">\n" +
+                            "                                            <span style=\"font-size: 10px; color: #999;\">下单日期：" + data.data.content[i].orderDate + "</span>\n" +
+                            "                                                    <span style=\"margin-left: 50px\">订单类型：<span\n" +
+                            "                                                            style=\"color: red\">系列</span></span>\n";
+
+                    }
+                    appendhtml2 = "                                                    <span style=\"margin-left: 100px\">状态：<span\n" +
+                        "                                                            style=\"color: green; \">未支付</span></span>\n" +
+                        "                                                </div>\n" +
+                        "                                                <div class=\"layui-input-inline\">\n" +
+                        "                                                    <button type=\"button\"\n" +
+                        "                                                            class=\"layui-btn layui-btn-sm layui-btn-danger  layui-btn-radius\"\n" +
+                        "                                                            style=\"margin-left: 20px\">立即支付\n" +
+                        "                                                    </button>\n" +
+                        "                                                </div>\n" +
+                        "                                            </div>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>";
+                    $("#order-non-payment-list").append(appendhtml1 + appendhtml2);
+                }
+            }
+        }
+    });
+}
+
+function showPaymentOrder(pageNo, pageSize, userId) {
+    var formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("limit", pageSize);
+    formData.append("page", pageNo);
+    $.ajax({
+        url: "/orderManage/getPaymentList",
+        type: "post",
+        dataType: "json",
+        async: false,
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $("#order-payment-list").empty();
+            if (data.data.numberOfElements === 0) {
+                document.getElementById("demo8").style.display = "none";
+                var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                    "<div>" +
+                    "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                    "<span>暂无相关信息！</span>" +
+                    "</div>" +
+                    "</div>"
+                $("#order-payment-list").append(appendhtml);
+            } else {
+                document.getElementById("demo8").style.display = "block";
+                for (var i = 0; i < data.data.numberOfElements; i++) {
+                    console.log("aaa" + i);
+                    var appendhtml1 = "";
+                    var appendhtml2 = "";
+                    if (data.data.content[i].videoSeries === null) {
+                        appendhtml1 = "<div class=\"course\">\n" +
+                            "                                        <div class=\"course-img layui-input-inline\">\n" +
+                            "                                            <img src=" + data.data.content[i].video.videoImageUrl + "\n" +
+                            "                                                 height=\"150\"\n" +
+                            "                                                 width=\"250\"/>\n" +
+                            "                                        </div>\n" +
+                            "                                        <div class=\"my-course-introduce layui-input-inline\">\n" +
+                            "                                            <div class=\"layui-card-header\">\n" +
+                            "                                                " + data.data.content[i].video.videoName + "\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                                <span style=\"font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                分类：" + data.data.content[i].video.videoClassification + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                二级分类：" + data.data.content[i].video.classificationLittle + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: green; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                积分：" + data.data.content[i].video.videoIntegral + "\n" +
+                            "                                            </span>\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                                <div class=\"layui-input-inline\">\n" +
+                            "                                            <span style=\"font-size: 10px; color: #999;\">下单日期：" + data.data.content[i].orderDate + "</span>\n" +
+                            "                                                    <span style=\"margin-left: 50px\">订单类型：<span\n" +
+                            "                                                            style=\"color: red\">视频</span></span>\n";
+                    } else {
+                        appendhtml1 = "<div class=\"course\">\n" +
+                            "                                        <div class=\"course-img layui-input-inline\">\n" +
+                            "                                            <img src=" + data.data.content[i].videoSeries.seriesImageUrl + "\n" +
+                            "                                                 height=\"150\"\n" +
+                            "                                                 width=\"250\"/>\n" +
+                            "                                        </div>\n" +
+                            "                                        <div class=\"my-course-introduce layui-input-inline\">\n" +
+                            "                                            <div class=\"layui-card-header\">\n" +
+                            "                                                " + data.data.content[i].videoSeries.seriesName + "\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                            <span style=\"font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                总集数：" + data.data.content[i].videoSeries.seriesNumber + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                分类：" + data.data.content[i].videoSeries.seriesClassification + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                二级分类：" + data.data.content[i].videoSeries.classificationLittle + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: green; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                积分：" + data.data.content[i].videoSeries.seriesIntegral + "\n" +
+                            "                                            </span>\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                                <div class=\"layui-input-inline\">\n" +
+                            "                                            <span style=\"font-size: 10px; color: #999;\">下单日期：" + data.data.content[i].orderDate + "</span>\n" +
+                            "                                                    <span style=\"margin-left: 50px\">订单类型：<span\n" +
+                            "                                                            style=\"color: red\">系列</span></span>\n";
+
+                    }
+                    appendhtml2 = "                                                    <span style=\"margin-left: 100px\">状态：<span\n" +
+                        "                                                            style=\"color: green; \">已支付</span></span>\n" +
+                        "                                                </div>\n" +
+                        "                                            </div>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>";
+                    $("#order-payment-list").append(appendhtml1 + appendhtml2);
+                }
+            }
+        }
+    });
+}
+
+function showLoseEfficacOrder(pageNo, pageSize, userId) {
+    var formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("limit", pageSize);
+    formData.append("page", pageNo);
+    $.ajax({
+        url: "/orderManage/getLoseEfficacyList",
+        type: "post",
+        dataType: "json",
+        async: false,
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $("#order-lose-efficacy-list").empty();
+            if (data.data.numberOfElements === 0) {
+                document.getElementById("demo8").style.display = "none";
+                var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                    "<div>" +
+                    "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                    "<span>暂无相关信息！</span>" +
+                    "</div>" +
+                    "</div>"
+                $("#order-lose-efficacy-list").append(appendhtml);
+            } else {
+                document.getElementById("demo8").style.display = "block";
+                for (var i = 0; i < data.data.numberOfElements; i++) {
+                    var appendhtml1 = "";
+                    var appendhtml2 = "";
+                    if (data.data.content[i].videoSeries === null) {
+                        appendhtml1 = "<div class=\"course\">\n" +
+                            "                                        <div class=\"course-img layui-input-inline\">\n" +
+                            "                                            <img src=" + data.data.content[i].video.videoImageUrl + "\n" +
+                            "                                                 height=\"150\"\n" +
+                            "                                                 width=\"250\"/>\n" +
+                            "                                        </div>\n" +
+                            "                                        <div class=\"my-course-introduce layui-input-inline\">\n" +
+                            "                                            <div class=\"layui-card-header\">\n" +
+                            "                                                " + data.data.content[i].video.videoName + "\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                                <span style=\"font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                分类：" + data.data.content[i].video.videoClassification + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                二级分类：" + data.data.content[i].video.classificationLittle + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: green; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                积分：" + data.data.content[i].video.videoIntegral + "\n" +
+                            "                                            </span>\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                                <div class=\"layui-input-inline\">\n" +
+                            "                                            <span style=\"font-size: 10px; color: #999;\">下单日期：" + data.data.content[i].orderDate + "</span>\n" +
+                            "                                                    <span style=\"margin-left: 50px\">订单类型：<span\n" +
+                            "                                                            style=\"color: red\">视频</span></span>\n";
+                    } else {
+                        appendhtml1 = "<div class=\"course\">\n" +
+                            "                                        <div class=\"course-img layui-input-inline\">\n" +
+                            "                                            <img src=" + data.data.content[i].videoSeries.seriesImageUrl + "\n" +
+                            "                                                 height=\"150\"\n" +
+                            "                                                 width=\"250\"/>\n" +
+                            "                                        </div>\n" +
+                            "                                        <div class=\"my-course-introduce layui-input-inline\">\n" +
+                            "                                            <div class=\"layui-card-header\">\n" +
+                            "                                                " + data.data.content[i].videoSeries.seriesName + "\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                            <span style=\"font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                总集数：" + data.data.content[i].videoSeries.seriesNumber + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                分类：" + data.data.content[i].videoSeries.seriesClassification + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                二级分类：" + data.data.content[i].videoSeries.classificationLittle + "\n" +
+                            "                                            </span>\n" +
+                            "                                                <span style=\"margin-left: 20px; font-size: 12px; color: green; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                            "                                                积分：" + data.data.content[i].videoSeries.seriesIntegral + "\n" +
+                            "                                            </span>\n" +
+                            "                                            </div>\n" +
+                            "                                            <div class=\"layui-card-body\">\n" +
+                            "                                                <div class=\"layui-input-inline\">\n" +
+                            "                                            <span style=\"font-size: 10px; color: #999;\">下单日期：" + data.data.content[i].orderDate + "</span>\n" +
+                            "                                                    <span style=\"margin-left: 50px\">订单类型：<span\n" +
+                            "                                                            style=\"color: red\">系列</span></span>\n";
+
+                    }
+                    appendhtml2 = "                                                    <span style=\"margin-left: 100px\">状态：<span\n" +
+                        "                                                            style=\"color: green; \">已失效</span></span>\n" +
+                        "                                                </div>\n" +
+                        "                                                <div class=\"layui-input-inline\">\n" +
+                        "                                                    <button type=\"button\"\n" +
+                        "                                                            class=\"layui-btn layui-btn-sm layui-btn-primary  layui-btn-radius\"\n" +
+                        "                                                            style=\"margin-left: 20px\" onclick='deleteOrder(" + data.data.content[i].id + ")'>删除订单\n" +
+                        "                                                    </button>\n" +
+                        "                                                </div>\n" +
+                        "                                            </div>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>";
+                    $("#order-lose-efficacy-list").append(appendhtml1 + appendhtml2);
+                }
+            }
+        }
+    });
+}
+
+function showCollectVideoList(pageNo, pageSize, userId, bookmarkName) {
+    var formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("bookmarkName", bookmarkName);
+    formData.append("limit", pageSize);
+    formData.append("page", pageNo);
+    $.ajax({
+        url: "/bookmarkManage/getVideoBookmarks",
+        type: "post",
+        dataType: "json",
+        async: false,
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $("#book-mark-video").empty();
+            $("#book-mark-video").append("<h2>“" + bookmarkName + "”收藏夹</h2><br><br>");
+            if (data.data.numberOfElements === 0) {
+                document.getElementById("demo9").style.display = "none";
+                var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                    "<div>" +
+                    "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                    "<span>暂无相关信息！</span>" +
+                    "</div>" +
+                    "</div>"
+                $("#book-mark-video").append(appendhtml);
+            } else {
+                document.getElementById("demo9").style.display = "block";
+                for (var i = 0; i < data.data.numberOfElements; i++) {
+                    var appendhtml = "<a href=\"/userUrl/playVideo?id=" + data.data.content[i].video.id + "\"><img src=\"../images/collectList.png\" width=\"15\" height=\"15\"/><span style=\"margin-left: 10px\">" + data.data.content[i].video.videoName + "</span></a>" +
+                        "<div class=\"layui-btn-group\" style=\"float: right\">\n" +
+                        "                                                    <button type=\"button\"\n" +
+                        "                                                            class=\"layui-btn layui-btn-primary layui-btn-sm\"><i\n" +
+                        "                                                            class=\"layui-icon\"  onclick='deleteBookmakById(\"" + data.data.content[i].id + "\")'></i></button>\n" +
+                        "                                                </div>\n" +
+                        "                                                <div style=\"clear: both\"></div>" +
+                        "<hr>";
+                    $("#book-mark-video").append(appendhtml);
+                }
+            }
+        }
+    });
+}
+
+function showCollectQuestionList(pageNo, pageSize, userId, bookmarkName) {
+    var formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("bookmarkName", bookmarkName);
+    formData.append("limit", pageSize);
+    formData.append("page", pageNo);
+    $.ajax({
+        url: "/bookmarkManage/getQuestionBookmarks",
+        type: "post",
+        dataType: "json",
+        async: false,
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $("#book-mark-question").empty();
+            $("#book-mark-question").append("<h2>“" + bookmarkName + "”收藏夹</h2><br><br>");
+            if (data.data.numberOfElements === 0) {
+                document.getElementById("demo9").style.display = "none";
+                var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                    "<div>" +
+                    "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                    "<span>暂无相关信息！</span>" +
+                    "</div>" +
+                    "</div>"
+                $("#book-mark-question").append(appendhtml);
+            } else {
+                document.getElementById("demo9").style.display = "block";
+                for (var i = 0; i < data.data.numberOfElements; i++) {
+                    var appendhtml = "<a href=\"/userUrl/question?id=" + data.data.content[i].question.id + "\"><img src=\"../images/collectList.png\" width=\"15\" height=\"15\"/><span style=\"margin-left: 10px\">" + data.data.content[i].question.questionName + "</span></a>" +
+                        "<div class=\"layui-btn-group\" style=\"float: right\">\n" +
+                        "                                                    <button type=\"button\"\n" +
+                        "                                                            class=\"layui-btn layui-btn-primary layui-btn-sm\"><i\n" +
+                        "                                                            class=\"layui-icon\" onclick='deleteBookmakById(\"" + data.data.content[i].id + "\")'></i></button>\n" +
+                        "                                                </div>\n" +
+                        "                                                <div style=\"clear: both\"></div>" +
+                        "<hr>";
+                    $("#book-mark-question").append(appendhtml);
+                }
+            }
+        }
+    });
+}
+

@@ -49,6 +49,9 @@ public class AnswerDTO implements Serializable {
     @Column(name = "user_id")
     private Integer userId;
 
+    @Column(name = "answer_is_delete")
+    private Integer isDelete;
+
     @Column(name = "answer_reply_id")
     private Integer answerReplyId;
 
@@ -112,6 +115,14 @@ public class AnswerDTO implements Serializable {
         this.answerReplyId = answerReplyId;
     }
 
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
         return "AnswerDTO{" +
@@ -120,6 +131,7 @@ public class AnswerDTO implements Serializable {
                 ", answerContent='" + answerContent + '\'' +
                 ", answerLike=" + answerLike +
                 ", userId=" + userId +
+                ", isDelete=" + isDelete +
                 ", answerReplyId=" + answerReplyId +
                 ", questionId=" + questionId +
                 '}';

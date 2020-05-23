@@ -57,4 +57,11 @@ public interface AnswerManageRepository extends PagingAndSortingRepository<Answe
      * @return
      */
     Integer getCountReplyByAnswerId(Integer answerId);
+
+    /**
+     * 根据问题id删除问题回答
+     * @param question
+     * @return
+     */
+    void deleteAnswerByQuestionId(Integer question);
 }

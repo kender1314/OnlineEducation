@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 /**
  * 实现更新管理员信息，但是不更新密码
+ *
  * @Author hejiang
  * @Version 1.0.0 RELEASE
  * @Date 2020-02-29 17:18
@@ -42,11 +43,14 @@ public class AdminDTO implements Serializable {
     @Column(name = "admin_user_name")
     private String userName;
 
-    public AdminDTO(){
+    @Column(name = "admin_is_delete")
+    private Integer isDelete;
+
+    public AdminDTO() {
 
     }
 
-    public AdminDTO(Integer id, String adminName, Integer adminAuthority, String adminPosition, String userName){
+    public AdminDTO(Integer id, String adminName, Integer adminAuthority, String adminPosition, String userName) {
         this.id = id;
         this.adminName = adminName;
         this.adminAuthority = adminAuthority;
@@ -94,14 +98,23 @@ public class AdminDTO implements Serializable {
         this.userName = userName;
     }
 
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
-        return "admin{" +
+        return "AdminDTO{" +
                 "id=" + id +
                 ", adminName='" + adminName + '\'' +
                 ", adminAuthority=" + adminAuthority +
                 ", adminPosition='" + adminPosition + '\'' +
                 ", userName='" + userName + '\'' +
+                ", isDelete=" + isDelete +
                 '}';
     }
 }

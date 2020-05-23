@@ -51,6 +51,9 @@ public class VideoSeriesDTO implements Serializable {
     @Column(name = "series_image_url")
     private String seriesImageUrl;
 
+    @Column(name = "series_is_delete")
+    private Integer isDelete;
+
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "series_date")
@@ -144,6 +147,14 @@ public class VideoSeriesDTO implements Serializable {
         this.classificationLittle = classificationLittle;
     }
 
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
         return "VideoSeriesDTO{" +
@@ -154,6 +165,7 @@ public class VideoSeriesDTO implements Serializable {
                 ", seriesIntegral=" + seriesIntegral +
                 ", seriesImage='" + seriesImage + '\'' +
                 ", seriesImageUrl='" + seriesImageUrl + '\'' +
+                ", isDelete=" + isDelete +
                 ", seriesDate=" + seriesDate +
                 ", seriesClassification='" + seriesClassification + '\'' +
                 ", classificationLittle='" + classificationLittle + '\'' +

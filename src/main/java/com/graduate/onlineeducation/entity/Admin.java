@@ -41,6 +41,9 @@ public class Admin implements Serializable {
     @Column(name = "admin_position")
     private String adminPosition;
 
+    @Column(name = "admin_is_delete")
+    private Integer isDelete;
+
     @NotNull
     @Column(name = "admin_user_name")
     private String userName;
@@ -93,14 +96,23 @@ public class Admin implements Serializable {
         this.userName = userName;
     }
 
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
-        return "admin{" +
+        return "Admin{" +
                 "id=" + id +
                 ", adminName='" + adminName + '\'' +
                 ", adminPassword='" + adminPassword + '\'' +
                 ", adminAuthority=" + adminAuthority +
                 ", adminPosition='" + adminPosition + '\'' +
+                ", isDelete=" + isDelete +
                 ", userName='" + userName + '\'' +
                 '}';
     }

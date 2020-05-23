@@ -67,6 +67,9 @@ public class VideoSeries implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "series_is_delete")
+    private Integer isDelete;
+
     public Integer getId() {
         return id;
     }
@@ -155,6 +158,14 @@ public class VideoSeries implements Serializable {
         this.classificationLittle = classificationLittle;
     }
 
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
         return "VideoSeries{" +
@@ -169,6 +180,7 @@ public class VideoSeries implements Serializable {
                 ", seriesClassification='" + seriesClassification + '\'' +
                 ", classificationLittle='" + classificationLittle + '\'' +
                 ", user=" + user +
+                ", isDelete=" + isDelete +
                 '}';
     }
 }

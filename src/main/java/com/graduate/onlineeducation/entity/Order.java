@@ -56,6 +56,9 @@ public class Order implements Serializable {
     @JoinColumn(name = "video_id")
     private Video video;
 
+    @Column(name = "order_is_delete")
+    private Integer isDelete;
+
     public Integer getId() {
         return id;
     }
@@ -112,16 +115,25 @@ public class Order implements Serializable {
         this.orderNumber = orderNumber;
     }
 
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", orderDate=" + orderDate +
                 ", orderStatus=" + orderStatus +
-                ", orderNumber=" + orderNumber +
+                ", orderNumber='" + orderNumber + '\'' +
                 ", user=" + user +
                 ", videoSeries=" + videoSeries +
                 ", video=" + video +
+                ", isDelete=" + isDelete +
                 '}';
     }
 }

@@ -1,5 +1,6 @@
 package com.graduate.onlineeducation.repo.jpa;
 
+import com.graduate.onlineeducation.entity.DTO.QuestionDTO;
 import com.graduate.onlineeducation.entity.Question;
 import com.graduate.onlineeducation.repo.QuestionManageRepository;
 import org.springframework.context.annotation.Profile;
@@ -34,4 +35,15 @@ public interface JpaQuestionManageRepository extends QuestionManageRepository {
 
     @Override
     Question getQuestionById(Integer id);
+
+    @Override
+    @Query(value = "select * from gp_question where user_id = ?1", nativeQuery = true)
+    Page<Question> getQuestionByUserId(Integer id, Pageable pageable);
+
+    @Override
+    @Query(value = "select count(*) from gp_question where user_id = ?1", nativeQuery = true)
+    Integer getCountQuestionByUserId(Integer id);
+
+    @Override
+    QuestionDTO save(QuestionDTO questionDTO);
 }

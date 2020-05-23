@@ -65,4 +65,10 @@ public class AnswerManageController {
     public Result<Object> getCountReplyByAnswerId(Integer answerId){
         return ResultUtils.success(answerManageService.getCountReplyByAnswerId(answerId));
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/deleteAnswerByQuestionId")
+    public Result<Object> deleteAnswerByQuestionId(Integer questionId) {
+        return ResultUtils.success(answerManageService.deleteAnswerByQuestionId(questionId));
+    }
 }

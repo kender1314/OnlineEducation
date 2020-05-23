@@ -1,6 +1,7 @@
-package com.graduate.onlineeducation.entity;
+package com.graduate.onlineeducation.entity.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.graduate.onlineeducation.entity.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,7 +17,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "gp_question")
-public class Question implements Serializable {
+public class QuestionDTO implements Serializable {
     private static final long serialVersionUID = 2514333989278491301L;
 
     /**
@@ -57,9 +58,8 @@ public class Question implements Serializable {
     @Column(name = "question_is_solve")
     private Integer questionIsSolve;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_id")
+    private Integer userId;
 
     @Column(name = "question_is_delete")
     private Integer isDelete;
@@ -120,14 +120,6 @@ public class Question implements Serializable {
         this.viewNumber = viewNumber;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Integer getQuestionIsSolve() {
         return questionIsSolve;
     }
@@ -144,6 +136,14 @@ public class Question implements Serializable {
         this.isDelete = isDelete;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "Question{" +
@@ -155,7 +155,7 @@ public class Question implements Serializable {
                 ", classification='" + classification + '\'' +
                 ", viewNumber=" + viewNumber +
                 ", questionIsSolve=" + questionIsSolve +
-                ", user=" + user +
+                ", userId=" + userId +
                 ", isDelete=" + isDelete +
                 '}';
     }

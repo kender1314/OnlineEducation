@@ -49,6 +49,9 @@ public class Comment implements Serializable {
     @JoinColumn(name = "video_id")
     private Video video;
 
+    @Column(name = "comment_is_delete")
+    private Integer isDelete;
+
     public Integer getId() {
         return id;
     }
@@ -97,6 +100,14 @@ public class Comment implements Serializable {
         this.video = video;
     }
 
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -106,6 +117,7 @@ public class Comment implements Serializable {
                 ", commentLike='" + commentLike + '\'' +
                 ", user=" + user +
                 ", video=" + video +
+                ", isDelete=" + isDelete +
                 '}';
     }
 }

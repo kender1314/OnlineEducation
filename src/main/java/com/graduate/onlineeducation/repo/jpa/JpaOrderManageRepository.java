@@ -41,4 +41,52 @@ public interface JpaOrderManageRepository extends OrderManageRepository {
 
     @Override
     Order save(Order order);
+
+    @Override
+    @Query(value = "select * from gp_order where user_id = ?1 and ISNULL(series_id)", nativeQuery = true)
+    Page<Order> getOrderListOfVideo(Integer userId, Pageable pageable);
+
+    @Override
+    @Query(value = "select count(*) from gp_order where user_id = ?1  and ISNULL(series_id)", nativeQuery = true)
+    Integer getCountListOfVideo(Integer userId);
+
+    @Override
+    @Query(value = "select * from gp_order where user_id = ?1 and ISNULL(video_id)", nativeQuery = true)
+    Page<Order> getOrderListOfSeries(Integer query, Pageable pageable);
+
+    @Override
+    @Query(value = "select count(*) from gp_order where user_id = ?1 and ISNULL(video_id)", nativeQuery = true)
+    Integer getCountListOfSeries(Integer userId);
+
+    @Override
+    @Query(value = "select count(*) from gp_order where user_id = ?1", nativeQuery = true)
+    Integer getCountOrderList(Integer userId);
+
+    @Override
+    @Query(value = "select * from gp_order where user_id = ?1", nativeQuery = true)
+    Page<Order> getOrderListByUserId(Integer userId, Pageable pageable);
+
+    @Override
+    @Query(value = "select count(*) from gp_order where user_id = ?1 and order_status = 1", nativeQuery = true)
+    Integer getCountNonPayment(Integer userId);
+
+    @Override
+    @Query(value = "select * from gp_order where user_id = ?1 and order_status = 1", nativeQuery = true)
+    Page<Order> getNonPaymentList(Integer userId, Pageable pageable);
+
+    @Override
+    @Query(value = "select count(*) from gp_order where user_id = ?1 and order_status = 2", nativeQuery = true)
+    Integer getCountPayment(Integer userId);
+
+    @Override
+    @Query(value = "select * from gp_order where user_id = ?1 and order_status = 2", nativeQuery = true)
+    Page<Order> getPaymentList(Integer userId, Pageable pageable);
+
+    @Override
+    @Query(value = "select count(*) from gp_order where user_id = ?1 and order_status = 3", nativeQuery = true)
+    Integer getCountLoseEfficacy(Integer userId);
+
+    @Override
+    @Query(value = "select * from gp_order where user_id = ?1 and order_status = 3", nativeQuery = true)
+    Page<Order> getLoseEfficacyList(Integer userId, Pageable pageable);
 }

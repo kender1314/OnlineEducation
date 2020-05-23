@@ -19,4 +19,102 @@ public interface BookmarkManageService {
      * @return
      */
     Page<Bookmark> getBookmarksList(Map<String, Object> params);
+
+    /**
+     * 根据用户id，获取视频收藏夹信息
+     * @param params 分页信息
+     * @return
+     */
+    Page<Bookmark> getVideoBookmarksList(Map<String, Object> params);
+
+    /**
+     * 根据用户id，获取视频收藏夹信息数量
+     * @param userId
+     * @return
+     */
+    Integer getCountVideoBookmarks(Integer userId);
+
+    /**
+     * 根据用户id，获取问题收藏夹信息
+     * @param params 分页信息
+     * @return
+     */
+    Page<Bookmark> getQuestionBookmarksList(Map<String, Object> params);
+
+    /**
+     * 根据用户id，获取问题收藏夹信息数量
+     * @param userId
+     * @return
+     */
+    Integer getCountQuestionBookmarks(Integer userId);
+
+    /**
+     * 根据用户id和收藏夹名称，获取视频收藏夹信息
+     * @param params 分页信息
+     * @return
+     */
+    Page<Bookmark> getVideoBookmarks(Map<String, Object> params);
+
+    /**
+     * 根据用户id和收藏夹名称，获取视频收藏夹信息数量
+     * @param params
+     * @return
+     */
+    Integer getVideoBookmarksCount(Map<String, Object> params);
+
+    /**
+     * 根据用户id和收藏夹名称，获取问题收藏夹信息
+     * @param params 分页信息
+     * @return
+     */
+    Page<Bookmark> getQuestionBookmarks(Map<String, Object> params);
+
+    /**
+     * 根据用户id和收藏夹名称，获取问题收藏夹信息数量
+     * @param params
+     * @return
+     */
+    Integer getQuestionBookmarksCount(Map<String, Object> params);
+
+    /**
+     * 根据用户id和收藏夹名称，删除视频不为空的收藏记录
+     * @param params
+     * @return
+     */
+    boolean deleteBookmarkOfVideo(Map<String, Object> params);
+
+    /**
+     * 根据用户id和收藏夹名称，删除问题不为空的收藏记录
+     * @param params
+     * @return
+     */
+    boolean deleteBookmarkOfQuestion(Map<String, Object> params);
+
+    /**
+     * 根据id删除收藏记录
+     * @param id
+     * @return
+     */
+    boolean deleteBookmarkById(Integer id);
+
+    /**
+     * 根据用户id和收藏夹名称，更新视频不为空的收藏记录
+     * @param params
+     * @return
+     */
+    boolean updateBookmarkOfVideo(Map<String, Object> params);
+
+    /**
+     * 根据用户id和收藏夹名称，更新问题不为空的收藏记录
+     * @param params
+     * @return
+     */
+    boolean updateBookmarkOfQuestion(Map<String, Object> params);
+
+    /**
+     * 根据问题id，删除收藏夹文件
+     * @param id
+     * @return
+     */
+    boolean deleteBookmarkByQuestionId(Integer id);
 }

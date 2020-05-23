@@ -18,6 +18,7 @@
             <dd><a href="/userUrl/videoList?videoClassification=前沿技术">前沿技术</a></dd>
         </dl>
     </li>
+    <input type="hidden" id="userId" name="userId" th:value="${session.user.id}">
     <div class="layui-input-inline" id="showSearch" style="margin-left: 50%">
         <input type="tel" name="search" id="search"
                style="display: none; width: 190px; border-radius:10px; height: 30px; border: white 1px solid; padding-left: 10px">
@@ -37,7 +38,7 @@
             <img src="../images/user.png" height="25" width="25"/>
         </a>
         <dl class="layui-nav-child">
-            <dd><a href="/userUrl/personalInformation">个人中心</a></dd>
+            <dd><a href="javascript:void(0);" onclick="toPersonalInformation()">个人中心</a></dd>
             <hr>
             <dd><a href="/user/logout">退出</a></dd>
         </dl>
@@ -75,5 +76,10 @@
             document.getElementById("showSearch").style.marginLeft = "36%";
         } else
             document.getElementById("search").style.display = "none";
+    }
+
+    function toPersonalInformation() {
+        var userId = document.getElementById("userId").value;
+        window.location.href = "/userUrl/personalInformation?userId=" + userId;
     }
 </script>

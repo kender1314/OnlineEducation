@@ -41,6 +41,12 @@ public class AnswerManageServiceImpl implements AnswerManageService {
     }
 
     @Override
+    public boolean deleteAnswerByQuestionId(Integer question) {
+        answerManageRepository.deleteAnswerByQuestionId(question);
+        return true;
+    }
+
+    @Override
     public Page<Answer> getAnswerReply(Map<String, Object> params) {
         Integer replyId = Integer.parseInt(params.get("replyId").toString()) ;
         return answerManageRepository.getAnswerReply(replyId, PaginationBase.getPagination(params));

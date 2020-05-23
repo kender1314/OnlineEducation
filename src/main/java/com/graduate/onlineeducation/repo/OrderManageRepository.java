@@ -45,4 +45,94 @@ public interface OrderManageRepository extends PagingAndSortingRepository<Order,
      */
     @Override
     Order save(Order order);
+
+    /**
+     * 获取已购买的视频列表
+     * @param userId
+     * @param pageable
+     * @return
+     */
+    Page<Order> getOrderListOfVideo(Integer userId, Pageable pageable);
+
+    /**
+     * 获取已购买的视频数量
+     * @param userId
+     * @return
+     */
+    Integer getCountListOfVideo(Integer userId);
+
+    /**
+     * 获取已购买的系列列表
+     * @param userId
+     * @param pageable
+     * @return
+     */
+    Page<Order> getOrderListOfSeries(Integer userId, Pageable pageable);
+
+    /**
+     * 获取已购买的系列数量
+     * @param userId
+     * @return
+     */
+    Integer getCountListOfSeries(Integer userId);
+
+    /**
+     * 获取该用户所有的视频和系列数量
+     * @param userId
+     * @return
+     */
+    Integer getCountOrderList(Integer userId);
+
+    /**
+     * 获取该用户所有的视频和系列列表
+     * @param userId
+     * @param pageable
+     * @return
+     */
+    Page<Order> getOrderListByUserId(Integer userId, Pageable pageable);
+
+    /**
+     * 获取未购买的视频和系列数量
+     * @param userId
+     * @return
+     */
+    Integer getCountNonPayment(Integer userId);
+
+    /**
+     * 获取未购买的视频和系列
+     * @param userId
+     * @param pageable
+     * @return
+     */
+    Page<Order> getNonPaymentList(Integer userId, Pageable pageable);
+
+    /**
+     * 获取已购买的视频和系列数量
+     * @param userId
+     * @return
+     */
+    Integer getCountPayment(Integer userId);
+
+    /**
+     * 获取已购买的视频和系列
+     * @param userId
+     * @param pageable
+     * @return
+     */
+    Page<Order> getPaymentList(Integer userId, Pageable pageable);
+
+    /**
+     * 获取已失效的视频和系列数量
+     * @param userId
+     * @return
+     */
+    Integer getCountLoseEfficacy(Integer userId);
+
+    /**
+     * 获取已失效的视频和系列
+     * @param userId
+     * @param pageable
+     * @return
+     */
+    Page<Order> getLoseEfficacyList(Integer userId, Pageable pageable);
 }

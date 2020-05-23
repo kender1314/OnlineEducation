@@ -1,5 +1,6 @@
 package com.graduate.onlineeducation.service;
 
+import com.graduate.onlineeducation.entity.DTO.QuestionDTO;
 import com.graduate.onlineeducation.entity.Question;
 import org.springframework.data.domain.Page;
 
@@ -49,9 +50,30 @@ public interface QuestionManageService {
     boolean updateQuestion(Question question);
 
     /**
+     * 新增问题
+     * @param question
+     * @return
+     */
+    boolean insertQuestion(QuestionDTO question);
+
+    /**
      * 根据id获取问题信息
      * @param id
      * @return
      */
     Question getQuestionById(Integer id);
+
+    /**
+     * 根据用户id获取用户提出的问题
+     * @param params
+     * @return
+     */
+    Page<Question> getQuestionByUserId(Map<String, Object> params);
+
+    /**
+     * 根据用户id获取用户的问题数量
+     * @param id
+     * @return
+     */
+    Integer getCountQuestionByUserId(Integer id);
 }

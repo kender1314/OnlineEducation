@@ -3,6 +3,7 @@ package com.graduate.onlineeducation.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Author hejiang
@@ -30,8 +31,23 @@ public class Bookmark implements Serializable {
     private String bookmarkName;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "series_id")
+    private VideoSeries series;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "video_id")
+    private Video video;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "question_id")
+    private Question question;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(name = "bookmark_is_delete")
+    private Integer isDelete;
 
     public Integer getId() {
         return id;
@@ -57,12 +73,48 @@ public class Bookmark implements Serializable {
         this.user = user;
     }
 
+    public VideoSeries getSeries() {
+        return series;
+    }
+
+    public void setSeries(VideoSeries series) {
+        this.series = series;
+    }
+
+    public Video getVideo() {
+        return video;
+    }
+
+    public void setVideo(Video video) {
+        this.video = video;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
         return "Bookmark{" +
                 "id=" + id +
-                ", bookmarkName=" + bookmarkName +
+                ", bookmarkName='" + bookmarkName + '\'' +
+                ", series=" + series +
+                ", video=" + video +
+                ", question=" + question +
                 ", user=" + user +
+                ", isDelete=" + isDelete +
                 '}';
     }
 }

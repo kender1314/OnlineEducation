@@ -58,4 +58,18 @@ public interface UserManageService {
      * @return
      */
     Integer getCountByQuery(String query);
+
+    /**
+     * 根据用户id获取用户信息
+     * @param userId
+     * @return
+     */
+    User getUserInfoByUserId(Integer userId);
+
+    /**
+     * 用户端-更新用户信息
+     * @param param
+     * @return
+     */
+    boolean updateUserByParam(Map<String, Object> param);
 }

@@ -30,6 +30,9 @@ public class Follow implements Serializable {
     @Column(name = "gp_user_id")
     private Integer gpUserId;
 
+    @Column(name = "follow_is_delete")
+    private Integer isDelete;
+
     public Integer getId() {
         return id;
     }
@@ -54,12 +57,21 @@ public class Follow implements Serializable {
         this.gpUserId = gpUserId;
     }
 
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
         return "Follow{" +
                 "id=" + id +
                 ", userId=" + userId +
                 ", gpUserId=" + gpUserId +
+                ", isDelete=" + isDelete +
                 '}';
     }
 }

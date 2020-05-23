@@ -23,15 +23,63 @@ public class BookmarkManageController {
     @Autowired
     private BookmarkManageService bookmarkManageService;
 
-    public Result<Object> createBookmark(){
-        return null;
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getBookmarksList")
+    public Result<Object> getBookmarksList(@RequestParam Map<String, Object> params){
+        Page<Bookmark> bookmarks = bookmarkManageService.getBookmarksList(params);
+        return ResultUtils.success(bookmarks);
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/getBookmarksList")
-    public Result<Object> getBookmarksList(@RequestBody Map<String, Object> params){
-        Page<Bookmark> bookmarks = bookmarkManageService.getBookmarksList(params);
+    @RequestMapping(method = RequestMethod.POST, value = "/getVideoBookmarksList")
+    public Result<Object> getVideoBookmarksList(@RequestParam Map<String, Object> params){
+        Page<Bookmark> bookmarks = bookmarkManageService.getVideoBookmarksList(params);
         return ResultUtils.success(bookmarks);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountVideoBookmarks")
+    public Result<Object> getCountVideoBookmarks(Integer userId){
+        return ResultUtils.success(bookmarkManageService.getCountVideoBookmarks(userId));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getVideoBookmarks")
+    public Result<Object> getVideoBookmarks(@RequestParam Map<String, Object> params){
+        Page<Bookmark> bookmarks = bookmarkManageService.getVideoBookmarks(params);
+        return ResultUtils.success(bookmarks);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getVideoBookmarksCount")
+    public Result<Object> getVideoBookmarksCount(@RequestParam Map<String, Object> params){
+        return ResultUtils.success(bookmarkManageService.getVideoBookmarksCount(params));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getQuestionBookmarksList")
+    public Result<Object> getQuestionBookmarksList(@RequestParam Map<String, Object> params){
+        Page<Bookmark> bookmarks = bookmarkManageService.getQuestionBookmarksList(params);
+        return ResultUtils.success(bookmarks);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountQuestionBookmarks")
+    public Result<Object> getCountQuestionBookmarks(Integer userId){
+        return ResultUtils.success(bookmarkManageService.getCountQuestionBookmarks(userId));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getQuestionBookmarks")
+    public Result<Object> getQuestionBookmarks(@RequestParam Map<String, Object> params){
+        Page<Bookmark> bookmarks = bookmarkManageService.getQuestionBookmarks(params);
+        return ResultUtils.success(bookmarks);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getQuestionBookmarksCount")
+    public Result<Object> getQuestionBookmarksCount(@RequestParam Map<String, Object> params){
+        return ResultUtils.success(bookmarkManageService.getQuestionBookmarksCount(params));
     }
 
     @ResponseBody
@@ -41,17 +89,38 @@ public class BookmarkManageController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/updateBookmark")
-    public Result<Object> updateBookmark(){
-        return ResultUtils.success(true);
+    @RequestMapping(method = RequestMethod.POST, value = "/updateBookmarkOfVideo")
+    public Result<Object> updateBookmarkOfVideo(@RequestParam Map<String, Object> params){
+        return ResultUtils.success(bookmarkManageService.updateBookmarkOfVideo(params));
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/deleteBookmark")
-    public Result<Object> deleteBookmark(){
-        return ResultUtils.success(true);
+    @RequestMapping(method = RequestMethod.POST, value = "/updateBookmarkOfQuestion")
+    public Result<Object> updateBookmarkOfQuestion(@RequestParam Map<String, Object> params){
+        return ResultUtils.success(bookmarkManageService.updateBookmarkOfQuestion(params));
     }
 
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/deleteBookmarkOfVideo")
+    public Result<Object> deleteBookmarkOfVideo(@RequestParam Map<String, Object> params){
+        return ResultUtils.success(bookmarkManageService.deleteBookmarkOfVideo(params));
+    }
 
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/deleteBookmarkOfQuestion")
+    public Result<Object> deleteBookmarkOfQuestion(@RequestParam Map<String, Object> params){
+        return ResultUtils.success(bookmarkManageService.deleteBookmarkOfQuestion(params));
+    }
 
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/deleteBookmarkById")
+    public Result<Object> deleteBookmarkById(Integer id){
+        return ResultUtils.success(bookmarkManageService.deleteBookmarkById(id));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/deleteBookmarkByQuestionId")
+    public Result<Object> deleteBookmarkByQuestionId(Integer id){
+        return ResultUtils.success(bookmarkManageService.deleteBookmarkByQuestionId(id));
+    }
 }

@@ -1,5 +1,6 @@
 package com.graduate.onlineeducation.service.impl;
 
+import com.graduate.onlineeducation.entity.DTO.QuestionDTO;
 import com.graduate.onlineeducation.entity.Question;
 import com.graduate.onlineeducation.repo.QuestionManageRepository;
 import com.graduate.onlineeducation.service.QuestionManageService;
@@ -53,7 +54,24 @@ public class QuestionManageServiceImpl implements QuestionManageService {
     }
 
     @Override
+    public boolean insertQuestion(QuestionDTO question) {
+        QuestionDTO questionTemp = questionManageRepository.save(question);
+        return questionTemp != null;
+    }
+
+    @Override
     public Question getQuestionById(Integer id) {
         return questionManageRepository.getQuestionById(id);
+    }
+
+    @Override
+    public Page<Question> getQuestionByUserId(Map<String, Object> params) {
+        Integer userId = Integer.parseInt(params.get("userId").toString());
+        return questionManageRepository.getQuestionByUserId(userId, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public Integer getCountQuestionByUserId(Integer id) {
+        return questionManageRepository.getCountQuestionByUserId(id);
     }
 }

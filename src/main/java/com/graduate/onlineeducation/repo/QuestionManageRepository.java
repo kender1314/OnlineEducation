@@ -1,5 +1,6 @@
 package com.graduate.onlineeducation.repo;
 
+import com.graduate.onlineeducation.entity.DTO.QuestionDTO;
 import com.graduate.onlineeducation.entity.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -51,4 +52,26 @@ public interface QuestionManageRepository extends PagingAndSortingRepository<Que
      * @return
      */
     Question getQuestionById(Integer id);
+
+    /**
+     * 根据用户id获取用户提出的问题
+     * @param id
+     * @param pageable
+     * @return
+     */
+    Page<Question> getQuestionByUserId(Integer id, Pageable pageable);
+
+    /**
+     * 根据用户id获取用户的问题数量
+     * @param id
+     * @return
+     */
+    Integer getCountQuestionByUserId(Integer id);
+
+    /**
+     * 新增问题
+     * @param questionDTO
+     * @return
+     */
+    QuestionDTO save(QuestionDTO questionDTO);
 }

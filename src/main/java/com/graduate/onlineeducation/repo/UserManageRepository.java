@@ -61,4 +61,60 @@ public interface UserManageRepository extends PagingAndSortingRepository<User, I
      * @return
      */
     Integer getCountByQuery(String query);
+
+    /**
+     * 根据用户id获取用户信息
+     * @param userId
+     * @return
+     */
+    User getUserById(Integer userId);
+
+    /**
+     * 更新用户名
+     * @param userName
+     * @return
+     */
+    int updateUserName(String userName, Integer userId);
+
+    /**
+     * 更新邮件
+     * @param mail
+     * @return
+     */
+    int updateUserMail(String mail, Integer userId);
+
+    /**
+     * 更新兴趣爱好
+     * @param hobby
+     * @return
+     */
+    int updateUserHobby(String hobby, Integer userId);
+
+    /**
+     * 更新地址
+     * @param address
+     * @return
+     */
+    int updateUserAddress(String address, Integer userId);
+
+    /**
+     * 更新学历
+     * @param education
+     * @return
+     */
+    int updateUserEducation(String education, Integer userId);
+
+    /**
+     * 更新介绍
+     * @param introduce
+     * @return
+     */
+    int updateUserIntroduce(String introduce, Integer userId);
+
+    /**
+     * 更新密码
+     * @param password
+     * @return
+     */
+    int updateUserPasssword(String password, Integer userId);
 }

@@ -2,6 +2,7 @@ package com.graduate.onlineeducation.service;
 
 import com.graduate.onlineeducation.entity.User;
 import org.springframework.data.domain.Page;
+import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -20,7 +21,7 @@ public interface UserLoginService {
      * @param session
      * @return
      */
-    boolean login(Map<String, Object> params, HttpSession session);
+    boolean login(Map<String, Object> params, HttpSession session, Model model);
 
     /**
      * 查找所有用户
