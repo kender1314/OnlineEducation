@@ -1,6 +1,7 @@
 package com.graduate.onlineeducation.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -28,7 +29,8 @@ public class Comment implements Serializable {
     @Column(name = "comment_id")
     private Integer id;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @NotNull
     @Column(name = "comment_date")
     private Date commentDate;
@@ -39,7 +41,7 @@ public class Comment implements Serializable {
 
     @NotNull
     @Column(name = "comment_like")
-    private String commentLike;
+    private Integer commentLike;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
@@ -48,6 +50,9 @@ public class Comment implements Serializable {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "video_id")
     private Video video;
+
+    @Column(name = "comment_reply_id")
+    private Integer replyId;
 
     @Column(name = "comment_is_delete")
     private Integer isDelete;
@@ -76,11 +81,11 @@ public class Comment implements Serializable {
         this.commentContent = commentContent;
     }
 
-    public String getCommentLike() {
+    public Integer getCommentLike() {
         return commentLike;
     }
 
-    public void setCommentLike(String commentLike) {
+    public void setCommentLike(Integer commentLike) {
         this.commentLike = commentLike;
     }
 
@@ -108,6 +113,14 @@ public class Comment implements Serializable {
         this.isDelete = isDelete;
     }
 
+    public Integer getReplyId() {
+        return replyId;
+    }
+
+    public void setReplyId(Integer replyId) {
+        this.replyId = replyId;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -117,6 +130,7 @@ public class Comment implements Serializable {
                 ", commentLike='" + commentLike + '\'' +
                 ", user=" + user +
                 ", video=" + video +
+                ", replyId=" + replyId +
                 ", isDelete=" + isDelete +
                 '}';
     }

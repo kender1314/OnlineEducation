@@ -1,13 +1,16 @@
 package com.graduate.onlineeducation.repo.jpa;
 
 import com.graduate.onlineeducation.entity.DTO.VideoDTO;
+import com.graduate.onlineeducation.entity.DTO.VideoUserIdDTO;
 import com.graduate.onlineeducation.entity.Video;
 import com.graduate.onlineeducation.repo.VideoManageRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @Author hejiang
@@ -25,10 +28,19 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
     void deleteById(Integer id);
 
     @Override
+    @Modifying
+    @Transactional
+    @Query(value = "update gp_video set video_is_delete = 1 where video_id = ?1", nativeQuery = true)
+    Integer deleteVideoById(Integer id);
+
+    @Override
     Video save(Video video);
 
     @Override
     VideoDTO save(VideoDTO video);
+
+    @Override
+    VideoUserIdDTO save(VideoUserIdDTO video);
 
     /**
      *视频模糊查询
@@ -47,7 +59,7 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
     Integer getCountByQuery(String query);
 
     @Override
-    @Query(value = "select * from gp_video where series_id = ?1 and video_status = 1 ", nativeQuery = true)
+    @Query(value = "select * from gp_video where series_id = ?1 and video_status = 1 and video_is_delete = 0", nativeQuery = true)
     Page<Video> getVideoBySeriesId(Integer seriesId, Pageable pageable);
 
     @Override
@@ -70,6 +82,14 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
     Page<Video> searchByLittleClassification(String query, Pageable pageable);
 
     @Override
-    @Query(value = "select count(*) from gp_video where user_id = ?1", nativeQuery = true)
+    @Query(value = "select count(*) from gp_video where user_id = ?1 and video_status = 1 and ISNULL(series_id) and video_is_delete = 0", nativeQuery = true)
     Integer getCountVideoByUserId(Integer id);
+
+    @Override
+    @Query(value = "select * from gp_video where user_id = ?1 and video_status = 1 and ISNULL(series_id) and video_is_delete = 0", nativeQuery = true)
+    Page<Video> getVideoByUserId(Integer id, Pageable pageable);
+
+    @Override
+    @Query(value = "select * from gp_video where video_id = ?1 and video_is_delete = 0", nativeQuery = true)
+    Video getVideoByVideoId(Integer id);
 }

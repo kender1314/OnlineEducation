@@ -3,6 +3,7 @@ package com.graduate.onlineeducation.service;
 import com.graduate.onlineeducation.entity.DTO.QuestionDTO;
 import com.graduate.onlineeducation.entity.Question;
 import org.springframework.data.domain.Page;
+import org.springframework.ui.Model;
 
 import java.util.Map;
 
@@ -34,6 +35,14 @@ public interface QuestionManageService {
      * @return
      */
     Page<Question> search(Map<String, Object> params);
+
+    /**
+     * 测试thymeleaf 分页
+     *
+     * @param params
+     * @return
+     */
+    Page<Question> getQuestionListTest(Map<String, Object> params, Model model);
 
     /**
      * 根据查询关键字，获取查询的问题数量

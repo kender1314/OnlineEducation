@@ -10,6 +10,7 @@ import com.graduate.onlineeducation.service.QuestionManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -89,6 +90,13 @@ public class QuestionManageController {
     @RequestMapping(method = RequestMethod.POST, value = "/getCountQuestionByUserId")
     public Result<Object> getCountQuestionByUserId(Integer id) {
         return ResultUtils.success(questionManageService.getCountQuestionByUserId(id));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getQuestionListTest")
+    public Result<Object> getQuestionListTest(@RequestParam Map<String, Object> params, Model model){
+        Page<Question> questions = questionManageService.getQuestionListTest(params, model);
+        return ResultUtils.success(questions);
     }
 
 }

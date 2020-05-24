@@ -64,4 +64,17 @@ public interface AnswerManageRepository extends PagingAndSortingRepository<Answe
      * @return
      */
     void deleteAnswerByQuestionId(Integer question);
+
+    /**
+     * 评论点赞
+     * @return
+     */
+    Integer updateAnswerLikeById(Integer answerId);
+
+    /**
+     * 根据id获取回答
+     * @param answerId
+     * @return
+     */
+    Answer getAnswerById(Integer answerId);
 }

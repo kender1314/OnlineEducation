@@ -14,18 +14,31 @@
     <div class="navigationAdmin" id="navAdmin">
     </div>
     <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
-            <h2>用户管理</h2>
-            <span th:text="user.userName"></span>
+        <div>
+            <table>
+                <tr th:each="page : ${pages}">  
+                    <td th:text="${page.questionName}">Onions</td>
+                    <td th:text="${page.questionContent}">test@test.com.cn</td>
+                </tr>
+            </table>
         </div>
-        <div class="demoTable" style="margin-left: 75%">
-            <div class="layui-inline">
-                <input class="layui-input" name="id" id="demoReload" autocomplete="off">
-            </div>
-            <button class="layui-btn" data-type="reload">搜索</button>
-        </div>
-        <table class="layui-hide" id="test" lay-filter="test"></table>
+
+        <table>
+            <tr>
+                <td><a th:href="@{/userUrl/test?pageNum=1}"><button type="button" class="layui-btn-sm layui-btn layui-btn-primary">首页</button></a></td>
+                <td th:switch="${pageNum}">
+                    <p th:case="1"><a th:href="@{/userUrl/test?pageNum=1}"><button type="button" class="layui-btn-sm layui-btn layui-btn-primary">上一页</button></a></p>
+                    <p th:case="*"><a th:href="@{/userUrl/test(pageNum=${pageNum-1})}"><button type="button" class="layui-btn-sm layui-btn layui-btn-primary">上一页</button></a></p>
+                </td>
+                <td th:switch="${pageNum}">
+                    <p th:case="${totalPages}"><a th:href="@{/userUrl/test(pageNum=${totalPages})}"><button type="button" class="layui-btn-sm layui-btn layui-btn-primary">下一页</button></a></p>
+                    <p th:case="*"><a th:href="@{/userUrl/test(pageNum=${pageNum+1})}"><button type="button" class="layui-btn-sm layui-btn layui-btn-primary">下一页</button></a></p>
+                </td>
+                <td><a th:href="@{/userUrl/test(pageNum=${totalPages})}"><button type="button" class="layui-btn-sm layui-btn layui-btn-primary">尾页</button></a></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;共<span th:text="${totalPages}"></span>页</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;第<span th:text="${pageNum}"></span>页</td>
+            </tr>
+        </table>
     </div>
     <div class="layui-footer">
         <!-- 底部固定区域 -->
@@ -33,111 +46,9 @@
     </div>
 </div>
 
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-    </div>
-</script>
-
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</script>
 
 <script src="../lib/layui/layui.js"></script>
 
-<script>
-    layui.use(['element', 'table', 'jquery', 'layer'], function(){
-        var $ = layui.$;
-        var table = layui.table;
-        var layer = layui.layer;
-
-        table.render({
-            elem: '#test'
-            ,url:'/userManage/userList'
-            ,request: {
-                "pageSize": 'limit',
-                "page": 'curr',//当前页（必传参数，可改变参数名）
-                "sortKey": 'userName',
-                "sortDesc": false
-            }
-            ,method: 'post'
-            ,parseData: function (res) {
-                return{
-                    "code": res.code,
-                    "msg": res.msg,
-                    "count": res.data.totalElements,
-                    "data": res.data.content
-                }
-            }
-            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-            ,defaultToolbar: ['filter']
-            ,title: '用户数据表'
-            ,cols: [
-                [
-                {type: 'checkbox', fixed: 'left'}
-                ,{field:'id', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
-                ,{field:'userName', title:'用户名', width:100}
-                ,{field:'userPhoneNumber', title:'电话', width:150}
-                ,{field:'userMail', title:'邮件', width:120}
-                ,{field:'userPassword', title:'密码', width:100}
-                ,{field:'userIntegral', title:'积分', width:60}
-                ,{field:'introduction', title:'介绍'}
-                ,{field:'major', title:'兴趣', width:120}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
-            ]
-            ]
-            ,page: true
-        });
-
-        //头工具栏事件
-        table.on('toolbar(test)', function(obj){
-            var checkStatus = table.checkStatus(obj.config.id);
-            switch(obj.event){
-                case 'getCheckData':
-                    var data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
-                    break;
-                case 'getCheckLength':
-                    var data = checkStatus.data;
-                    layer.msg('选中了：'+ data.length + ' 个');
-                    break;
-                case 'isAll':
-                    layer.msg(checkStatus.isAll ? '全选': '未全选');
-                    break;
-
-                //自定义头工具栏右侧图标 - 提示
-                case 'LAYTABLE_TIPS':
-                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
-                    break;
-            };
-        });
-
-        //监听行工具事件
-        table.on('tool(test)', function(obj){
-            var data = obj.data;
-            console.log(obj);
-            if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    obj.del();
-                    layer.close(index);
-                });
-            } else if(obj.event === 'edit'){
-                layer.prompt({
-                    formType: 2
-                    ,value: data.email
-                }, function(value, index){
-                    obj.update({
-                        email: value
-                    });
-                    layer.close(index);
-                });
-            }
-        });
-        $(".navigationAdmin").load('/views/admin_navigation.html');
-    });
-</script>
 
 </body>
 </html>

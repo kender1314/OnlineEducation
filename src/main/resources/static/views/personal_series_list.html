@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <!--Layui-->
+    <link rel="stylesheet" href="../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/personal_information.css">
+</head>
+<body>
+<div class="navigation">
+</div>
+<div style="width: 80%; margin-left: 10%; background-color: white; min-height: 500px; padding: 20px">
+    <input type="hidden" id="userId" name="userId" th:value="${session.user.id}">
+    <input type="hidden" id="seriesId" name="seriesId" th:value="${videoSeries.id}">
+    <input type="hidden" id="seriesName" name="seriesName" th:value="${videoSeries.seriesName}">
+    <input type="hidden" id="seriesNumber" name="seriesNumber" th:value="${videoSeries.seriesNumber}">
+    <input type="hidden" id="seriesClassification" name="seriesNumber" th:value="${videoSeries.seriesClassification}">
+    <input type="hidden" id="classificationLittle" name="seriesNumber" th:value="${videoSeries.classificationLittle}">
+    <input type="hidden" id="introduction" name="introduction" th:value="${videoSeries.introduction}">
+    <input type="hidden" id="seriesIntegral" name="seriesIntegral" th:value="${videoSeries.seriesIntegral}">
+    <input type="hidden" id="seriesImage" name="seriesImage" th:value="${videoSeries.seriesImage}">
+    <input type="hidden" id="seriesImageUrl" name="seriesImageUrl" th:value="${videoSeries.seriesImageUrl}">
+    <input type="hidden" id="isDelete" name="isDelete" th:value="${videoSeries.isDelete}">
+    <input type="hidden" id="seriesDate" name="seriesDate" th:value="${videoSeries.seriesDate}">
+    <div id="">
+        <div style="width: 100%;min-height: 300px;background-color: #dee3e2;margin-bottom: 20px;">
+            <div class="layui-input-inline">
+                <img th:src="${videoSeries.seriesImageUrl}"
+                     height="300"
+                     width="350"/>
+            </div>
+            <div class="layui-input-inline" style="margin-left: 20px;width: 800px;min-height: 150px;">
+                <div class="layui-card-header">
+                    <h2 style="margin-bottom: 10px; width: 600px" th:text="${videoSeries.seriesName}">JavaScript进阶篇</h2>
+                </div>
+                <div class="layui-card-body">
+                                            <span style="font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white">
+                                                总集数：<span th:text="${videoSeries.seriesNumber}">0</span>
+                                            </span>
+                    <span style="margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white">
+                                                分类：<span th:text="${videoSeries.seriesClassification}"></span>
+                                            </span>
+                    <span style="margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white">
+                                                二级分类：<span th:text="${videoSeries.classificationLittle}"></span>
+                                            </span>
+                    <span style="margin-left: 20px; font-size: 12px; color: green; border:  1px solid #23b8ff; padding: 5px; background-color: white">
+                                                花费积分：<span th:text="${videoSeries.seriesIntegral}"></span>
+                                            </span>
+                    <div style="float: right" id="seriesDateA"><span style="font-size: 12px; color: #999">2010-05-12</span></div>
+                </div>
+                <div>
+                    <span style="color: #999; font-size: 14px" th:text="${videoSeries.introduction}">
+                        使用RN + TS开发听书App，从需求分析，到功能实现，一步步带领大家完成功能，学会如何解决实际开发问题，是一个完整的项目开发实例。通过导航器、dva状态管理、图标生成组件、自定义导航器、动画效果、音视频的播放、动态导航和动态model、本地数据持久化等一系列的功能，帮助大家具备独立开发完整的RN应用的能力
+                        使用RN + TS开发听书App，从需求分析，到功能实现，一步步带领大家完成功能，学会如何解决实际开发问题，是一个完整的项目开发实例。通过导航器、dva状态管理、图标生成组件、自定义导航器、动画效果、音视频的播放、动态导航和动态model、本地数据持久化等一系列的功能，帮助大家具备独立开发完整的RN应用的能力
+                        使用RN + TS开发听书App，从需求分析，到功能实现，一步步带领大家完成功能，学会如何解决实际开发问题，是一个完整的项目开发实例。通过导航器、dva状态管理、图标生成组件、自定义导航器、动画效果、音视频的播放、动态导航和动态model、本地数据持久化等一系列的功能，帮助大家具备独立开发完整的RN应用的能力
+                    </span>
+                </div>
+                <div style="float: right">
+                    <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" id="editSeries">修改</button>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+        <h3>视频集</h3>
+        <div style="padding: 10px">
+            <table class="layui-hide" id="test" lay-filter="test"></table>
+        </div>
+    </div>
+</div>
+<div style="clear:both"></div>
+<div class="my-footer">
+</div>
+</body>
+</html>
+<script src="../lib/jquery-2.1.4/jquery.min.js"></script>
+<script src="../lib/layui/layui.js"></script>
+<!--jquery-->
+<!--json-->
+<script src="../lib/json/json2.js" type="text/javascript"></script>
+<script src="../js/common.js"></script>
+<script src="../js/personal_series_list.js"></script>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" id="getCheckData">上传视频</button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">详情</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>

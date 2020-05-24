@@ -5,23 +5,21 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
         , layer = layui.layer;
     var $ = layui.$;
 
+    /**
+     * 获取时间
+     */
     $.ajax({
-        url: "/answerManage/getCountAnswerByQuestionId?questionId=" + questionId,
+        url: "/questionManage/getQuestionById?id=" + questionId,
         type: "post",
         dataType: "json",
         contentType: false,
         processData: false,
         success: function (data) {
-            laypage.render({
-                elem: 'demo8'
-                , count: data.data
-                , layout: ['prev', 'page', 'next', 'count']
-                , limit: 10
-                , jump: function (obj) {
-                    //调用加载函数加载数据
-                    showAnswerByQuestionId(obj.curr, obj.limit, questionId);
-                }
-            });
+            $("#questionDate").empty();
+            if (data.data !== null) {
+                var appendhtml = "<span style=\"font-size: 12px; color: #999\">" + data.data.questionDate + "</span>";
+                $("#questionDate").append(appendhtml);
+            }
         }
     });
 
@@ -47,13 +45,18 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             processData: false,
             success: function (data) {
                 if (data.data === true) {
-                    location.reload();
+                    layer.msg("评论成功", {icon: 6});
+                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                        window.location.reload();//页面刷新
+                    }, 1000);
+                } else {
+                    layer.msg("评论失败，请重试！", {icon: 6});
                 }
             }
         });
     });
 
-    function showAnswerByQuestionId(pageNo, pageSize, questionId) {
+    window.showAnswerByQuestionId = function (pageNo, pageSize, questionId) {
         var formData = new FormData();
         formData.append("questionId", questionId);
         formData.append("limit", pageSize);
@@ -70,7 +73,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                 $("#answer-list").empty();
                 if (data.data.numberOfElements === 0) {
                     document.getElementById("demo8").style.display = "none";
-                    var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                    var appendhtml = "<div style=\" text-align: center; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
                         "<div>" +
                         "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
                         "<span>暂无相关评论！</span>" +
@@ -83,31 +86,21 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                         var appendhtml = " <div class=\"layui-col-md12\" style=\"margin-top: 20px;\">\n" +
                             "                        <div class=\"layui-card\">\n" +
                             "                            <div class=\"layui-card-header\">\n" +
-                            "                                <img src=\"../images/user1.png\" style=\"width: 30px; height: 30px\"/><b>" + data.data.content[i].user.userName + "</b>\n" +
+                            "                                <img src=\"../images/user1.png\" style=\"width: 30px; height: 30px\"/><b><span style=\"font-size: 14px\">" + data.data.content[i].user.userName + "</span></b>\n" +
                             "                            </div>\n" +
                             "                            <div class=\"layui-card-body\">\n" +
-                            "                                " + data.data.content[i].answerContent + "\n" +
+                            "                               <span style=\"font-size: 13px\">" + data.data.content[i].answerContent + "</span>\n" +
                             "                            </div>\n" +
                             "                            <div style=\"padding-bottom: 20px\">\n" +
                             "                                <div style=\"float: left; margin-left: 15px\">\n" +
                             "                                    <span style=\"font-size: 10px; color: #999\">时间：" + data.data.content[i].answerDate + "</span>\n" +
-                            "                                    <a style=\"margin-left: 20px\" href=\"\"><img src=\"../images/like.png\" height=\"15\" width=\"15\"/></a>\n" +
+                            "                                    <a style=\"margin-left: 20px\" href=\"#\"><img src=\"../images/like.png\" height=\"15\" onclick='addLike(" + data.data.content[i].id + ")' width=\"15\"/></a>\n" +
                             "                                    <span style=\"font-size: 14px; color: #999\">" + data.data.content[i].answerLike + "</span>\n" +
-                            "                                    <a  href = \"javascript:void(0);\" onclick =\" "+ getReplyListCount(i, data.data.content[i].id) + "\"><img src=\"../images/comment.png\" height=\"15\" width=\"15\"\n" +
+                            "                                    <a  href = \"javascript:void(0);\" onclick =' getReplyListCount(" + data.data.content[i].id + ")'\"><img src=\"../images/comment.png\" height=\"15\" width=\"15\"\n" +
                             "                                                    style=\"margin-left: 20px\"/></a>\n" +
-                            "                                    <div id=\"reply\" style=\"min-height: 50px; margin-left: 50px;margin-top: 10px; display: none\">\n" +
-                            "                                        <textarea placeholder=\"请输入内容\" class=\"layui-textarea\" style=\"width: 80%\"></textarea>\n" +
-                            "                                        <div style=\"width: 80%; text-align: right; margin-top: 5px\">\n" +
-                            "                                            <button type=\"button\" class=\"layui-btn layui-btn-sm\">回复</button>\n" +
-                            "                                        </div>" +
-                            "                                        <div id=\"reply-answer" + i +"\">" +
-                            "                                        </div>\n" +
-                            "                                        <div id=\"demo7\" style=\"text-align: center\"></div>\n" +
-                            "                                    </div>" +
                             "                                    </div>" +
                             "                                </div>\n" +
                             "                                <div style=\"clear: both\"></div>\n" +
-                            "                            </div>\n" +
                             "                        </div>\n" +
                             "                    </div>";
                         $("#answer-list").append(appendhtml);
@@ -117,7 +110,62 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
         });
     }
 
-    function getReplyListCount(temp, answerId) {
+    window.addLike = function (id) {
+        $.ajax({
+            url: "/answerManage/addAnswerLikeById?answerId=" + id,
+            type: "post",
+            dataType: "json",
+            async: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.data === true) {
+                    layer.msg("点赞成功", {icon: 6});
+                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                        window.location.reload();//页面刷新
+                    }, 1000);
+                } else {
+                    layer.msg("点赞失败", {icon: 6});
+                }
+            }
+        })
+    }
+
+    window.answerReply = function (id) {
+        var answerContent = document.getElementById("answerReply" + id).value;
+        var myDate = new Date();
+        var date = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+        var formData = new FormData();
+        if (answerContent === "" || answerContent == null) {
+            document.getElementById("answerReply-warm" + id).style.display = "block";
+        } else {
+            formData.append("answerContent", answerContent);
+        }
+        formData.append("userId", userId);
+        formData.append("questionId", questionId);
+        formData.append("answerDate", date);
+        formData.append("answerReplyId", id);
+        $.ajax({
+            url: "/answerManage/insertAnswer",
+            type: "post",
+            dataType: "json",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.data === true) {
+                    layer.msg("评论成功", {icon: 6});
+                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                        window.location.reload();//页面刷新
+                    }, 1000);
+                } else {
+                    layer.msg("评论失败，请重试", {icon: 5});
+                }
+            }
+        })
+    }
+
+    window.getReplyListCount = function (answerId) {
         $.ajax({
             url: "/answerManage/getCountReplyByAnswerId?answerId=" + answerId,
             type: "post",
@@ -127,21 +175,20 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             processData: false,
             success: function (data) {
                 laypage.render({
-                    elem: 'demo7'
+                    elem: 'demo8'
                     , count: data.data
                     , layout: ['prev', 'page', 'next', 'count']
-                    , limit: 10
+                    , limit: 8
                     , jump: function (obj) {
                         //调用加载函数加载数据
-                        showReplyAnswerList(obj.curr, obj.limit, answerId, temp);
+                        showReplyAnswerList(obj.curr, obj.limit, answerId);
                     }
                 });
             }
         });
     }
 
-
-    function showReplyAnswerList(pageNo, pageSize, replyId, temp) {
+    window.showReplyAnswerList = function (pageNo, pageSize, replyId) {
         var formData = new FormData();
         formData.append("replyId", replyId);
         formData.append("limit", pageSize);
@@ -155,44 +202,86 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             contentType: false,
             processData: false,
             success: function (data) {
-                $("#reply-answer" + temp).empty();
-                if (data.data.numberOfElements === 0) {
-                    document.getElementById("demo7").style.display = "none";
-                    var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
-                        "<div>" +
-                        "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
-                        "<span>暂无相关评论！</span>" +
-                        "</div>" +
-                        "</div>";
-                    $("#reply-answer"+ temp).append(appendhtml);
-                } else {
-                    console.log("aaa" + i);
-                    document.getElementById("demo7").style.display = "block";
-                    document.getElementById("reply").style.display = "block";
-                    for (var i = 0; i < data.data.numberOfElements; i++) {
-                        var appendhtml = "<div style=\"margin-top: 10px\">\n" +
-                            "                                            <img src=\"../images/user1.png\" height=\"15\" width=\"15\"/>\n" +
-                            "                                            <span style=\"font-size: 10px; color: #2E2D3C\">" + data.data.content[i].user.userName + "</span>\n" +
-                            "                                            <span style=\"font-size: 12px\">" + data.data.content[i].answerContent + "</span>\n" +
-                            "                                            <div style=\"margin-top: 5px\">\n" +
-                            "                                                <span style=\"font-size: 10px; color: #999;\">时间：" + data.data.content[i].answerDate + "</span>\n" +
-                            "                                                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-                            "                                                <a href=\"#\">\n" +
-                            "                                                    <img src=\"../images/like.png\" style=\"width: 15px; height: 15px\"/>\n" +
-                            "                                                </a>\n" +
-                            "                                    <span style=\"font-size: 14px; color: #999\">" + data.data.content[i].answerLike + "</span>\n" +
-                            "                                                <span style=\"font-size: 10px; color: #999;\">12</span>\n" +
-                            "                                                &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-                            "                                                <a href=\"#\" style=\"font-size: 10px; color: #999;\">回复</a>\n" +
-                            "                                            </div>\n" +
-                            "                                        </div>";
-                        $("#reply-answer"+ temp).append(appendhtml);
+                if (data.data !== null) {
+                    var rpleyContent = document.getElementById("reply" + replyId).style.display;
+                    if (rpleyContent === "none") {
+                        document.getElementById("reply" + replyId).style.display = "block";
+                        $("#replyAnswer" + replyId).empty();
+                        for (var i = 0; i < data.data.numberOfElements; i++) {
+                            var appendhtml = "<div style=\"margin-top: 20px\">\n" +
+                                "                                                    <img src=\"../images/user1.png\" height=\"15\" width=\"15\"/>\n" +
+                                "                                                    <span style=\"font-size: 10px; color: #2E2D3C\">" + data.data.content[i].user.userName + "：</span>\n" +
+                                "                                                    <span style=\"font-size: 12px\">" + data.data.content[i].answerContent + "</span>\n" +
+                                "                                                    <div style=\"margin-top: 5px\">\n" +
+                                "                                                        <span style=\"font-size: 10px; color: #999;\">" + data.data.content[i].answerDate + "</span>\n" +
+                                "                                                        &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+                                "                                                        <a href=\"#\" >\n" +
+                                "                                                            <img src=\"../images/like.png\"\n" +
+                                "                                                                 style=\"width: 15px; height: 15px\" onclick='addLike(" + data.data.content[i].id + ")'/>\n" +
+                                "                                                        </a>\n" +
+                                "                                                        <span style=\"font-size: 10px; color: #999;\">" + data.data.content[i].answerLike + "</span>\n" +
+                                "                                                        &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+                                "                                                        <a href=\"#\" style=\"font-size: 10px; color: #999;\"><img onclick='replyA(" + data.data.content[i].id + ", \"" + data.data.content[i].answerContent + "\")' src=\"../images/comment.png\" height=\"15\" width=\"15\"\n" +
+                                "                                                    style=\"margin-left: 20px\"/></a>\n" +
+                                "                                                    </div>\n" +
+                                "                                                </div>";
+                            $("#replyAnswer" + replyId).append(appendhtml);
+                        }
+                    } else {
+                        document.getElementById("reply" + replyId).style.display = "none";
                     }
                 }
             }
         });
     }
+    window.replyA = function(id, content){
+        layer.open({
+            type: 6,
+            title: '回复评论--"' + content + '"',
+            // skin:'layui-layer-rim',
+            area: ['600px', 'auto'],
+
+            content: '<textarea placeholder="请输入内容" id="replyA" class="layui-textarea" style="width: 80%; margin-left: 10%; margin-top: 20px"></textarea>\n' +
+                '  <span style="color: red; font-size: 12px; display: none; margin-left: 10%" id="replyA-warm">评论不能不为空！</span>\n'
+            ,
+            btn: ['回复', '取消'],
+            btn1: function (index, layero) {
+                var answerContent = document.getElementById("replyA").value;
+                var myDate = new Date();
+                var date = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+                var formData = new FormData();
+                if (answerContent === "" || answerContent == null) {
+                    document.getElementById("replyA-warm").style.display = "block";
+                } else {
+                    formData.append("answerContent", answerContent);
+                }
+                formData.append("userId", userId);
+                formData.append("questionId", questionId);
+                formData.append("answerDate", date);
+                formData.append("answerReplyId", id);
+                $.ajax({
+                    url: "/answerManage/insertAnswer",
+                    type: "post",
+                    dataType: "json",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.data === true) {
+                            layer.msg("评论成功", {icon: 6});
+                            setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                window.location.reload();//页面刷新
+                            }, 1000);
+                        } else {
+                            layer.msg("评论失败，请重试", {icon: 5});
+                        }
+                    }
+                })
+            },
+        });
+    }
 });
+
 function answer() {
     var answerContent = document.getElementById("my-answer-content").style.display;
     if (answerContent === "none") {
@@ -203,3 +292,4 @@ function answer() {
         document.getElementById("my-answer-content").style.display = "none";
     }
 }
+

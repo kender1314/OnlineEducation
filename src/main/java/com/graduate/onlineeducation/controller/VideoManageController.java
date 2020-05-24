@@ -3,6 +3,7 @@ package com.graduate.onlineeducation.controller;
 import com.graduate.onlineeducation.common.Result;
 import com.graduate.onlineeducation.common.ResultUtils;
 import com.graduate.onlineeducation.entity.DTO.VideoDTO;
+import com.graduate.onlineeducation.entity.DTO.VideoUserIdDTO;
 import com.graduate.onlineeducation.entity.Video;
 import com.graduate.onlineeducation.service.VideoManageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -42,6 +44,19 @@ public class VideoManageController {
     @RequestMapping(method = RequestMethod.POST, value = "/updateVideo")
     public Result<Object> updateVideo(VideoDTO video) {
         return ResultUtils.success(videoManageService.updateVideo(video));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/updateVideoImage")
+    public Result<Object> updateVideoImage(@RequestParam(value = "image",required=false) MultipartFile image, VideoDTO video) {
+        return ResultUtils.success(videoManageService.updateVideoImage(video, image));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/insertVideo")
+    public Result<Object> insertVideo(@RequestParam(value = "uploadVideo",required=false) MultipartFile uploadVideo,
+                                      @RequestParam(value = "uploadVideoImage",required=false) MultipartFile uploadVideoImage, VideoUserIdDTO video) {
+        return ResultUtils.success(videoManageService.insertVideo(uploadVideo, uploadVideoImage, video));
     }
 
     @ResponseBody
@@ -97,8 +112,28 @@ public class VideoManageController {
     }
 
     @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getVideoByVideoId")
+    public Result<Object> getVideoByVideoId(Integer id) {
+        return ResultUtils.success(videoManageService.getVideoByVideoId(id));
+    }
+
+
+    @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/getCountVideoByUserId")
     public Result<Object> getCountVideoByUserId(Integer id){
         return ResultUtils.success(videoManageService.getCountVideoByUserId(id));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getVideoByUserId")
+    public Result<Object> getVideoByUserId(@RequestParam Map<String, Object> params){
+        Page<Video> videos = videoManageService.getVideoByUserId(params);
+        return ResultUtils.success(videos);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/deleteVideoById")
+    public Result<Object> deleteVideoById(Integer id) {
+        return ResultUtils.success(videoManageService.deleteVideoById(id));
     }
 }

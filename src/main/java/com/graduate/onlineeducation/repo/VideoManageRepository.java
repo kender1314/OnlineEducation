@@ -1,6 +1,7 @@
 package com.graduate.onlineeducation.repo;
 
 import com.graduate.onlineeducation.entity.DTO.VideoDTO;
+import com.graduate.onlineeducation.entity.DTO.VideoUserIdDTO;
 import com.graduate.onlineeducation.entity.Video;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +33,14 @@ public interface VideoManageRepository extends PagingAndSortingRepository<Video,
     void deleteById(Integer id);
 
     /**
+     * 将video_is_delete字段更新为0，实现伪删除
+     *
+     * @param id
+     * @return
+     */
+    Integer deleteVideoById(Integer id);
+
+    /**
      *储存和更新视频
      * @param video
      * @return
@@ -45,6 +54,8 @@ public interface VideoManageRepository extends PagingAndSortingRepository<Video,
      * @return
      */
     VideoDTO save(VideoDTO video);
+
+    VideoUserIdDTO save(VideoUserIdDTO video);
 
     /**
      * 查找视频信息
@@ -113,4 +124,18 @@ public interface VideoManageRepository extends PagingAndSortingRepository<Video,
      * @return
      */
     Integer getCountVideoByUserId(Integer id);
+
+    /**
+     * 根据用户的id，获取该用户的视频
+     * @param id
+     * @return
+     */
+    Page<Video> getVideoByUserId(Integer id, Pageable pageable);
+
+    /**
+     * 根据id获取视频，并且video_is_delete=0
+     * @param id
+     * @return
+     */
+    Video getVideoByVideoId(Integer id);
 }

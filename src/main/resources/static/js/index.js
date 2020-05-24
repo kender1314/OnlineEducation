@@ -326,7 +326,7 @@ function showByClassification(pageNo, pageSize, videoClassification) {
                     var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
                         "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
                         "                                    <div class=\"layui-card\">\n" +
-                        "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "\">" +
+                        "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "&pageNum=1\">" +
                         "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
                         "                                            <div style=\"height: 40px\">\n" +
                         "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
@@ -382,7 +382,7 @@ function showByClassificationLittle(pageNo, pageSize, classificationLittle) {
                     var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
                         "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
                         "                                    <div class=\"layui-card\">\n" +
-                        "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "\">" +
+                        "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "&pageNum=1\">" +
                         "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
                         "                                            <div style=\"height: 40px\">\n" +
                         "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +

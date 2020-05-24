@@ -19,7 +19,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface JpaVideoAuditManageRepository extends VideoAuditManageRepository {
 
     @Override
-    @Query(value = "select * from gp_video where video_status = 2", nativeQuery = true)
+    @Query(value = "select * from gp_video where video_status = 0", nativeQuery = true)
     Page<Video> findVideoNoAudit(Specification<Video> spec, Pageable pageable);
 
     @Override

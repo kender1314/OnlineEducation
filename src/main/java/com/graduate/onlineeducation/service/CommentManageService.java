@@ -1,6 +1,7 @@
 package com.graduate.onlineeducation.service;
 
 import com.graduate.onlineeducation.entity.Comment;
+import com.graduate.onlineeducation.entity.DTO.CommentDTO;
 import org.springframework.data.domain.Page;
 
 import java.util.Map;
@@ -33,4 +34,25 @@ public interface CommentManageService {
      * @return
      */
     Page<Comment> getCommentReply(Map<String, Object> params);
+
+    /**
+     * 根据视频id获取评论
+     * @param params
+     * @return
+     */
+    Page<Comment> getCommentByVideoId(Map<String, Object> params);
+
+    /**
+     * 新增视频评论
+     * @param commentDTO
+     * @return
+     */
+    boolean insertComment(CommentDTO commentDTO);
+
+    /**
+     * 视频评论点赞
+     * @param commentId
+     * @return
+     */
+    boolean addCommentLikeById(Integer commentId);
 }

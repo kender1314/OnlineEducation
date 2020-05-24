@@ -3,6 +3,7 @@ package com.graduate.onlineeducation.controller;
 import com.graduate.onlineeducation.common.Result;
 import com.graduate.onlineeducation.common.ResultUtils;
 import com.graduate.onlineeducation.entity.Comment;
+import com.graduate.onlineeducation.entity.DTO.CommentDTO;
 import com.graduate.onlineeducation.service.CommentManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,4 +43,24 @@ public class CommentManageController {
         Page<Comment> answers = commentManageService.getCommentReply(params);
         return ResultUtils.success(answers);
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCommentByVideoId")
+    public Result<Object> getCommentByVideoId(@RequestParam Map<String, Object> params) {
+        Page<Comment> answers = commentManageService.getCommentByVideoId(params);
+        return ResultUtils.success(answers);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/insertComment")
+    public Result<Object> insertComment(CommentDTO commentDTO) {
+        return ResultUtils.success(commentManageService.insertComment(commentDTO));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/addCommentLikeById")
+    public Result<Object> addCommentLikeById(Integer commentId) {
+        return ResultUtils.success(commentManageService.addCommentLikeById(commentId));
+    }
+
 }

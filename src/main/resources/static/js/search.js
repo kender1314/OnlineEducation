@@ -138,7 +138,7 @@ function showVideoByQuery(pageNo, pageSize, query) {
                     var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
                         "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
                         "                                    <div class=\"layui-card\">\n" +
-                        "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "\">" +
+                        "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "&pageNum=1\">" +
                         "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
                         "                                            <div style=\"min-height: 30px; margin-left: 15px; \">\n" +
                         "                                                <span style=\"font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
@@ -254,7 +254,7 @@ function showQuestionByQuery(pageNo, pageSize, query) {
                         "                            <div class=\"layui-card\">\n" +
                         "                                <div class=\"layui-card-header\">\n" +
                         "                                    <div class=\"layui-input-inline\" style=\"float: left;\">\n" +
-                        "                                        <a href=\"/userUrl/question?id=" + data.data.content[i].id + "\"><b>" + data.data.content[i].questionName +"</b></a>\n" +
+                        "                                        <a href=\"/userUrl/question?id=" + data.data.content[i].id + "&pageNum=1\"><b>" + data.data.content[i].questionName +"</b></a>\n" +
                         "                                    </div>\n" +
                         "                                    <div class=\"layui-input-inline\" style=\"float: right\">\n" +
                         "                                    <img src=\"../images/user1.png\" style=\"width: 16px; height: 16px\"/>\n" +

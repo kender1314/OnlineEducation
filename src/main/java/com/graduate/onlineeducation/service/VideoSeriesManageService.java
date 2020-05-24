@@ -1,8 +1,10 @@
 package com.graduate.onlineeducation.service;
 
 import com.graduate.onlineeducation.entity.DTO.VideoSeriesDTO;
+import com.graduate.onlineeducation.entity.DTO.VideoSeriesUserIdDTO;
 import com.graduate.onlineeducation.entity.VideoSeries;
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -28,11 +30,25 @@ public interface VideoSeriesManageService {
     boolean deleteSeries(Integer id);
 
     /**
+     * 根据id删除系列(伪删除)
+     * @param id
+     * @return
+     */
+    boolean deleteVideoSeriesById(Integer id);
+
+    /**
      * 更新视频系列信息
      * @param videoSeriesDTO
      * @return
      */
     boolean updateVideoSeries(VideoSeriesDTO videoSeriesDTO);
+
+    /**
+     * 新增视频系列信息
+     * @param videoSeriesDTO
+     * @return
+     */
+    boolean insertVideoSeriesAndImage(MultipartFile image, VideoSeriesUserIdDTO videoSeriesDTO);
 
     /**
      * 查找系列信息
@@ -56,4 +72,18 @@ public interface VideoSeriesManageService {
      * @return
      */
    VideoSeries getVideoSeriesById(Integer id);
+
+    /**
+     * 根据用户名获取该用户的视频系列
+     * @param params
+     * @return
+     */
+    Page<VideoSeries> getVideoSeriesByUserId(Map<String, Object> params);
+
+    /**
+     * 根据用户名获取该用户的视频系列数量
+     * @param userId
+     * @return
+     */
+    Integer getCountVideoSeriesByUserId(Integer userId);
 }

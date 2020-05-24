@@ -10,7 +10,9 @@
 <body>
 <div class="navigation">
 </div>
-<div style="margin-left: 10%; width: 80%; min-height: 700px; background-color: white; padding: 10px; margin-top: 10px">
+<input type="hidden" id="userId" name="userId" th:value="${session.user.id}">
+<input type="hidden" id="videoId" name="videoId" th:value="${video.id}">
+<div style="margin-left: 10%; width: 80%; min-height: 700px; background-color: white; padding: 20px; margin-top: 10px">
     <h2 th:text="${video.videoName}">课程介绍及学习指导建议</h2>
     <br>
     <span style="font-size: 10px; color: #999;">分类：<span th:text="${video.videoClassification}"></span></span>
@@ -101,93 +103,113 @@
     </div>
     <div style="width: 70%; margin-top: 20px">
         <hr>
-        <span>
-            <h3>动物新世代</h3>
-        </span>
+        <div>
+            <img src="../images/user1.png" style="width: 25px; height: 25px"/>
+            <span style="font-size: 20px" th:text="${video.user.userName}">动物新世代</span>
+        </div>
         <br>
-        <span style="font-size: 10px">
+        <span style="font-size: 12px"><b>视频简介：</b></span>
+        <span style="font-size: 10px" th:text="${video.videoIntroduce}">
             21世纪，一直以来隐藏在历史暗处的兽人们的存在开始为人所知。 曾是普通人类的影森满，某天突然变成了狸兽人。她为了逃避人类而前往的兽人特区“动物都市”，是十年前兽人为了像兽人一样活着而建造的兽人专属的城镇。满在那里与厌恶人类的狼兽人·大神士郎相遇，并和他一起行动。在此期间，她学习到自己在人类世界所不知道的“兽人们”的烦恼、生活以及喜悦。 满为何会变成兽人呢？就在追寻谜底的过程中，她自身也被卷入了意想不到的巨大事件当中。
 21世纪，一直以来隐藏在历史暗处的兽人们的存在开始为人所知。 曾是普通人类的影森满，某天突然变成了狸兽人。她为了逃避人类而前往的兽人特区“动物都市”，是十年前兽人为了像兽人一样活着而建造的兽人专属的城镇。满在那里与厌恶人类的狼兽人·大神士郎相遇，并和他一起行动。在此期间，她学习到自己在人类世界所不知道的“兽人们”的烦恼、生活以及喜悦。 满为何会变成兽人呢？就在追寻谜底的过程中，她自身也被卷入了意想不到的巨大事件当中。
         </span>
         <hr>
     </div>
-    <div style="width: 70%;">
+    <h3>评论</h3>
+    <div id="my-answer-content" style="width: 70%; margin-top: 20px">
+        <textarea placeholder="请输入内容" class="layui-textarea" id="comment-content"></textarea>
+        <br>
+        <span style="color: red; font-size: 12px; display: none" id="content-warm">评论不能不为空！</span>
+        <button type="button" class="layui-btn" id="comment-submit" style="margin-left: 90%; margin-top: 10px">
+            评论
+        </button>
+    </div>
+    <div style="width: 70%;" th:each="page : ${pages}">
         <div style="margin-top: 20px">
             <div>
                 <img src="../images/users.png" height="25" width="25"/>
-                <span style="font-size: 13px; color: #2E2D3C">科学声音</span>
+                <span style="font-size: 13px; color: #2E2D3C" th:text="${page.user.userName}">科学声音</span>
             </div>
             <div style="margin-top: 10px">
-                <span>21世纪，一直以来隐藏在历史暗处的兽人们的存在开始为人所知。在此期间，她学习到自己在人类世界所不知道的“兽人们”的烦恼、生活以及喜悦。
+                <span th:text="${page.commentContent}">21世纪，一直以来隐藏在历史暗处的兽人们的存在开始为人所知。在此期间，她学习到自己在人类世界所不知道的“兽人们”的烦恼、生活以及喜悦。
                     满为何会变成兽人呢？就在追寻谜底的过程中，她自身也被卷入了意想不到的巨大事件当中。</span>
                 <div style="margin-top: 5px">
-                    <span style="font-size: 10px; color: #999;">2020-05-05 23:57</span>
+                    <span style="font-size: 10px; color: #999;" th:text="${page.commentDate}">2020-05-05 23:57</span>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="#">
-                        <img src="../images/like.png" style="width: 15px; height: 15px"/>
+                        <img src="../images/like.png" href="javascript:void(0);"
+                             th:onclick="'addLike(' + ${page.id} + ')'" style="width: 15px; height: 15px"/>
                     </a>
-                    <span style="font-size: 10px; color: #999;">12</span>
+                    <span style="font-size: 10px; color: #999;" th:text="${page.commentLike}">12</span>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="#" style="font-size: 10px; color: #999;">回复</a>
+                    <a href="#" style="font-size: 10px; color: #999;">
+                        <img src="../images/comment.png" th:onclick="'getReplyListCount(' + ${page.id} + ')'" height="15" width="15" style="margin-left: 20px"/>
+                    </a>
                 </div>
-                <div style="margin-left: 5%; margin-top: 5px">
-                    <div>
-                        <img src="../images/users.png" height="15" width="15"/>
-                        <span style="font-size: 10px; color: #2E2D3C">科学声音：</span>
-                        <span style="font-size: 12px">21世纪，一直以来隐藏在历史暗处的兽人们的存在开始为人所知。</span>
-                        <div style="margin-top: 5px">
-                            <span style="font-size: 10px; color: #999;">2020-05-05 23:57</span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#">
-                                <img src="../images/like.png" style="width: 15px; height: 15px"/>
-                            </a>
-                            <span style="font-size: 10px; color: #999;">12</span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#" style="font-size: 10px; color: #999;">回复</a>
-                        </div>
+                <div style="margin-left: 5%; margin-top: 5px; display: none" id="replyContent">
+                     <textarea placeholder="请输入内容" class="layui-textarea" th:id="'commentReply' + ${page.id} + ''"
+                               style="width: 80%"></textarea>
+                    <span style="color: red; font-size: 12px; display: none" th:id="'commentReply-warm' + ${page.id} + ''">评论不能不为空！</span>
+                    <div style="width: 80%; text-align: right; margin-top: 5px">
+                        <button type="button" class="layui-btn layui-btn-sm" th:onclick="'commentReply(' + ${page.id} + ')'">回复</button>
                     </div>
-                </div>
-                <div style="margin-left: 5%; margin-top: 5px">
-                    <div>
-                        <img src="../images/users.png" height="15" width="15"/>
-                        <span style="font-size: 10px; color: #2E2D3C">科学声音：</span>
-                        <span style="font-size: 12px">21世纪，一直以来隐藏在历史暗处的兽人们的存在开始为人所知。</span>
-                        <div style="margin-top: 5px">
-                            <span style="font-size: 10px; color: #999;">2020-05-05 23:57</span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#">
-                                <img src="../images/like.png" style="width: 15px; height: 15px"/>
-                            </a>
-                            <span style="font-size: 10px; color: #999;">12</span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#" style="font-size: 10px; color: #999;">回复</a>
+                    <div th:id="'replyComment' + ${page.id} + ''">
+                        <div style="margin-top: 20px">
+                            <img src="../images/users.png" height="15" width="15"/>
+                            <span style="font-size: 10px; color: #2E2D3C">科学声音：</span>
+                            <span style="font-size: 12px">21世纪，一直以来隐藏在历史暗处的兽人们的存在开始为人所知。</span>
+                            <div style="margin-top: 5px">
+                                <span style="font-size: 10px; color: #999;">2020-05-05 23:57</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#">
+                                    <img src="../images/like.png" style="width: 15px; height: 15px"/>
+                                </a>
+                                <span style="font-size: 10px; color: #999;">12</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#" style="font-size: 10px; color: #999;">
+                                    <img src="../images/comment.png" height="15" width="15" style="margin-left: 20px"/>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <hr>
-        <div style="margin-top: 20px">
-            <div>
-                <img src="../images/users.png" height="25" width="25"/>
-                <span style="font-size: 13px; color: #2E2D3C">科学声音</span>
-            </div>
-            <div style="margin-top: 10px">
-                <span>21世纪，一直以来隐藏在历史暗处的兽人们的存在开始为人所知。在此期间，她学习到自己在人类世界所不知道的“兽人们”的烦恼、生活以及喜悦。
-                    满为何会变成兽人呢？就在追寻谜底的过程中，她自身也被卷入了意想不到的巨大事件当中。</span>
-                <div style="margin-top: 5px">
-                    <span style="font-size: 10px; color: #999;">2020-05-05 23:57</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="#">
-                        <img src="../images/like.png" style="width: 15px; height: 15px"/>
-                    </a>
-                    <span style="font-size: 10px; color: #999;">12</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="#" style="font-size: 10px; color: #999;">回复</a>
-                </div>
-            </div>
-        </div>
-        <hr>
+    </div>
+    <div style="text-align:center; width: 100%">
+        <table style="margin-left: 30%">
+            <tr>
+                <td>共<span th:text="${totalElements}">1</span>条&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td><a th:href="@{/userUrl/playVideo(pageNum=1, id=${video.id})}">
+                    <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">首页</button>
+                </a></td>
+                <td th:switch="${pageNum}">
+                    <p th:case="1"><a th:href="@{/userUrl/playVideo(pageNum=1, id=${video.id})}">
+                        <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">上一页</button>
+                    </a></p>
+                    <p th:case="*"><a
+                            th:href="@{/userUrl/playVideo(pageNum=${pageNum-1}, id=${video.id})}">
+                        <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">上一页</button>
+                    </a></p>
+                </td>
+                <td th:switch="${pageNum}">
+                    <p th:case="${totalPages}"><a
+                            th:href="@{/userUrl/playVideo(pageNum=${totalPages}, id=${video.id})}">
+                        <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">下一页</button>
+                    </a></p>
+                    <p th:case="*"><a
+                            th:href="@{/userUrl/playVideo(pageNum=${pageNum+1}, id=${video.id})}">
+                        <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">下一页</button>
+                    </a></p>
+                </td>
+                <td><a th:href="@{/userUrl/playVideo(pageNum=${totalPages}, id=${video.id})}">
+                    <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">尾页</button>
+                </a></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;共<span th:text="${totalPages}">1</span>页</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;第<span th:text="${pageNum}">1</span>页</td>
+            </tr>
+        </table>
     </div>
 </div>
 <div class="my-footer">
@@ -200,6 +222,4 @@
 <!--json-->
 <script src="../lib/json/json2.js" type="text/javascript"></script>
 <script src="../js/common.js"></script>
-<script>
-
-</script>
+<script src="../js/play_video.js"></script>

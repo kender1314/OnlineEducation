@@ -47,6 +47,11 @@ public class AnswerManageServiceImpl implements AnswerManageService {
     }
 
     @Override
+    public boolean addAnswerLikeById(Integer answerId) {
+        return answerManageRepository.updateAnswerLikeById(answerId) == 1;
+    }
+
+    @Override
     public Page<Answer> getAnswerReply(Map<String, Object> params) {
         Integer replyId = Integer.parseInt(params.get("replyId").toString()) ;
         return answerManageRepository.getAnswerReply(replyId, PaginationBase.getPagination(params));
@@ -75,5 +80,10 @@ public class AnswerManageServiceImpl implements AnswerManageService {
     @Override
     public Integer getCountReplyByAnswerId(Integer answerId) {
         return answerManageRepository.getCountReplyByAnswerId(answerId);
+    }
+
+    @Override
+    public Answer getAnswerById(Integer answerId) {
+        return answerManageRepository.getAnswerById(answerId);
     }
 }

@@ -1,8 +1,10 @@
 package com.graduate.onlineeducation.service;
 
 import com.graduate.onlineeducation.entity.DTO.VideoDTO;
+import com.graduate.onlineeducation.entity.DTO.VideoUserIdDTO;
 import com.graduate.onlineeducation.entity.Video;
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -29,11 +31,36 @@ public interface VideoManageService {
     boolean deleteVideo(Integer id);
 
     /**
+     * 将video_is_delete字段更新为1，实现伪删除
+     *
+     * @param id
+     * @return
+     */
+    boolean deleteVideoById(Integer id);
+
+    /**
      * 更新视频信息
      * @param video
      * @return
      */
     boolean updateVideo(VideoDTO video);
+
+
+    /**
+     * 更新视频信息
+     * @param video
+     * @return
+     */
+    boolean updateVideoImage(VideoDTO video, MultipartFile image);
+
+    /**
+     * 添加新的视频
+     * @param uploadVideo
+     * @param uploadVideoImage
+     * @param video
+     * @return
+     */
+    boolean insertVideo(MultipartFile uploadVideo, MultipartFile uploadVideoImage, VideoUserIdDTO video);
 
     /**
      * 查找不属于系列的视频信息
@@ -72,6 +99,13 @@ public interface VideoManageService {
     Video getVideoById(Integer id);
 
     /**
+     * 根据id获取视频，并且video_is_delete=0
+     * @param id
+     * @return
+     */
+    Video getVideoByVideoId(Integer id);
+
+    /**
      * 根据分类获取视频的数量
      * @param videoClassification
      * @return
@@ -98,4 +132,12 @@ public interface VideoManageService {
      * @return
      */
     Integer getCountVideoByUserId(Integer id);
+
+    /**
+     * 根据用户的id，获取该用户的视频
+     * @param params
+     * @return
+     */
+    Page<Video> getVideoByUserId(Map<String, Object> params);
+
 }

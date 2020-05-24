@@ -1,6 +1,7 @@
 package com.graduate.onlineeducation.repo;
 
 import com.graduate.onlineeducation.entity.DTO.VideoSeriesDTO;
+import com.graduate.onlineeducation.entity.DTO.VideoSeriesUserIdDTO;
 import com.graduate.onlineeducation.entity.VideoSeries;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -60,4 +61,27 @@ public interface VideoSeriesManageRepository extends PagingAndSortingRepository<
      * @return
      */
     VideoSeries getVideoSeriesById(Integer id);
+
+    /**
+     * 根据用户名获取该用户的视频系列
+     * @param userid
+     * @return
+     */
+    Page<VideoSeries> getVideoSeriesByUserId(Integer userid, Pageable pageable);
+
+    /**
+     * 根据用户名获取该用户的视频系列数量
+     * @param userid
+     * @return
+     */
+    Integer getCountVideoSeriesByUserId(Integer userid);
+
+    VideoSeriesUserIdDTO save(VideoSeriesUserIdDTO videoSeriesUserIdDTO);
+
+    /**
+     * 根据id删除系列(伪删除)
+     * @param id
+     * @return
+     */
+    Integer deleteVideoSeriesById(Integer id);
 }

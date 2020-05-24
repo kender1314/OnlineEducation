@@ -37,6 +37,12 @@ public interface AnswerManageService {
     boolean deleteAnswerByQuestionId(Integer question);
 
     /**
+     * 评论点赞
+     * @return
+     */
+    boolean addAnswerLikeById(Integer answerId);
+
+    /**
      * 获取问题回复对话
      * @param params
      * @return
@@ -63,4 +69,11 @@ public interface AnswerManageService {
      * @return
      */
     Integer getCountReplyByAnswerId(Integer answerId);
+
+    /**
+     * 根据id获取回答
+     * @param answerId
+     * @return
+     */
+    Answer getAnswerById(Integer answerId);
 }

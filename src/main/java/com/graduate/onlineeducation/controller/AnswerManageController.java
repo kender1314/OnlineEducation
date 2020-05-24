@@ -71,4 +71,16 @@ public class AnswerManageController {
     public Result<Object> deleteAnswerByQuestionId(Integer questionId) {
         return ResultUtils.success(answerManageService.deleteAnswerByQuestionId(questionId));
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/addAnswerLikeById")
+    public Result<Object> addAnswerLikeById(Integer answerId) {
+        return ResultUtils.success(answerManageService.addAnswerLikeById(answerId));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getAnswerById")
+    public Result<Object> getAnswerById(Integer answerId) {
+        return ResultUtils.success(answerManageService.getAnswerById(answerId));
+    }
 }

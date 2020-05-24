@@ -1,19 +1,24 @@
 package com.graduate.onlineeducation.controller;
 
 import com.graduate.onlineeducation.autoconfigure.annotations.InterceptUser;
-import com.graduate.onlineeducation.entity.Question;
-import com.graduate.onlineeducation.entity.User;
-import com.graduate.onlineeducation.entity.Video;
-import com.graduate.onlineeducation.entity.VideoSeries;
-import com.graduate.onlineeducation.service.QuestionManageService;
-import com.graduate.onlineeducation.service.UserManageService;
-import com.graduate.onlineeducation.service.VideoManageService;
-import com.graduate.onlineeducation.service.VideoSeriesManageService;
+import com.graduate.onlineeducation.entity.*;
+import com.graduate.onlineeducation.entity.DO.AnswerDO;
+import com.graduate.onlineeducation.entity.DO.CommentDO;
+import com.graduate.onlineeducation.service.*;
+import com.graduate.onlineeducation.support.ThymeleafSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Author hejiang
@@ -25,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/userUrl")
 public class UrlUserController {
+    private static final Logger logger = LoggerFactory.getLogger(UrlUserController.class);
+
     @Autowired
     private VideoManageService videoManageService;
 
@@ -36,6 +43,12 @@ public class UrlUserController {
 
     @Autowired
     private UserManageService userManageService;
+
+    @Autowired
+    private AnswerManageService answerManageService;
+
+    @Autowired
+    private CommentManageService commentManageService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/index")
     public String index() {
@@ -80,10 +93,45 @@ public class UrlUserController {
         return "/views/video_list";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/playSeries")
+    public String playSeries(Integer videoId, Integer seriesId, Model model) {
+        Video video = videoManageService.getVideoById(videoId);
+        model.addAttribute("video", video);
+        VideoSeries videoSeries = videoSeriesManageService.getVideoSeriesById(seriesId);
+        model.addAttribute("videoSeries", videoSeries);
+        return "/views/play_series";
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/playVideo")
-    public String playVideo(Integer id, Model model) {
+    public String playVideo(Integer id, @RequestParam(value = "pageNum", defaultValue = "1") String pageNo, Model model) {
         Video video = videoManageService.getVideoById(id);
         model.addAttribute("video", video);
+
+        Map<String, Object> params = new HashMap<>(10);
+        params.put("limit", 10);
+        params.put("videoId", id);
+        params.put("page", pageNo);
+
+        Page<Comment> pages = commentManageService.getCommentByVideoId(params);
+        ThymeleafSupport.findCommentPage(pages, pageNo, model);
+
+        List<CommentDO> list = new ArrayList<>();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        for (Comment comment : pages) {
+            String formatStr = formatter.format(comment.getCommentDate());
+            CommentDO commentDO = new CommentDO();
+            commentDO.setId(comment.getId());
+            commentDO.setCommentContent(comment.getCommentContent());
+            commentDO.setCommentDate(formatStr);
+            commentDO.setCommentLike(comment.getCommentLike());
+            commentDO.setIsDelete(comment.getIsDelete());
+            commentDO.setUser(comment.getUser());
+            commentDO.setVideo(comment.getVideo());
+            commentDO.setReplyId(comment.getReplyId());
+
+            list.add(commentDO);
+        }
+        model.addAttribute("pages", list);
         return "/views/play_video";
     }
 
@@ -97,17 +145,67 @@ public class UrlUserController {
     public String showSeries(Integer id, Model model) {
         VideoSeries videoSeries = videoSeriesManageService.getVideoSeriesById(id);
         model.addAttribute("videoSeries", videoSeries);
-        if(videoSeries.getSeriesIntegral() == 0){
+        if (videoSeries.getSeriesIntegral() == 0) {
             return "/views/play_series";
-        }else {
+        } else {
             return "/views/buy";
         }
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/question")
-    public String question(Integer id, Model model) {
+    public String question(Integer id, @RequestParam(value = "pageNum", defaultValue = "1") String pageNo, Model model) {
         Question question = questionManageService.getQuestionById(id);
         model.addAttribute("question", question);
+
+        Map<String, Object> params = new HashMap<>(10);
+        params.put("limit", 10);
+        params.put("questionId", id);
+        params.put("page", pageNo);
+        Page<Answer> pages = answerManageService.getAnswerListByQuestionId(params);
+        ThymeleafSupport.findAnswerPage(pages, pageNo, model);
+        List<AnswerDO> list = new ArrayList<>();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        for (Answer answer : pages) {
+            String formatStr = formatter.format(answer.getAnswerDate());
+            AnswerDO answerDO = new AnswerDO();
+            answerDO.setId(answer.getId());
+            answerDO.setUser(answer.getUser());
+            answerDO.setQuestion(answer.getQuestion());
+            answerDO.setIsDelete(answer.getIsDelete());
+            answerDO.setAnswerReplyId(answer.getAnswerReplyId());
+            answerDO.setAnswerLike(answer.getAnswerLike());
+            answerDO.setAnswerDate(formatStr);
+            answerDO.setAnswerContent(answer.getAnswerContent());
+            list.add(answerDO);
+        }
+        model.addAttribute("pages", list);
         return "/views/question";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/showSeriesList")
+    public String showSeriesList(Integer id, Model model) {
+        VideoSeries videoSeries = videoSeriesManageService.getVideoSeriesById(id);
+        model.addAttribute("videoSeries", videoSeries);
+
+        return "/views/personal_series_list";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/uploadSeriesVideo")
+    public String uploadSeriesVideo(Integer id, Model model) {
+        VideoSeries videoSeries = videoSeriesManageService.getVideoSeriesById(id);
+        model.addAttribute("videoSeries", videoSeries);
+
+        return "/views/upload_series_video";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/test")
+    public String test(@RequestParam(value = "pageNum", defaultValue = "1") String pageNo, Model model) {
+        Map<String, Object> params = new HashMap<>(10);
+        params.put("limit", 10);
+        params.put("page", pageNo);
+        Page<Question> pages = questionManageService.getQuestionListTest(params, model);
+        model.addAttribute("pages", pages);
+
+        return "/views/test";
     }
 }

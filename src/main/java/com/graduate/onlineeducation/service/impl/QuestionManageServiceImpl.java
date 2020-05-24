@@ -6,10 +6,12 @@ import com.graduate.onlineeducation.repo.QuestionManageRepository;
 import com.graduate.onlineeducation.service.QuestionManageService;
 import com.graduate.onlineeducation.support.ByQuestionSpecification;
 import com.graduate.onlineeducation.support.PaginationBase;
+import com.graduate.onlineeducation.support.ThymeleafSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.Map;
 
@@ -40,6 +42,15 @@ public class QuestionManageServiceImpl implements QuestionManageService {
     public Page<Question> search(Map<String, Object> params) {
         String query = (String) params.get("query");
         return questionManageRepository.findByParam(query, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public Page<Question> getQuestionListTest(Map<String, Object> params, Model model) {
+        String pageNum = params.get("page").toString();
+        Specification<Question> specification = new ByQuestionSpecification(params);
+        Page<Question> pages = questionManageRepository.findAll(specification, PaginationBase.getPagination(params));
+        ThymeleafSupport.findQuestionPage(pages, pageNum, model);
+        return pages;
     }
 
     @Override

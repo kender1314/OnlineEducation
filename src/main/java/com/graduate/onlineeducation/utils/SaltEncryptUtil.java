@@ -14,7 +14,7 @@ import java.util.Base64;
  * @Description:
  */
 public class SaltEncryptUtil {
-    private static Logger logger = LoggerFactory.getLogger(ExecutionException.class);
+    private static Logger logger = LoggerFactory.getLogger(SaltEncryptUtil.class);
 
     /**
      * 在Java中，String的getBytes()方法是得到一个操作系统默认的编码格式的字节数组.

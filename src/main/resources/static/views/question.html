@@ -35,7 +35,7 @@
                     <span style="font-size: 10px; color: #999; margin-right: 20px">分类：<span
                             th:text="${question.classification}"></span></span>
                     <span style="font-size: 10px; color: #999; margin-right: 20px">时间：<span
-                            th:text="${question.questionDate}"></span></span>
+                            id="questionDate"></span></span>
                 </div>
                 <button type="button" id="my-answer" onclick="answer()" style="margin-top: 20px" class="layui-btn">我来答
                 </button>
@@ -50,55 +50,80 @@
             </div>
             <fieldset class="layui-elem-field" style="padding: 20px">
                 <legend>回答</legend>
-                <div id="answer-list">
-<!--                    <div class="layui-col-md12">-->
-<!--                        <div class="layui-card">-->
-<!--                            <div class="layui-card-header">-->
-<!--                                <img src="../images/user1.png" style="width: 30px; height: 30px"/><b>会飞的猪</b>-->
-<!--                            </div>-->
-<!--                            <div class="layui-card-body">-->
-<!--                                是不是JQ路径错了？-->
-<!--                            </div>-->
-<!--                            <div style="padding-bottom: 20px">-->
-<!--                                <div style="margin-left: 15px">-->
-<!--                                    <span style="font-size: 10px; color: #999">时间：<span-->
-<!--                                            th:text="${question.questionDate}">2020-02-01</span></span>-->
-<!--                                    <a style="margin-left: 20px" href=""><img src="../images/like.png" height="15"-->
-<!--                                                                              width="15"/></a>-->
-<!--                                    <span style="font-size: 14px; color: #999">12</span>-->
-<!--                                    <a href=""><img src="../images/comment.png" height="15" width="15"-->
-<!--                                                    style="margin-left: 20px"/></a>-->
-<!--                                    <div style="min-height: 50px; margin-left: 50px;margin-top: 10px; ">-->
-<!--                                        <textarea placeholder="请输入内容" class="layui-textarea" style="width: 80%"></textarea>-->
-<!--                                        <div style="width: 80%; text-align: right; margin-top: 5px">-->
-<!--                                            <button type="button" class="layui-btn layui-btn-sm">回复</button>-->
-<!--                                        </div>-->
-<!--                                        <div>-->
-<!--                                            <div style="margin-top: 10px">-->
-<!--                                                <img src="../images/user1.png" height="15" width="15"/>-->
-<!--                                                <span style="font-size: 10px; color: #2E2D3C">科学声音：</span>-->
-<!--                                                <span style="font-size: 12px">21世纪，一直以来隐藏在历史暗处的兽人们的存在开始为人所知。</span>-->
-<!--                                                <div style="margin-top: 5px">-->
-<!--                                                    <span style="font-size: 10px; color: #999;">2020-05-05 23:57</span>-->
-<!--                                                    &nbsp;&nbsp;&nbsp;&nbsp;-->
-<!--                                                    <a href="#">-->
-<!--                                                        <img src="../images/like.png"-->
-<!--                                                             style="width: 15px; height: 15px"/>-->
-<!--                                                    </a>-->
-<!--                                                    <span style="font-size: 10px; color: #999;">12</span>-->
-<!--                                                    &nbsp;&nbsp;&nbsp;&nbsp;-->
-<!--                                                    <a href="#" style="font-size: 10px; color: #999;">回复</a>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div id="demo7" style="text-align: center"></div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                <div id="answer-list" th:each="page : ${pages}">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <img src="../images/user1.png" style="width: 30px; height: 30px"/>
+                                <b>
+                                    <span th:text="${page.user.userName}">会飞的猪</span>
+                                </b>
+                            </div>
+                            <div class="layui-card-body">
+                                <span th:text="${page.answerContent}"></span>
+                            </div>
+                            <div style="padding-bottom: 20px">
+                                <div style="margin-left: 15px">
+                                    <span style="font-size: 10px; color: #999">时间：<span
+                                            th:text="${page.answerDate}" th:id="'answerDateA' + ${page.id} + ''">2020-02-01</span></span>
+                                    <a style="margin-left: 20px" href="javascript:void(0);"
+                                       th:onclick="'addLike(' + ${page.id} + ')'">
+                                        <img src="../images/like.png" height="15" width="15"/></a>
+                                    <span style="font-size: 14px; color: #999" th:text="${page.answerLike}"></span>
+                                    <a href="javascript:void(0);" th:onclick="'getReplyListCount(' + ${page.id} + ')'"><img src="../images/comment.png" height="15" width="15"
+                                                    style="margin-left: 20px"/></a>
+                                    <div style="min-height: 50px; margin-left: 50px;margin-top: 10px; display: none" th:id="'reply' + ${page.id} + ''">
+                                        <div>
+                                             <textarea placeholder="请输入内容" class="layui-textarea" th:id="'answerReply' + ${page.id} + ''"
+                                                       style="width: 80%"></textarea>
+                                            <span style="color: red; font-size: 12px; display: none" th:id="'answerReply-warm' + ${page.id} + ''">评论不能不为空！</span>
+                                            <div style="width: 80%; text-align: right; margin-top: 5px">
+                                                <button type="button" class="layui-btn layui-btn-sm" th:onclick="'answerReply(' + ${page.id} + ')'">回复</button>
+                                            </div>
+                                            <div th:id="'replyAnswer' + ${page.id} + ''">
+                                            </div>
+                                            <div id="demo8" style="text-align:center;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div id="demo8" style="text-align:center;"></div>
+                <div style="text-align:center; width: 100%">
+                    <table style="margin-left: 30%">
+                        <tr>
+                            <td>共<span th:text="${totalElements}">1</span>条&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td><a th:href="@{/userUrl/question(pageNum=1, id=${question.id})}">
+                                <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">首页</button>
+                            </a></td>
+                            <td th:switch="${pageNum}">
+                                <p th:case="1"><a th:href="@{/userUrl/question(pageNum=1, id=${question.id})}">
+                                    <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">上一页</button>
+                                </a></p>
+                                <p th:case="*"><a
+                                        th:href="@{/userUrl/question(pageNum=${pageNum-1}, id=${question.id})}">
+                                    <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">上一页</button>
+                                </a></p>
+                            </td>
+                            <td th:switch="${pageNum}">
+                                <p th:case="${totalPages}"><a
+                                        th:href="@{/userUrl/question(pageNum=${totalPages}, id=${question.id})}">
+                                    <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">下一页</button>
+                                </a></p>
+                                <p th:case="*"><a
+                                        th:href="@{/userUrl/question(pageNum=${pageNum+1}, id=${question.id})}">
+                                    <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">下一页</button>
+                                </a></p>
+                            </td>
+                            <td><a th:href="@{/userUrl/question(pageNum=${totalPages}, id=${question.id})}">
+                                <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">尾页</button>
+                            </a></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;共<span th:text="${totalPages}">1</span>页</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;第<span th:text="${pageNum}">1</span>页</td>
+                        </tr>
+                    </table>
+                </div>
             </fieldset>
         </div>
     </div>

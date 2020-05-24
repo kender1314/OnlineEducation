@@ -25,23 +25,24 @@ public interface JpaQuestionManageRepository extends QuestionManageRepository {
 
     @Override
     @Query(value = "select gp_question.* from gp_user, gp_question where gp_question.user_id = gp_user.user_id and(" +
-            "gp_user.user_name like %?1% or question_name like %?1% or question_content like %?1%)", nativeQuery = true)
+            "gp_user.user_name like %?1% or question_name like %?1% or question_content like %?1%) and question_is_delete = 0", nativeQuery = true)
     Page<Question> findByParam(String query, Pageable pageable);
 
     @Override
     @Query(value = "select count(*) from gp_user, gp_question where gp_question.user_id = gp_user.user_id and(" +
-            "gp_user.user_name like %?1% or question_name like %?1% or question_content like %?1%)", nativeQuery = true)
+            "gp_user.user_name like %?1% or question_name like %?1% or question_content like %?1%) and question_is_delete = 0", nativeQuery = true)
     Integer getCountByQuery(String query);
 
     @Override
+    @Query(value = "select * from gp_question where question_id = ?1 and question_is_delete = 0", nativeQuery = true)
     Question getQuestionById(Integer id);
 
     @Override
-    @Query(value = "select * from gp_question where user_id = ?1", nativeQuery = true)
+    @Query(value = "select * from gp_question where user_id = ?1 and question_is_delete = 0", nativeQuery = true)
     Page<Question> getQuestionByUserId(Integer id, Pageable pageable);
 
     @Override
-    @Query(value = "select count(*) from gp_question where user_id = ?1", nativeQuery = true)
+    @Query(value = "select count(*) from gp_question where user_id = ?1 and question_is_delete = 0", nativeQuery = true)
     Integer getCountQuestionByUserId(Integer id);
 
     @Override

@@ -74,6 +74,12 @@ public class VideoDTO implements Serializable {
     @Column(name = "video_number")
     private Integer videoNumber;
 
+    @Column(name = "video_image")
+    private String videoImage;
+
+    @Column(name = "video_image_url")
+    private String videoImageUrl;
+
     public Integer getId() {
         return id;
     }
@@ -170,6 +176,22 @@ public class VideoDTO implements Serializable {
         this.isDelete = isDelete;
     }
 
+    public String getVideoImage() {
+        return videoImage;
+    }
+
+    public void setVideoImage(String videoImage) {
+        this.videoImage = videoImage;
+    }
+
+    public String getVideoImageUrl() {
+        return videoImageUrl;
+    }
+
+    public void setVideoImageUrl(String videoImageUrl) {
+        this.videoImageUrl = videoImageUrl;
+    }
+
     @Override
     public String toString() {
         return "VideoDTO{" +
@@ -185,6 +207,8 @@ public class VideoDTO implements Serializable {
                 ", coverUrl='" + coverUrl + '\'' +
                 ", classificationLittle='" + classificationLittle + '\'' +
                 ", videoNumber=" + videoNumber +
+                ", videoImage='" + videoImage + '\'' +
+                ", videoImageUrl='" + videoImageUrl + '\'' +
                 '}';
     }
 }
