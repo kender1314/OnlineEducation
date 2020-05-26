@@ -123,4 +123,16 @@ public class BookmarkManageController {
     public Result<Object> deleteBookmarkByQuestionId(Integer id){
         return ResultUtils.success(bookmarkManageService.deleteBookmarkByQuestionId(id));
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountBookmarkByVideoId")
+    public Result<Object> getCountBookmarkByVideoId(Integer id){
+        return ResultUtils.success(bookmarkManageService.getCountBookmarkByVideoId(id));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountBookmarkByQuestionId")
+    public Result<Object> getCountBookmarkByQuestionId(Integer id){
+        return ResultUtils.success(bookmarkManageService.getCountBookmarkByQuestionId(id));
+    }
 }

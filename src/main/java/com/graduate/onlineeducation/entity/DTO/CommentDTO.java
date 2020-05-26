@@ -57,6 +57,9 @@ public class CommentDTO implements Serializable {
     @Column(name = "comment_is_delete")
     private Integer isDelete;
 
+    @Column(name = "comment_is_watch")
+    private Integer commentIsWatch;
+
     public Integer getId() {
         return id;
     }
@@ -122,17 +125,26 @@ public class CommentDTO implements Serializable {
         this.videoId = videoId;
     }
 
+    public Integer getCommentIsWatch() {
+        return commentIsWatch;
+    }
+
+    public void setCommentIsWatch(Integer commentIsWatch) {
+        this.commentIsWatch = commentIsWatch;
+    }
+
     @Override
     public String toString() {
         return "CommentDTO{" +
                 "id=" + id +
                 ", commentDate=" + commentDate +
                 ", commentContent='" + commentContent + '\'' +
-                ", commentLike='" + commentLike + '\'' +
+                ", commentLike=" + commentLike +
                 ", userId=" + userId +
                 ", videoId=" + videoId +
                 ", replyId=" + replyId +
                 ", isDelete=" + isDelete +
+                ", commentIsWatch=" + commentIsWatch +
                 '}';
     }
 }

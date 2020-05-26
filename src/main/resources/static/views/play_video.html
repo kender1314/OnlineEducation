@@ -12,12 +12,13 @@
 </div>
 <input type="hidden" id="userId" name="userId" th:value="${session.user.id}">
 <input type="hidden" id="videoId" name="videoId" th:value="${video.id}">
+<input type="hidden" id="videoClassification" name="videoClassification" th:value="${video.videoClassification}">
 <div style="margin-left: 10%; width: 80%; min-height: 700px; background-color: white; padding: 20px; margin-top: 10px">
     <h2 th:text="${video.videoName}">课程介绍及学习指导建议</h2>
     <br>
     <span style="font-size: 10px; color: #999;">分类：<span th:text="${video.videoClassification}"></span></span>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <span style="font-size: 10px; color: #999;">上传时间：</span>
+    <span style="font-size: 10px; color: #999;">上传时间：<span id="videoDate"></span></span>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <span style="font-size: 10px; color: #999;">播放量：<span th:text="${video.playbackVolume}"></span></span>
     &nbsp;&nbsp;&nbsp;&nbsp;
@@ -25,7 +26,7 @@
     <a href="#">
         <img src="../images/collect.png" style="width: 20px; height: 20px"/>
     </a>
-    <span style="font-size: 12px; margin-top: 12px">122</span>
+    <span style="font-size: 12px; margin-top: 12px" id="countCollectVideo"></span>
     <div style="margin-top: 15px">
         <div style="width: 70%; height: 500px; float: left">
             <video width="100%" height="480" controls="controls">
@@ -33,59 +34,15 @@
                 Your browser does not support the video tag.
             </video>
         </div>
-        <div style="width: 30%; height: 500px; float: right">
-            <div style="margin-left: 5%; width: 90%; height: 105px; margin-bottom: 10px; padding: 5px">
-                <div style="float: left">
-                    <img src="../images/316422.jpg" style="height: 100px; width: 150px"/>
-                </div>
-                <div style="float: left; margin-left: 10px;">
-                    <div style="height: 60px; width: 160px; white-space:normal; word-break:break-all; word-wrap:break-word;">
-                        <span>陪你去看流星雨，花开花落霜满天</span>
+        <span style="margin-left: 20px; font-size: 16px; color: #222">相关推荐</span>
+        <br>
+        <div style="width: 30%; height: 500px; float: right" id="recommendVideo">
+            <div style="margin-left: 5%; width: 90%; height: 105px; margin-top: 10px; padding: 5px">
+                <a>
+                    <div style="float: left">
+                        <img src="../images/316422.jpg" style="height: 100px; width: 150px"/>
                     </div>
-                    <div style="height: 40px">
-                        <span style="font-size: 10px; color: #999">作者：科学声音</span>
-                        <br>
-                        <span style="font-size: 10px; color: #999">播放量：1</span>
-                    </div>
-                </div>
-                <div style="clear: both"></div>
-            </div>
-            <div style="margin-left: 5%; width: 90%; height: 105px; margin-bottom: 10px; padding: 5px">
-                <div style="float: left">
-                    <img src="../images/316422.jpg" style="height: 100px; width: 150px"/>
-                </div>
-                <div style="float: left; margin-left: 10px;">
-                    <div style="height: 60px; width: 160px; white-space:normal; word-break:break-all; word-wrap:break-word;">
-                        <span>陪你去看流星雨</span>
-                    </div>
-                    <div style="height: 40px">
-                        <span style="font-size: 10px; color: #999">作者：科学声音</span>
-                        <br>
-                        <span style="font-size: 10px; color: #999">播放量：1</span>
-                    </div>
-                </div>
-                <div style="clear: both"></div>
-            </div>
-            <div style="margin-left: 5%; width: 90%; height: 105px; margin-bottom: 10px; padding: 5px">
-                <div style="float: left">
-                    <img src="../images/316422.jpg" style="height: 100px; width: 150px"/>
-                </div>
-                <div style="float: left; margin-left: 10px;">
-                    <div style="height: 60px; width: 160px; white-space:normal; word-break:break-all; word-wrap:break-word;">
-                        <span>陪你去看流星雨</span>
-                    </div>
-                    <div style="height: 40px">
-                        <span style="font-size: 10px; color: #999">作者：科学声音</span>
-                        <br>
-                        <span style="font-size: 10px; color: #999">播放量：1</span>
-                    </div>
-                </div>
-                <div style="clear: both"></div>
-            </div>
-            <div style="margin-left: 5%; width: 90%; height: 105px; margin-bottom: 10px; padding: 5px">
-                <div style="float: left">
-                    <img src="../images/316422.jpg" style="height: 100px; width: 150px"/>
-                </div>
+                </a>
                 <div style="float: left; margin-left: 10px;">
                     <div style="height: 60px; width: 160px; white-space:normal; word-break:break-all; word-wrap:break-word;">
                         <span>陪你去看流星雨，回忆过去的点点滴滴</span>
@@ -93,7 +50,10 @@
                     <div style="height: 40px">
                         <span style="font-size: 10px; color: #999">作者：科学声音</span>
                         <br>
-                        <span style="font-size: 10px; color: #999">播放量：1</span>
+                        <img src="../images/play.png" style="width: 16px; height: 16px"/>
+                        <span style="font-size: 10px; color: #999">1</span>
+                        <img src="../images/integral.png" style="width: 16px; height: 16px; margin-left: 10px"/>
+                        <span style="color: red; font-size: 10px">20</span>
                     </div>
                 </div>
                 <div style="clear: both"></div>
@@ -136,22 +96,26 @@
                 <div style="margin-top: 5px">
                     <span style="font-size: 10px; color: #999;" th:text="${page.commentDate}">2020-05-05 23:57</span>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="#">
-                        <img src="../images/like.png" href="javascript:void(0);"
-                             th:onclick="'addLike(' + ${page.id} + ')'" style="width: 15px; height: 15px"/>
+                    <a href="javascript:void(0);"
+                       th:onclick="'addLike(' + ${page.id} + ')'">
+                        <img src="../images/like.png" style="width: 15px; height: 15px"/>
                     </a>
                     <span style="font-size: 10px; color: #999;" th:text="${page.commentLike}">12</span>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="#" style="font-size: 10px; color: #999;">
-                        <img src="../images/comment.png" th:onclick="'getReplyListCount(' + ${page.id} + ')'" height="15" width="15" style="margin-left: 20px"/>
+                    <a a href="javascript:void(0);" th:onclick="'getReplyListCount(' + ${page.id} + ')'"
+                       style="font-size: 10px; color: #999;">
+                        <img src="../images/comment.png" height="15" width="15" style="margin-left: 20px"/>
                     </a>
                 </div>
-                <div style="margin-left: 5%; margin-top: 5px; display: none" id="replyContent">
+                <div style="margin-left: 5%; margin-top: 5px; display: none" th:id="'reply' + ${page.id} + ''">
                      <textarea placeholder="请输入内容" class="layui-textarea" th:id="'commentReply' + ${page.id} + ''"
                                style="width: 80%"></textarea>
-                    <span style="color: red; font-size: 12px; display: none" th:id="'commentReply-warm' + ${page.id} + ''">评论不能不为空！</span>
+                    <span style="color: red; font-size: 12px; display: none"
+                          th:id="'commentReply-warm' + ${page.id} + ''">评论不能不为空！</span>
                     <div style="width: 80%; text-align: right; margin-top: 5px">
-                        <button type="button" class="layui-btn layui-btn-sm" th:onclick="'commentReply(' + ${page.id} + ')'">回复</button>
+                        <button type="button" class="layui-btn layui-btn-sm"
+                                th:onclick="'commentReply(' + ${page.id} + ')'">回复
+                        </button>
                     </div>
                     <div th:id="'replyComment' + ${page.id} + ''">
                         <div style="margin-top: 20px">
@@ -172,6 +136,7 @@
                             </div>
                         </div>
                     </div>
+                    <div id="demo8" style="text-align:center;"></div>
                 </div>
             </div>
         </div>

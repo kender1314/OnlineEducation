@@ -14,7 +14,7 @@
 <div style="width: 80%; margin-left: 10%; background-color: white; min-height: 500px; padding: 20px">
     <input type="hidden" id="userId" name="userId" th:value="${session.user.id}">
     <input type="hidden" id="seriesId" name="seriesId" th:value="${videoSeries.id}">
-    <h2 th:text="${videoSeries.seriesName}" style="margin-left: 100px"><span>视频系列上传-</span>JavaScript进阶篇</h2>
+    <h2 style="margin-left: 100px"><span>视频系列上传-"</span ><span th:text="${videoSeries.seriesName}">JavaScript进阶篇</span>"</h2>
     <div class="row" style="padding: 30px 100px; ">
         <div style="border: 1px solid #b9b9b9; padding: 10px">
             <div style="width: 100%">
@@ -39,30 +39,38 @@
                         <div class="layui-inline">
                             <label class="layui-form-label" style="font-size: 13px">类别</label>
                             <div class="layui-input-block">
-                                <select name="videoClassification"
-                                        id="videoClassification"
-                                        style="width: 150px; height: 30px; margin-top: 5px"
-                                        onchange="selectSeries()">
-                                    <option value="编程语言">编程语言</option>
-                                    <option value="云计算大数据">云计算大数据</option>
-                                    <option value="计算机基础">计算机基础</option>
-                                    <option value="移动开发">移动开发</option>
-                                    <option value="前沿技术">前沿技术</option>
-                                </select>
+<!--                                <select name="videoClassification"-->
+<!--                                        id="videoClassification"-->
+<!--                                        style="width: 150px; height: 30px; margin-top: 5px"-->
+<!--                                        onchange="selectSeries()">-->
+<!--                                    <option value="编程语言">编程语言</option>-->
+<!--                                    <option value="云计算大数据">云计算大数据</option>-->
+<!--                                    <option value="计算机基础">计算机基础</option>-->
+<!--                                    <option value="移动开发">移动开发</option>-->
+<!--                                    <option value="前沿技术">前沿技术</option>-->
+<!--                                </select>-->
+                                <input type="tel" id="videoClassification" name="videoClassification"
+                                       autocomplete="off"
+                                       class="layui-input" readonly
+                                       style="width: 150px; height: 30px; margin-top: 5px" th:value="${videoSeries.seriesClassification}">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label" style="font-size: 13px">二级类别</label>
                             <div class="layui-input-block">
-                                <select name="classificationLittle"
-                                        id="classificationLittle"
-                                        style="width: 150px; height: 30px; margin-top: 5px"
-                                        lay-verify="required" lay-search="">
-                                    <option value="Java">Java</option>
-                                    <option value="C++">C++</option>
-                                    <option value="Python">Python</option>
-                                    <option value="C">C</option>
-                                </select>
+<!--                                <select name="classificationLittle"-->
+<!--                                        id="classificationLittle"-->
+<!--                                        style="width: 150px; height: 30px; margin-top: 5px"-->
+<!--                                        lay-verify="required" lay-search="">-->
+<!--                                    <option value="Java">Java</option>-->
+<!--                                    <option value="C++">C++</option>-->
+<!--                                    <option value="Python">Python</option>-->
+<!--                                    <option value="C">C</option>-->
+<!--                                </select>-->
+                                <input type="tel" id="classificationLittle" name="classificationLittle"
+                                       autocomplete="off"
+                                       class="layui-input" readonly
+                                       style="width: 150px; height: 30px; margin-top: 5px" th:value="${videoSeries.classificationLittle}">
                             </div>
                         </div>
                     </div>

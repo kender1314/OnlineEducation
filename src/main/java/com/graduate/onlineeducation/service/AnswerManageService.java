@@ -17,6 +17,7 @@ import java.util.Map;
 public interface AnswerManageService {
     /**
      * 根据问题查找回复
+     *
      * @param params
      * @return
      */
@@ -24,13 +25,23 @@ public interface AnswerManageService {
 
     /**
      * 根据id删除问题回答
+     *
      * @param id
      * @return
      */
     boolean deleteAnswer(Integer id);
 
     /**
+     * 根据id删除问题回答(伪删除)
+     *
+     * @param id
+     * @return
+     */
+    boolean deleteAnswerByAnswerId(Integer id);
+
+    /**
      * 根据问题id删除问题回答
+     *
      * @param question
      * @return
      */
@@ -38,12 +49,14 @@ public interface AnswerManageService {
 
     /**
      * 评论点赞
+     *
      * @return
      */
-    boolean addAnswerLikeById(Integer answerId);
+    boolean addAnswerLikeById(Integer userId, Integer answerId);
 
     /**
      * 获取问题回复对话
+     *
      * @param params
      * @return
      */
@@ -51,6 +64,7 @@ public interface AnswerManageService {
 
     /**
      * 对问题新增回答
+     *
      * @param answer
      * @return
      */
@@ -58,6 +72,7 @@ public interface AnswerManageService {
 
     /**
      * 根据问题id获取评论的数量
+     *
      * @param questionId
      * @return
      */
@@ -65,6 +80,7 @@ public interface AnswerManageService {
 
     /**
      * 根据评论id获取回复该评论的评论的数量
+     *
      * @param answerId
      * @return
      */
@@ -72,8 +88,24 @@ public interface AnswerManageService {
 
     /**
      * 根据id获取回答
+     *
      * @param answerId
      * @return
      */
     Answer getAnswerById(Integer answerId);
+
+    /**
+     * 消息中心显示问题评论的回复
+     *
+     * @param params
+     * @return
+     */
+    Page<Map<String, Object>> getQuestionCommentReplyList(Map<String, Object> params);
+
+    /**
+     * 用户将该评论标记为已读
+     * @param answerId
+     * @return
+     */
+    boolean updateIsWatchByAnswerId(Integer answerId);
 }

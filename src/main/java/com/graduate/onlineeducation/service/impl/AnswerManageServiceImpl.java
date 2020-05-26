@@ -3,6 +3,7 @@ package com.graduate.onlineeducation.service.impl;
 import com.graduate.onlineeducation.entity.Answer;
 import com.graduate.onlineeducation.entity.DTO.AnswerDTO;
 import com.graduate.onlineeducation.repo.AnswerManageRepository;
+import com.graduate.onlineeducation.repo.CommentLikeRepository;
 import com.graduate.onlineeducation.service.AnswerManageService;
 import com.graduate.onlineeducation.support.PaginationBase;
 import org.slf4j.Logger;
@@ -27,10 +28,13 @@ import java.util.Map;
 public class AnswerManageServiceImpl implements AnswerManageService {
     @Autowired
     private AnswerManageRepository answerManageRepository;
+    @Autowired
+    private CommentLikeRepository commentLikeRepository;
     private static final Logger logger = LoggerFactory.getLogger(AnswerManageServiceImpl.class);
+
     @Override
     public Page<Answer> getAnswerListByQuestionId(Map<String, Object> params) {
-        Integer questionId = Integer.parseInt(params.get("questionId").toString()) ;
+        Integer questionId = Integer.parseInt(params.get("questionId").toString());
         return answerManageRepository.findAll(questionId, PaginationBase.getPagination(params));
     }
 
@@ -41,26 +45,39 @@ public class AnswerManageServiceImpl implements AnswerManageService {
     }
 
     @Override
+    public boolean deleteAnswerByAnswerId(Integer id) {
+        return answerManageRepository.deleteAnswerByAnswerId(id) == 1;
+    }
+
+    @Override
     public boolean deleteAnswerByQuestionId(Integer question) {
         answerManageRepository.deleteAnswerByQuestionId(question);
         return true;
     }
 
     @Override
-    public boolean addAnswerLikeById(Integer answerId) {
+    public boolean addAnswerLikeById(Integer userId, Integer answerId) {
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            commentLikeRepository.insertAnswer(userId, answerId, df.format(new Date()));
+        } catch (Exception e) {
+            logger.info("该用户已点赞，点赞失败->>>>" + e);
+            return false;
+        }
         return answerManageRepository.updateAnswerLikeById(answerId) == 1;
     }
 
     @Override
     public Page<Answer> getAnswerReply(Map<String, Object> params) {
-        Integer replyId = Integer.parseInt(params.get("replyId").toString()) ;
+        Integer replyId = Integer.parseInt(params.get("replyId").toString());
         return answerManageRepository.getAnswerReply(replyId, PaginationBase.getPagination(params));
     }
 
     @Override
     public boolean insertAnswer(AnswerDTO answer) {
         answer.setAnswerLike(0);
-
+        answer.setIsDelete(0);
+        answer.setAnswerIsWatch(0);
 //        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 //        String date = new Date(System.currentTimeMillis()).toString();
 //        try {
@@ -85,5 +102,16 @@ public class AnswerManageServiceImpl implements AnswerManageService {
     @Override
     public Answer getAnswerById(Integer answerId) {
         return answerManageRepository.getAnswerById(answerId);
+    }
+
+    @Override
+    public Page<Map<String, Object>> getQuestionCommentReplyList(Map<String, Object> params) {
+        Integer userId = Integer.parseInt(params.get("userId").toString()) ;
+        return answerManageRepository.getQuestionCommentReplyList(userId, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public boolean updateIsWatchByAnswerId(Integer answerId) {
+        return answerManageRepository.updateIsWatchByAnswerId(answerId) ==1;
     }
 }

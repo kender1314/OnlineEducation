@@ -38,6 +38,8 @@ public class CommentDO {
 
     private Integer replyId;
 
+    private Integer commentIsWatch;
+
     public Integer getId() {
         return id;
     }
@@ -102,17 +104,26 @@ public class CommentDO {
         this.replyId = replyId;
     }
 
+    public Integer getCommentIsWatch() {
+        return commentIsWatch;
+    }
+
+    public void setCommentIsWatch(Integer commentIsWatch) {
+        this.commentIsWatch = commentIsWatch;
+    }
+
     @Override
     public String toString() {
         return "CommentDO{" +
                 "id=" + id +
                 ", commentDate='" + commentDate + '\'' +
                 ", commentContent='" + commentContent + '\'' +
-                ", commentLike='" + commentLike + '\'' +
+                ", commentLike=" + commentLike +
                 ", user=" + user +
                 ", video=" + video +
                 ", isDelete=" + isDelete +
                 ", replyId=" + replyId +
+                ", commentIsWatch=" + commentIsWatch +
                 '}';
     }
 }

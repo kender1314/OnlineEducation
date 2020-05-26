@@ -59,6 +59,9 @@ public class AnswerDTO implements Serializable {
     @Column(name = "question_id")
     private Integer questionId;
 
+    @Column(name = "answer_is_watch")
+    private Integer answerIsWatch;
+
     public Integer getId() {
         return id;
     }
@@ -123,6 +126,14 @@ public class AnswerDTO implements Serializable {
         this.isDelete = isDelete;
     }
 
+    public Integer getAnswerIsWatch() {
+        return answerIsWatch;
+    }
+
+    public void setAnswerIsWatch(Integer answerIsWatch) {
+        this.answerIsWatch = answerIsWatch;
+    }
+
     @Override
     public String toString() {
         return "AnswerDTO{" +
@@ -134,6 +145,7 @@ public class AnswerDTO implements Serializable {
                 ", isDelete=" + isDelete +
                 ", answerReplyId=" + answerReplyId +
                 ", questionId=" + questionId +
+                ", answerIsWatch=" + answerIsWatch +
                 '}';
     }
 }

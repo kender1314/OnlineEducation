@@ -57,6 +57,9 @@ public class Comment implements Serializable {
     @Column(name = "comment_is_delete")
     private Integer isDelete;
 
+    @Column(name = "comment_is_watch")
+    private Integer commentIsWatch;
+
     public Integer getId() {
         return id;
     }
@@ -121,17 +124,26 @@ public class Comment implements Serializable {
         this.replyId = replyId;
     }
 
+    public Integer getCommentIsWatch() {
+        return commentIsWatch;
+    }
+
+    public void setCommentIsWatch(Integer commentIsWatch) {
+        this.commentIsWatch = commentIsWatch;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
                 ", commentDate=" + commentDate +
                 ", commentContent='" + commentContent + '\'' +
-                ", commentLike='" + commentLike + '\'' +
+                ", commentLike=" + commentLike +
                 ", user=" + user +
                 ", video=" + video +
                 ", replyId=" + replyId +
                 ", isDelete=" + isDelete +
+                ", commentIsWatch=" + commentIsWatch +
                 '}';
     }
 }

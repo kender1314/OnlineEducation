@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>消息中心</title>
+    <!--Layui-->
+    <link rel="stylesheet" href="../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/news.css">
+</head>
+<body>
+
+<div class="navigation">
+</div>
+<ul class="layui-nav layui-nav-tree layui-inline my-ul" lay-filter="demo">
+    <a href="javascript:void(0);" onclick="fun(1)">
+        <li class="my-li"><span>视频回复</span></li>
+    </a>
+    <a href="javascript:void(0);" onclick="fun(2)">
+        <li class="my-li"><span>收到的赞</span></li>
+    </a>
+    <a href="javascript:void(0);" onclick="fun(3)">
+        <li class="my-li"><span>系统通知</span></li>
+    </a>
+    <a href="javascript:void(0);" onclick="fun(4)">
+        <li class="my-li"><span>问题回复</span></li>
+    </a>
+</ul>
+<div class="my-content">
+    <input type="hidden" id="userId" name="userId" th:value="${session.user.id}">
+    <div class="my-content-like" id="my-content-like">
+        <div class="comment" id="commentLike">
+            <div class="comment-catalog">
+                <h2>收到的赞</h2>
+            </div>
+            <div class="comment-content" th:each="page : ${pages}">
+                <div class="comment-content-img">
+                    <a href="#"><img style="width: 30px; height: 30px;" src="../images/users.png"></a>
+                </div>
+                <div class="comment-content-user">
+                    <a href="#">
+                        <b>
+                            <span class="comment-content-user-username" th:text="${page.userName}">科学声音</span>
+                        </b>
+                    </a>
+                    <span class="comment-content-response"><span style="color: #00a65a">赞了我。</span>
+                    </span>
+                    <br>
+                    <span class="comment-content-user-time" th:text="${page.likeDate}">2019年3月19日&nbsp;09:18</span>
+                </div>
+                <div class="comment-content-remark">
+                        <span style="font-size: 13px" th:text="${page.commentContent}">
+                            不科学，1.百度了一下，没找到全国有机大米促进会，2.据研究，没有表明研究出处，
+                            3.被长期赞美大米比普通大米更有益健康，违反常识，没有科学依据，4.95％未标明
+                        </span>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="text-align:center; width: 100%">
+        <table style="margin-left: 30%; margin-top: 20px">
+            <tr>
+                <td>共<span th:text="${totalElements}">1</span>条&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td><a th:href="@{/userUrl/newLike(pageNum=1, id=${session.user.id})}">
+                    <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">首页</button>
+                </a></td>
+                <td th:switch="${pageNum}">
+                    <p th:case="1"><a th:href="@{/userUrl/newLike(pageNum=1, id=${session.user.id})}">
+                        <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">上一页</button>
+                    </a></p>
+                    <p th:case="*"><a
+                            th:href="@{/userUrl/newLike(pageNum=${pageNum-1}, id=${session.user.id})}">
+                        <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">上一页</button>
+                    </a></p>
+                </td>
+                <td th:switch="${pageNum}">
+                    <p th:case="${totalPages}"><a
+                            th:href="@{/userUrl/newLike(pageNum=${totalPages}, id=${session.user.id})}">
+                        <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">下一页</button>
+                    </a></p>
+                    <p th:case="*"><a
+                            th:href="@{/userUrl/newLike(pageNum=${pageNum+1}, id=${session.user.id})}">
+                        <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">下一页</button>
+                    </a></p>
+                </td>
+                <td><a th:href="@{/userUrl/newLike(pageNum=${totalPages}, id=${session.user.id})}">
+                    <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">尾页</button>
+                </a></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;共<span th:text="${totalPages}">1</span>页</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;第<span th:text="${pageNum}">1</span>页</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div class="my-footer">
+</div>
+</body>
+</html>
+<script src="../lib/jquery-2.1.4/jquery.min.js"></script>
+<script src="../lib/layui/layui.js"></script>
+<!--json-->
+<script src="../lib/json/json2.js" type="text/javascript"></script>
+<script src="../js/common.js"></script>
+<script src="../lib/jquery-2.1.4/jquery.form.js"></script>
+<script src="../js/news.js"></script>
+
+

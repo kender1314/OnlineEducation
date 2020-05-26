@@ -59,11 +59,11 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
     Integer getCountByQuery(String query);
 
     @Override
-    @Query(value = "select * from gp_video where series_id = ?1 and video_status = 1 and video_is_delete = 0", nativeQuery = true)
+    @Query(value = "select * from gp_video where series_id = ?1 and video_status = 1 and video_is_delete = 0  order by video_number asc", nativeQuery = true)
     Page<Video> getVideoBySeriesId(Integer seriesId, Pageable pageable);
 
     @Override
-    @Query(value = "select * from gp_video where video_classification = ?1 and video_status = 1 and ISNULL(series_id)", nativeQuery = true)
+    @Query(value = "select * from gp_video where video_classification = ?1 and video_status = 1 and ISNULL(series_id) and video_is_delete = 0", nativeQuery = true)
     Page<Video> searchByClassification(String query, Pageable pageable);
 
     @Override
@@ -74,11 +74,11 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
     Integer getCountByClassification(String videoClassification);
 
     @Override
-    @Query(value = "select count(*) from gp_video where video_classification_little = ?1 and video_status = 1 and ISNULL(series_id)", nativeQuery = true)
+    @Query(value = "select count(*) from gp_video where video_classification_little = ?1 and video_status = 1 and ISNULL(series_id) and video_is_delete = 0 ", nativeQuery = true)
     Integer getCountByLittleClassification(String classificationLittle);
 
     @Override
-    @Query(value = "select * from gp_video where video_classification_little = ?1 and video_status = 1 and ISNULL(series_id)", nativeQuery = true)
+    @Query(value = "select * from gp_video where video_classification_little = ?1 and video_status = 1 and ISNULL(series_id) and video_is_delete = 0", nativeQuery = true)
     Page<Video> searchByLittleClassification(String query, Pageable pageable);
 
     @Override
@@ -92,4 +92,8 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
     @Override
     @Query(value = "select * from gp_video where video_id = ?1 and video_is_delete = 0", nativeQuery = true)
     Video getVideoByVideoId(Integer id);
+
+    @Override
+    @Query(value = "select min(video_id) from gp_video where series_id = ?1 and video_is_delete = 0", nativeQuery = true)
+    Integer getMinVideoIdBySeries(Integer series);
 }

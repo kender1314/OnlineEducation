@@ -117,4 +117,18 @@ public interface BookmarkManageService {
      * @return
      */
     boolean deleteBookmarkByQuestionId(Integer id);
+
+    /**
+     * 统计视频被收藏的次数
+     * @param id
+     * @return
+     */
+    Integer getCountBookmarkByVideoId(Integer id);
+
+    /**
+     * 统计问题被收藏的次数
+     * @param id
+     * @return
+     */
+    Integer getCountBookmarkByQuestionId(Integer id);
 }

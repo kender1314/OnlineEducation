@@ -62,115 +62,6 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
     var tree = layui.tree
         , util = layui.util;
 
-    //普通图片上传
-    var uploadInst = upload.render({
-        elem: '#test1'
-        , url: 'https://httpbin.org/post' //改成您自己的上传接口
-        , before: function (obj) {
-            //预读本地文件示例，不支持ie8
-            obj.preview(function (index, file, result) {
-                $('#demo1').attr('src', result); //图片链接（base64）
-            });
-        }
-        , done: function (res) {
-            //如果上传失败
-            if (res.code > 0) {
-                return layer.msg('上传失败');
-            }
-            //上传成功
-        }
-        , error: function () {
-            //演示失败状态，并实现重传
-            var demoText = $('#demoText');
-            demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-            demoText.find('.demo-reload').on('click', function () {
-                uploadInst.upload();
-            });
-        }
-    });
-
-    //普通图片上传
-    var uploadInst = upload.render({
-        elem: '#test2'
-        , url: 'https://httpbin.org/post' //改成您自己的上传接口
-        , before: function (obj) {
-            //预读本地文件示例，不支持ie8
-            obj.preview(function (index, file, result) {
-                $('#demo2').attr('src', result); //图片链接（base64）
-            });
-        }
-        , done: function (res) {
-            //如果上传失败
-            if (res.code > 0) {
-                return layer.msg('上传失败');
-            }
-            //上传成功
-        }
-        , error: function () {
-            //演示失败状态，并实现重传
-            var demoText = $('#demoText2');
-            demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-            demoText.find('.demo-reload').on('click', function () {
-                uploadInst.upload();
-            });
-        }
-    });
-
-    //多文件列表示例
-    var demoListView = $('#demoList')
-        , uploadListIns = upload.render({
-        elem: '#testList'
-        , url: 'https://httpbin.org/post' //改成您自己的上传接口
-        , accept: 'video'
-        , multiple: true
-        , auto: false
-        , bindAction: '#testListAction'
-        , choose: function (obj) {
-            var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
-            //读取本地文件
-            obj.preview(function (index, file, result) {
-                var tr = $(['<tr id="upload-' + index + '">'
-                    , '<td>' + file.name + '</td>'
-                    , '<td>' + (file.size / 1024).toFixed(1) + 'kb</td>'
-                    , '<td>等待上传</td>'
-                    , '<td>'
-                    , '<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
-                    , '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
-                    , '</td>'
-                    , '</tr>'].join(''));
-
-                //单个重传
-                tr.find('.demo-reload').on('click', function () {
-                    obj.upload(index, file);
-                });
-
-                //删除
-                tr.find('.demo-delete').on('click', function () {
-                    delete files[index]; //删除对应的文件
-                    tr.remove();
-                    uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
-                });
-
-                demoListView.append(tr);
-            });
-        }
-        , done: function (res, index, upload) {
-            if (res.files.file) { //上传成功
-                var tr = demoListView.find('tr#upload-' + index)
-                    , tds = tr.children();
-                tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
-                tds.eq(3).html(''); //清空操作
-                return delete this.files[index]; //删除文件队列已经上传成功的文件
-            }
-            this.error(index, upload);
-        }
-        , error: function (index, upload) {
-            var tr = demoListView.find('tr#upload-' + index)
-                , tds = tr.children();
-            tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
-            tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
-        }
-    });
 
 //触发事件
     var active = {
@@ -368,9 +259,10 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 ,
                 id: 'edit-introduce' + type //防止重复弹出
                 ,
+                area: ['600px', '270px'],
                 content: '  <div style="margin-top: 20px; margin-right: 40px ">\n' +
                     '    <label class="layui-form-label">个人简介</label>\n' +
-                    '    <div style="margin-left: 35px; width: 300px; ">\n' +
+                    '    <div style="margin-left: 35px; width: 500px; ">\n' +
                     '      <textarea placeholder="请输入内容"  name="introduce" id="introduce" class="layui-textarea"></textarea>\n' +
                     '    </div>\n' +
                     '  </div>'
@@ -511,6 +403,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     //关闭弹框
                     layer.close(index);
                     layer.msg("更新成功", {icon: 6});
+                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                        window.location.reload();//页面刷新
+                    }, 1000);
                 } else {
                     layer.msg("更新失败", {icon: 5});
                 }
@@ -2074,7 +1969,7 @@ function showSeriesByOrder(pageNo, pageSize, userId) {
                         "                                        </div>\n" +
                         "                                        <div class=\"layui-card-body\">\n" +
                         "                                            <button type=\"button\" class=\"layui-btn layui-btn-sm layui-btn-radius\"\n" +
-                        "                                                    style=\"margin-left: 300px\">继续学习\n" +
+                        "                                                    style=\"margin-left: 300px\" onclick='playVideoBySeries(" + data.data.content[i].videoSeries.id + ")'>继续学习\n" +
                         "                                            </button>\n" +
                         "                                            <button type=\"button\" class=\"layui-btn layui-btn-sm layui-btn-danger layui-btn-radius\"\n" +
                         "                                                    style=\"margin-left: 50px\">删除课程\n" +
@@ -2088,6 +1983,10 @@ function showSeriesByOrder(pageNo, pageSize, userId) {
 
         }
     });
+}
+
+function playVideoBySeries(seriesId) {
+
 }
 
 function deleteOrder(orderId) {

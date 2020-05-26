@@ -128,4 +128,10 @@ public class VideoManageServiceImpl implements VideoManageService {
         Integer userId = Integer.parseInt(params.get("userId").toString());
         return videoManageRepository.getVideoByUserId(userId, PaginationBase.getPagination(params));
     }
+
+
+    @Override
+    public Integer getMinVideoIdBySeries(Integer series) {
+        return videoManageRepository.getMinVideoIdBySeries(series);
+    }
 }

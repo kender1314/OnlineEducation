@@ -42,6 +42,12 @@ public class AnswerManageController {
     }
 
     @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/deleteAnswerByAnswerId")
+    public Result<Object> deleteAnswerByAnswerId(Integer id) {
+        return ResultUtils.success(answerManageService.deleteAnswerByAnswerId(id));
+    }
+
+    @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/getAnswerReply")
     public Result<Object> getAnswerReply(@RequestParam Map<String, Object> params) {
         Page<Answer> answers = answerManageService.getAnswerReply(params);
@@ -56,13 +62,13 @@ public class AnswerManageController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/getCountAnswerByQuestionId")
-    public Result<Object> getCountAnswerByQuestionId(Integer questionId){
+    public Result<Object> getCountAnswerByQuestionId(Integer questionId) {
         return ResultUtils.success(answerManageService.getCountAnswerByQuestionId(questionId));
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/getCountReplyByAnswerId")
-    public Result<Object> getCountReplyByAnswerId(Integer answerId){
+    public Result<Object> getCountReplyByAnswerId(Integer answerId) {
         return ResultUtils.success(answerManageService.getCountReplyByAnswerId(answerId));
     }
 
@@ -74,13 +80,19 @@ public class AnswerManageController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/addAnswerLikeById")
-    public Result<Object> addAnswerLikeById(Integer answerId) {
-        return ResultUtils.success(answerManageService.addAnswerLikeById(answerId));
+    public Result<Object> addAnswerLikeById(Integer answerId, Integer userId) {
+        return ResultUtils.success(answerManageService.addAnswerLikeById(userId, answerId));
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/getAnswerById")
     public Result<Object> getAnswerById(Integer answerId) {
         return ResultUtils.success(answerManageService.getAnswerById(answerId));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/updateIsWatchByAnswerId")
+    public Result<Object> updateIsWatchByAnswerId(Integer answerId) {
+        return ResultUtils.success(answerManageService.updateIsWatchByAnswerId(answerId));
     }
 }

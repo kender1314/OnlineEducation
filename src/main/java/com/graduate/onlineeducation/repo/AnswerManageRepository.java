@@ -8,6 +8,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author hejiang
@@ -77,4 +78,27 @@ public interface AnswerManageRepository extends PagingAndSortingRepository<Answe
      * @return
      */
     Answer getAnswerById(Integer answerId);
+
+    /**
+     * 消息中心显示问题评论的回复
+     * @param userId
+     * @param pageable
+     * @return
+     */
+    Page<Map<String, Object>> getQuestionCommentReplyList(Integer userId, Pageable pageable);
+
+    /**
+     * 根据id删除问题回答(伪删除)
+     *
+     * @param id
+     * @return
+     */
+    Integer deleteAnswerByAnswerId(Integer id);
+
+    /**
+     * 用户将该评论标记为已读
+     * @param answerId
+     * @return
+     */
+    Integer updateIsWatchByAnswerId(Integer answerId);
 }

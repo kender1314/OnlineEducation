@@ -2,6 +2,7 @@ package com.graduate.onlineeducation.support;
 
 import com.graduate.onlineeducation.entity.Answer;
 import com.graduate.onlineeducation.entity.Comment;
+import com.graduate.onlineeducation.entity.DO.LikeNews;
 import com.graduate.onlineeducation.entity.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
@@ -40,6 +41,28 @@ public class ThymeleafSupport {
     }
 
     public static void findCommentPage(Page<Comment> pages, String pageNum, Model model) {
+        if (pageNum == null) {
+            pageNum = "1";
+        }
+        int pagenum = Integer.parseInt(pageNum);
+        model.addAttribute("page", pages);
+        model.addAttribute("pageNum", pagenum);
+        model.addAttribute("totalPages", pages.getTotalPages());
+        model.addAttribute("totalElements", pages.getTotalElements());
+    }
+
+    public static void findMapPage(Page<Map<String, Object>> pages, String pageNum, Model model) {
+        if (pageNum == null) {
+            pageNum = "1";
+        }
+        int pagenum = Integer.parseInt(pageNum);
+        model.addAttribute("page", pages);
+        model.addAttribute("pageNum", pagenum);
+        model.addAttribute("totalPages", pages.getTotalPages());
+        model.addAttribute("totalElements", pages.getTotalElements());
+    }
+
+    public static void findLikeNewsPage(Page<LikeNews> pages, String pageNum, Model model) {
         if (pageNum == null) {
             pageNum = "1";
         }

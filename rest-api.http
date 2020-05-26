@@ -5,7 +5,7 @@ Accept-Language: zh_CN
 Connection: keep-alive
 Content-Type: application/json
 
-{"pageSize": 10, "page": 1, "sortKey": "", "limit": 10}
+{"pageSize": 10, "page": 1, "sortKey": "playbackVolume", "limit": 10, "sortDesc": true}
 
 ###
 POST http://localhost:8080/user/register?userName=aaaaa&userPassword=111111&userMail=18715770814@163.com

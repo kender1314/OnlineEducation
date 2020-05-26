@@ -123,4 +123,14 @@ public class BookmarkManageServiceImpl implements BookmarkManageService {
         return bookmarkManageRepository.deleteBookmarkByQuestionId(id);
     }
 
+    @Override
+    public Integer getCountBookmarkByVideoId(Integer id) {
+        return bookmarkManageRepository.getCountBookmarkByVideoId(id);
+    }
+
+    @Override
+    public Integer getCountBookmarkByQuestionId(Integer id) {
+        return bookmarkManageRepository.getCountBookmarkByQuestionId(id);
+    }
+
 }

@@ -22,6 +22,23 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             }
         }
     });
+    /**
+     * 获取收藏量
+     */
+    $.ajax({
+        url: "/bookmarkManage/getCountBookmarkByQuestionId?id=" + questionId,
+        type: "post",
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $("#countCollectQuestion").empty();
+            if (data.data !== null) {
+                var appendhtml = "<span style=\"font-size: 12px; color: #999\">" + data.data + "</span>";
+                $("#countCollectQuestion").append(appendhtml);
+            }
+        }
+    });
 
     $('#answer-submit').on('click', function () {
         var answerContent = document.getElementById("answer-content").value;
@@ -112,7 +129,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
 
     window.addLike = function (id) {
         $.ajax({
-            url: "/answerManage/addAnswerLikeById?answerId=" + id,
+            url: "/answerManage/addAnswerLikeById?answerId=" + id + "&userId=" + userId,
             type: "post",
             dataType: "json",
             async: false,
@@ -125,7 +142,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                         window.location.reload();//页面刷新
                     }, 1000);
                 } else {
-                    layer.msg("点赞失败", {icon: 6});
+                    layer.msg("您已点赞过该评论，请勿重复点赞！", {icon: 5});
                 }
             }
         })

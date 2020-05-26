@@ -140,4 +140,11 @@ public interface VideoManageService {
      */
     Page<Video> getVideoByUserId(Map<String, Object> params);
 
+    /**
+     * 根据系列编号，获取系列中编号最小的视频
+     * @param series
+     * @return
+     */
+    Integer getMinVideoIdBySeries(Integer series);
+
 }

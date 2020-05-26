@@ -240,7 +240,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 },
             });
         } else if (obj.event === 'detail') {
-            window.location.href ="/userUrl/playSeries?videoId=" + data.id + "&seriesId=" + seriesId;
+            window.location.href ="/userUrl/playSeries?videoId=" + data.id + "&seriesId=" + seriesId + "&pageNum=1";
         }
     });
 

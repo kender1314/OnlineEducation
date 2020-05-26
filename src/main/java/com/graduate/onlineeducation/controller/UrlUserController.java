@@ -4,6 +4,7 @@ import com.graduate.onlineeducation.autoconfigure.annotations.InterceptUser;
 import com.graduate.onlineeducation.entity.*;
 import com.graduate.onlineeducation.entity.DO.AnswerDO;
 import com.graduate.onlineeducation.entity.DO.CommentDO;
+import com.graduate.onlineeducation.entity.DO.LikeNews;
 import com.graduate.onlineeducation.service.*;
 import com.graduate.onlineeducation.support.ThymeleafSupport;
 import org.slf4j.Logger;
@@ -94,11 +95,36 @@ public class UrlUserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/playSeries")
-    public String playSeries(Integer videoId, Integer seriesId, Model model) {
+    public String playSeries(Integer videoId, Integer seriesId,
+                             @RequestParam(value = "pageNum", defaultValue = "1") String pageNo,  Model model) {
+        return getSeriesList(seriesId, pageNo, model, videoId);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/playSeriesBySeries")
+    public String playSeriesBySeries(Integer seriesId, @RequestParam(value = "pageNum", defaultValue = "1") String pageNo, Model model) {
+        Integer videoId = videoManageService.getMinVideoIdBySeries(seriesId);
+        return getSeriesList(seriesId, pageNo, model, videoId);
+    }
+
+    private String getSeriesList(Integer seriesId, String pageNo, Model model, Integer videoId) {
         Video video = videoManageService.getVideoById(videoId);
         model.addAttribute("video", video);
         VideoSeries videoSeries = videoSeriesManageService.getVideoSeriesById(seriesId);
         model.addAttribute("videoSeries", videoSeries);
+        Map<String, Object> params = new HashMap<>(10);
+        params.put("limit", 10);
+        params.put("videoId", videoId);
+        params.put("page", pageNo);
+
+        Map<String, Object> params1 = new HashMap<>(10);
+        params1.put("limit", 10);
+        params1.put("seriesId", seriesId);
+        params1.put("page", pageNo);
+        Page<Video> pageVideoBySeriesId = videoManageService.getVideoBySeriesId(params1);
+        Page<Comment> pages = commentManageService.getCommentByVideoId(params);
+        List<CommentDO> list = getCommentDo(pageNo, model, pages);
+        model.addAttribute("pages", list);
+        model.addAttribute("pageVideo", pageVideoBySeriesId);
         return "/views/play_series";
     }
 
@@ -113,7 +139,111 @@ public class UrlUserController {
         params.put("page", pageNo);
 
         Page<Comment> pages = commentManageService.getCommentByVideoId(params);
-        ThymeleafSupport.findCommentPage(pages, pageNo, model);
+        List<CommentDO> list = getCommentDo(pageNo, model, pages);
+        model.addAttribute("pages", list);
+        return "/views/play_video";
+    }
+
+    /**
+     * 显示系统通知
+     * @param id userId
+     * @param pageNum
+     * @param model
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/newNotice")
+    public String newNotice(Integer id, @RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model) {
+        Map<String, Object> params = new HashMap<>(10);
+        params.put("limit", 10);
+        params.put("userId", id);
+        params.put("page", pageNum);
+
+        Page<Comment> pages = commentManageService.getSystemNoticeList(params);
+        List<CommentDO> list = getCommentDo(pageNum, model, pages);
+        model.addAttribute("pages", list);
+        return "/views/news-notice";
+    }
+
+    /**
+     * 消息中心显示视频评论的回复
+     * @param id userId
+     * @param pageNum
+     * @param model
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/newVideo")
+    public String newVideo(Integer id, @RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model) {
+        Map<String, Object> params = new HashMap<>(10);
+        params.put("limit", 10);
+        params.put("userId", id);
+        params.put("page", pageNum);
+
+        Page<Map<String, Object>> pages = commentManageService.getVideoCommentReplyList(params);
+        ThymeleafSupport.findMapPage(pages, pageNum, model);
+
+//        List<CommentDO> list = new ArrayList<>();
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//        for (Map<String, Object> map : pages) {
+//            String formatStr = formatter.format(map.get("comment_date"));
+//            map.put("comment_date", formatStr);
+//            pages.
+//        }
+        model.addAttribute("pages", pages);
+        return "/views/news-video";
+    }
+
+    /**
+     * 消息中心显示问题评论的回复
+     * @param id userId
+     * @param pageNum
+     * @param model
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/newQuestion")
+    public String newQuestion(Integer id, @RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model) {
+        Map<String, Object> params = new HashMap<>(10);
+        params.put("limit", 10);
+        params.put("userId", id);
+        params.put("page", pageNum);
+
+        Page<Map<String, Object>> pages = answerManageService.getQuestionCommentReplyList(params);
+        ThymeleafSupport.findMapPage(pages, pageNum, model);
+
+//        List<CommentDO> list = new ArrayList<>();
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//        for (Map<String, Object> map : pages) {
+//            String formatStr = formatter.format(map.get("comment_date"));
+//            map.put("comment_date", formatStr);
+//            pages.
+//        }
+        model.addAttribute("pages", pages);
+        return "/views/news-question";
+    }
+
+    /**
+     * 显示评论点赞消息
+     * @param id userId
+     * @param pageNum
+     * @param model
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/newLike")
+    public String newLike(Integer id, @RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model) {
+        Map<String, Object> params = new HashMap<>(10);
+        params.put("limit", 10);
+        params.put("userId", id);
+        params.put("page", pageNum);
+
+        Page<LikeNews> pages = commentManageService.getLikeNewsListByUserId(params);
+        ThymeleafSupport.findLikeNewsPage(pages, pageNum, model);
+
+        model.addAttribute("pages", pages);
+        return "/views/news-like";
+    }
+
+
+    private List<CommentDO> getCommentDo(String pageNum, Model model, Page<Comment> pages) {
+        ThymeleafSupport.findCommentPage(pages, pageNum, model);
 
         List<CommentDO> list = new ArrayList<>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -128,12 +258,55 @@ public class UrlUserController {
             commentDO.setUser(comment.getUser());
             commentDO.setVideo(comment.getVideo());
             commentDO.setReplyId(comment.getReplyId());
+            commentDO.setCommentIsWatch(comment.getCommentIsWatch());
 
             list.add(commentDO);
         }
-        model.addAttribute("pages", list);
-        return "/views/play_video";
+        return list;
     }
+
+//    /**
+//     *
+//     * @param id  用户id
+//     * @param pageNo
+//     * @param model
+//     * @return
+//     */
+//    @RequestMapping(method = RequestMethod.GET, value = "/news")
+//    public String news(Integer id, @RequestParam(value = "pageNum", defaultValue = "1") String pageNo, Model model) {
+//
+//        List<Comment> commentList = commentManageService.getCommentListByUserId(id);
+//
+//        for (Comment comment : commentList) {
+//            Map<String, Object> params = new HashMap<>(10);
+//            params.put("limit", 10);
+//            params.put("replyId", comment.getId());
+//            params.put("page", pageNo);
+//            Page<Comment> answers = commentManageService.getCommentReply(params);
+//        }
+//
+//        Page<Comment> pages = commentManageService.getCommentByVideoId(params);
+//        ThymeleafSupport.findCommentPage(pages, pageNo, model);
+//
+//        List<CommentDO> list = new ArrayList<>();
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//        for (Comment comment : pages) {
+//            String formatStr = formatter.format(comment.getCommentDate());
+//            CommentDO commentDO = new CommentDO();
+//            commentDO.setId(comment.getId());
+//            commentDO.setCommentContent(comment.getCommentContent());
+//            commentDO.setCommentDate(formatStr);
+//            commentDO.setCommentLike(comment.getCommentLike());
+//            commentDO.setIsDelete(comment.getIsDelete());
+//            commentDO.setUser(comment.getUser());
+//            commentDO.setVideo(comment.getVideo());
+//            commentDO.setReplyId(comment.getReplyId());
+//
+//            list.add(commentDO);
+//        }
+//        model.addAttribute("pages", list);
+//        return "/views/play_video";
+//    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/search")
     public String search(String query, Model model) {
@@ -153,16 +326,16 @@ public class UrlUserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/question")
-    public String question(Integer id, @RequestParam(value = "pageNum", defaultValue = "1") String pageNo, Model model) {
+    public String question(Integer id, @RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model) {
         Question question = questionManageService.getQuestionById(id);
         model.addAttribute("question", question);
 
         Map<String, Object> params = new HashMap<>(10);
         params.put("limit", 10);
         params.put("questionId", id);
-        params.put("page", pageNo);
+        params.put("page", pageNum);
         Page<Answer> pages = answerManageService.getAnswerListByQuestionId(params);
-        ThymeleafSupport.findAnswerPage(pages, pageNo, model);
+        ThymeleafSupport.findAnswerPage(pages, pageNum, model);
         List<AnswerDO> list = new ArrayList<>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         for (Answer answer : pages) {

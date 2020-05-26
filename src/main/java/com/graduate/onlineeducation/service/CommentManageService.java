@@ -1,9 +1,11 @@
 package com.graduate.onlineeducation.service;
 
 import com.graduate.onlineeducation.entity.Comment;
+import com.graduate.onlineeducation.entity.DO.LikeNews;
 import com.graduate.onlineeducation.entity.DTO.CommentDTO;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,11 +31,25 @@ public interface CommentManageService {
     boolean deleteComment(Integer id);
 
     /**
+     * 删除评论（伪删除）
+     * @param id
+     * @return
+     */
+    boolean deleteCommentByCommentId(Integer id);
+
+    /**
      * 视频评论对话
      * @param params
      * @return
      */
     Page<Comment> getCommentReply(Map<String, Object> params);
+
+    /**
+     * 视频评论对话数量
+     * @param commentId
+     * @return
+     */
+    Integer getCountReplyByCommentId(Integer commentId);
 
     /**
      * 根据视频id获取评论
@@ -54,5 +70,47 @@ public interface CommentManageService {
      * @param commentId
      * @return
      */
-    boolean addCommentLikeById(Integer commentId);
+    boolean addCommentLikeById(Integer userId, Integer commentId);
+
+    /**
+     * 根据用户id获取评论列表
+     * @param userId
+     * @return
+     */
+    List<Comment> getCommentListByUserId(Integer userId);
+
+    /**
+     * 获取系统通知
+     * @param params
+     * @return
+     */
+    Page<Comment> getSystemNoticeList(Map<String, Object> params);
+
+    /**
+     * 消息中心显示视频评论的回复
+     * @param params
+     * @return
+     */
+    Page<Map<String, Object>> getVideoCommentReplyList(Map<String, Object> params);
+
+    /**
+     * 用户将该评论标记为已读
+     * @param commentId
+     * @return
+     */
+    boolean updateIsWatchByCommentId(Integer commentId);
+
+    /**
+     * 获取评论点赞信息
+     * @param params
+     * @return
+     */
+    Page<LikeNews> getLikeNewsListByUserId(Map<String, Object> params);
+
+    /**
+     * 根据评论id获取评论信息
+     * @param commentId
+     * @return
+     */
+    Comment getCommentByCommentId(Integer commentId);
 }

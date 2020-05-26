@@ -92,4 +92,12 @@ public interface JpaBookmarkManageRepository extends BookmarkManageRepository {
     @Transactional
     @Query(value = "DELETE FROM gp_bookmark where question_id = ?1", nativeQuery = true)
     boolean deleteBookmarkByQuestionId(Integer id);
+
+    @Override
+    @Query(value = "select count(*) from gp_bookmark where video_id = ?1 and bookmark_is_delete = 0", nativeQuery = true)
+    Integer getCountBookmarkByVideoId(Integer id);
+
+    @Override
+    @Query(value = "select count(*) from gp_bookmark where question_id = ?1 and bookmark_is_delete = 0", nativeQuery = true)
+    Integer getCountBookmarkByQuestionId(Integer id);
 }

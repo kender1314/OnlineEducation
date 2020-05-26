@@ -56,8 +56,10 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
             success: function (data) {
                 if (data.data === true) {
                     //关闭弹框
-                    layer.msg("添加成功", {icon: 6});
-                    window.location.href = "/userUrl/showSeriesList?id=" + seriesId;
+                    layer.msg("上传成功，等待管理员审核，返回上一页", {icon: 6});
+                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                        window.location.href = "/userUrl/showSeriesList?id=" + seriesId;
+                    }, 2000);
                 } else {
                     layer.msg("添加失败", {icon: 5});
                 }

@@ -29,6 +29,11 @@
                     </div>
                 </div>
                 <div style="text-align: right">
+                    <span style="font-size: 10px; color: #999;">收藏量：</span>
+                    <a href="#">
+                        <img src="../images/collect.png" style="width: 16px; height: 16px"/>
+                    </a>
+                    <span style="font-size: 10px; color:#999; margin-right: 20px" id="countCollectQuestion"></span>
                     <img src="../images/integral.png" style="width: 16px; height: 16px"/>
                     <span style="font-size: 10px; color:#999; margin-right: 20px"
                           th:text="${question.questionIntegral}"></span>
@@ -64,21 +69,46 @@
                             </div>
                             <div style="padding-bottom: 20px">
                                 <div style="margin-left: 15px">
-                                    <span style="font-size: 10px; color: #999">时间：<span
-                                            th:text="${page.answerDate}" th:id="'answerDateA' + ${page.id} + ''">2020-02-01</span></span>
-                                    <a style="margin-left: 20px" href="javascript:void(0);"
-                                       th:onclick="'addLike(' + ${page.id} + ')'">
-                                        <img src="../images/like.png" height="15" width="15"/></a>
-                                    <span style="font-size: 14px; color: #999" th:text="${page.answerLike}"></span>
-                                    <a href="javascript:void(0);" th:onclick="'getReplyListCount(' + ${page.id} + ')'"><img src="../images/comment.png" height="15" width="15"
-                                                    style="margin-left: 20px"/></a>
-                                    <div style="min-height: 50px; margin-left: 50px;margin-top: 10px; display: none" th:id="'reply' + ${page.id} + ''">
+                                    <table>
+                                        <tr>
+                                            <td width="100">
+                                                <span style="font-size: 10px; color: #999">时间：
+                                                    <span th:text="${page.answerDate}"
+                                                          th:id="'answerDateA' + ${page.id} + ''">2020-02-01</span>
+                                                </span>
+                                            </td>
+                                            <td width="70">
+                                                <a style="margin-left: 20px" href="javascript:void(0);"
+                                                   th:onclick="'addLike(' + ${page.id} + ')'">
+                                                    <img src="../images/like.png" height="15" width="15"/></a>
+                                                <span style="font-size: 14px; color: #999"
+                                                      th:text="${page.answerLike}"></span>
+                                            </td>
+                                            <td width="50">
+                                                <a href="javascript:void(0);"
+                                                   th:onclick="'getReplyListCount(' + ${page.id} + ')'">
+                                                    <img src="../images/comment.png" height="15" width="15"
+                                                         style="margin-left: 20px"/></a>
+                                            </td>
+                                            <td width="50">
+                                                <a href="">
+                                                    <span style="font-size: 12px; color: #999; margin-left: 20px">采纳</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div style="min-height: 50px; margin-left: 50px;margin-top: 10px; display: none"
+                                         th:id="'reply' + ${page.id} + ''">
                                         <div>
-                                             <textarea placeholder="请输入内容" class="layui-textarea" th:id="'answerReply' + ${page.id} + ''"
+                                             <textarea placeholder="请输入内容" class="layui-textarea"
+                                                       th:id="'answerReply' + ${page.id} + ''"
                                                        style="width: 80%"></textarea>
-                                            <span style="color: red; font-size: 12px; display: none" th:id="'answerReply-warm' + ${page.id} + ''">评论不能不为空！</span>
+                                            <span style="color: red; font-size: 12px; display: none"
+                                                  th:id="'answerReply-warm' + ${page.id} + ''">评论不能不为空！</span>
                                             <div style="width: 80%; text-align: right; margin-top: 5px">
-                                                <button type="button" class="layui-btn layui-btn-sm" th:onclick="'answerReply(' + ${page.id} + ')'">回复</button>
+                                                <button type="button" class="layui-btn layui-btn-sm"
+                                                        th:onclick="'answerReply(' + ${page.id} + ')'">回复
+                                                </button>
                                             </div>
                                             <div th:id="'replyAnswer' + ${page.id} + ''">
                                             </div>

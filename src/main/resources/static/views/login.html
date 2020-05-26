@@ -4,25 +4,15 @@
     <meta charset="UTF-8">
     <title>登录</title>
 
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="/css/login.css">
     <!--Layui-->
-    <link rel="stylesheet" href="../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="/lib/layui/css/layui.css">
 
 </head>
 <body>
 <ul class="layui-nav layui-bg-blue">
-    <img src="../images/logo.png" height="42" width="250" style="margin-right: 50px"/>
+    <img src="/images/logo.png" height="42" width="250" style="margin-right: 50px"/>
     <li class="layui-nav-item layui-this"><a href="">首页</a></li>
-    <li class="layui-nav-item">
-        <a href="javascript:;">分类</a>
-        <dl class="layui-nav-child">
-            <dd><a href="">编程语言</a></dd>
-            <dd><a href="">云计算大数据</a></dd>
-            <dd><a href="">计算机基础</a></dd>
-            <dd><a href="">移动开发</a></dd>
-            <dd><a href="">前沿技术</a></dd>
-        </dl>
-    </li>
 </ul>
 <div style="min-height: 400px">
     <form class="layui-form my-login-form" action="/user/login" id="form" lay-filter="example" method="post">
@@ -43,7 +33,7 @@
                        style="width: 300px" onblur="checkPassword()">
                 <span id="password-tips"></span>
                 <br>
-                <a href="/userUrl/retrievePassword"><span style="font-size: 12px">找回密码？</span></a>
+                <a href="/userUrlNot/retrievePassword"><span style="font-size: 12px">找回密码？</span></a>
             </div>
         </div>
         <div class="layui-form-item">
@@ -58,14 +48,14 @@
 </div>
 </body>
 </html>
-<script src="../lib/layui/layui.js"></script>
+<script src="/lib/layui/layui.js"></script>
 <!--json-->
-<script src="../lib/json/json2.js" type="text/javascript"></script>
+<script src="/lib/json/json2.js" type="text/javascript"></script>
 <!--jquery-->
-<script src="../lib/jquery-2.1.4/jquery.min.js"></script>
-<script src="../lib/jquery-2.1.4/jquery.form.js"></script>
+<script src="/lib/jquery-2.1.4/jquery.min.js"></script>
+<script src="/lib/jquery-2.1.4/jquery.form.js"></script>
 <!--加密-->
-<script src="../js/obscure.js"></script>
+<script src="/js/obscure.js"></script>
 
 <script>
     layui.use('element', function () {
@@ -96,7 +86,7 @@
     });
 
     $("#register").click(function () {
-        window.location.href = "/userUrl/register";
+        window.location.href = "/userUrlNot/register";
     });
 
     function checkUserName() {

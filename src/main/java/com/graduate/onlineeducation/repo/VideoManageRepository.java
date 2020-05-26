@@ -138,4 +138,11 @@ public interface VideoManageRepository extends PagingAndSortingRepository<Video,
      * @return
      */
     Video getVideoByVideoId(Integer id);
+
+    /**
+     * 根据系列编号，获取系列中编号最小的视频
+     * @param series
+     * @return
+     */
+    Integer getMinVideoIdBySeries(Integer series);
 }
