@@ -89,4 +89,10 @@ public class UrlAdminController {
         model.addAttribute("id", id);
         return "/views/admin_comment";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/adminNavigation")
+    public String adminNavigation() {
+        return "/views/admin_navigation";
+    }
+
 }

@@ -136,4 +136,17 @@ public class VideoManageController {
     public Result<Object> deleteVideoById(Integer id) {
         return ResultUtils.success(videoManageService.deleteVideoById(id));
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getVideoListClassificationVolume")
+    public Result<Object> getVideoListClassificationVolume(@RequestParam Map<String, Object> params, Model model) {
+        Page<Video> videos = videoManageService.getVideoListClassificationVolume(params);
+        return ResultUtils.success(videos);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/addOneVideoPlay")
+    public Result<Object> addOneVideoPlay(Integer id) {
+        return ResultUtils.success(videoManageService.addOneVideoPlay(id));
+    }
 }

@@ -96,4 +96,14 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
     @Override
     @Query(value = "select min(video_id) from gp_video where series_id = ?1 and video_is_delete = 0", nativeQuery = true)
     Integer getMinVideoIdBySeries(Integer series);
+
+    @Override
+    @Query(value = "select * from gp_video where video_classification = ?1 and video_status = 1 and video_is_delete = 0 and ISNULL(series_id) order by video_playback_volume desc", nativeQuery = true)
+    Page<Video> getVideoListClassificationVolume(String classification, Pageable pageable);
+
+    @Override
+    @Modifying
+    @Transactional
+    @Query(value = "update gp_video set video_playback_volume = video_playback_volume + 1 where video_id = ?1 and video_is_delete = 0", nativeQuery = true)
+    Integer addOneVideoPlay(Integer id);
 }

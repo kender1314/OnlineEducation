@@ -97,16 +97,16 @@ public class UrlUserController {
     @RequestMapping(method = RequestMethod.GET, value = "/playSeries")
     public String playSeries(Integer videoId, Integer seriesId,
                              @RequestParam(value = "pageNum", defaultValue = "1") String pageNo,  Model model) {
-        return getSeriesList(seriesId, pageNo, model, videoId);
+        return getString(seriesId, pageNo, model, videoId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/playSeriesBySeries")
     public String playSeriesBySeries(Integer seriesId, @RequestParam(value = "pageNum", defaultValue = "1") String pageNo, Model model) {
         Integer videoId = videoManageService.getMinVideoIdBySeries(seriesId);
-        return getSeriesList(seriesId, pageNo, model, videoId);
+        return getString(seriesId, pageNo, model, videoId);
     }
 
-    private String getSeriesList(Integer seriesId, String pageNo, Model model, Integer videoId) {
+    private String getString(Integer seriesId, String pageNo, Model model, Integer videoId) {
         Video video = videoManageService.getVideoById(videoId);
         model.addAttribute("video", video);
         VideoSeries videoSeries = videoSeriesManageService.getVideoSeriesById(seriesId);
@@ -124,7 +124,7 @@ public class UrlUserController {
         Page<Comment> pages = commentManageService.getCommentByVideoId(params);
         List<CommentDO> list = getCommentDo(pageNo, model, pages);
         model.addAttribute("pages", list);
-        model.addAttribute("pageVideo", pageVideoBySeriesId);
+        model.addAttribute("pageSeriesList", pageVideoBySeriesId);
         return "/views/play_series";
     }
 
@@ -321,7 +321,7 @@ public class UrlUserController {
         if (videoSeries.getSeriesIntegral() == 0) {
             return "/views/play_series";
         } else {
-            return "/views/buy";
+            return "/views/buy-series";
         }
     }
 

@@ -5,11 +5,14 @@ import com.graduate.onlineeducation.repo.BookmarkManageRepository;
 import com.graduate.onlineeducation.service.BookmarkManageService;
 import com.graduate.onlineeducation.support.ByBookmarkSpecification;
 import com.graduate.onlineeducation.support.PaginationBase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +26,8 @@ public class BookmarkManageServiceImpl implements BookmarkManageService {
     @Autowired
     private BookmarkManageRepository bookmarkManageRepository;
 
+    private static final Logger logger = LoggerFactory.getLogger(BookmarkManageServiceImpl.class);
+
     @Override
     public Page<Bookmark> getBookmarksList(Map<String, Object> params) {
         Specification<Bookmark> specification = new ByBookmarkSpecification(params);
@@ -33,6 +38,16 @@ public class BookmarkManageServiceImpl implements BookmarkManageService {
     public Page<Bookmark> getVideoBookmarksList(Map<String, Object> params) {
         Integer userId = Integer.parseInt(params.get("userId").toString());
         return bookmarkManageRepository.getVideoBookmarksList(userId, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public List<Bookmark> getVideoBookmarksListByUserId(Integer userId) {
+        return bookmarkManageRepository.getVideoBookmarksListByUserId(userId);
+    }
+
+    @Override
+    public List<Bookmark> getQuestionBookmarksListByUserId(Integer userId) {
+        return bookmarkManageRepository.getQuestionBookmarksListByUserId(userId);
     }
 
     @Override
@@ -77,6 +92,53 @@ public class BookmarkManageServiceImpl implements BookmarkManageService {
         Integer userId = Integer.parseInt(params.get("userId").toString());
         String bookmarkName = params.get("bookmarkName").toString();
         return bookmarkManageRepository.getQuestionBookmarksCount(bookmarkName, userId);
+    }
+
+    @Override
+    public boolean insertBookmark(Map<String, Object> params) {
+        Integer userId = Integer.parseInt(params.get("userId").toString());
+        String bookmarkName = params.get("bookmarkName").toString();
+        Integer isVideo = Integer.parseInt(params.get("isVideo").toString());
+        Integer isDelete = Integer.parseInt(params.get("isDelete").toString());
+        Integer temp = 0;
+        try {
+            temp = bookmarkManageRepository.insertBookmark(isDelete, bookmarkName, userId, isVideo);
+        } catch (Exception e) {
+            logger.info("新建收藏夹失败->>>>" + e);
+        }
+        return temp != 0;
+    }
+
+    @Override
+    public boolean insertVideoBookmark(Map<String, Object> params) {
+        Integer userId = Integer.parseInt(params.get("userId").toString());
+        String bookmarkName = params.get("bookmarkName").toString();
+        Integer isVideo = Integer.parseInt(params.get("isVideo").toString());
+        Integer isDelete = Integer.parseInt(params.get("isDelete").toString());
+        Integer videoId = Integer.parseInt(params.get("videoId").toString());
+        Integer temp = 0;
+        try {
+            temp = bookmarkManageRepository.insertVideoBookmark(isDelete, bookmarkName, userId, isVideo, videoId);
+        } catch (Exception e) {
+            logger.info("收藏视频失败->>>>" + e);
+        }
+        return temp != 0;
+    }
+
+    @Override
+    public boolean insertQuestionBookmark(Map<String, Object> params) {
+        Integer userId = Integer.parseInt(params.get("userId").toString());
+        String bookmarkName = params.get("bookmarkName").toString();
+        Integer isVideo = Integer.parseInt(params.get("isVideo").toString());
+        Integer isDelete = Integer.parseInt(params.get("isDelete").toString());
+        Integer questionId = Integer.parseInt(params.get("questionId").toString());
+        Integer temp = 0;
+        try {
+            temp = bookmarkManageRepository.insertQuestionBookmark(isDelete, bookmarkName, userId, isVideo, questionId);
+        } catch (Exception e) {
+            logger.info("收藏问题失败->>>>" + e);
+        }
+        return temp != 0;
     }
 
     @Override

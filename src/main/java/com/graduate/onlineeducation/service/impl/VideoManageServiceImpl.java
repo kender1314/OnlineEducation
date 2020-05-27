@@ -134,4 +134,15 @@ public class VideoManageServiceImpl implements VideoManageService {
     public Integer getMinVideoIdBySeries(Integer series) {
         return videoManageRepository.getMinVideoIdBySeries(series);
     }
+
+    @Override
+    public Page<Video> getVideoListClassificationVolume(Map<String, Object> params) {
+        String classification = (String) params.get("classification");
+        return videoManageRepository.getVideoListClassificationVolume(classification, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public boolean addOneVideoPlay(Integer id) {
+        return videoManageRepository.addOneVideoPlay(id) == 1;
+    }
 }

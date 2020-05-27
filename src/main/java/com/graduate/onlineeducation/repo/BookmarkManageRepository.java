@@ -7,6 +7,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.List;
+
 /**
  * @Author hejiang
  * @Version 1.0.0 RELEASE
@@ -30,6 +32,20 @@ public interface BookmarkManageRepository extends PagingAndSortingRepository<Boo
      * @return
      */
     Page<Bookmark> getVideoBookmarksList(Integer userId, Pageable pageable);
+
+    /**
+     * 根据用户id，获取视频收藏夹信息(不分页)
+     * @param userId
+     * @return
+     */
+    List<Bookmark> getVideoBookmarksListByUserId(Integer userId);
+
+    /**
+     * 根据用户id，获取问题收藏夹信息(不分页)
+     * @param userId
+     * @return
+     */
+    List<Bookmark> getQuestionBookmarksListByUserId(Integer userId);
 
     /**
      * 根据用户id，获取视频收藏夹信息数量
@@ -86,6 +102,38 @@ public interface BookmarkManageRepository extends PagingAndSortingRepository<Boo
      * @return
      */
     Integer getQuestionBookmarksCount(String bookmarkName, Integer userId);
+
+    /**
+     * 新增收藏夹
+     * @param isDelete
+     * @param bookmarkName
+     * @param userId
+     * @param isVideo
+     * @return
+     */
+    Integer insertBookmark(Integer isDelete, String bookmarkName, Integer userId, Integer isVideo);
+
+    /**
+     * 收藏视频
+     * @param isDelete
+     * @param bookmarkName
+     * @param userId
+     * @param isVideo
+     * @param videoId
+     * @return
+     */
+    Integer insertVideoBookmark(Integer isDelete, String bookmarkName, Integer userId, Integer isVideo, Integer videoId);
+
+    /**
+     * 收藏问题
+     * @param isDelete
+     * @param bookmarkName
+     * @param userId
+     * @param isVideo
+     * @param questionId
+     * @return
+     */
+    Integer insertQuestionBookmark(Integer isDelete, String bookmarkName, Integer userId, Integer isVideo, Integer questionId);
 
     /**
      * 根据用户id和收藏夹名称，删除视频不为空的收藏记录

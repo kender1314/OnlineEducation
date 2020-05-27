@@ -145,4 +145,18 @@ public interface VideoManageRepository extends PagingAndSortingRepository<Video,
      * @return
      */
     Integer getMinVideoIdBySeries(Integer series);
+
+    /**
+     * 根据分类获取视频列表，并根据播放量排序DES
+     * @param classification
+     * @return
+     */
+    Page<Video> getVideoListClassificationVolume(String classification, Pageable pageable);
+
+    /**
+     * 点击进入视频页面后，播放量+1
+     * @param id
+     * @return
+     */
+    Integer addOneVideoPlay(Integer id);
 }

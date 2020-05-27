@@ -127,6 +127,153 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
         });
     }
 
+    /**
+     * 收藏问题
+     */
+    window.collectQuestion = function(){
+        $.ajax({
+            url: "/bookmarkManage/getQuestionBookmarksListByUserId?userId=" + userId,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log(data);
+                var appendHtml = "";
+                if (data.data.length !== 0) {
+                    for (var i = 0; i < data.data.length; i++) {
+                        appendHtml += "<div style=\"margin-bottom: 10px;\">\n" +
+                            "        <div style=\"float: left\">\n" +
+                            "        <span style=\"color: #4d4d4d; font-size: 13px\">\n" +
+                            "            " + data.data[i].bookmarkName + "\n" +
+                            "        </span>\n" +
+                            "        </div>\n" +
+                            "        <div style=\"float: right\">\n" +
+                            "            <button type=\"button\" onclick='collectQuestionA(\"" + data.data[i].bookmarkName + "\")' class=\"layui-btn layui-btn-danger layui-btn-xs\">收藏</button>\n" +
+                            "        </div>\n" +
+                            "        <div style=\"clear: both\"></div>\n" +
+                            "    </div>";
+                    }
+                }
+                layer.open({
+                    type: 6,
+                    title: '添加收藏',
+                    // offset: 'auto',
+                    // skin:'layui-layer-rim',
+                    area: ['auto', 'auto'],
+
+                    content: '<div style="overflow-y: auto; overflow-x: auto; height: 250px; width: 350px; padding: 20px">' + appendHtml +
+                        '</div>'
+                    ,
+                    btn: ['新建收藏夹'],
+                    btn1: function (index, layero) {
+                        layer.close(index)
+                        insertCollect();
+                    }
+                });
+            }
+        })
+    }
+    /**
+     * 新建收藏夹
+     */
+    window.insertCollect = function () {
+        layer.open({
+            type: 6,
+            title: '新建收藏夹',
+            // skin:'layui-layer-rim',
+            area: ['400px', 'auto'],
+
+            content: '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
+                + '<table>'
+                + '<tr>'
+                + '<td>'
+                + '<div class="layui-form-item" style="margin-top: 20px">\n'
+                + '    <label class="layui-form-label" style="font-size: 13px">标题</label>\n'
+                + '    <div class="layui-input-block">\n'
+                + '      <input type="tel" name="bookmarkName" id="bookmarkName" placeholder="请输入标题" value="" autocomplete="off" class="layui-input" '
+                + 'style="width: 200px; height: 30px; margin-top: 5px">\n'
+                + '    </div>\n'
+                + '  </div>'
+                + '</td>'
+                + '</tr>'
+                + '<tr>'
+                + '<td>'
+                + '<div class="layui-form-item" style="margin-top: 20px">\n'
+                + '    <label class="layui-form-label" style="font-size: 13px">收藏夹分类</label>\n'
+                + '    <div class="layui-input-block">\n'
+                + '        <select name="isVideo" id="isVideo" '
+                + 'style="width: 200px; height: 30px; margin-top: 5px" lay-verify="required" lay-search="">\n'
+                + '          <option value="1">视频</option>\n'
+                + '          <option value="0">问题</option>\n'
+                + '        </select>\n'
+                + '    </div>\n'
+                + '  </div>'
+                + '</td>'
+                + '</tr>'
+                + '</table>'
+                + '</div>'
+            ,
+            btn: ['保存', '取消'],
+            btn1: function (index, layero) {
+                var formData = new FormData();
+                var bookmarkName = document.getElementById("bookmarkName").value;
+                var isDelete = 0;
+                var isVideo = document.getElementById("isVideo").value;
+                formData.append("bookmarkName", bookmarkName);
+                formData.append("userId", userId);
+                formData.append("isDelete", isDelete);
+                formData.append("isVideo", isVideo);
+                $.ajax({
+                    url: "/bookmarkManage/insertBookmark",
+                    type: "post",
+                    dataType: "json",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (msg) {
+                        if (msg.data === true) {
+                            //关闭弹框
+                            layer.close(index);
+                            layer.msg("添加成功", {icon: 6});
+                        } else {
+                            layer.msg("添加失败，该收藏夹已存在！", {icon: 5});
+                        }
+                    }
+                });
+
+            },
+        });
+    }
+    /**
+     * 收藏问题
+     */
+    window.collectQuestionA = function (bookmarkName) {
+        var formData = new FormData();
+        formData.append("bookmarkName", bookmarkName);
+        formData.append("userId", userId);
+        formData.append("isDelete", 0);
+        formData.append("isVideo", 1);
+        formData.append("questionId", questionId);
+        $.ajax({
+            url: "/bookmarkManage/insertQuestionBookmark",
+            type: "post",
+            dataType: "json",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (msg) {
+                if (msg.data === true) {
+                    layer.msg("收藏成功", {icon: 6});
+                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                        window.location.reload();//页面刷新
+                    }, 1000);
+                } else {
+                    layer.msg("收藏失败，该收藏夹已收藏该文件！", {icon: 5});
+                }
+            }
+        });
+    }
     window.addLike = function (id) {
         $.ajax({
             url: "/answerManage/addAnswerLikeById?answerId=" + id + "&userId=" + userId,

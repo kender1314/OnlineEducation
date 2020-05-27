@@ -147,4 +147,17 @@ public interface VideoManageService {
      */
     Integer getMinVideoIdBySeries(Integer series);
 
+    /**
+     * 根据分类获取视频列表，并根据播放量排序DES
+     * @param params
+     * @return
+     */
+    Page<Video> getVideoListClassificationVolume(Map<String, Object> params);
+
+    /**
+     * 点击进入视频页面后，播放量+1
+     * @param id
+     * @return
+     */
+    boolean addOneVideoPlay(Integer id);
 }

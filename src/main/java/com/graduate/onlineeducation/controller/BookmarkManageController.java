@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,6 +35,20 @@ public class BookmarkManageController {
     @RequestMapping(method = RequestMethod.POST, value = "/getVideoBookmarksList")
     public Result<Object> getVideoBookmarksList(@RequestParam Map<String, Object> params){
         Page<Bookmark> bookmarks = bookmarkManageService.getVideoBookmarksList(params);
+        return ResultUtils.success(bookmarks);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getVideoBookmarksListByUserId")
+    public Result<Object> getVideoBookmarksListByUserId(Integer userId){
+        List<Bookmark> bookmarks = bookmarkManageService.getVideoBookmarksListByUserId(userId);
+        return ResultUtils.success(bookmarks);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getQuestionBookmarksListByUserId")
+    public Result<Object> getQuestionBookmarksListByUserId(Integer userId){
+        List<Bookmark> bookmarks = bookmarkManageService.getQuestionBookmarksListByUserId(userId);
         return ResultUtils.success(bookmarks);
     }
 
@@ -84,9 +99,22 @@ public class BookmarkManageController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/insertBookmark")
-    public Result<Object> insertBookmark(){
-        return ResultUtils.success(true);
+    public Result<Object> insertBookmark(@RequestParam Map<String, Object> params){
+        return ResultUtils.success(bookmarkManageService.insertBookmark(params));
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/insertVideoBookmark")
+    public Result<Object> insertVideoBookmark(@RequestParam Map<String, Object> params){
+        return ResultUtils.success(bookmarkManageService.insertVideoBookmark(params));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/insertQuestionBookmark")
+    public Result<Object> insertQuestionBookmark(@RequestParam Map<String, Object> params){
+        return ResultUtils.success(bookmarkManageService.insertQuestionBookmark(params));
+    }
+
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/updateBookmarkOfVideo")

@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @Author hejiang
  * @Version 1.0.0 RELEASE
@@ -23,8 +25,18 @@ public interface JpaBookmarkManageRepository extends BookmarkManageRepository {
 
     @Override
     @Query(value = "select * from gp_bookmark where bookmark_id in (select min(bookmark_id) from " +
-            "gp_bookmark WHERE user_id = ?1 and video_id is not null group by bookmark_name)", nativeQuery = true)
+            "gp_bookmark WHERE user_id = ?1 and bookmark_is_video = 1  group by bookmark_name)", nativeQuery = true)
     Page<Bookmark> getVideoBookmarksList(Integer userId, Pageable pageable);
+
+    @Override
+    @Query(value = "select * from gp_bookmark where bookmark_id in (select min(bookmark_id) from " +
+            "gp_bookmark WHERE user_id = 1 and ISNULL(question_id) group by bookmark_name)", nativeQuery = true)
+    List<Bookmark> getVideoBookmarksListByUserId(Integer userId);
+
+    @Override
+    @Query(value = "select * from gp_bookmark where bookmark_id in (select min(bookmark_id) from " +
+            "gp_bookmark WHERE user_id = 1 and ISNULL(video_id) and bookmark_is_delete = 0 group by bookmark_name)", nativeQuery = true)
+    List<Bookmark> getQuestionBookmarksListByUserId(Integer userId);
 
     @Override
     @Query(value = "select count(*) from gp_bookmark where bookmark_id in (select min(bookmark_id) from " +
@@ -33,7 +45,7 @@ public interface JpaBookmarkManageRepository extends BookmarkManageRepository {
 
     @Override
     @Query(value = "select * from gp_bookmark where bookmark_id in (select min(bookmark_id) from " +
-            "gp_bookmark WHERE user_id = ?1 and question_id is not null group by bookmark_name)", nativeQuery = true)
+            "gp_bookmark WHERE user_id = ?1 and bookmark_is_video = 0 group by bookmark_name)", nativeQuery = true)
     Page<Bookmark> getQuestionBookmarksList(Integer userId, Pageable pageable);
 
     @Override
@@ -62,6 +74,36 @@ public interface JpaBookmarkManageRepository extends BookmarkManageRepository {
     @Transactional
     @Query(value = "DELETE FROM gp_bookmark where bookmark_name = ?1 and user_id = ?2 and video_id is not null", nativeQuery = true)
     void deleteBookmarkOfVideo(String bookmarkName, Integer userId);
+
+    @Override
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO gp_bookmark\n" +
+            "(user_id, bookmark_name, bookmark_is_delete, bookmark_is_video)\n" +
+            "select\n" +
+            "?3, ?2, ?1, ?4\n" +
+            "where  NOT EXISTS\n" +
+            "(select bookmark_name from gp_bookmark where " +
+            "bookmark_name = ?2 and user_id = ?3 and bookmark_is_video = ?4 and bookmark_is_delete = ?1)", nativeQuery = true)
+    Integer insertBookmark(Integer isDelete, String bookmarkName, Integer userId, Integer isVideo);
+
+    @Override
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO gp_bookmark\n" +
+            "(user_id, bookmark_name, bookmark_is_delete, bookmark_is_video, video_id)\n" +
+            "VALUES\n" +
+            "(?3, ?2, ?1, ?4, ?5)", nativeQuery = true)
+    Integer insertVideoBookmark(Integer isDelete, String bookmarkName, Integer userId, Integer isVideo, Integer videoId);
+
+    @Override
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO gp_bookmark\n" +
+            "(user_id, bookmark_name, bookmark_is_delete, bookmark_is_video, question_id)\n" +
+            "VALUES\n" +
+            "(?3, ?2, ?1, ?4, ?5)", nativeQuery = true)
+    Integer insertQuestionBookmark(Integer isDelete, String bookmarkName, Integer userId, Integer isVideo, Integer questionId);
 
     @Override
     @Modifying

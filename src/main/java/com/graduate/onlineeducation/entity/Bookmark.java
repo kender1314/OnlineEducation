@@ -49,6 +49,9 @@ public class Bookmark implements Serializable {
     @Column(name = "bookmark_is_delete")
     private Integer isDelete;
 
+    @Column(name = "bookmark_is_video")
+    private Integer isVideo;
+
     public Integer getId() {
         return id;
     }
@@ -105,6 +108,14 @@ public class Bookmark implements Serializable {
         this.isDelete = isDelete;
     }
 
+    public Integer getIsVideo() {
+        return isVideo;
+    }
+
+    public void setIsVideo(Integer isVideo) {
+        this.isVideo = isVideo;
+    }
+
     @Override
     public String toString() {
         return "Bookmark{" +
@@ -115,6 +126,7 @@ public class Bookmark implements Serializable {
                 ", question=" + question +
                 ", user=" + user +
                 ", isDelete=" + isDelete +
+                ", isVideo=" + isVideo +
                 '}';
     }
 }

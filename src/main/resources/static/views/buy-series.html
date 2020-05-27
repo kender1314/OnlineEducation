@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>购买视频</title>
+    <!--Layui-->
+    <link rel="stylesheet" href="../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/news.css">
+</head>
+<body>
+<div class="navigation">
+</div>
+<div class="layui-carousel" id="test10"
+     style="padding: 20px; margin-left: 10%; min-height: 500px; width: 80%; margin-top: 20px; background-color: white">
+    <div style="margin-top: 20px">
+        <div style="float: left">
+            <img src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"
+                 height="200">
+        </div>
+        <div style="float: left; margin-left: 30px; width: 60%">
+            <b><span style="font-size: 16px;" th:text="${videoSeries.seriesName}">不要小看一个redis_吊打面试官的硬核技能</span></b>
+            <div style="min-height: 35px; margin-top: 15px">
+                <img src="../images/user1.png" style="width: 16px; height: 16px"/>
+                <span style="font-size: 14px; color: #999" th:text="${videoSeries.user.userName}">kender</span>
+                <span style="font-size: 13px; margin-left: 20px; border: 1px solid #23b8ff; color: #23b8ff; padding: 2px">总集数：<span
+                        th:text="${videoSeries.seriesNumber}"></span></span>
+                <span style="font-size: 13px; margin-left: 20px; border: 1px solid #23b8ff; color: #23b8ff; padding: 2px">分类：<span
+                        th:text="${videoSeries.seriesClassification}"></span></span>
+                <span style="font-size: 13px; margin-left: 20px; border: 1px solid #23b8ff; color: #23b8ff; padding: 2px">二级分类：<span
+                        th:text="${videoSeries.classificationLittle}"></span></span>
+            </div>
+            <div style="min-height: 100px;">
+                <span style="font-size: 14px; color: #999" th:text="${videoSeries.introduction}"></span>
+            </div>
+            <div style="margin-top: 10px">
+                <span style="color: red">所需积分：<span th:text="${videoSeries.seriesIntegral}"></span></span>
+            </div>
+            <div style="width: 100% ;text-align: left; margin-top: 100px">
+                <button type="button" class="layui-btn">立即购买</button>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+</div>
+<div class="my-footer">
+</div>
+</body>
+</html>
+<script src="../lib/jquery-2.1.4/jquery.min.js"></script>
+<script src="../lib/layui/layui.js"></script>
+<!--json-->
+<script src="../lib/json/json2.js" type="text/javascript"></script>
+<script src="../js/common.js"></script>
+<script src="../lib/jquery-2.1.4/jquery.form.js"></script>
+

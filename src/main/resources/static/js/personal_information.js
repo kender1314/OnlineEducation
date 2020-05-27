@@ -695,7 +695,10 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
         });
     });
 
-    $('#video-card').on('click', function () {
+    /**
+     * 获取自己上传的单个视频
+     */
+    $('#video-card, #show-video').on('click', function () {
         $.ajax({
             url: "/videoManage/getCountVideoByUserId?id=" + userId,
             type: "post",
@@ -739,7 +742,10 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
         });
     });
 
-    $('#order-card').on('click', function () {
+    /**
+     * 获取所有订单信息
+     */
+    $('#order-card, #all-order').on('click', function () {
         $.ajax({
             url: "/orderManage/getCountOrderList?userId=" + userId,
             type: "post",
@@ -824,8 +830,10 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
             }
         });
     });
-
-    $('#collect-card').on('click', function () {
+    /**
+     * 获取视频收藏列表
+     */
+    $('#collect-card, #collect-video').on('click', function () {
         $.ajax({
             url: "/bookmarkManage/getCountVideoBookmarks?userId=" + userId,
             type: "post",
@@ -1969,10 +1977,7 @@ function showSeriesByOrder(pageNo, pageSize, userId) {
                         "                                        </div>\n" +
                         "                                        <div class=\"layui-card-body\">\n" +
                         "                                            <button type=\"button\" class=\"layui-btn layui-btn-sm layui-btn-radius\"\n" +
-                        "                                                    style=\"margin-left: 300px\" onclick='playVideoBySeries(" + data.data.content[i].videoSeries.id + ")'>继续学习\n" +
-                        "                                            </button>\n" +
-                        "                                            <button type=\"button\" class=\"layui-btn layui-btn-sm layui-btn-danger layui-btn-radius\"\n" +
-                        "                                                    style=\"margin-left: 50px\">删除课程\n" +
+                        "                                                    style=\"margin-left: 400px\" onclick='playVideoBySeries(" + data.data.content[i].videoSeries.id + ")'>继续学习\n" +
                         "                                            </button>\n" +
                         "                                        </div>\n" +
                         "                                    </div>\n" +
@@ -1986,7 +1991,7 @@ function showSeriesByOrder(pageNo, pageSize, userId) {
 }
 
 function playVideoBySeries(seriesId) {
-
+    window.location.href ="/userUrl/playSeriesBySeries?seriesId=" + seriesId + "&pageNum=1";
 }
 
 function deleteOrder(orderId) {
