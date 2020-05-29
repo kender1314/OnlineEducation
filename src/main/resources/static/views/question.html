@@ -34,9 +34,6 @@
                         <img src="../images/collect.png" style="width: 16px; height: 16px"/>
                     </a>
                     <span style="font-size: 10px; color:#999; margin-right: 20px" id="countCollectQuestion"></span>
-                    <img src="../images/integral.png" style="width: 16px; height: 16px"/>
-                    <span style="font-size: 10px; color:#999; margin-right: 20px"
-                          th:text="${question.questionIntegral}"></span>
                     <span style="font-size: 10px; color: #999; margin-right: 20px">分类：<span
                             th:text="${question.classification}"></span></span>
                     <span style="font-size: 10px; color: #999; margin-right: 20px">时间：<span
@@ -89,11 +86,6 @@
                                                    th:onclick="'getReplyListCount(' + ${page.id} + ')'">
                                                     <img src="../images/comment.png" height="15" width="15"
                                                          style="margin-left: 20px"/></a>
-                                            </td>
-                                            <td width="50">
-                                                <a href="">
-                                                    <span style="font-size: 12px; color: #999; margin-left: 20px">采纳</span>
-                                                </a>
                                             </td>
                                         </tr>
                                     </table>

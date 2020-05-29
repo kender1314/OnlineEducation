@@ -100,7 +100,15 @@ public interface AnswerManageService {
      * @param params
      * @return
      */
-    Page<Map<String, Object>> getQuestionCommentReplyList(Map<String, Object> params);
+    List<Map<String, Object>> getQuestionCommentReplyList(Map<String, Object> params);
+
+    /**
+     * 统计消息中心显示问题评论的回复数量
+     *
+     * @param params
+     * @return
+     */
+    Integer getCountQuestionCommentReplyList(Map<String, Object> params);
 
     /**
      * 用户将该评论标记为已读

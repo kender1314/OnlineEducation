@@ -44,7 +44,7 @@ public interface JpaCommentManageRepository extends CommentManageRepository {
     Integer getCountReplyByCommentId(Integer commentId);
 
     @Override
-    @Query(value = "select * from gp_comment where video_id = ?1 and comment_is_delete = 0 and ISNULL(comment_reply_id)", nativeQuery = true)
+    @Query(value = "select * from gp_comment where video_id = ?1 and comment_is_delete = 0 and ISNULL(comment_reply_id) order by comment_date desc ", nativeQuery = true)
     Page<Comment> getCommentByVideoId(Integer videoId, Pageable pageable);
 
     @Override
@@ -70,9 +70,24 @@ public interface JpaCommentManageRepository extends CommentManageRepository {
     @Query(value = "update gp_comment set comment_is_watch = 1 where comment_id = ?1", nativeQuery = true)
     Integer updateIsWatchByCommentId(Integer commentId);
 
+    /**
+     * @Query(value = "select * from trade$seek_purchase_offer where sp_id in (:spIds) and of_enuu = :enUu", nativeQuery = true)
+     *     List<SeekPurchaseOffer> getSeekPurchaseOfferList(@Param("spIds") List<Long> spIds, @Param("enUu") Long enUu);
+     *     另一种写法
+     * @param userId
+     * @return
+     */
     @Override
-    @Query(value = "select gp_comment.*, gp_user.user_name from gp_comment, gp_user where gp_comment.comment_reply_id in (select gp_comment.comment_id from gp_comment where user_id = ?1) and comment_is_delete = 0 and gp_comment.user_id = gp_user.user_id order by gp_comment.comment_is_watch asc", nativeQuery = true)
-    Page<Map<String, Object>> getVideoCommentReplyList(Integer userId, Pageable pageable);
+    @Query(value = "select gp_comment.*,gp_user.user_name from gp_comment, gp_user where gp_comment.comment_reply_id in (select comment_id from gp_comment where user_id = ?1) and comment_is_delete = 0 and gp_comment.user_id = gp_user.user_id order by gp_comment.comment_is_watch asc limit ?3,?2", nativeQuery = true)
+    List<Map<String, Object>> getVideoCommentReplyList(Integer userId, Integer size, int pageNum);
+
+    @Override
+    @Query(value = "select count(*) from gp_comment, gp_user where gp_comment.comment_reply_id in (select comment_id from gp_comment where user_id = ?1) and comment_is_delete = 0 and gp_comment.user_id = gp_user.user_id order by gp_comment.comment_is_watch asc", nativeQuery = true)
+    Integer getCountVideoCommentReplyList(Integer userId);
+
+//    @Override
+//@Query(value = "select gp_comment.* from gp_comment, gp_user where gp_comment.comment_reply_id in (select comment_id from gp_comment where user_id = ?1) and comment_is_delete = 0 and gp_comment.user_id = gp_user.user_id order by gp_comment.comment_is_watch asc", nativeQuery = true)
+//    Page<Comment> getVideoCommentReplyList(Integer userId, Pageable pageable);
 
     @Override
     Comment getCommentById(Integer commentId);

@@ -69,7 +69,8 @@ public class UserManageServiceImpl implements UserManageService {
     public boolean updateUserByParam(Map<String, Object> param) {
         Integer userId = Integer.parseInt(param.get("userId").toString());
         Object userName = param.get("userName");
-        Object mail = param.get("mail");
+//        Object mail = param.get("mail");
+        Object phone = param.get("phone");
         Object hobby = param.get("major");
         Object address = param.get("address");
         Object education = param.get("education");
@@ -77,8 +78,8 @@ public class UserManageServiceImpl implements UserManageService {
         Object passsword = param.get("passsword");
         if (userName != null){
             return userManageRepository.updateUserName(userName.toString(), userId) == 1;
-        }else if(mail != null){
-            return userManageRepository.updateUserMail(mail.toString(), userId) == 1;
+        }else if(phone != null){
+            return userManageRepository.updateUserPhone(phone.toString(), userId) == 1;
         }else if(hobby != null){
             return userManageRepository.updateUserHobby(hobby.toString(), userId) == 1;
         }else if(address != null){

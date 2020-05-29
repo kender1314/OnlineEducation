@@ -100,7 +100,7 @@ public class CommentManageController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/getLikeNewsListByUserId")
     public Result<Object> getLikeNewsListByUserId(@RequestParam Map<String, Object> params) {
-        Page<LikeNews> likeNews = commentManageService.getLikeNewsListByUserId(params);
+        List<Map<String, Object>> likeNews = commentManageService.getLikeNewsListByUserId(params);
         return ResultUtils.success(likeNews);
     }
 

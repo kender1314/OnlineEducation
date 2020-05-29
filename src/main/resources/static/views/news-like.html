@@ -40,16 +40,16 @@
                 <div class="comment-content-user">
                     <a href="#">
                         <b>
-                            <span class="comment-content-user-username" th:text="${page.userName}">科学声音</span>
+                            <span class="comment-content-user-username" th:text="${page['user_name']}">科学声音</span>
                         </b>
                     </a>
                     <span class="comment-content-response"><span style="color: #00a65a">赞了我。</span>
                     </span>
                     <br>
-                    <span class="comment-content-user-time" th:text="${page.likeDate}">2019年3月19日&nbsp;09:18</span>
+                    <span class="comment-content-user-time" th:text="${page['like_date']}">2019年3月19日&nbsp;09:18</span>
                 </div>
                 <div class="comment-content-remark">
-                        <span style="font-size: 13px" th:text="${page.commentContent}">
+                        <span style="font-size: 13px" th:text="${page['comment_content']}">
                             不科学，1.百度了一下，没找到全国有机大米促进会，2.据研究，没有表明研究出处，
                             3.被长期赞美大米比普通大米更有益健康，违反常识，没有科学依据，4.95％未标明
                         </span>

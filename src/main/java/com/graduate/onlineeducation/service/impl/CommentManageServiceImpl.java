@@ -39,7 +39,7 @@ public class CommentManageServiceImpl implements CommentManageService {
 
     @Override
     public Page<Comment> getCommentList(Map<String, Object> params) {
-        Integer videoId = Integer.parseInt(params.get("videoId").toString()) ;
+        Integer videoId = Integer.parseInt(params.get("videoId").toString());
         return commentManageRepository.findAll(videoId, PaginationBase.getPagination(params));
     }
 
@@ -56,7 +56,7 @@ public class CommentManageServiceImpl implements CommentManageService {
 
     @Override
     public Page<Comment> getCommentReply(Map<String, Object> params) {
-        Integer replyId = Integer.parseInt(params.get("replyId").toString()) ;
+        Integer replyId = Integer.parseInt(params.get("replyId").toString());
         return commentManageRepository.getCommentReply(replyId, PaginationBase.getPagination(params));
     }
 
@@ -67,7 +67,7 @@ public class CommentManageServiceImpl implements CommentManageService {
 
     @Override
     public Page<Comment> getCommentByVideoId(Map<String, Object> params) {
-        Integer videoId = Integer.parseInt(params.get("videoId").toString()) ;
+        Integer videoId = Integer.parseInt(params.get("videoId").toString());
         return commentManageRepository.getCommentByVideoId(videoId, PaginationBase.getPagination(params));
     }
 
@@ -76,7 +76,15 @@ public class CommentManageServiceImpl implements CommentManageService {
         commentDTO.setCommentLike(0);
         commentDTO.setIsDelete(0);
         commentDTO.setCommentIsWatch(0);
-        CommentDTO temp =  commentManageRepository.save(commentDTO);
+        //是否可以自己回复自己的评论
+//        Comment comment = null;
+//        if (commentDTO.getReplyId() != null) {
+//            comment = commentManageRepository.getCommentById(commentDTO.getReplyId());
+//        }
+//        if (comment != null && comment.getUser().getId().equals(commentDTO.getUserId())) {
+//            return false;
+//        }
+        CommentDTO temp = commentManageRepository.save(commentDTO);
         return temp != null;
     }
 
@@ -85,7 +93,7 @@ public class CommentManageServiceImpl implements CommentManageService {
         try {
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             commentLikeRepository.insertComment(userId, commentId, df.format(new Date()));
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.info("该用户已点赞，点赞失败->>>>" + e);
             return false;
         }
@@ -99,14 +107,23 @@ public class CommentManageServiceImpl implements CommentManageService {
 
     @Override
     public Page<Comment> getSystemNoticeList(Map<String, Object> params) {
-        Integer userId = Integer.parseInt(params.get("userId").toString()) ;
+        Integer userId = Integer.parseInt(params.get("userId").toString());
         return commentManageRepository.getSystemNoticeList(userId, PaginationBase.getPagination(params));
     }
 
     @Override
-    public Page<Map<String, Object>> getVideoCommentReplyList(Map<String, Object> params) {
-        Integer userId = Integer.parseInt(params.get("userId").toString()) ;
-        return commentManageRepository.getVideoCommentReplyList(userId, PaginationBase.getPagination(params));
+    public List<Map<String, Object>> getVideoCommentReplyList(Map<String, Object> params) {
+        Integer userId = Integer.parseInt(params.get("userId").toString());
+        Integer size = Integer.parseInt(params.get("limit").toString());
+        int pageNum = Integer.parseInt(params.get("page").toString());
+        pageNum = (pageNum - 1) * 10;
+        return commentManageRepository.getVideoCommentReplyList(userId, size, pageNum);
+    }
+
+    @Override
+    public Integer getCountVideoCommentReplyList(Map<String, Object> params) {
+        Integer userId = Integer.parseInt(params.get("userId").toString());
+        return commentManageRepository.getCountVideoCommentReplyList(userId);
     }
 
     @Override
@@ -115,20 +132,18 @@ public class CommentManageServiceImpl implements CommentManageService {
     }
 
     @Override
-    public Page<LikeNews> getLikeNewsListByUserId(Map<String, Object> params) {
-        List<LikeNews> list = new ArrayList<>();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Integer userId = Integer.parseInt(params.get("userId").toString()) ;
-        Page<Map<String, Object>> page = commentLikeRepository.getLikeNewsList(userId, PaginationBase.getPagination(params));
-        for (Map<String, Object> map : page){
-            LikeNews likeNews = new LikeNews();
-            likeNews.setUserId(Integer.parseInt(map.get("user_id").toString()));
-            likeNews.setCommentContent(map.get("comment_content").toString());
-            likeNews.setUserName(map.get("user_name").toString());
-            likeNews.setLikeDate(df.format(map.get("like_date")));
-            list.add(likeNews);
-        }
-        return new PageImpl<>(list, PaginationBase.getPagination(params), list.size());
+    public List<Map<String, Object>> getLikeNewsListByUserId(Map<String, Object> params) {
+        Integer userId = Integer.parseInt(params.get("userId").toString());
+        Integer size = Integer.parseInt(params.get("limit").toString());
+        int pageNum = Integer.parseInt(params.get("page").toString());
+        pageNum = (pageNum - 1) * 10;
+        return commentLikeRepository.getLikeNewsList(userId, size, pageNum);
+    }
+
+    @Override
+    public Integer getCountLikeNewsListByUserId(Map<String, Object> params) {
+        Integer userId = Integer.parseInt(params.get("userId").toString());
+        return commentLikeRepository.getCountLikeNewsListByUserId(userId);
     }
 
     @Override

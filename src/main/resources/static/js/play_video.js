@@ -12,7 +12,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
     $('#comment-submit').on('click', function () {
         var commentContent = document.getElementById("comment-content").value;
         var myDate = new Date();
-        var date = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+        var date = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
         var formData = new FormData();
         if (commentContent === "" || commentContent == null) {
             document.getElementById("content-warm").style.display = "block";
@@ -138,7 +138,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
      */
     window.addLike = function (id) {
         var myDate = new Date();
-        var date = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+        var date = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
         $.ajax({
             url: "/commentManage/addCommentLikeById?commentId=" + id + "&userId=" + userId,
             type: "post",
@@ -161,7 +161,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
     window.commentReply = function (id) {
         var commentContent = document.getElementById("commentReply" + id).value;
         var myDate = new Date();
-        var date = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+        var date = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
         var formData = new FormData();
         if (commentContent === "" || commentContent == null) {
             document.getElementById("commentReply-warm" + id).style.display = "block";
@@ -273,7 +273,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             btn1: function (index, layero) {
                 var commentContent = document.getElementById("replyA").value;
                 var myDate = new Date();
-                var date = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+                var date = myDate.getFullYear() + "-" + (myDate.getMonth()+1)+ "-" + myDate.getDate();
                 var formData = new FormData();
                 if (commentContent === "" || commentContent == null) {
                     document.getElementById("replyA-warm").style.display = "block";

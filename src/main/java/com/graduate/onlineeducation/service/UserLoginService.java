@@ -16,6 +16,7 @@ import java.util.Map;
 public interface UserLoginService {
 
     /**
+     * 用户名和邮箱都可以登录
      * login
      * @param params 账号和密码
      * @param session

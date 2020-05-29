@@ -18,15 +18,18 @@
             <dd><a href="/userUrl/videoList?videoClassification=前沿技术">前沿技术</a></dd>
         </dl>
     </li>
-    <input type="hidden" id="userId" name="userId" th:value="${session.user.id}">
-    <div class="layui-input-inline" id="showSearch" style="margin-left: 50%">
+    <li class="layui-nav-item">
+        <a href="javascript:void(0);" onClick="showQuestions()">问题中心</a>
+    </li>
+    <input type="hidden" id="userId" name="userId" th:value="${session.user.id}">'
+    <div class="layui-input-inline" id="showSearch" style="margin-left: 39%">
         <input type="tel" name="search" id="search"
                style="display: none; width: 190px; border-radius:10px; height: 30px; border: white 1px solid; padding-left: 10px">
         <button id="searchSubmit" onClick="searchSubmit()" type="submit"
                 style="display: none; background-color:rgba(0,0,255,0); border:none">
-            <a><img src="../images/search.png" height="25" width="25"/></a>
+            <a href="#"><img src="../images/search.png" height="25" width="25"/></a>
         </button>
-        <a href="javascript:void(0);" onClick="showsearch()">
+        <a href="javascript:void(0);" onClick="showSearch()">
             <img src="../images/search.png" id="images" height="25" width="25"/>
         </a>
     </div>
@@ -67,18 +70,23 @@
         window.location.href = "/userUrl/newVideo?id=" + userId + "&pageNum=1";
     }
 
+    function showQuestions() {
+        var userId = document.getElementById("userId").value;
+        window.location.href = "/userUrl/questionList?id=" + userId + "&pageNum=1";
+    }
+
     function searchSubmit(){
         var query = document.getElementById("search").value;
         window.location.href = "/userUrl/search?query=" + query;
     }
 
-    function showsearch() {
+    function showSearch() {
         var value = document.getElementById("search").style.display;
         if (value == "none") {
             document.getElementById("search").style.display = "inline";
             document.getElementById("images").style.display = "none";
             document.getElementById("searchSubmit").style.display = "inline";
-            document.getElementById("showSearch").style.marginLeft = "36%";
+            document.getElementById("showSearch").style.marginLeft = "25%";
         } else
             document.getElementById("search").style.display = "none";
     }

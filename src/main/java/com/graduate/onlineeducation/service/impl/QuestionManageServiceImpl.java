@@ -1,7 +1,9 @@
 package com.graduate.onlineeducation.service.impl;
 
 import com.graduate.onlineeducation.entity.DTO.QuestionDTO;
+import com.graduate.onlineeducation.entity.DTO.QuestionDateDTO;
 import com.graduate.onlineeducation.entity.Question;
+import com.graduate.onlineeducation.repo.QuestionDateManageRepository;
 import com.graduate.onlineeducation.repo.QuestionManageRepository;
 import com.graduate.onlineeducation.service.QuestionManageService;
 import com.graduate.onlineeducation.support.ByQuestionSpecification;
@@ -26,6 +28,9 @@ public class QuestionManageServiceImpl implements QuestionManageService {
     @Autowired
     private QuestionManageRepository questionManageRepository;
 
+    @Autowired
+    private QuestionDateManageRepository questionDateManageRepository;
+
     @Override
     public boolean deleteQuestion(Integer id) {
         questionManageRepository.deleteById(id);
@@ -36,6 +41,12 @@ public class QuestionManageServiceImpl implements QuestionManageService {
     public Page<Question> getQuestionList(Map<String, Object> params) {
         Specification<Question> specification = new ByQuestionSpecification(params);
         return questionManageRepository.findAll(specification, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public Page<QuestionDateDTO> getQuestionListOrderByDate(Map<String, Object> params) {
+        Page<QuestionDateDTO> questionDateList = questionDateManageRepository.getQuestionListOrderByDate(PaginationBase.getPagination(params));
+        return questionDateList;
     }
 
     @Override

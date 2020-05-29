@@ -101,10 +101,16 @@ public interface CommentManageRepository extends PagingAndSortingRepository<Comm
     /**
      * 消息中心显示视频评论的回复
      * @param userId
-     * @param pageable
      * @return
      */
-    Page<Map<String, Object>> getVideoCommentReplyList(Integer userId, Pageable pageable);
+    List<Map<String, Object>> getVideoCommentReplyList(Integer userId, Integer size, int pageNum);
+
+    /**
+     * 消息中心显示视频评论的回复
+     * @param userId
+     * @return
+     */
+    Integer getCountVideoCommentReplyList(Integer userId);
 
     /**
      * 根据评论id获取评论信息

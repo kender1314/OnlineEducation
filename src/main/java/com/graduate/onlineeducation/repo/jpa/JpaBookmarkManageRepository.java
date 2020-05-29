@@ -30,12 +30,12 @@ public interface JpaBookmarkManageRepository extends BookmarkManageRepository {
 
     @Override
     @Query(value = "select * from gp_bookmark where bookmark_id in (select min(bookmark_id) from " +
-            "gp_bookmark WHERE user_id = 1 and ISNULL(question_id) group by bookmark_name)", nativeQuery = true)
+            "gp_bookmark WHERE user_id = ?1 and bookmark_is_video = 1 and ISNULL(question_id) group by bookmark_name)", nativeQuery = true)
     List<Bookmark> getVideoBookmarksListByUserId(Integer userId);
 
     @Override
     @Query(value = "select * from gp_bookmark where bookmark_id in (select min(bookmark_id) from " +
-            "gp_bookmark WHERE user_id = 1 and ISNULL(video_id) and bookmark_is_delete = 0 group by bookmark_name)", nativeQuery = true)
+            "gp_bookmark WHERE user_id = ?1 and ISNULL(video_id) and bookmark_is_video = 0 and bookmark_is_delete = 0 group by bookmark_name)", nativeQuery = true)
     List<Bookmark> getQuestionBookmarksListByUserId(Integer userId);
 
     @Override

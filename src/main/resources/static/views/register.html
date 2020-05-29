@@ -12,48 +12,52 @@
     <img src="../images/logo.png" height="42" width="250" style="margin-right: 50px"/>
     <li class="layui-nav-item layui-this"><a href="">首页</a></li>
 </ul>
-<form class="layui-form" id="form" action="/user/register" method="post"
-      style="width: 400px; margin: 200px auto 0;">
-    <div class="layui-form-item">
-        <label class="layui-form-label">用户名</label>
-        <div class="layui-input-block">
-            <input type="text" name="userName" id="userName" lay-verify="title" autocomplete="off" placeholder="请输入用户名"
-                   class="layui-input" onblur="checkUserName()">
-            <span id="userName-tips"></span>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">密码</label>
-        <div class="layui-input-block">
-            <input type="password" id="password" lay-verify="required" lay-reqtext="请输入长度为6-12位的密码"
-                   placeholder="请输入密码" autocomplete="off" class="layui-input" onblur="countPassword()">
-            <span id="password-tips"></span>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">确认密码</label>
-        <div class="layui-input-block">
-            <input type="password" name="userPassword" id="confirmPassword" lay-verify="required" lay-reqtext="请输入长度为6-12位的密码"
-                   onblur="checkpassword()" placeholder="请再次输入密码" autocomplete="off" class="layui-input">
-            <span id="tips"></span>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">验证邮箱</label>
-            <div class="layui-input-inline">
-                <input type="text" name="userMail" lay-verify="email" autocomplete="off" class="layui-input">
+<div style="min-height: 500px; width: 80%; margin-left: 10%">
+    <form class="layui-form" id="form" action="/user/register" method="post"
+          style="width: 400px; margin-top: 100px; margin-left: 350px">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" name="userName" id="userName" lay-verify="title" autocomplete="off"
+                       placeholder="请输入用户名"
+                       class="layui-input" onblur="checkUserName()">
+                <span id="userName-tips"></span>
             </div>
         </div>
-    </div>
-    <div class="layui-form-item" style="margin-top: 50px">
-        <div class="layui-input-block">
-            <button type="button" id="sub" class="layui-btn" lay-submit="">立即注册</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            <button type="button" id="login" class="layui-btn layui-btn-primary">登录</button>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="password" id="password" lay-verify="required" lay-reqtext="请输入长度为6-12位的密码"
+                       placeholder="请输入密码" autocomplete="off" class="layui-input" onblur="countPassword()">
+                <span id="password-tips"></span>
+            </div>
         </div>
-    </div>
-</form>
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="userPassword" id="confirmPassword" lay-verify="required"
+                       lay-reqtext="请输入长度为6-12位的密码"
+                       onblur="checkpassword()" placeholder="请再次输入密码" autocomplete="off" class="layui-input">
+                <span id="tips"></span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">验证邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userMail" lay-verify="email" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-top: 50px">
+            <div class="layui-input-block">
+                <button type="button" id="sub" class="layui-btn" lay-submit="">立即注册</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <button type="button" id="login" class="layui-btn layui-btn-primary">登录</button>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="my-footer">
 </div>
 </body>
@@ -105,13 +109,13 @@
 
     function checkUserName() {
         var userName = document.getElementById("userName").value;
-        if (userName === ""){
+        if (userName === "") {
             document.getElementById("userName-tips").innerHTML = "<br><font color='red'>输入账号不能为空!</font>";
             document.getElementById("submit").disabled = true;
-        }else if (userName.length < 5){
+        } else if (userName.length < 5) {
             document.getElementById("userName-tips").innerHTML = "<br><font color='red'>用户名至少得5个字符!</font>";
             document.getElementById("submit").disabled = true;
-        }else {
+        } else {
             document.getElementById("userName-tips").innerHTML = "";
             document.getElementById("submit").disabled = true;
         }
@@ -119,13 +123,13 @@
 
     function countPassword() {
         var password = document.getElementById("password").value;
-        if (password === ""){
+        if (password === "") {
             document.getElementById("password-tips").innerHTML = "<br><font color='red'>输入密码不能为空!</font>";
             document.getElementById("submit").disabled = true;
-        }else if (password.length < 6){
+        } else if (password.length < 6) {
             document.getElementById("password-tips").innerHTML = "<br><font color='red'>密码至少得6个字符!</font>";
             document.getElementById("submit").disabled = true;
-        }else {
+        } else {
             document.getElementById("password-tips").innerHTML = "";
             document.getElementById("submit").disabled = false;
         }
@@ -134,10 +138,10 @@
     function checkpassword() {
         var password = document.getElementById("password").value;
         var repassword = document.getElementById("confirmPassword").value;
-        if (password === "" || repassword === ""){
+        if (password === "" || repassword === "") {
             document.getElementById("tips").innerHTML = "<br><font color='red'>输入密码不能为空!</font>";
             document.getElementById("submit").disabled = true;
-        }else if (password === repassword) {
+        } else if (password === repassword) {
             document.getElementById("tips").innerHTML = "<br><font color='green'>两次密码输入一致</font>";
             document.getElementById("password").value = obscure(repassword, 10);
             document.getElementById("confirmPassword").value = obscure(repassword, 10);

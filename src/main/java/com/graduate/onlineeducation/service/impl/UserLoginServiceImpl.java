@@ -50,11 +50,13 @@ public class UserLoginServiceImpl implements UserLoginService {
         String username = (String) params.get("username");
         String password = (String) params.get("password");
         User user = userLoginRepository.login(username);
-        if (SaltEncryptUtil.stringToDecode(user.getUserPassword()).
-                equals(SaltEncryptUtil.stringToDecode(password))) {
-            session.setAttribute("user", user);
-            model.addAttribute("user", user);
-            return true;
+        if (user != null) {
+            if (SaltEncryptUtil.stringToDecode(user.getUserPassword()).
+                    equals(SaltEncryptUtil.stringToDecode(password))) {
+                session.setAttribute("user", user);
+                model.addAttribute("user", user);
+                return true;
+            }
         }
         return false;
     }
@@ -96,11 +98,11 @@ public class UserLoginServiceImpl implements UserLoginService {
     @Transactional
     public boolean rePassword(String mail) {
         String activeCode = IDUtils.getUUID();
-        int temp  = userLoginRepository.updateActiveCode(activeCode, mail);
-            logger.info("激活码:" + activeCode);
-            String subject = "来自启路在线网站的激活邮件";
-            String context = "<a href=\"http://localhost:8080/user/reCheckCode?code=" + activeCode + "\">密码重置请点击这里</a>";
-            mailService.sendMimeMail(mail, subject, context);
+        int temp = userLoginRepository.updateActiveCode(activeCode, mail);
+        logger.info("激活码:" + activeCode);
+        String subject = "来自启路在线网站的激活邮件";
+        String context = "<a href=\"http://localhost:8080/user/reCheckCode?code=" + activeCode + "\">密码重置请点击这里</a>";
+        mailService.sendMimeMail(mail, subject, context);
         return temp == 1;
     }
 

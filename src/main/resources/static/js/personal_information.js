@@ -64,6 +64,29 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
 
 
 //触发事件
+    var active0 = {
+        offset: function (othis) {
+            var type = othis.data('type');
+
+            layer.open({
+                type: 1
+                ,
+                offset: ['200px', '700px'] //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                ,
+                title: '积分充值'
+                ,
+                id: 'recharge' + type //防止重复弹出
+                ,
+                content: '<img src="../images/pay.jpg" width="200px"/>'
+            });
+        }
+    };
+
+    $('#recharge').on('click', function () {
+        var othis = $(this), method = othis.data('method');
+        active0[method] ? active0[method].call(this, othis) : '';
+    });
+
     var active = {
         offset: function (othis) {
             var type = othis.data('type');
@@ -110,26 +133,26 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 ,
                 title: '信息修改'
                 ,
-                id: 'edit-mail' + type //防止重复弹出
+                id: 'edit-phone' + type //防止重复弹出
                 ,
                 content: '   <div class="layui-inline" style="margin-top: 20px; margin-right: 40px">\n' +
-                    '       <label class="layui-form-label" style="font-size: 13px">邮件</label>\n' +
+                    '       <label class="layui-form-label" style="font-size: 13px">电话</label>\n' +
                     '       <div class="layui-input-inline">\n' +
-                    '        <input type="tel" name="mail" id="mail" class="layui-input"' +
-                    'style="width: 200px; height: 30px; margin-top: 5px">\n' +
+                    '        <input type="tel" name="phone" name="phone" id="phone" lay-verify="required|phone" autocomplete="off" class="layui-input"' +
+                    'style="width: 200px; height: 30px; margin-top: 5px">' +
                     '       </div>\n' +
                     '   </div>'
                 ,
                 btn: ['保存', '取消']
                 , btn1: function (index, layero) {
-                    var param = document.getElementById("mail").value;
-                    updateUser("mail", param, index);
+                    var param = document.getElementById("phone").value;
+                    updateUser("phone", param, index);
                 }
             });
         }
     };
 
-    $('#edit-mail').on('click', function () {
+    $('#edit-phone').on('click', function () {
         var othis = $(this), method = othis.data('method');
         active1[method] ? active1[method].call(this, othis) : '';
     });
@@ -429,6 +452,8 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 id: 'addQuestion' + type //防止重复弹出
                 ,
                 content: '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
+                    + '      <input type="hidden" min="0" id="questionIntegral" value="0" placeholder="请输入悬赏积分" autocomplete="off" class="layui-input" '
+                    + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
                     + '<table>'
                     + '<tr>'
                     + '<td colspan="2">'
@@ -441,15 +466,6 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     + '</td>'
                     + '</tr>'
                     + '<tr>'
-                    + '<td>'
-                    + '<div class="layui-form-item">\n'
-                    + '    <label class="layui-form-label" style="font-size: 13px">悬赏积分</label>\n'
-                    + '    <div class="layui-input-block">\n'
-                    + '      <input type="number" min="0" id="questionIntegral" value="" placeholder="请输入悬赏积分" autocomplete="off" class="layui-input" '
-                    + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                    + '    </div>\n'
-                    + '  </div>'
-                    + '</td>'
                     + '<td >'
                     + '<div class="layui-form-item">\n'
                     + '    <label class="layui-form-label" style="font-size: 13px">类别</label>\n'
@@ -490,7 +506,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     var questionIntegral = document.getElementById("questionIntegral").value;
                     var classification = document.getElementById("classification").value;
                     var questionContent = document.getElementById("questionContent").value;
-                    var questionDate = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+                    var questionDate = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
                     var questionIsSolve = 0;
                     var isDelete = 0;
                     formData.append("userId", userId);
@@ -514,6 +530,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                                 //关闭弹框
                                 layer.close(index);
                                 layer.msg("添加成功", {icon: 6});
+                                setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                    window.location.reload();//页面刷新
+                                }, 1000);
                             } else {
                                 layer.msg("添加失败", {icon: 5});
                             }
@@ -611,19 +630,6 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
     $('#editQuestion').on('click', function () {
         var othis = $(this), method = othis.data('method');
         active6[method] ? active6[method].call(this, othis) : '';
-    });
-
-    table.render({
-        elem: '#test'
-        , url: '/demo/table/user/'
-        , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-        , cols: [[
-            , {field: 'videoNumber', width: 80, title: '集'}
-            , {field: 'videoName', title: '视频名', sort: true}
-            , {field: 'videoDate', title: '上传时间'}
-            , {field: 'playbackVolume', title: '播放量'} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
-        ]]
     });
 
     /**
@@ -1055,6 +1061,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                         //关闭弹框
                         layer.close(index);
                         layer.msg("删除成功", {icon: 6});
+                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                            window.location.reload();//页面刷新
+                        }, 1000);
                     } else {
                         layer.msg("删除失败", {icon: 5});
                     }
@@ -1081,6 +1090,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                         //关闭弹框
                         layer.close(index);
                         layer.msg("删除成功", {icon: 6});
+                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                            window.location.reload();//页面刷新
+                        }, 1000);
                     } else {
                         layer.msg("删除失败", {icon: 5});
                     }
@@ -1103,6 +1115,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                         //关闭弹框
                         layer.close(index);
                         layer.msg("删除成功", {icon: 6});
+                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                            window.location.reload();//页面刷新
+                        }, 1000);
                     } else {
                         layer.msg("删除失败", {icon: 5});
                     }
@@ -1145,6 +1160,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             //关闭弹框
                             layer.close(index);
                             layer.msg("更新成功", {icon: 6});
+                            setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                window.location.reload();//页面刷新
+                            }, 1000);
                         } else {
                             layer.msg("更新失败", {icon: 5});
                         }
@@ -1189,6 +1207,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             //关闭弹框
                             layer.close(index);
                             layer.msg("更新成功", {icon: 6});
+                            setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                window.location.reload();//页面刷新
+                            }, 1000);
                         } else {
                             layer.msg("更新失败", {icon: 5});
                         }
@@ -1294,6 +1315,8 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             + '<input type="hidden" id="questionIsSolve" name="questionIsSolve" value="' + data.data.questionIsSolve + '">'
                             + '<input type="hidden" id="isDelete" name="isDelete" value="' + data.data.isDelete + '">'
                             + '<input type="hidden" id="viewNumber" name="viewNumber" value="' + data.data.viewNumber + '">'
+                            + '      <input type="hidden" min="0" id="questionIntegral" value="' + data.data.questionIntegral + '" placeholder="请输入悬赏积分" autocomplete="off" class="layui-input" '
+                            + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
                             + '<table>'
                             + '<tr>'
                             + '<td colspan="2">'
@@ -1306,15 +1329,6 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             + '</td>'
                             + '</tr>'
                             + '<tr>'
-                            + '<td>'
-                            + '<div class="layui-form-item">\n'
-                            + '    <label class="layui-form-label" style="font-size: 13px">悬赏积分</label>\n'
-                            + '    <div class="layui-input-block">\n'
-                            + '      <input type="number" min="0" id="questionIntegral" value="' + data.data.questionIntegral + '" placeholder="请输入悬赏积分" autocomplete="off" class="layui-input" '
-                            + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                            + '    </div>\n'
-                            + '  </div>'
-                            + '</td>'
                             + '<td >'
                             + '<div class="layui-form-item">\n'
                             + '    <label class="layui-form-label" style="font-size: 13px">类别</label>\n'
@@ -1360,7 +1374,8 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             var questionDate = document.getElementById("questionDate").value;
                             var questionIsSolve = document.getElementById("questionIsSolve").value;
                             var isDelete = document.getElementById("isDelete").value;
-                            var viewNumber = document.getElementById("viewNumber").value;
+                            // var viewNumber = document.getElementById("viewNumber").value;
+                            var viewNumber = 0;
                             formData.append("id", id);
                             formData.append("userId", userId);
                             formData.append("questionName", questionName);
@@ -1384,6 +1399,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                                         //关闭弹框
                                         layer.close(index);
                                         layer.msg("修改成功", {icon: 6});
+                                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                            window.location.reload();//页面刷新
+                                        }, 1000);
                                     } else {
                                         layer.msg("修改失败", {icon: 5});
                                     }
@@ -1414,6 +1432,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                         //关闭弹框
                         layer.close(index);
                         layer.msg("删除成功", {icon: 6});
+                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                            window.location.reload();//页面刷新
+                        }, 1000);
                     } else {
                         layer.msg("删除失败", {icon: 5});
                     }
@@ -1453,10 +1474,13 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 } else {
                     document.getElementById("demoPage").style.display = "block";
                     for (var i = 0; i < data.data.numberOfElements; i++) {
-                        var appendhtml = "<div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px\">\n" +
+                        var appendhtml = "<div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px;\">\n" +
                             "                                <div class=\"layui-card\">\n" +
-                            "                                    <a href=\"\"><img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
-                            "                                        <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
+                            "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "&pageNum=1\">" +
+                            "                                        <img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
+                            "                                            <div style=\"height: 40px\">\n" +
+                            "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
+                            "                                            </div>\n" +
                             "                                    </a>\n" +
                             "                                    <div class=\"layui-card-body\">\n" +
                             "                                        <div class=\"layui-input-inline\" style=\"float: left\">\n" +
@@ -1547,6 +1571,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                         //关闭弹框
                         layer.close(index);
                         layer.msg("删除成功", {icon: 6});
+                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                            window.location.reload();//页面刷新
+                        }, 1000);
                     } else {
                         layer.msg("删除失败", {icon: 5});
                     }
@@ -1573,6 +1600,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                         //关闭弹框
                         layer.close(index);
                         layer.msg("删除成功", {icon: 6});
+                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                            window.location.reload();//页面刷新
+                        }, 1000);
                     } else {
                         layer.msg("删除失败", {icon: 5});
                     }
@@ -1721,6 +1751,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                                         //关闭弹框
                                         layer.close(index);
                                         layer.msg("修改成功", {icon: 6});
+                                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                            window.location.reload();//页面刷新
+                                        }, 1000);
                                     } else {
                                         layer.msg("修改失败", {icon: 5});
                                     }
@@ -1742,7 +1775,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
             fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
         // 检查是否是图片
         if( !fileFormat.match(/.png|.jpg|.jpeg/) ) {
-            layer.msg("上传错误,文件格式必须为：png/jpg/jpeg", {icon: 6});
+            layer.msg("上传错误,文件格式必须为：png/jpg/jpeg", {icon: 5});
             return;
         }
     });
@@ -1752,7 +1785,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
             fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
         // 检查是否是图片
         if( !fileFormat.match(/.png|.jpg|.jpeg/) ) {
-            layer.msg("上传错误,文件格式必须为：png/jpg/jpeg", {icon: 6});
+            layer.msg("上传错误,文件格式必须为：png/jpg/jpeg", {icon: 5});
         }
     });
 
@@ -1761,7 +1794,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
             fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
         // 检查是否是图片
         if( !fileFormat.match(/.mp4|.avi/) ) {
-            layer.msg("上传错误,视频格式必须为：mp4", {icon: 6});
+            layer.msg("上传错误,视频格式必须为：mp4", {icon: 5});
         }
     });
 
@@ -1780,7 +1813,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
         var introduction = document.getElementById("seriesIntroduction").value;
         var introduction = document.getElementById("seriesIntroduction").value;
         var myDate = new Date();
-        var seriesDate = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+        var seriesDate = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
 
         formData.append("userId", userId);
         formData.append("seriesName", seriesName);
@@ -1803,9 +1836,12 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
             success: function (data) {
                 if (data.data === true) {
                     //关闭弹框
-                    layer.msg("修改成功", {icon: 6});
+                    layer.msg("新建成功", {icon: 6});
+                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                        window.location.reload();//页面刷新
+                    }, 1000);
                 } else {
-                    layer.msg("修改失败", {icon: 5});
+                    layer.msg("新建失败", {icon: 5});
                 }
             }
         });
@@ -1830,7 +1866,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
         var videoIntegral = document.getElementById("videoIntegral").value;
         var introduction = document.getElementById("introduction").value;
         var myDate = new Date();
-        var videoDate = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+        var videoDate = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
 
         formData.append("userId", userId);
         formData.append("videoName", videoName);
@@ -1857,6 +1893,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 if (data.data === true) {
                     //关闭弹框
                     layer.msg("添加成功", {icon: 6});
+                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                        window.location.reload();//页面刷新
+                    }, 1000);
                 } else {
                     layer.msg("添加失败", {icon: 5});
                 }
@@ -1898,8 +1937,8 @@ function showVideoByOrder(pageNo, pageSize, userId) {
                         "                                    <div class=\"layui-card\">\n" +
                         "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].video.id + "&pageNum=1\">" +
                         "                                           <img src=" + data.data.content[i].video.videoImageUrl + " width=\"212\">\n" +
-                        "                                            <div style=\"min-height: 30px; margin-left: 15px; \">\n" +
-                        "                                                <span style=\"font-size: 12px\">" + data.data.content[i].video.videoName + "</span>\n" +
+                        "                                            <div style=\"height: 40px\">\n" +
+                        "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].video.videoName + "</span>\n" +
                         "                                            </div>\n" +
                         "                                        </a>\n" +
                         "                                        <div class=\"layui-card-body\">\n" +
@@ -1994,6 +2033,10 @@ function playVideoBySeries(seriesId) {
     window.location.href ="/userUrl/playSeriesBySeries?seriesId=" + seriesId + "&pageNum=1";
 }
 
+/**
+ * 删除无效订单
+ * @param orderId
+ */
 function deleteOrder(orderId) {
     layer.confirm('是否删除', function (index) {
         $.ajax({
@@ -2007,7 +2050,9 @@ function deleteOrder(orderId) {
                 if (data.data === true) {
                     layer.close(index);
                     layer.msg("删除成功", {icon: 6});
-                    location.reload();
+                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                        location.reload();
+                    }, 1000);
                 } else {
                     layer.msg("删除失败", {icon: 5});
                 }
@@ -2112,13 +2157,17 @@ function showAllOrder(pageNo, pageSize, userId) {
                             "                                        </div>\n" +
                             "                                    </div>";
                     } else if (data.data.content[i].orderStatus === 1) {
-                        appendhtml2 = "                                                    <span style=\"margin-left: 100px\">状态：<span\n" +
+                        appendhtml2 = "                                                    <span style=\"margin-left: 50px\">状态：<span\n" +
                             "                                                            style=\"color: green; \">未支付</span></span>\n" +
                             "                                                </div>\n" +
                             "                                                <div class=\"layui-input-inline\">\n" +
                             "                                                    <button type=\"button\"\n" +
+                            "                                                            class=\"layui-btn layui-btn-sm layui-btn-normal  layui-btn-radius\"\n" +
+                            "                                                            style=\"margin-left: 10px\" onclick='toPay(" + data.data.content[i].id + ", " + data.data.content[i].isVideo +")'>立即支付\n" +
+                            "                                                    </button>\n" +
+                            "                                                    <button type=\"button\"\n" +
                             "                                                            class=\"layui-btn layui-btn-sm layui-btn-danger  layui-btn-radius\"\n" +
-                            "                                                            style=\"margin-left: 20px\">立即支付\n" +
+                            "                                                            style=\"margin-left: 10px\" onclick='cancelOrder(" + data.data.content[i].id + ")'>取消订单\n" +
                             "                                                    </button>\n" +
                             "                                                </div>\n" +
                             "                                            </div>\n" +
@@ -2142,6 +2191,34 @@ function showAllOrder(pageNo, pageSize, userId) {
                 }
             }
         }
+    });
+}
+
+function toPay(id, isVideo) {
+    window.location.href = "/userUrl/toPay?id=" + id + "&isVideo=" + isVideo;
+}
+
+function cancelOrder(orderId) {
+    layer.confirm('是否取消订单？', function (index) {
+        $.ajax({
+            url: "/orderManage/cancelOrder?id=" + orderId,
+            type: "post",
+            dataType: "json",
+            async: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.data === true) {
+                    layer.close(index);
+                    layer.msg("取消成功", {icon: 6});
+                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                        location.reload();
+                    }, 1000);
+                } else {
+                    layer.msg("取消失败", {icon: 5});
+                }
+            }
+        });
     });
 }
 
@@ -2233,13 +2310,17 @@ function showNonPaymentOrder(pageNo, pageSize, userId) {
                             "                                                            style=\"color: red\">系列</span></span>\n";
 
                     }
-                    appendhtml2 = "                                                    <span style=\"margin-left: 100px\">状态：<span\n" +
+                    appendhtml2 = "                                                    <span style=\"margin-left: 50px\">状态：<span\n" +
                         "                                                            style=\"color: green; \">未支付</span></span>\n" +
                         "                                                </div>\n" +
                         "                                                <div class=\"layui-input-inline\">\n" +
                         "                                                    <button type=\"button\"\n" +
+                        "                                                            class=\"layui-btn layui-btn-sm layui-btn-normal  layui-btn-radius\"\n" +
+                        "                                                            style=\"margin-left: 10px\" onclick='toPay(" + data.data.content[i].id + ", " + data.data.content[i].isVideo +")'>立即支付\n" +
+                        "                                                    </button>\n" +
+                        "                                                    <button type=\"button\"\n" +
                         "                                                            class=\"layui-btn layui-btn-sm layui-btn-danger  layui-btn-radius\"\n" +
-                        "                                                            style=\"margin-left: 20px\">立即支付\n" +
+                        "                                                            style=\"margin-left: 10px\" onclick='cancelOrder(" + data.data.content[i].id + ")'>取消订单\n" +
                         "                                                    </button>\n" +
                         "                                                </div>\n" +
                         "                                            </div>\n" +

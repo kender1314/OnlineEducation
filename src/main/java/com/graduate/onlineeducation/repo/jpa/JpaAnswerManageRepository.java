@@ -61,8 +61,12 @@ public interface JpaAnswerManageRepository extends AnswerManageRepository {
     Answer getAnswerById(Integer answerId);
 
     @Override
-    @Query(value = "select gp_answer.*, gp_user.user_name from gp_answer, gp_user where gp_answer.answer_reply_id in (select gp_answer.answer_id from gp_answer where user_id = ?1) and answer_is_delete = 0 and gp_answer.user_id = gp_user.user_id order by gp_answer.answer_is_watch asc", nativeQuery = true)
-    Page<Map<String, Object>> getQuestionCommentReplyList(Integer userId, Pageable pageable);
+    @Query(value = "select gp_answer.*, gp_user.user_name from gp_answer, gp_user where gp_answer.answer_reply_id in (select gp_answer.answer_id from gp_answer where user_id = ?1) and answer_is_delete = 0 and gp_answer.user_id = gp_user.user_id order by gp_answer.answer_is_watch asc limit ?3,?2", nativeQuery = true)
+    List<Map<String, Object>> getQuestionCommentReplyList(Integer userId, Integer size, int pageNum);
+
+    @Override
+    @Query(value = "select count(*) from gp_answer, gp_user where gp_answer.answer_reply_id in (select gp_answer.answer_id from gp_answer where user_id = ?1) and answer_is_delete = 0 and gp_answer.user_id = gp_user.user_id order by gp_answer.answer_is_watch asc", nativeQuery = true)
+    Integer getCountQuestionCommentReplyList(Integer userId);
 
     @Override
     @Modifying

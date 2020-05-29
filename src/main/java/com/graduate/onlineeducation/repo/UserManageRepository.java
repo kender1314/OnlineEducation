@@ -74,47 +74,61 @@ public interface UserManageRepository extends PagingAndSortingRepository<User, I
      * @param userName
      * @return
      */
-    int updateUserName(String userName, Integer userId);
+    Integer updateUserName(String userName, Integer userId);
 
     /**
      * 更新邮件
-     * @param mail
+     * @param phone
      * @return
      */
-    int updateUserMail(String mail, Integer userId);
+    Integer updateUserPhone(String phone, Integer userId);
 
     /**
      * 更新兴趣爱好
      * @param hobby
      * @return
      */
-    int updateUserHobby(String hobby, Integer userId);
+    Integer updateUserHobby(String hobby, Integer userId);
 
     /**
      * 更新地址
      * @param address
      * @return
      */
-    int updateUserAddress(String address, Integer userId);
+    Integer updateUserAddress(String address, Integer userId);
 
     /**
      * 更新学历
      * @param education
      * @return
      */
-    int updateUserEducation(String education, Integer userId);
+    Integer updateUserEducation(String education, Integer userId);
 
     /**
      * 更新介绍
      * @param introduce
      * @return
      */
-    int updateUserIntroduce(String introduce, Integer userId);
+    Integer updateUserIntroduce(String introduce, Integer userId);
 
     /**
      * 更新密码
      * @param password
      * @return
      */
-    int updateUserPasssword(String password, Integer userId);
+    Integer updateUserPasssword(String password, Integer userId);
+
+    /**
+     * 购买视频之后的人减去积分
+     * @param userId
+     * @return
+     */
+    Integer subtractIntegralByOrder(Integer userId, Integer seriesIntegral);
+
+    /**
+     * 被购买视频的人加上积分
+     * @param userId
+     * @return
+     */
+    Integer addIntegralByOrder(Integer userId, Integer seriesIntegral);
 }

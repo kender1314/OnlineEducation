@@ -1,6 +1,7 @@
 package com.graduate.onlineeducation.service;
 
 import com.graduate.onlineeducation.entity.DTO.QuestionDTO;
+import com.graduate.onlineeducation.entity.DTO.QuestionDateDTO;
 import com.graduate.onlineeducation.entity.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
@@ -27,6 +28,13 @@ public interface QuestionManageService {
      * @return
      */
     Page<Question> getQuestionList(Map<String, Object> params);
+
+    /**
+     * 获取所有问题信息列表，按时间新旧排序
+     * @param params
+     * @return
+     */
+    Page<QuestionDateDTO> getQuestionListOrderByDate(Map<String, Object> params);
 
     /**
      * 查找问题信息

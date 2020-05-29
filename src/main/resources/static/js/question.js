@@ -43,7 +43,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
     $('#answer-submit').on('click', function () {
         var answerContent = document.getElementById("answer-content").value;
         var myDate = new Date();
-        var date = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+        var date = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
         var formData = new FormData();
         if (answerContent === "" || answerContent == null) {
             document.getElementById("content-warm").style.display = "block";
@@ -298,7 +298,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
     window.answerReply = function (id) {
         var answerContent = document.getElementById("answerReply" + id).value;
         var myDate = new Date();
-        var date = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+        var date = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
         var formData = new FormData();
         if (answerContent === "" || answerContent == null) {
             document.getElementById("answerReply-warm" + id).style.display = "block";
@@ -412,7 +412,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             btn1: function (index, layero) {
                 var answerContent = document.getElementById("replyA").value;
                 var myDate = new Date();
-                var date = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+                var date = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
                 var formData = new FormData();
                 if (answerContent === "" || answerContent == null) {
                     document.getElementById("replyA-warm").style.display = "block";

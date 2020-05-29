@@ -84,7 +84,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             btn1: function (index, layero) {
                 var commentContent = document.getElementById("replyA").value;
                 var myDate = new Date();
-                var date = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+                var date = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
                 var formData = new FormData();
                 if (commentContent === "" || commentContent == null) {
                     document.getElementById("replyA-warm").style.display = "block";
@@ -219,7 +219,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             btn1: function (index, layero) {
                 var answerContent = document.getElementById("replyA").value;
                 var myDate = new Date();
-                var date = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+                var date = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
                 var formData = new FormData();
                 if (answerContent === "" || answerContent == null) {
                     document.getElementById("replyA-warm").style.display = "block";

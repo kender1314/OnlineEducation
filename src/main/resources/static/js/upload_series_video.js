@@ -29,7 +29,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
         var introduction = document.getElementById("introduction").value;
         var videoNumber = document.getElementById("videoNumber").value;
         var myDate = new Date();
-        var videoDate = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+        var videoDate = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
 
         formData.append("userId", userId);
         formData.append("seriesId", seriesId);

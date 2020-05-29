@@ -77,6 +77,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             //关闭弹框
                             layer.close(index);
                             layer.msg("删除成功", {icon: 6});
+                            setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                window.location.reload();//页面刷新
+                            }, 1000);
                         } else {
                             layer.msg("删除失败", {icon: 5});
                         }
@@ -132,16 +135,19 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     + '    <label class="layui-form-label" style="font-size: 13px">类别</label>\n'
                     + '    <div class="layui-input-block">\n'
                     + ' <div class="layui-inline" style="width: 150px; height: 30px; margin-top: 5px">\n'
-                    + '      <div class="layui-input-inline">\n'
-                    + '        <select name="videoClassification" id="videoClassification1" '
-                    + 'style="width: 150px; height: 30px; margin-top: 5px" onchange="selectSeries1()" lay-verify="required" lay-search="">\n'
-                    + '          <option value="'+ data.videoClassification + '">默认：'+ data.videoClassification + '</option>\n'
-                    + '          <option value="编程语言">编程语言</option>\n'
-                    + '          <option value="云计算大数据">云计算大数据</option>\n'
-                    + '          <option value="计算机基础">计算机基础</option>\n'
-                    + '          <option value="移动开发">移动开发</option>\n'
-                    + '          <option value="前沿技术">前沿技术</option>\n'
-                    + '        </select>\n'
+                    + '      <div class="layui-input-inline">\n' +
+                    '                        <input type="tel" name="videoClassification" id="videoClassification1"\n' +
+                    '                                       autocomplete="off"\n' +
+                    '                                       class="layui-input" readonly\n' +
+                    '                                       style="width: 150px; height: 30px; margin-top: 5px" value="'+ data.videoClassification + '">'
+                    // + '        <select name="videoClassification" id="videoClassification1" style="width: 150px; height: 30px; margin-top: 5px" onchange="selectSeries1()" lay-verify="required" lay-search="">\n'
+                    // + '          <option value="'+ data.videoClassification + '">默认：'+ data.videoClassification + '</option>\n'
+                    // + '          <option value="编程语言">编程语言</option>\n'
+                    // + '          <option value="云计算大数据">云计算大数据</option>\n'
+                    // + '          <option value="计算机基础">计算机基础</option>\n'
+                    // + '          <option value="移动开发">移动开发</option>\n'
+                    // + '          <option value="前沿技术">前沿技术</option>\n'
+                    // + '        </select>\n'
                     + '      </div>\n'
                     + '    </div>'
                     + '    </div>\n'
@@ -152,11 +158,14 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     + '    <label class="layui-form-label" style="font-size: 13px">二级分类</label>\n'
                     + '    <div class="layui-input-block">\n'
                     + ' <div class="layui-inline" style="width: 150px; height: 30px; margin-top: 5px">\n'
-                    + '      <div class="layui-input-inline">\n'
-                    + '        <select name="classificationLittle" id="classificationLittle1" '
-                    + 'style="width: 150px; height: 30px; margin-top: 5px" lay-verify="required" lay-search="">\n'
-                    + '          <option value="'+ data.classificationLittle + '">默认：'+ data.classificationLittle + '</option>\n'
-                    +           '</select>\n'
+                    + '      <div class="layui-input-inline">\n' +
+                    '                                <input type="tel" name="classificationLittle" id="classificationLittle1"\n' +
+                    '                                       autocomplete="off"\n' +
+                    '                                       class="layui-input" readonly\n' +
+                    '                                       style="width: 150px; height: 30px; margin-top: 5px" value="'+ data.classificationLittle + '">'
+                    // + '        <select name="classificationLittle" id="classificationLittle1" style="width: 150px; height: 30px; margin-top: 5px" lay-verify="required" lay-search="">\n'
+                    // + '          <option value="'+ data.classificationLittle + '">默认：'+ data.classificationLittle + '</option>\n'
+                    // +           '</select>\n'
                     + '      </div>\n'
                     + '    </div>'
                     + '    </div>\n'
@@ -231,6 +240,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                                 //关闭弹框
                                 layer.close(index);
                                 layer.msg("更新成功", {icon: 6});
+                                setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                    window.location.reload();//页面刷新
+                                }, 1000);
                             } else {
                                 layer.msg("更新失败", {icon: 5});
                             }
@@ -378,6 +390,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             //关闭弹框
                             layer.close(index);
                             layer.msg("更新成功", {icon: 6});
+                            setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                window.location.reload();//页面刷新
+                            }, 1000);
                         } else {
                             layer.msg("更新失败", {icon: 5});
                         }

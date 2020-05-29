@@ -44,11 +44,18 @@ public interface CommentLikeRepository extends PagingAndSortingRepository<Commen
 
     /**
      * 获取评论点赞信息
-     *
      * @param userId
-     * @param pageable
+     * @param size
+     * @param pageNum
      * @return
      */
-    Page<Map<String, Object>> getLikeNewsList(Integer userId, Pageable pageable);
+    List<Map<String, Object>> getLikeNewsList(Integer userId, Integer size, int pageNum);
+
+    /**
+     * 统计评论点赞信息数量
+     * @param userId
+     * @return
+     */
+    Integer getCountLikeNewsListByUserId(Integer userId);
 
 }

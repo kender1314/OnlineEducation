@@ -1,6 +1,7 @@
 package com.graduate.onlineeducation.repo;
 
 import com.graduate.onlineeducation.entity.DTO.QuestionDTO;
+import com.graduate.onlineeducation.entity.DTO.QuestionDateDTO;
 import com.graduate.onlineeducation.entity.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,13 @@ public interface QuestionManageRepository extends PagingAndSortingRepository<Que
      * @return
      */
     Page<Question> findAll(Specification<Question> spec, Pageable pageable);
+
+    /**
+     * 获取所有问题信息列表，按时间新旧排序
+     * @param pageable
+     * @return
+     */
+    Page<Question> getQuestionListOrderByDate(Pageable pageable);
 
     /**
      * 查找问题信息

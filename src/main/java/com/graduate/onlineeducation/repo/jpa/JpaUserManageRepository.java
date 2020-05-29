@@ -78,41 +78,53 @@ public interface JpaUserManageRepository extends UserManageRepository {
     @Modifying
     @Transactional
     @Query(value = "update gp_user set user_name = ?1 where user_id = ?2", nativeQuery = true)
-    int updateUserName(String userName, Integer userId);
+    Integer updateUserName(String userName, Integer userId);
 
     @Override
     @Modifying
     @Transactional
-    @Query(value = "update gp_user set user_mail = ?1 where user_id = ?2", nativeQuery = true)
-    int updateUserMail(String mail, Integer userId);
+    @Query(value = "update gp_user set user_phone_number = ?1 where user_id = ?2", nativeQuery = true)
+    Integer updateUserPhone(String phone, Integer userId);
 
     @Override
     @Modifying
     @Transactional
     @Query(value = "update gp_user set user_major = ?1 where user_id = ?2", nativeQuery = true)
-    int updateUserHobby(String hobby, Integer userId);
+    Integer updateUserHobby(String hobby, Integer userId);
 
     @Override
     @Modifying
     @Transactional
     @Query(value = "update gp_user set user_address = ?1 where user_id = ?2", nativeQuery = true)
-    int updateUserAddress(String address, Integer userId);
+    Integer updateUserAddress(String address, Integer userId);
 
     @Override
     @Modifying
     @Transactional
     @Query(value = "update gp_user set user_education = ?1 where user_id = ?2", nativeQuery = true)
-    int updateUserEducation(String education, Integer userId);
+    Integer updateUserEducation(String education, Integer userId);
 
     @Override
     @Modifying
     @Transactional
     @Query(value = "update gp_user set user_brief_introduction = ?1 where user_id = ?2", nativeQuery = true)
-    int updateUserIntroduce(String introduce, Integer userId);
+    Integer updateUserIntroduce(String introduce, Integer userId);
 
     @Override
     @Modifying
     @Transactional
     @Query(value = "update gp_user set user_password = ?1 where user_id = ?2", nativeQuery = true)
-    int updateUserPasssword(String password, Integer userId);
+    Integer updateUserPasssword(String password, Integer userId);
+
+    @Override
+    @Modifying
+    @Transactional
+    @Query(value = "update gp_user set user_integral = user_integral - ?2 where user_id = ?1 and user_integral >= ?2", nativeQuery = true)
+    Integer subtractIntegralByOrder(Integer userId, Integer seriesIntegral);
+
+    @Override
+    @Modifying
+    @Transactional
+    @Query(value = "update gp_user set user_integral = user_integral + ?2 where user_id = ?1", nativeQuery = true)
+    Integer addIntegralByOrder(Integer userId, Integer seriesIntegral);
 }

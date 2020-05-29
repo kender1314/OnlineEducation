@@ -60,11 +60,26 @@ public interface VideoSeriesManageService {
 
 
     /**
+     * 根据查询关键字，获取查询的系列
+     *
+     * @param params
+     * @return
+     */
+    Page<VideoSeries> getVideoByQuery(Map<String, Object> params);
+
+    /**
      * 根据查询关键字，获取查询的系列数量
      * @param query
      * @return
      */
     Integer getCountByQuery(String query);
+
+    /**
+     * 根据查询关键字，获取查询的系列数量
+     * @param query
+     * @return
+     */
+    Integer getCountVideoByQuery(String query);
 
     /**
      * 根据id获取视频系列

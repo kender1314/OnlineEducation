@@ -95,4 +95,9 @@ public class UrlAdminController {
         return "/views/admin_navigation";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/adminVideoPlay")
+    public String adminVideoPlay(String coverUrl, Model model) {
+        model.addAttribute("coverUrl", coverUrl);
+        return "/views/admin_videoPlay";
+    }
 }

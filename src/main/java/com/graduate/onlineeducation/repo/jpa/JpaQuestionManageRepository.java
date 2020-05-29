@@ -1,6 +1,7 @@
 package com.graduate.onlineeducation.repo.jpa;
 
 import com.graduate.onlineeducation.entity.DTO.QuestionDTO;
+import com.graduate.onlineeducation.entity.DTO.QuestionDateDTO;
 import com.graduate.onlineeducation.entity.Question;
 import com.graduate.onlineeducation.repo.QuestionManageRepository;
 import org.springframework.context.annotation.Profile;
@@ -24,6 +25,10 @@ public interface JpaQuestionManageRepository extends QuestionManageRepository {
     Page<Question> findAll(Specification<Question> spec, Pageable pageable);
 
     @Override
+    @Query(value = "select * from gp_question where user_id = 1 and question_is_delete = 0 ", nativeQuery = true)
+    Page<Question> getQuestionListOrderByDate(Pageable pageable);
+
+    @Override
     @Query(value = "select gp_question.* from gp_user, gp_question where gp_question.user_id = gp_user.user_id and(" +
             "gp_user.user_name like %?1% or question_name like %?1% or question_content like %?1%) and question_is_delete = 0", nativeQuery = true)
     Page<Question> findByParam(String query, Pageable pageable);
@@ -38,11 +43,11 @@ public interface JpaQuestionManageRepository extends QuestionManageRepository {
     Question getQuestionById(Integer id);
 
     @Override
-    @Query(value = "select * from gp_question where user_id = ?1 and question_is_delete = 0", nativeQuery = true)
+    @Query(value = "select * from gp_question where user_id = ?1 and question_is_delete = 0 order by question_date desc", nativeQuery = true)
     Page<Question> getQuestionByUserId(Integer id, Pageable pageable);
 
     @Override
-    @Query(value = "select count(*) from gp_question where user_id = ?1 and question_is_delete = 0", nativeQuery = true)
+    @Query(value = "select count(*) from gp_question where user_id = ?1 and question_is_delete = 0  order by question_date desc", nativeQuery = true)
     Integer getCountQuestionByUserId(Integer id);
 
     @Override

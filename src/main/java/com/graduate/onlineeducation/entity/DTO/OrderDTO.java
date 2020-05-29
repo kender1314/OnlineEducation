@@ -1,13 +1,15 @@
-package com.graduate.onlineeducation.entity;
+package com.graduate.onlineeducation.entity.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.graduate.onlineeducation.entity.User;
+import com.graduate.onlineeducation.entity.Video;
+import com.graduate.onlineeducation.entity.VideoSeries;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @Author hejiang
@@ -17,7 +19,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "gp_order", uniqueConstraints = {@UniqueConstraint(columnNames = "order_number")})
-public class Order implements Serializable {
+public class OrderDTO implements Serializable {
     private static final long serialVersionUID = 2514333989278491301L;
     /**
      * TABLE：使用一个特定的数据库表格来保存主键。
@@ -44,17 +46,14 @@ public class Order implements Serializable {
     @Column(name = "order_number")
     private String orderNumber;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_id")
+    private Integer userId;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "series_id")
-    private VideoSeries videoSeries;
+    @Column(name = "series_id")
+    private Integer seriesId;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "video_id")
-    private Video video;
+    @Column(name = "video_id")
+    private Integer videoId;
 
     @Column(name = "order_is_delete")
     private Integer isDelete;
@@ -86,28 +85,28 @@ public class Order implements Serializable {
         this.orderStatus = orderStatus;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public VideoSeries getVideoSeries() {
-        return videoSeries;
+    public Integer getSeriesId() {
+        return seriesId;
     }
 
-    public void setVideoSeries(VideoSeries videoSeries) {
-        this.videoSeries = videoSeries;
+    public void setSeriesId(Integer seriesId) {
+        this.seriesId = seriesId;
     }
 
-    public Video getVideo() {
-        return video;
+    public Integer getVideoId() {
+        return videoId;
     }
 
-    public void setVideo(Video video) {
-        this.video = video;
+    public void setVideoId(Integer videoId) {
+        this.videoId = videoId;
     }
 
     public String getOrderNumber() {
@@ -136,14 +135,14 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "OrderDTO{" +
                 "id=" + id +
                 ", orderDate=" + orderDate +
                 ", orderStatus=" + orderStatus +
                 ", orderNumber='" + orderNumber + '\'' +
-                ", user=" + user +
-                ", videoSeries=" + videoSeries +
-                ", video=" + video +
+                ", userId=" + userId +
+                ", seriesId=" + seriesId +
+                ", videoId=" + videoId +
                 ", isDelete=" + isDelete +
                 ", isVideo=" + isVideo +
                 '}';

@@ -65,8 +65,19 @@ public class VideoSeriesManageServiceImpl implements VideoSeriesManageService {
     }
 
     @Override
+    public Page<VideoSeries> getVideoByQuery(Map<String, Object> params) {
+        String query = (String) params.get("query");
+        return videoSeriesManageRepository.getVideoByQuery(query, PaginationBase.getPagination(params));
+    }
+
+    @Override
     public Integer getCountByQuery(String query) {
         return videoSeriesManageRepository.getCountByQuery(query);
+    }
+
+    @Override
+    public Integer getCountVideoByQuery(String query) {
+        return videoSeriesManageRepository.getCountVideoByQuery(query);
     }
 
     @Override

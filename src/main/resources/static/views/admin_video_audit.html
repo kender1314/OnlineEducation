@@ -74,6 +74,7 @@
 <!--<script src="../lib/jquery-2.1.4/jquery.min.js"></script>-->
 
 <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">详情</a>
     <a class="layui-btn layui-btn-xs" lay-event="pass">通过</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="fail">不通过</a>
 </script>
@@ -128,8 +129,8 @@
                         return d.series.seriesName;
                     }
                 }
-                    , {field: 'videoDate', title: '视频时间'}
-                    , {field: 'videoStatus', title: '视频状态', width: 100}
+                    , {field: 'videoDate', title: '视频上传时间'}
+                    // , {field: 'videoStatus', title: '视频状态', width: 100}
                     , {field: 'videoNumber', title: '视频集', width: 80}
                     , {field: 'videoClassification', title: '视频类别', width: 100}
                     , {field: 'classificationLittle', title: '二级分类', width: 100}
@@ -137,7 +138,7 @@
                     , {field: 'videoIntroduce', title: '视频简介', width: 100}
                     , {field: 'playbackVolume', title: '播放量', width: 100}
                     , {field: 'coverUrl', title: '视频地址', width: 100}
-                    , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                    , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
                 ]
             ]
             , id: 'testReload'
@@ -184,6 +185,9 @@
                         }
                     });
                 });
+            }else if(obj.event === 'detail'){
+                window.open ("/url/adminVideoPlay?coverUrl="+data.coverUrl, "newwindow", "height=520, width=900, top=150px, " +
+                    "left=400px, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
             }
         });
 

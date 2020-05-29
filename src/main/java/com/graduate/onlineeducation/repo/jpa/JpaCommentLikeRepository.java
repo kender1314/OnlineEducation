@@ -42,7 +42,10 @@ public interface JpaCommentLikeRepository extends CommentLikeRepository {
     Integer insertAnswer(Integer userId, Integer answerId, String likeDate);
 
     @Override
-    @Query(value = "select gp_user.user_id, gp_user.user_name, gp_comment.comment_content, gp_comment_like.like_date from gp_comment_like, gp_user, gp_comment where gp_comment_like.comment_id = gp_comment.comment_id and gp_user.user_id = gp_comment_like.user_id and gp_comment_like.comment_id in (select comment_id from gp_comment where user_id = ?1)", nativeQuery = true)
-    Page<Map<String, Object>> getLikeNewsList(Integer userId , Pageable pageable);
+    @Query(value = "select gp_user.user_id, gp_user.user_name, gp_comment.comment_content, gp_comment_like.like_date from gp_comment_like, gp_user, gp_comment where gp_comment_like.comment_id = gp_comment.comment_id and gp_user.user_id = gp_comment_like.user_id and gp_comment_like.comment_id in (select comment_id from gp_comment where user_id = ?1) order by gp_comment_like.like_date desc limit ?3,?2", nativeQuery = true)
+    List<Map<String, Object>> getLikeNewsList(Integer userId, Integer size, int pageNum);
 
+    @Override
+    @Query(value = "select count(*) from gp_comment_like, gp_user, gp_comment where gp_comment_like.comment_id = gp_comment.comment_id and gp_user.user_id = gp_comment_like.user_id and gp_comment_like.comment_id in (select comment_id from gp_comment where user_id = ?1) order by gp_comment_like.like_date desc ", nativeQuery = true)
+    Integer getCountLikeNewsListByUserId(Integer userId);
 }

@@ -300,6 +300,8 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
 function showByClassification(pageNo, pageSize, videoClassification) {
     var formData = new FormData();
     formData.append("query", videoClassification);
+    // formData.append("limit", pageSize);
+    // formData.append("page", pageNo);
     formData.append("limit", pageSize);
     formData.append("page", pageNo);
     $.ajax({
@@ -312,7 +314,7 @@ function showByClassification(pageNo, pageSize, videoClassification) {
         success: function (data) {
             $("#videoClass_limitless_item").empty();
             if (data.data.numberOfElements === 0) {
-                document.getElementById("demo7").style.display = "none";
+                // document.getElementById("demo7").style.display = "none";
                 var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
                     "<div>" +
                     "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
@@ -321,7 +323,7 @@ function showByClassification(pageNo, pageSize, videoClassification) {
                     "</div>";
                 $("#videoClass_limitless_item").append(appendhtml);
             } else {
-                document.getElementById("demo7").style.display = "block";
+                // document.getElementById("demo7").style.display = "block";
                 for (var i = 0; i < data.data.numberOfElements; i++) {
                     var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
                         "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
@@ -356,6 +358,8 @@ function showByClassification(pageNo, pageSize, videoClassification) {
 function showByClassificationLittle(pageNo, pageSize, classificationLittle) {
     var formData = new FormData();
     formData.append("query", classificationLittle);
+    // formData.append("limit", pageSize);
+    // formData.append("page", pageNo);
     formData.append("limit", pageSize);
     formData.append("page", pageNo);
     $.ajax({

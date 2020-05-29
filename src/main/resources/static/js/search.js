@@ -46,7 +46,7 @@ layui.use(['laypage', 'layer'], function () {
     });
     $('#searchSeries').on('click', function () {
         $.ajax({
-            url: "/videoSeriesManage/getCountByQuery?query=" + query,
+            url: "/videoSeriesManage/getCountVideoByQuery?query=" + query,
             type: "post",
             dataType: "json",
             contentType: false,
@@ -172,7 +172,7 @@ function showSeriesByQuery(pageNo, pageSize, query) {
     formData.append("limit", pageSize);
     formData.append("page", pageNo);
     $.ajax({
-        url: "/videoSeriesManage/search",
+        url: "/videoSeriesManage/getVideoByQuery",
         type: "post",
         dataType: "json",
         data: formData,
@@ -192,32 +192,37 @@ function showSeriesByQuery(pageNo, pageSize, query) {
             } else {
                 document.getElementById("demo7").style.display = "block";
                 for (var i = 0; i < data.data.numberOfElements; i++) {
-                    var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
-                        "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
-                        "                                    <div class=\"layui-card\">\n" +
-                        "                                        <a href=\"/userUrl/showSeries?id=" + data.data.content[i].id + "\">" +
-                        "                                           <img src=" + data.data.content[i].seriesImageUrl + " width=\"212\">\n" +
-                        "                                            <div style=\"height: 30px; margin-left: 15px;\">\n" +
-                        "                                                <span style=\" font-size: 12px\">" + data.data.content[i].seriesName + "</span>\n" +
-                        "                                            </div>\n" +
-                        "                                        </a>\n" +
+                    var appendHtml =  "<div style=\"width: 100%; min-height: 150px; background-color: #dee3e2;margin-bottom: 20px;\">\n" +
+                        "                                    <a href=\"/userUrl/playSeriesBySeries?seriesId=" + data.data.content[i].id + "&pageNum=1\">" +
+                        "                                    <div class=\"course-img layui-input-inline\" style=\"width: 250px; height: 150px\">\n" +
+                        "                                        <img src=" + data.data.content[i].seriesImageUrl + "\n" +
+                        "                                             height=\"150\"\n" +
+                        "                                             width=\"250\"/>\n" +
+                        "                                    </div>\n" +
+                        "                                    </a>\n" +
+                        "                                    <div class=\"my-course-introduce layui-input-inline\" style=\"width: 900px; min-height: 150px\">\n" +
+                        "                                        <div class=\"layui-card-header\">" + data.data.content[i].seriesName + "</div>\n" +
                         "                                        <div class=\"layui-card-body\">\n" +
-                        "                                            <div class=\"layui-input-inline\" style=\"float: left\">\n" +
-                        "                                                <img src=\"../images/integral.png\" style=\"width: 16px; height: 16px\"/>\n" +
-                        "                                                <span style=\"color: red; font-size: 10px\">" + data.data.content[i].seriesIntegral + "</span>&nbsp;&nbsp;" +
-                        // "                                                <img src=\"../images/play.png\" style=\"width: 16px; height: 16px\"/>\n" +
-                        // "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].playbackVolume + "</span>\n" +
-                        "                                            </div>\n" +
-                        "                                            <div class=\"layui-input-inline\" style=\"float: right\">\n" +
-                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].seriesDate + "</span>\n" +
-                        "                                            </div>\n" +
-                        "                                            <div style=\"clear: both\"></div>\n" +
-                        "                                            <img src=\"../images/user1.png\" style=\"width: 16px; height: 16px\"/>\n" +
-                        "                                            <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].user.userName +"</span>" +
+                        "                                             <span style=\"font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                总集数：" + data.data.content[i].seriesNumber + "\n" +
+                        "                                            </span>\n" +
+                        "                                            <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                分类：" + data.data.content[i].seriesClassification + "\n" +
+                        "                                            </span>\n" +
+                        "                                            <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                二级分类：" + data.data.content[i].classificationLittle + "\n" +
+                        "                                            </span>\n" +
+                        "                                            <span style=\"margin-left: 20px; font-size: 12px; color: green; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                <img src=\"../images/integral.png\" style=\"width: 13px; height: 13px\"/>\n" +
+                        "                                                " + data.data.content[i].seriesIntegral + "\n" +
+                        "                                            </span>" +
+                        "                                        </div>\n" +
+                        "                                        <div class=\"layui-card-body\">\n" +
+                        "                                           <span style=\"font-size: 12px; color:#999\"><b>系列简介：</b>" + data.data.content[i].introduction +"</span>" +
                         "                                        </div>\n" +
                         "                                    </div>\n" +
                         "                                </div>";
-                    $("#videoClass_limitless_item").append(appendhtml);
+                    $("#videoClass_limitless_item").append(appendHtml);
                 }
             }
         }
@@ -260,17 +265,15 @@ function showQuestionByQuery(pageNo, pageSize, query) {
                         "                                    <img src=\"../images/user1.png\" style=\"width: 16px; height: 16px\"/>\n" +
                         "                                    <span style=\"font-size: 10px; color:#999;margin-right: 40px;\">" + data.data.content[i].user.userName +"</span>";
 
-                    if(data.data.content[i].questionIsSolve === 1){
-                        var appendhtml2 = "<img src=\"../images/correct.png\" style=\"width: 16px; height: 16px\"/>" +
-                            "<span style=\"font-size: 10px; margin-right: 40px; color: green\">已解决</span>\n";
-                    }else {
-                        var appendhtml2 = "<img src=\"../images/error.png\" style=\"width: 16px; height: 16px\"/>" +
-                            "<span style=\"font-size: 10px; margin-right: 40px; color: red\">未解决</span>\n";
-                    }
+                    // if(data.data.content[i].questionIsSolve === 1){
+                    //     var appendhtml2 = "<img src=\"../images/correct.png\" style=\"width: 16px; height: 16px\"/>" +
+                    //         "<span style=\"font-size: 10px; margin-right: 40px; color: green\">已解决</span>\n";
+                    // }else {
+                    //     var appendhtml2 = "<img src=\"../images/error.png\" style=\"width: 16px; height: 16px\"/>" +
+                    //         "<span style=\"font-size: 10px; margin-right: 40px; color: red\">未解决</span>\n";
+                    // }
 
-                    var appendhtml3 = "<img src=\"../images/integral.png\" style=\"width: 16px; height: 16px\"/>\n" +
-                        "                                        <span style=\"font-size: 10px; color:#999;margin-right: 40px\">" + data.data.content[i].questionIntegral + "</span>\n" +
-                        "                                        <span style=\"font-size: 10px; color:#999;margin-right: 40px\">分类：" + data.data.content[i].classification + "</span>\n" +
+                    var appendhtml3 = "<span style=\"font-size: 10px; color:#999;margin-right: 40px\">分类：" + data.data.content[i].classification + "</span>\n" +
                         "                                        <span style=\"font-size: 10px; color:#999;margin-right: 40px\">" + data.data.content[i].questionDate + "</span>\n" +
                         "                                    </div>\n" +
                         "                                    <div style=\"clear: both\"></div>\n" +
@@ -282,7 +285,7 @@ function showQuestionByQuery(pageNo, pageSize, query) {
                         "                        </div>\n" +
                         "                    </div>";
 
-                    $("#videoClass_limitless_item").append(appendhtml1 + appendhtml2 + appendhtml3);
+                    $("#videoClass_limitless_item").append(appendhtml1  + appendhtml3);
                 }
             }
         }
@@ -324,10 +327,8 @@ function showUserByQuery(pageNo, pageSize, query) {
                         "                                            <img src=\"../images/user1.png\" height=\"35\" width=\"35\"/>\n" +
                         "                                            <span style=\"margin-left: 20px\"><b>" + data.data.content[i].userName +"</b></span>\n" +
                         "                                        </a>\n" +
-                        "                                        <button type=\"button\" class=\"layui-btn layui-btn-sm layui-btn-normal\" style=\"margin-left: 20px\">关注</button>\n" +
                         "                                    </div>\n" +
                         "                                    <div class=\"layui-input-inline\" style=\"float: right\">\n" +
-                        "<span style=\"font-size: 10px; color:#999;margin-right: 40px\" id=\"fan" + i +"\"></span>\n" +
                         "<span style=\"font-size: 10px; color:#999;margin-right: 40px\" id=\"video" + i +"\"></span>\n" +
                         "                  </div>\n" +
                         "                                <div style=\"clear: both\"></div>\n" +
@@ -340,19 +341,6 @@ function showUserByQuery(pageNo, pageSize, query) {
                         "                        </div>\n" +
                         "                    </div>";
                     $("#videoClass_limitless_item").append(appendhtml1);
-                    $.ajax({
-                        url: "/followManage/getCountFanById?id=" + data.data.content[i].id,
-                        type: "post",
-                        async: false,
-                        dataType: "json",
-                        contentType: false,
-                        processData: false,
-                        success: function (data) {
-                            // var appendhtml2 = "<span style=\"font-size: 10px; color:#999;margin-right: 40px\">粉丝：" + data.data + "</span>\n";
-                            // $("#videoClass_limitless_item").append(appendhtml2);
-                            document.getElementById("fan" + i).innerText = "粉丝：" + data.data ;
-                        }
-                    });
                     $.ajax({
                         url: "/videoManage/getCountVideoByUserId?id=" + data.data.content[i].id,
                         type: "post",

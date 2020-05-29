@@ -1,12 +1,15 @@
 package com.graduate.onlineeducation.repo.jpa;
 
+import com.graduate.onlineeducation.entity.DTO.OrderDTO;
 import com.graduate.onlineeducation.entity.Order;
 import com.graduate.onlineeducation.repo.OrderManageRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -37,25 +40,37 @@ public interface JpaOrderManageRepository extends OrderManageRepository {
     Page<Order> findByQuery(String query, Pageable pageable);
 
     @Override
+    Order getOrderById(Integer id);
+
+    @Override
     void deleteById(Integer id);
 
     @Override
     Order save(Order order);
 
     @Override
-    @Query(value = "select * from gp_order where user_id = ?1 and ISNULL(series_id)", nativeQuery = true)
+    OrderDTO save(OrderDTO order);
+
+    @Override
+    @Modifying
+    @Transactional
+    @Query(value = "update gp_order set order_status = ?2 where order_id = ?1 and order_is_delete = 0", nativeQuery = true)
+    Integer updateOrderStatus(Integer id, Integer orderStatus);
+
+    @Override
+    @Query(value = "select * from gp_order where user_id = ?1 and ISNULL(series_id) and order_status = 2 and order_is_delete = 0", nativeQuery = true)
     Page<Order> getOrderListOfVideo(Integer userId, Pageable pageable);
 
     @Override
-    @Query(value = "select count(*) from gp_order where user_id = ?1  and ISNULL(series_id)", nativeQuery = true)
+    @Query(value = "select count(*) from gp_order where user_id = ?1  and ISNULL(series_id) and order_status = 2 and order_is_delete = 0", nativeQuery = true)
     Integer getCountListOfVideo(Integer userId);
 
     @Override
-    @Query(value = "select * from gp_order where user_id = ?1 and ISNULL(video_id)", nativeQuery = true)
+    @Query(value = "select * from gp_order where user_id = ?1 and ISNULL(video_id) and order_status = 2 and order_is_delete = 0", nativeQuery = true)
     Page<Order> getOrderListOfSeries(Integer query, Pageable pageable);
 
     @Override
-    @Query(value = "select count(*) from gp_order where user_id = ?1 and ISNULL(video_id)", nativeQuery = true)
+    @Query(value = "select count(*) from gp_order where user_id = ?1 and ISNULL(video_id) and order_status = 2 and order_is_delete = 0", nativeQuery = true)
     Integer getCountListOfSeries(Integer userId);
 
     @Override
@@ -89,4 +104,18 @@ public interface JpaOrderManageRepository extends OrderManageRepository {
     @Override
     @Query(value = "select * from gp_order where user_id = ?1 and order_status = 3", nativeQuery = true)
     Page<Order> getLoseEfficacyList(Integer userId, Pageable pageable);
+
+    @Override
+    @Modifying
+    @Transactional
+    @Query(value = "update gp_order set order_status = 3 where order_id = ?1 and order_is_delete = 0", nativeQuery = true)
+    Integer cancelOrder(Integer id);
+
+    @Override
+    @Query(value = "select * from gp_order where user_id = ?1 and video_id = ?2 and order_is_delete = 0", nativeQuery = true)
+    Order verifyVideoStatus(Integer userId, Integer videoId);
+
+    @Override
+    @Query(value = "select * from gp_order where user_id = ?1 and series_id = ?2 and order_is_delete = 0", nativeQuery = true)
+    Order verifyVideoSeriesStatus(Integer userId, Integer seriesId);
 }

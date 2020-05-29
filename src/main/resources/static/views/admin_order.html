@@ -122,7 +122,7 @@
                     , {
                     field: 'videoId', title: '系列名', templet: function (d) {
                         if (d.videoSeries == null) {
-                            return "[null]";
+                            return "<span style='color: green'>【系列订单】</span>";
                         }
                         return d.videoSeries.seriesName;
                     }
@@ -130,13 +130,23 @@
                     , {
                     field: 'seriesId', title: '视频名', templet: function (d) {
                         if (d.video == null) {
-                            return "[null]";
+                            return "<span style='color: green'>【视频订单】</span>";
                         }
                         return d.video.videoName;
                     }
                 }
                     , {field: 'orderDate', title: '订单时间'}
-                    , {field: 'orderStatus', title: '订单状态', width: 100}
+                    , {field: 'orderStatus', title: '订单状态',  templet: function (d) {
+                        if (d.orderStatus == 1) {
+                            return "<span style='color: yellow'>未支付</span>";
+                        }else if(d.orderStatus == 2){
+                            return "<span style='color: green'>已支付</span>";
+                        }else if(d.orderStatus == 3){
+                            return "<span style='color: red'>已失效</span>";
+                        }
+                        return d.video.videoName;
+                    }
+                }
                     , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
                 ]
             ]

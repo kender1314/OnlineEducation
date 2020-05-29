@@ -91,7 +91,14 @@ public interface CommentManageService {
      * @param params
      * @return
      */
-    Page<Map<String, Object>> getVideoCommentReplyList(Map<String, Object> params);
+    List<Map<String, Object>> getVideoCommentReplyList(Map<String, Object> params);
+
+    /**
+     * 统计消息中心视频评论的回复数量
+     * @param params
+     * @return
+     */
+    Integer getCountVideoCommentReplyList(Map<String, Object> params);
 
     /**
      * 用户将该评论标记为已读
@@ -105,7 +112,14 @@ public interface CommentManageService {
      * @param params
      * @return
      */
-    Page<LikeNews> getLikeNewsListByUserId(Map<String, Object> params);
+    List<Map<String, Object>> getLikeNewsListByUserId(Map<String, Object> params);
+
+    /**
+     * 统计评论点赞信息的数量
+     * @param params
+     * @return
+     */
+    Integer getCountLikeNewsListByUserId(Map<String, Object> params);
 
     /**
      * 根据评论id获取评论信息

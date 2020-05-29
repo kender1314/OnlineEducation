@@ -105,9 +105,18 @@ public class AnswerManageServiceImpl implements AnswerManageService {
     }
 
     @Override
-    public Page<Map<String, Object>> getQuestionCommentReplyList(Map<String, Object> params) {
+    public List<Map<String, Object>> getQuestionCommentReplyList(Map<String, Object> params) {
         Integer userId = Integer.parseInt(params.get("userId").toString()) ;
-        return answerManageRepository.getQuestionCommentReplyList(userId, PaginationBase.getPagination(params));
+        Integer size = Integer.parseInt(params.get("limit").toString()) ;
+        int pageNum = Integer.parseInt(params.get("page").toString()) ;
+        pageNum = (pageNum - 1) * 10;
+        return answerManageRepository.getQuestionCommentReplyList(userId, size, pageNum);
+    }
+
+    @Override
+    public Integer getCountQuestionCommentReplyList(Map<String, Object> params) {
+        Integer userId = Integer.parseInt(params.get("userId").toString()) ;
+        return answerManageRepository.getCountQuestionCommentReplyList(userId);
     }
 
     @Override

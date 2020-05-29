@@ -56,7 +56,9 @@ public class VideoManageServiceImpl implements VideoManageService {
 
     @Override
     public boolean updateVideoImage(VideoDTO video, MultipartFile image) {
-        UploadUtils.uploadImage(video, image);
+        if(image != null) {
+            UploadUtils.uploadImage(video, image);
+        }
         VideoDTO videoTemp = videoManageRepository.save(video);
         return videoTemp != null;
     }

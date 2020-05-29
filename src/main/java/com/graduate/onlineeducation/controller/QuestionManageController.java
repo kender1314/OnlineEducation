@@ -3,6 +3,7 @@ package com.graduate.onlineeducation.controller;
 import com.graduate.onlineeducation.common.Result;
 import com.graduate.onlineeducation.common.ResultUtils;
 import com.graduate.onlineeducation.entity.DTO.QuestionDTO;
+import com.graduate.onlineeducation.entity.DTO.QuestionDateDTO;
 import com.graduate.onlineeducation.entity.Question;
 import com.graduate.onlineeducation.service.AnswerManageService;
 import com.graduate.onlineeducation.service.BookmarkManageService;
@@ -36,8 +37,8 @@ public class QuestionManageController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/deleteQuestion")
     public Result<Object> deleteQuestion(Integer id){
-        answerManageService.deleteAnswerByQuestionId(id);
-        bookmarkManageService.deleteBookmarkByQuestionId(id);
+//        answerManageService.deleteAnswerByQuestionId(id);
+//        bookmarkManageService.deleteBookmarkByQuestionId(id);
         boolean flag = questionManageService.deleteQuestion(id);
         return ResultUtils.success(flag);
     }
@@ -48,6 +49,13 @@ public class QuestionManageController {
         Page<Question> questions = questionManageService.getQuestionList(params);
         return ResultUtils.success(questions);
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getQuestionListOrderByDate")
+    public Result<Object> getQuestionListOrderByDate(@RequestParam Map<String, Object> params){
+        return ResultUtils.success(questionManageService.getQuestionListOrderByDate(params));
+    }
+
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/search")

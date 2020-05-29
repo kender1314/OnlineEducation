@@ -2,6 +2,7 @@ package com.graduate.onlineeducation.controller;
 
 import com.graduate.onlineeducation.common.Result;
 import com.graduate.onlineeducation.common.ResultUtils;
+import com.graduate.onlineeducation.entity.DTO.OrderDTO;
 import com.graduate.onlineeducation.entity.Order;
 import com.graduate.onlineeducation.service.OrderManageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,13 @@ public class OrderManageController {
     }
 
     @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getOrderById")
+    public Result<Object> getOrderById(Integer id){
+        Order order = orderManageService.getOrderById(id);
+        return ResultUtils.success(order);
+    }
+
+    @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/deleteOrder")
     public Result<Object> deleteOrder(Integer id){
         return ResultUtils.success( orderManageService.deleteOrder(id));
@@ -76,6 +84,30 @@ public class OrderManageController {
     public String updateOrder(Order order){
         orderManageService.updateOrder(order);
         return "/views/admin_order";
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/insertOrder")
+    public Result<Object> insertOrder(OrderDTO order, @RequestParam(value = "integral",required=false) Integer integral){
+        return ResultUtils.success(orderManageService.insertOrder(order, integral));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/insertOrderNotPay")
+    public Result<Object> insertOrderNotPay(OrderDTO order){
+        return ResultUtils.success(orderManageService.insertOrderNotPay(order));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/updateOrderA")
+    public Result<Object> updateOrderA(Order order){
+        return ResultUtils.success(orderManageService.updateOrderA(order));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/updateOrderStatus")
+    public Result<Object> updateOrderStatus(@RequestParam Map<String, Object> params){
+        return ResultUtils.success(orderManageService.updateOrderStatus(params));
     }
 
     @ResponseBody
@@ -128,5 +160,11 @@ public class OrderManageController {
     public Result<Object> getLoseEfficacyList(@RequestParam Map<String, Object> params){
         Page<Order> orders = orderManageService.getLoseEfficacyList(params);
         return ResultUtils.success(orders);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/cancelOrder")
+    public Result<Object> cancelOrder(Integer id){
+        return ResultUtils.success(orderManageService.cancelOrder(id));
     }
 }

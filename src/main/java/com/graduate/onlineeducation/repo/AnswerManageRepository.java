@@ -82,10 +82,18 @@ public interface AnswerManageRepository extends PagingAndSortingRepository<Answe
     /**
      * 消息中心显示问题评论的回复
      * @param userId
-     * @param pageable
+     * @param size
+     * @param pageNum
      * @return
      */
-    Page<Map<String, Object>> getQuestionCommentReplyList(Integer userId, Pageable pageable);
+    List<Map<String, Object>> getQuestionCommentReplyList(Integer userId, Integer size, int pageNum);
+
+    /**
+     * 统计消息中心显示问题评论的回复数量
+     * @param userId
+     * @return
+     */
+    Integer getCountQuestionCommentReplyList(Integer userId);
 
     /**
      * 根据id删除问题回答(伪删除)

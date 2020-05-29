@@ -47,8 +47,7 @@
                             <li id="boughtSeries">系列视频</li>
                         </ul>
                         <div class="layui-tab-content">
-                            <div class="layui-tab-item layui-show" style="min-height: 450px;"
-                                 id="boughtVideoList">
+                            <div class="layui-tab-item layui-show" style="min-height: 500px; width: 100%" id="boughtVideoList">
                                 <div class="course">
                                     <div class="course-img layui-input-inline">
                                         <img src="https://img.mukewang.com/574678bd00010a7206000338-360-202.jpg"
@@ -116,7 +115,10 @@
                 <div class="layui-col-md6">
                     <div class="layui-card">
                         <div class="layui-card-header">
-                            手机号
+                            手&nbsp;&nbsp;机&nbsp;&nbsp;号
+                            <a href="#" data-method="offset" data-type="auto"
+                               id="edit-phone"
+                               style="color: #369bff; margin-left: 70%">修改</a>
                         </div>
                         <div class="layui-card-body">
                             <span th:text="${user.userPhoneNumber}"></span>
@@ -127,8 +129,8 @@
                     <div class="layui-card">
                         <div class="layui-card-header">
                             邮&nbsp;&nbsp;&nbsp;&nbsp;箱
-                            <a href="#" data-method="offset" data-type="auto" id="edit-mail"
-                               style="color: #369bff; margin-left: 70%">修改</a>
+<!--                            <a href="#" data-method="offset" data-type="auto" id="edit-mail"-->
+<!--                               style="color: #369bff; margin-left: 70%">修改</a>-->
                         </div>
                         <div class="layui-card-body">
                             <span th:text="${user.userMail}"></span>
@@ -151,6 +153,8 @@
                     <div class="layui-card">
                         <div class="layui-card-header">
                             积&nbsp;&nbsp;&nbsp;&nbsp;分
+                            <a href="#" data-method="offset" data-type="auto" id="recharge"
+                               style="color: #369bff; margin-left: 70%">充值</a>
                         </div>
                         <div class="layui-card-body">
                             <span th:text="${user.userIntegral}"></span>&nbsp;&nbsp;
@@ -324,34 +328,7 @@
                 </ul>
                 <div class="layui-tab-content" style="background-color: white">
                     <div class="layui-tab-item layui-show">
-                        <div style="background-color: #f2f2f2; width: 100%; height: 500px" id="my-video">
-                            <!--                            <div class="layui-col-md6" style="width: 222px; padding: 5px">-->
-                            <!--                                <div class="layui-card">-->
-                            <!--                                    <a href=""><img-->
-                            <!--                                            src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBnAoWaErmJAIM4Caqr18HXAuLMUkNUNBh5aXXcu5M0mc3ia80DejSwSbZTA5Lib14vk/356"-->
-                            <!--                                            width="212">-->
-                            <!--                                        <span style="margin-left: 15px; font-size: 12px">Java性能调优全解2.5</span>-->
-                            <!--                                    </a>-->
-                            <!--                                    <div class="layui-card-body">-->
-                            <!--                                        <div class="layui-input-inline" style="float: left">-->
-                            <!--                                            <img src="../images/integral.png" style="width: 16px; height: 16px"/>-->
-                            <!--                                            <span style="color: red; font-size: 10px">5</span>&nbsp;&nbsp;-->
-                            <!--                                            <img src="../images/play.png" style="width: 16px; height: 16px"/>-->
-                            <!--                                            <span style="font-size: 10px; color:#999;">1222</span>-->
-                            <!--                                        </div>-->
-                            <!--                                        <div class="layui-input-inline" style="float: right">-->
-                            <!--                                            <span style="font-size: 10px; color:#999;">2020-02-16</span>-->
-                            <!--                                        </div>-->
-                            <!--                                        <div style="clear: both"></div>-->
-                            <!--                                        <div class="layui-btn-group">-->
-                            <!--                                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i-->
-                            <!--                                                    class="layui-icon"></i></button>-->
-                            <!--                                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i-->
-                            <!--                                                    class="layui-icon"></i></button>-->
-                            <!--                                        </div>-->
-                            <!--                                    </div>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
+                        <div id="my-video" style="min-height: 500px">
                         </div>
                         <div style="width: 100%; text-align: center">
                             <div id="demoPage"></div>
@@ -455,7 +432,7 @@
                                     <div class="layui-form-item layui-inline" style="">
                                         <label class="layui-form-label" style="font-size: 13px">积分</label>
                                         <div class="layui-input-block">
-                                            <input type="number" min="1" step="1" id="seriesIntegral"
+                                            <input type="number" min="1" step="1" value="0" id="seriesIntegral"
                                                    placeholder="请输入积分"
                                                    autocomplete="off" class="layui-input"
                                                    style="width: 150px; height: 30px; margin-top: 5px">
@@ -464,7 +441,7 @@
                                     <div class="layui-form-item layui-inline" style="">
                                         <label class="layui-form-label" style="font-size: 13px">集数</label>
                                         <div class="layui-input-block">
-                                            <input type="number" min="1" step="1" id="seriesNumber" placeholder="请输入集数"
+                                            <input type="number" min="1" step="1" id="seriesNumber" value="0" placeholder="请输入集数"
                                                    autocomplete="off" class="layui-input"
                                                    style="width: 150px; height: 30px; margin-top: 5px">
                                         </div>
@@ -539,7 +516,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label" style="font-size: 13px">积分</label>
                                         <div class="layui-input-block">
-                                            <input type="number" min="1" step="1" id="videoIntegral" placeholder="请输入积分"
+                                            <input type="number" min="1" value="0" step="1" id="videoIntegral" placeholder="请输入积分"
                                                    autocomplete="off" class="layui-input"
                                                    style="width: 150px; height: 30px; margin-top: 5px">
                                         </div>
@@ -573,76 +550,6 @@
             </button>
             <div class="layui-collapse" lay-accordion=""
                  style="background-color: white; padding: 10px; margin-top: 10px" id="question-list">
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">layui 更适合哪些开发者？</h2>
-                    <div class="layui-colla-content" style="border: solid #97b3ff 1px; border-radius: 5px;">
-                        <p>在前端技术快速变革的今天，layui 仍然坚持语义化的组织模式，甚至于模块理念都是采用类AMD组织形式，并非是有意与时代背道而驰。layui
-                            认为以jQuery为核心的开发方式还没有到完全消亡的时候，而早期市面上基于jQuery的UI都普通做得差强人意，所以需要有一个新的UI去重新为这一领域注入活力，并采用一些更科学的架构方式。
-                            <br>
-                            因此准确地说，layui 更多是面向那些追求开发简单的前端工程师们，以及所有层次的服务端程序员。</p>
-                        <div style="float: right">
-                            <div class="layui-btn-group">
-                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">详情</button>
-                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"
-                                        data-method="offset" data-type="auto" id="editQuestion"><i
-                                        class="layui-icon"></i></button>
-                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
-                                        class="layui-icon"></i></button>
-                            </div>
-                        </div>
-                        <div style="clear: both"></div>
-                    </div>
-                </div>
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">为什么JS社区大量采用未发布或者未广泛支持的语言特性？</h2>
-                    <div class="layui-colla-content" style="border: solid #97b3ff 1px; border-radius: 5px;">
-                        <p>
-                            有不少其他答案说是因为JS太差。我下面的答案已经说了，这不是根本性的原因。但除此之外，我还要纠正一些对JS具体问题的误解。JS当初是被作为脚本语言设计的，所以某些问题并不是JS设计得差或者是JS设计者的失误。比如var的作用域问题，并不是“错误”，而是当时绝大部分脚本语言都是这样的，如perl/php/sh等。模块的问题也是，脚本语言几乎都没有模块/命名空间功能。弱类型、for-in之类的问题也是，只不过现在用那些老的脚本语言的人比较少，所以很多人都误以为是JS才有的坑。另外有人说JS是半残语言，满足不了开发需求，1999年就该死。半残这个嘛，就夸张了。JS虽然有很多问题，但是设计总体还是优秀的。——来自知乎@贺师俊</p>
-                        <div style="float: right">
-                            <div class="layui-btn-group">
-                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">详情</button>
-                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
-                                        class="layui-icon"></i></button>
-                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
-                                        class="layui-icon"></i></button>
-                            </div>
-                        </div>
-                        <div style="clear: both"></div>
-                    </div>
-                </div>
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">为什么前端工程师多不愿意用 Bootstrap 框架？</h2>
-                    <div class="layui-colla-content" style="border: solid #97b3ff 1px; border-radius: 5px;">
-                        <p>
-                            因为不适合。如果希望开发长期的项目或者制作产品类网站，那么就需要实现特定的设计，为了在维护项目中可以方便地按设计师要求快速修改样式，肯定会逐步编写出各种业务组件、工具类，相当于为项目自行开发一套框架。——来自知乎@Kayo</p>
-                        <div style="float: right">
-                            <div class="layui-btn-group">
-                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">详情</button>
-                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
-                                        class="layui-icon"></i></button>
-                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
-                                        class="layui-icon"></i></button>
-                            </div>
-                        </div>
-                        <div style="clear: both"></div>
-                    </div>
-                </div>
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">贤心是男是女？</h2>
-                    <div class="layui-colla-content" style="border: solid #97b3ff 1px; border-radius: 5px;">
-                        <p>man！ 所以这个问题不要再出现了。。。</p>
-                        <div style="float: right">
-                            <div class="layui-btn-group">
-                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">详情</button>
-                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
-                                        class="layui-icon"></i></button>
-                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
-                                        class="layui-icon"></i></button>
-                            </div>
-                        </div>
-                        <div style="clear: both"></div>
-                    </div>
-                </div>
             </div>
             <div style="width: 80%; height: 50px; margin-left: 10%; padding: 10px">
                 <div id="demo10" style="text-align: center"></div>

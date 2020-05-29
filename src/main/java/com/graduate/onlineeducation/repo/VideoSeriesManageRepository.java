@@ -53,6 +53,19 @@ public interface VideoSeriesManageRepository extends PagingAndSortingRepository<
      * @param query
      * @return
      */
+    Page<VideoSeries> getVideoByQuery(String query, Pageable pageable);
+
+    /**
+     * 根据查询关键字，获取查询的系列数量
+     * @param query
+     * @return
+     */
+    Integer getCountVideoByQuery(String query);
+    /**
+     * 根据查询关键字，获取查询的系列数量
+     * @param query
+     * @return
+     */
     Integer getCountByQuery(String query);
 
     /**
