@@ -60,12 +60,6 @@ public class UserLoginController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public Result<Object> register(User user) {
-        user.setActiveStatus(0);
-        String activeCode = IDUtils.getUUID();
-        user.setActiveCode(activeCode);
-        //设置默认积分为0
-        user.setUserIntegral(0);
-
         User users = userLoginService.register(user);
         if (users != null) {
             return ResultUtils.success(true);

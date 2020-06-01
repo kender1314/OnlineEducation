@@ -23,7 +23,7 @@ import java.util.Map;
 public interface JpaAnswerManageRepository extends AnswerManageRepository {
 
     @Override
-    @Query(value = "select * from gp_answer where question_id = ?1 and answer_is_delete = 0", nativeQuery = true)
+    @Query(value = "select * from gp_answer where question_id = ?1 and answer_is_delete = 0 order by answer_date desc ", nativeQuery = true)
     Page<Answer> findAll(Integer questionId, Pageable pageable);
 
     @Override

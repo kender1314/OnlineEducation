@@ -8,7 +8,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+
+import javax.transaction.Transactional;
 
 /**
  * @Author hejiang
@@ -19,7 +22,14 @@ import org.springframework.data.jpa.repository.Query;
 @Profile({"mysql"})
 public interface JpaQuestionManageRepository extends QuestionManageRepository {
     @Override
-    void deleteById(Integer id);
+    @Transactional
+    @Modifying
+    @Query(value = "update gp_question set question_is_delete = 1 where question_id = ?1", nativeQuery = true)
+    Integer deleteByQuestionId(Integer id);
+
+    @Override
+    @Query(value = "select * from gp_question where question_is_delete = 0 order by question_date desc ", nativeQuery = true)
+    Page<Question> getQuestionList(Pageable pageable);
 
     @Override
     Page<Question> findAll(Specification<Question> spec, Pageable pageable);

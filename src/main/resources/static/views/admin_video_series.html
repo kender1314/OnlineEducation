@@ -121,15 +121,13 @@
                 [
                     {type: 'numbers', title: '序号', width: 100, fixed: 'left'}
                     , {field: 'seriesName', title: '系列名', unresize: true, sort: true}
-                    , {
-                        field: 'user', title: '用户名', width: 200, templet: function (d) {
-                        if (d.user == null) {
-                            return "管理员";
-                        }
-                            return d.user.userName;
-                        }
-                    }
+                    , { field: 'user', title: '用户名', templet: function (d) {
+                        return d.user.userName;
+                    }}
                     , {field: 'seriesNumber', title: '总集数', width: 100}
+                    , {field: 'seriesDate', title: '创建时间', width: 100}
+                    , {field: 'seriesClassification', title: '系列类别', width: 100}
+                    , {field: 'classificationLittle', title: '二级分类', width: 100}
                     // , {field: 'videoStatus', title: '视频状态', width: 100}
                     , {field: 'introduction', title: '系列简介'}
                     , {field: 'seriesIntegral', title: '积分', }
@@ -148,7 +146,7 @@
             if (obj.event === 'del') {
                 layer.confirm('是否删除', function (index) {
                     $.ajax({
-                        url: "/videoSeriesManage/deleteSeries?id=" + data.id,
+                        url: "/videoSeriesManage/deleteVideoSeriesById?id=" + data.id,
                         type: "POST",
                         success: function (msg) {
                             if (msg.data === true) {
@@ -170,10 +168,13 @@
                     type: 6,
                     title: '修改信息',
                     // skin:'layui-layer-rim',
-                    area: ['600px', 'auto'],
+                    area: ['650px', 'auto'],
 
                     content: '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
                         + '<input type="hidden" id="id" name="id" value="' + data.id + '">'
+                        + '<input type="hidden" id="isDelete" name="isDelete" value="' + data.isDelete + '">'
+                        + '<input type="hidden" id="seriesImage" name="seriesImage" value="' + data.seriesImage + '">'
+                        + '<input type="hidden" id="seriesImageUrl" name="seriesImageUrl" value="' + data.seriesImageUrl + '">'
                         + '<table>'
                         + '<tr>'
                         + '<td>'
@@ -181,7 +182,7 @@
                         + '    <label class="layui-form-label" style="font-size: 13px">视频系列名</label>\n'
                         + '    <div class="layui-input-block">\n'
                         + '      <input type="tel" name="seriesName" id="seriesName" placeholder="请输入系列名" value="' + data.seriesName + '" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + 'style="width: 150px;px; height: 30px; margin-top: 5px">\n'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -191,8 +192,54 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">总集数</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="seriesNumber" id="seriesNumber" placeholder="请输入总集数" value="' + data.seriesNumber + '" autocomplete="off" class="layui-input" '
+                        + '      <input type="number" min="1" step="1" name="seriesNumber" id="seriesNumber" placeholder="请输入总集数" value="' + data.seriesNumber + '" autocomplete="off" class="layui-input" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '<td>'
+                        + '<div class="layui-form-item">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">积分</label>\n'
+                        + '    <div class="layui-input-block">\n'
+                        + '      <input type="number" min="0" step="1" name="seriesIntegral" id="seriesIntegral" placeholder="请输入积分" value="' + data.seriesIntegral + '" autocomplete="off" class="layui-input" '
+                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '</tr>'
+                        + '<tr>'
+                        + '<td>'
+                        + '<div class="layui-form-item">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">类别</label>\n'
+                        + '    <div class="layui-input-block">\n'
+                        + ' <div class="layui-inline" style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '      <div class="layui-input-inline">\n'
+                        + '        <select name="seriesClassification1" id="seriesClassification1" '
+                        + 'style="width: 150px; height: 30px; margin-top: 5px" onchange="selectSeries1()" lay-verify="required" lay-search="">\n'
+                        + '          <option value="'+ data.seriesClassification + '">默认：'+ data.seriesClassification + '</option>\n'
+                        + '          <option value="编程语言">编程语言</option>\n'
+                        + '          <option value="云计算大数据">云计算大数据</option>\n'
+                        + '          <option value="计算机基础">计算机基础</option>\n'
+                        + '          <option value="移动开发">移动开发</option>\n'
+                        + '          <option value="前沿技术">前沿技术</option>\n'
+                        + '        </select>\n'
+                        + '      </div>\n'
+                        + '    </div>'
+                        + '    </div>\n'
+                        + '  </div>'
+                        + '</td>'
+                        + '<td>'
+                        + '<div class="layui-form-item">\n'
+                        + '    <label class="layui-form-label" style="font-size: 13px">二级分类</label>\n'
+                        + '    <div class="layui-input-block">\n'
+                        + ' <div class="layui-inline" style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '      <div class="layui-input-inline">\n'
+                        + '        <select name="classificationLittle1" id="classificationLittle1" '
+                        + 'style="width: 150px; height: 30px; margin-top: 5px" lay-verify="required" lay-search="">\n'
+                        + '          <option value="'+ data.classificationLittle + '">默认：'+ data.classificationLittle + '</option>\n'
+                        +           '</select>\n'
+                        + '      </div>\n'
+                        + '    </div>'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -202,8 +249,8 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">积分</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="seriesIntegral" id="seriesIntegral" placeholder="请输入积分" value="' + data.seriesIntegral + '" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '    <input type="date" name="seriesDate" id="seriesDate"  class="layui-input" value="' + data.seriesDate + '" placeholder="yyyy-MM-dd"'
+                        + 'style="width: 150px; height: 30px; margin-top: 5px">'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -213,7 +260,7 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">系列简介</label>\n'
                         + '    <div style="margin-left: 110px; width: 410px; ">\n'
-                        + '      <textarea placeholder="请输入简介" name="introduction" id="introduction" class="layui-textarea">' + data.introduction + '</textarea>\n'
+                        + '      <textarea placeholder="请输入简介" name="introduction" style="width: 460px; height: 200px" id="introduction" class="layui-textarea">' + data.introduction + '</textarea>\n'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -229,11 +276,23 @@
                         var seriesNumber = document.getElementById("seriesNumber").value;
                         var seriesIntegral = document.getElementById("seriesIntegral").value;
                         var introduction = document.getElementById("introduction").value;
+                        var seriesClassification = document.getElementById("seriesClassification1").value;
+                        var classificationLittle = document.getElementById("classificationLittle1").value;
+                        var isDelete = document.getElementById("isDelete").value;
+                        var seriesDate = document.getElementById("seriesDate").value;
+                        var seriesImage = document.getElementById("seriesImage").value;
+                        var seriesImageUrl = document.getElementById("seriesImageUrl").value;
                         formData.append("id", id);
                         formData.append("seriesName", seriesName);
                         formData.append("seriesNumber", seriesNumber);
                         formData.append("seriesIntegral", seriesIntegral);
                         formData.append("introduction", introduction);
+                        formData.append("seriesClassification", seriesClassification);
+                        formData.append("classificationLittle", classificationLittle);
+                        formData.append("isDelete", isDelete);
+                        formData.append("seriesDate", seriesDate);
+                        formData.append("seriesImage", seriesImage);
+                        formData.append("seriesImageUrl", seriesImageUrl);
                         $.ajax({
                             url: "/videoSeriesManage/updateVideoSeries",
                             type: "post",
@@ -247,6 +306,9 @@
                                     //关闭弹框
                                     layer.close(index);
                                     layer.msg("更新成功", {icon: 6});
+                                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                        window.location.reload();//页面刷新
+                                    }, 1000);
                                 } else {
                                     layer.msg("更新失败", {icon: 5});
                                 }
@@ -260,7 +322,8 @@
                     ,type: 'datetime'
                 });
             } else if (obj.event === 'list') {
-                window.location.href ="/url/adminVideoSeriesList?id=" + data.id;
+                window.location.href ="/url/adminVideoSeriesList?id=" + data.id + "&seriesClassification=" + data.seriesClassification +
+                    "&classificationLittle=" + data.classificationLittle + "&seriesNumber=" + data.seriesNumber;
             }
         });
 
@@ -271,92 +334,126 @@
                     type: 6,
                     title: '新增系列信息',
                     // skin:'layui-layer-rim',
-                    area: ['600px', 'auto'],
+                    area: ['800px', 'auto'],
 
-                    content: '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
-                        + '<table>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div class="layui-form-item" style="margin-top: 20px">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">视频名</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="seriesName" id="seriesName" placeholder="请输入系列名" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '<td>'
-                        + '<div class="layui-form-item" style="margin-top: 20px">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">用户名</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="userName" id="userName" readonly="readonly" value="管理员" placeholder="请输入用户名"  autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">总集数</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="seriesNumber" id="seriesNumber" placeholder="请输入总集数" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">积分</label>\n'
-                        + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" name="seriesIntegral" id="seriesIntegral" placeholder="请输入积分" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td colspan="2">'
-                        + '<div class="layui-form-item">\n'
-                        + '    <label class="layui-form-label" style="font-size: 13px">系列简介</label>\n'
-                        + '    <div style="margin-left: 110px; width: 410px; ">\n'
-                        + '      <textarea placeholder="请输入简介" name="introduction" id="introduction" class="layui-textarea"></textarea>\n'
-                        + '    </div>\n'
-                        + '  </div>'
-                        + '</td>'
-                        + '</tr>'
-                        + '</table>'
-                        + '</div>'
+                    content: '<div style="width: 100%">\n' +
+                        '                                <div class="layui-upload" style="margin-left: 33%; margin-top: 10px">\n' +
+                        '                                    上传封面&nbsp;&nbsp;<input type="file" id="uploadImage1"\n' +
+                        '                                           class="layui-btn layui-btn-primary layui-btn-sm">\n' +
+                        '                                </div>\n' +
+                        '                                <hr>\n' +
+                        '                                <div style="margin-left: 20%">\n' +
+                        '                                    <div class="layui-form-item" style="margin-top: 20px">\n' +
+                        '                                        <label class="layui-form-label" style="font-size: 13px">视频系列名字</label>\n' +
+                        '                                        <div class="layui-input-block">\n' +
+                        '                                            <input type="tel" id="seriesName" name="seriesName" placeholder="请输入视频系列名字"\n' +
+                        '                                                   autocomplete="off"\n' +
+                        '                                                   class="layui-input"\n' +
+                        '                                                   style="width: 150px; height: 30px; margin-top: 5px">\n' +
+                        '                                        </div>\n' +
+                        '                                    </div>\n' +
+                        '                                    <div class="layui-form-item">\n' +
+                        '                                        <div class="layui-inline">\n' +
+                        '                                            <label class="layui-form-label" style="font-size: 13px">类别</label>\n' +
+                        '                                            <div class="layui-input-block">\n' +
+                        '                                                <select name="seriesClassification1"\n' +
+                        '                                                        id="seriesClassification1"\n' +
+                        '                                                        style="width: 150px; height: 30px; margin-top: 5px"\n' +
+                        '                                                        onchange="selectSeries1()">\n' +
+                        '                                                    <option value="编程语言">编程语言</option>\n' +
+                        '                                                    <option value="云计算大数据">云计算大数据</option>\n' +
+                        '                                                    <option value="计算机基础">计算机基础</option>\n' +
+                        '                                                    <option value="移动开发">移动开发</option>\n' +
+                        '                                                    <option value="前沿技术">前沿技术</option>\n' +
+                        '                                                </select>\n' +
+                        '                                            </div>\n' +
+                        '                                        </div>\n' +
+                        '                                        <div class="layui-inline">\n' +
+                        '                                            <label class="layui-form-label" style="font-size: 13px">二级类别</label>\n' +
+                        '                                            <div class="layui-input-block">\n' +
+                        '                                                <select name="classificationLittle1"\n' +
+                        '                                                        id="classificationLittle1"\n' +
+                        '                                                        style="width: 150px; height: 30px; margin-top: 5px"\n' +
+                        '                                                        lay-verify="required" lay-search="">\n' +
+                        '                                                    <option value="Java">Java</option>\n' +
+                        '                                                    <option value="php">php</option>\n' +
+                        '                                                    <option value="Python">Python</option>\n' +
+                        '                                                    <option value="C">C</option>\n' +
+                        '                                                </select>\n' +
+                        '                                            </div>\n' +
+                        '                                        </div>\n' +
+                        '                                    </div>\n' +
+                        '                                    <div class="layui-form-item layui-inline" style="">\n' +
+                        '                                        <label class="layui-form-label" style="font-size: 13px">积分</label>\n' +
+                        '                                        <div class="layui-input-block">\n' +
+                        '                                            <input type="number" min="0" step="1" value="0" id="seriesIntegral"\n' +
+                        '                                                   placeholder="请输入积分"\n' +
+                        '                                                   autocomplete="off" class="layui-input"\n' +
+                        '                                                   style="width: 150px; height: 30px; margin-top: 5px">\n' +
+                        '                                        </div>\n' +
+                        '                                    </div>\n' +
+                        '                                    <div class="layui-form-item layui-inline" style="">\n' +
+                        '                                        <label class="layui-form-label" style="font-size: 13px">集数</label>\n' +
+                        '                                        <div class="layui-input-block">\n' +
+                        '                                            <input type="number" min="1" step="1" id="seriesNumber" value="1" placeholder="请输入集数"\n' +
+                        '                                                   autocomplete="off" class="layui-input"\n' +
+                        '                                                   style="width: 150px; height: 30px; margin-top: 5px">\n' +
+                        '                                        </div>\n' +
+                        '                                    </div>\n' +
+                        '                                    <div class="layui-form-item">\n' +
+                        '                                        <label class="layui-form-label" style="font-size: 13px">视频系列简介</label>\n' +
+                        '                                        <div style="margin-left: 110px; width: 410px; ">\n' +
+                        '                                            <textarea placeholder="请输入简介" style="width: 460px; height: 200px" id="seriesIntroduction"\n' +
+                        '                                                      class="layui-textarea"></textarea>\n' +
+                        '                                        </div>\n' +
+                        '                                    </div>\n' +
+                        '                                </div>\n' +
+                        '                            </div>'
                     ,
                     btn: ['保存', '取消'],
                     btn1: function (index, layero) {
                         var formData = new FormData();
+                        var logo_file = document.getElementById("uploadImage1");
+                        if (logo_file !== null) {
+                            var image = logo_file.files[0];
+                            formData.append("image", image);
+                        }
                         var seriesName = document.getElementById("seriesName").value;
-                        var seriesNumber = document.getElementById("seriesNumber").value;
+                        var seriesClassification = document.getElementById("seriesClassification1").value;
+                        var classificationLittle = document.getElementById("classificationLittle1").value;
                         var seriesIntegral = document.getElementById("seriesIntegral").value;
-                        var introduction = document.getElementById("introduction").value;
+                        var seriesNumber = document.getElementById("seriesNumber").value;
+                        var introduction = document.getElementById("seriesIntroduction").value;
+                        var myDate = new Date();
+                        var seriesDate = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
+
+                        formData.append("userId", 1);
                         formData.append("seriesName", seriesName);
                         formData.append("seriesNumber", seriesNumber);
-                        formData.append("seriesIntegral", seriesIntegral);
                         formData.append("introduction", introduction);
-                        console.log(introduction);
+                        formData.append("seriesIntegral", seriesIntegral);
+                        formData.append("seriesClassification", seriesClassification);
+                        formData.append("classificationLittle", classificationLittle);
+                        // formData.append("seriesImage", seriesImage1);
+                        // formData.append("seriesImageUrl", seriesImageUrl1);
+                        formData.append("seriesDate", seriesDate);
+                        formData.append("isDelete", 0);
                         $.ajax({
-                            url: "/videoSeriesManage/insertVideoSeries",
+                            url: "/videoSeriesManage/insertVideoSeriesAndImage",
                             type: "post",
                             dataType: "json",
                             data: formData,
                             contentType: false,
                             processData: false,
-                            success: function (msg) {
-                                console.log(msg);
-                                if (msg.data === true) {
+                            success: function (data) {
+                                if (data.data === true) {
                                     //关闭弹框
-                                    layer.close(index);
-                                    layer.msg("添加成功", {icon: 6});
+                                    layer.msg("新建成功", {icon: 6});
+                                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                        window.location.reload();//页面刷新
+                                    }, 1000);
                                 } else {
-                                    layer.msg("添加失败", {icon: 5});
+                                    layer.msg("新建失败", {icon: 5});
                                 }
                             }
                         });
@@ -393,4 +490,42 @@
             active[type] ? active[type].call(this) : '';
         });
     });
+    function selectSeries1(){
+        var select=document.getElementById("seriesClassification1");
+        var c=select.value;
+        var area=document.getElementById("classificationLittle1");
+        switch(c)
+        {
+            case "编程语言": area.innerHTML="" +
+                "<option value=\"Java\">Java</option>" +
+                "<option value=\"php\">php</option>" +
+                "<option value=\"Python\">Python</option>" +
+                "<option value=\"C\">C</option>";
+                break;
+            case "云计算大数据":area.innerHTML="" +
+                "<option value=\"Hadoop\">Hadoop</option>" +
+                "<option value=\"Spark\">Spark</option>" +
+                "<option value=\"Hbase\">Hbase</option>" +
+                "<option value=\"阿里云\">阿里云</option>" +
+                "<option value=\"Docker\">Docker</option>";
+                break;
+            case "计算机基础":area.innerHTML="" +
+                "<option value=\"计算机网络\">计算机网络</option>" +
+                "<option value=\"算法与数据结构\">算法与数据结构</option>";
+                break;
+            case "移动开发":area.innerHTML="" +
+                "<option value=\"Android\">Android</option>" +
+                "<option value=\"iOS\">iOS</option>" +
+                "<option value=\"React native\">React native</option>";
+                break;
+            case "前沿技术":area.innerHTML="" +
+                "<option value=\"微服务\">微服务</option>" +
+                "<option value=\"区块链\">区块链</option>" +
+                "<option value=\"机器学习\">机器学习</option>" +
+                "<option value=\"深度学习\">深度学习</option>" +
+                "<option value=\"计算机视觉\">计算机视觉</option>";
+                break;
+            default:alert("error");
+        }
+    };
 </script>

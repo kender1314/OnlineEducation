@@ -62,11 +62,12 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             laypage.render({
                 elem: 'demo7'
                 , count: data.data
-                // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                , layout: ['count', 'prev', 'page', 'next']
                 , limit: 10
                 , jump: function (obj) {
                     //调用加载函数加载数据
                     showByClassification(obj.curr, obj.limit, videoClassification);
+                    showSeriesByClassification(obj.curr, obj.limit, videoClassification);
                 }
             });
         }
@@ -87,11 +88,12 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                 laypage.render({
                     elem: 'demo7'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
                         showByClassification(obj.curr, obj.limit, videoClassification);
+                        showSeriesByClassification(obj.curr, obj.limit, videoClassification);
                     }
                 });
             }
@@ -109,11 +111,12 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                 laypage.render({
                     elem: 'demo7'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
                         showByClassification(obj.curr, obj.limit, videoClassification);
+                        showSeriesByClassification(obj.curr, obj.limit, videoClassification);
                     }
                 });
             }
@@ -132,11 +135,12 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                 laypage.render({
                     elem: 'demo7'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
                         showByClassification(obj.curr, obj.limit, videoClassification);
+                        showSeriesByClassification(obj.curr, obj.limit, videoClassification);
                     }
                 });
             }
@@ -155,11 +159,12 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                 laypage.render({
                     elem: 'demo7'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
                         showByClassification(obj.curr, obj.limit, videoClassification);
+                        showSeriesByClassification(obj.curr, obj.limit, videoClassification);
                     }
                 });
             }
@@ -178,11 +183,12 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                 laypage.render({
                     elem: 'demo7'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
                         showByClassification(obj.curr, obj.limit, videoClassification);
+                        showSeriesByClassification(obj.curr, obj.limit, videoClassification);
                     }
                 });
             }
@@ -204,11 +210,12 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                 laypage.render({
                     elem: 'demo7'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
                         showByClassificationLittle(obj.curr, obj.limit, classificationLittle);
+                        showSeriesByClassificationLittle(obj.curr, obj.limit, classificationLittle);
                     }
                 });
             }
@@ -219,8 +226,8 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
         classificationLittle = "Java";
         showClassificationLittle(classificationLittle);
     });
-    $('#videoClass1_c1').on('click', function () {
-        classificationLittle = "C++";
+    $('#videoClass1_php').on('click', function () {
+        classificationLittle = "php";
         showClassificationLittle(classificationLittle);
     });
     $('#videoClass1_python').on('click', function () {
@@ -302,8 +309,8 @@ function showByClassification(pageNo, pageSize, videoClassification) {
     formData.append("query", videoClassification);
     // formData.append("limit", pageSize);
     // formData.append("page", pageNo);
-    formData.append("limit", pageSize);
-    formData.append("page", pageNo);
+    formData.append("limit", 5);
+    formData.append("page", 1);
     $.ajax({
         url: "/videoManage/searchByClassification",
         type: "post",
@@ -314,7 +321,6 @@ function showByClassification(pageNo, pageSize, videoClassification) {
         success: function (data) {
             $("#videoClass_limitless_item").empty();
             if (data.data.numberOfElements === 0) {
-                // document.getElementById("demo7").style.display = "none";
                 var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
                     "<div>" +
                     "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
@@ -322,8 +328,70 @@ function showByClassification(pageNo, pageSize, videoClassification) {
                     "</div>" +
                     "</div>";
                 $("#videoClass_limitless_item").append(appendhtml);
+                $("#video-more").empty();
             } else {
-                // document.getElementById("demo7").style.display = "block";
+                for (var i = 0; i < data.data.numberOfElements; i++) {
+                    var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
+                        "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
+                        "                                    <div class=\"layui-card\">\n" +
+                        "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "&pageNum=1\">" +
+                        "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
+                        "                                            <div style=\"height: 40px\">\n" +
+                        "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                        </a>\n" +
+                        "                                        <div class=\"layui-card-body\">\n" +
+                        "                                            <div class=\"layui-input-inline\" style=\"float: left\">\n" +
+                        "                                                <img src=\"../images/integral.png\" style=\"width: 16px; height: 16px\"/>\n" +
+                        "                                                <span style=\"color: red; font-size: 10px\">" + data.data.content[i].videoIntegral + "</span>&nbsp;&nbsp;" +
+                        "                                                <img src=\"../images/play.png\" style=\"width: 16px; height: 16px\"/>\n" +
+                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].playbackVolume + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                            <div class=\"layui-input-inline\" style=\"float: right\">\n" +
+                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].videoDate + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                            <div style=\"clear: both\"></div>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>";
+                    $("#videoClass_limitless_item").append(appendhtml);
+                }
+                $("#video-more").empty();
+                var appendHtml = "   <a href=\"/userUrl/videoList?videoClassification=" + videoClassification +"\">\n" +
+                    "                    <span style=\" font-size: 16px\">更多&nbsp;&nbsp;<img src=\"../images/more.png\" width='12'/></span>\n" +
+                    "                </a>";
+                $("#video-more").append(appendHtml);
+            }
+        }
+    });
+}
+
+function showByClassificationLittle(pageNo, pageSize, classificationLittle) {
+    var formData = new FormData();
+    formData.append("query", classificationLittle);
+    // formData.append("limit", pageSize);
+    // formData.append("page", pageNo);
+    formData.append("limit", 5);
+    formData.append("page", 1);
+    $.ajax({
+        url: "/videoManage/searchByLittleClassification",
+        type: "post",
+        dataType: "json",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $("#videoClass_limitless_item").empty();
+            if (data.data.numberOfElements === 0) {
+                var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                    "<div>" +
+                    "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                    "<span>暂无相关信息，请查看其它分类！</span>" +
+                    "</div>" +
+                    "</div>";
+                $("#videoClass_limitless_item").append(appendhtml);
+                $("#video-more").empty();
+            } else {
                 for (var i = 0; i < data.data.numberOfElements; i++) {
                     var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
                         "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
@@ -355,59 +423,117 @@ function showByClassification(pageNo, pageSize, videoClassification) {
     });
 }
 
-function showByClassificationLittle(pageNo, pageSize, classificationLittle) {
+function showSeriesByClassification(pageNo, pageSize, seriesClassification) {
     var formData = new FormData();
-    formData.append("query", classificationLittle);
+    formData.append("query", seriesClassification);
     // formData.append("limit", pageSize);
     // formData.append("page", pageNo);
-    formData.append("limit", pageSize);
-    formData.append("page", pageNo);
+    formData.append("limit", 5);
+    formData.append("page", 1);
     $.ajax({
-        url: "/videoManage/searchByLittleClassification",
+        url: "/videoSeriesManage/searchByClassification",
         type: "post",
         dataType: "json",
         data: formData,
         contentType: false,
         processData: false,
         success: function (data) {
-            $("#videoClass_limitless_item").empty();
+            $("#series-list").empty();
             if (data.data.numberOfElements === 0) {
-                document.getElementById("demo7").style.display = "none";
-                var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
-                    "<div>" +
-                    "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
-                    "<span>暂无相关信息，请查看其它分类！</span>" +
-                    "</div>" +
-                    "</div>";
-                $("#videoClass_limitless_item").append(appendhtml);
+                $("#series-more").empty();
+                $("#series-list").empty();
+                document.getElementById("recommend-series").style.display = "none";
             } else {
-                document.getElementById("demo7").style.display = "block";
                 for (var i = 0; i < data.data.numberOfElements; i++) {
-                    var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
+                    var appendhtml = "<input type=\"hidden\" id=\"seriesId\" name=\"seriesId\" value=" + data.data.content[i].id + ">\n " +
                         "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
                         "                                    <div class=\"layui-card\">\n" +
-                        "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "&pageNum=1\">" +
-                        "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
+                        "                                    <a href=\"/userUrl/playSeriesBySeries?seriesId=" + data.data.content[i].id + "&pageNum=1\">" +
+                        "                                           <img src=" + data.data.content[i].seriesImageUrl + " width=\"212\">\n" +
                         "                                            <div style=\"height: 40px\">\n" +
-                        "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
+                        "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].seriesName + "</span>\n" +
                         "                                            </div>\n" +
                         "                                        </a>\n" +
                         "                                        <div class=\"layui-card-body\">\n" +
                         "                                            <div class=\"layui-input-inline\" style=\"float: left\">\n" +
                         "                                                <img src=\"../images/integral.png\" style=\"width: 16px; height: 16px\"/>\n" +
-                        "                                                <span style=\"color: red; font-size: 10px\">" + data.data.content[i].videoIntegral + "</span>&nbsp;&nbsp;" +
-                        "                                                <img src=\"../images/play.png\" style=\"width: 16px; height: 16px\"/>\n" +
-                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].playbackVolume + "</span>\n" +
+                        "                                                <span style=\"color: red; font-size: 10px\">" + data.data.content[i].seriesIntegral + "</span>&nbsp;&nbsp;" +
+                        // "                                                <img src=\"../images/play.png\" style=\"width: 16px; height: 16px\"/>\n" +
+                        // "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].playbackVolume + "</span>\n" +
                         "                                            </div>\n" +
                         "                                            <div class=\"layui-input-inline\" style=\"float: right\">\n" +
-                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].videoDate + "</span>\n" +
+                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].seriesDate + "</span>\n" +
                         "                                            </div>\n" +
                         "                                            <div style=\"clear: both\"></div>\n" +
                         "                                        </div>\n" +
                         "                                    </div>\n" +
                         "                                </div>";
-                    $("#videoClass_limitless_item").append(appendhtml);
+                    $("#series-list").append(appendhtml);
                 }
+                document.getElementById("recommend-series").style.display = "block";
+                $("#series-more").empty();
+                var appendHtml = "   <a href=\"/userUrl/seriesList?seriesClassification=" + seriesClassification +"\">\n" +
+                    "                    <span style=\" font-size: 16px\">更多&nbsp;&nbsp;<img src=\"../images/more.png\" width='12'/></span>\n" +
+                    "                </a>";
+                $("#series-more").append(appendHtml);
+            }
+        }
+    });
+}
+
+function showSeriesByClassificationLittle(pageNo, pageSize, classificationLittle) {
+    var formData = new FormData();
+    formData.append("query", classificationLittle);
+    // formData.append("limit", pageSize);
+    // formData.append("page", pageNo);
+    formData.append("limit", 5);
+    formData.append("page", 1);
+    $.ajax({
+        url: "/videoSeriesManage/searchByLittleClassification",
+        type: "post",
+        dataType: "json",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $("#series-list").empty();
+            if (data.data.numberOfElements === 0) {
+                $("#series-more").empty();
+                $("#series-list").empty();
+                document.getElementById("recommend-series").style.display = "none";
+            } else {
+                for (var i = 0; i < data.data.numberOfElements; i++) {
+                    var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
+                        "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
+                        "                                    <div class=\"layui-card\">\n" +
+                        "                                        <a href=\"/userUrl/playSeriesBySeries?seriesId=" + data.data.content[i].id + "&pageNum=1\">" +
+                        "                                           <img src=" + data.data.content[i].seriesImageUrl + " width=\"212\">\n" +
+                        "                                            <div style=\"height: 40px\">\n" +
+                        "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].seriesName + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                        </a>\n" +
+                        "                                        <div class=\"layui-card-body\">\n" +
+                        "                                            <div class=\"layui-input-inline\" style=\"float: left\">\n" +
+                        "                                                <img src=\"../images/integral.png\" style=\"width: 16px; height: 16px\"/>\n" +
+                        "                                                <span style=\"color: red; font-size: 10px\">" + data.data.content[i].seriesIntegral + "</span>&nbsp;&nbsp;" +
+                        // "                                                <img src=\"../images/play.png\" style=\"width: 16px; height: 16px\"/>\n" +
+                        // "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].playbackVolume + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                            <div class=\"layui-input-inline\" style=\"float: right\">\n" +
+                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].seriesDate + "</span>\n" +
+                        "                                            </div>\n" +
+                        "                                            <div style=\"clear: both\"></div>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>";
+                    $("#series-list").append(appendhtml);
+                }
+                document.getElementById("recommend-series").style.display = "block";
+                $("#series-more").empty();
+                var appendHtml = "   <a href=\"/userUrl/seriesList?seriesClassification=" + classificationLittle +"\">\n" +
+                    "                    <span style=\" font-size: 16px\">更多&nbsp;&nbsp;<img src=\"../images/more.png\" width='12'/></span>\n" +
+                    "                </a>";
+                $("#series-more").append(appendHtml);
             }
         }
     });

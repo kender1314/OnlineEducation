@@ -26,7 +26,7 @@ public class AdminManageServiceImpl implements AdminManageService {
 
     @Override
     public Page<Admin> getAdminList(Map<String, Object> params) {
-        return adminManageRepository.findAll(PaginationBase.getPagination(params));
+        return adminManageRepository.getAdminList(PaginationBase.getPagination(params));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class AdminManageServiceImpl implements AdminManageService {
             return adminTemp != null;
         }
         AdminDTO adminDTO = new AdminDTO(admin.getId(), admin.getAdminName(), admin.getAdminAuthority(),
-                admin.getAdminPosition(), admin.getUserName());
+                admin.getAdminPosition(), admin.getUserName(), admin.getIsDelete());
         adminDTO.toString();
         AdminDTO adminDtoTemp = adminManageRepository.save(adminDTO);
         return adminDtoTemp != null;
@@ -46,8 +46,7 @@ public class AdminManageServiceImpl implements AdminManageService {
 
     @Override
     public boolean deleteAdmin(Integer id) {
-        adminManageRepository.deleteById(id);
-        return true;
+        return adminManageRepository.deleteByAdminId(id) == 1;
     }
 
     @Override

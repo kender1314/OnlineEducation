@@ -124,20 +124,25 @@
                     , {
                     field: 'series', title: '系列名', templet: function (d) {
                         if (d.series == null) {
-                            return "[null]";
+                            return "<span style='color: green'>【独立视频】</span>";
                         }
                         return d.series.seriesName;
                     }
                 }
                     , {field: 'videoDate', title: '视频上传时间'}
                     // , {field: 'videoStatus', title: '视频状态', width: 100}
-                    , {field: 'videoNumber', title: '视频集', width: 80}
+                    , {field: 'videoNumber', title: '视频集', templet: function (d) {
+                        if (d.videoNumber === 0) {
+                            return "<span style='color: green'>【独立视频】</span>";
+                        }
+                        return d.videoNumber;
+                    }}
                     , {field: 'videoClassification', title: '视频类别', width: 100}
                     , {field: 'classificationLittle', title: '二级分类', width: 100}
                     , {field: 'videoIntegral', title: '积分', width: 100}
                     , {field: 'videoIntroduce', title: '视频简介', width: 100}
-                    , {field: 'playbackVolume', title: '播放量', width: 100}
-                    , {field: 'coverUrl', title: '视频地址', width: 100}
+                    // , {field: 'playbackVolume', title: '播放量', width: 100}
+                    // , {field: 'coverUrl', title: '视频地址', width: 100}
                     , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
                 ]
             ]
@@ -162,6 +167,9 @@
                                 //关闭弹框
                                 layer.close(index);
                                 layer.msg("操作成功", {icon: 6});
+                                setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                    window.location.reload();//页面刷新
+                                }, 1000);
                             } else {
                                 layer.msg("操作失败", {icon: 5});
                             }
@@ -179,6 +187,9 @@
                             if (msg.data === true) {
                                 layer.close(index);
                                 layer.msg("操作成功", {icon: 6});
+                                setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                    window.location.reload();//页面刷新
+                                }, 1000);
                             } else {
                                 layer.msg("操作失败", {icon: 5});
                             }

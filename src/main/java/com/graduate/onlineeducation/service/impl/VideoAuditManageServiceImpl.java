@@ -31,7 +31,6 @@ public class VideoAuditManageServiceImpl implements VideoAuditManageService {
     }
 
     @Override
-    @Transactional
     public boolean updateVideoAuditPass(Integer id) {
         int temp = videoAuditManageRepository.updateVideoAuditPass(id);
         return temp == 1;

@@ -17,13 +17,43 @@ import java.util.Map;
 public interface VideoSeriesManageService {
     /**
      * 获取属于视频的系列信息
+     *
      * @param params
      * @return
      */
     Page<VideoSeries> getVideoSeriesList(Map<String, Object> params);
 
     /**
+     * 根据二级分类获取系列列表
+     * @param params
+     * @return
+     */
+    Page<VideoSeries> searchByLittleClassification(Map<String, Object> params);
+
+    /**
+     * 根据分类获取系列列表
+     * @param params
+     * @return
+     */
+    Page<VideoSeries> searchByClassification(Map<String, Object> params);
+
+    /**
+     * 根据二级分类获取系列列表数量
+     * @param classificationLittle
+     * @return
+     */
+    Integer getCountLittleClassification(String classificationLittle);
+
+    /**
+     * 根据分类获取系列列表数量
+     * @param seriesClassification
+     * @return
+     */
+    Integer getCountClassification(String seriesClassification);
+
+    /**
      * 根据id删除系列
+     *
      * @param id
      * @return
      */
@@ -31,6 +61,7 @@ public interface VideoSeriesManageService {
 
     /**
      * 根据id删除系列(伪删除)
+     *
      * @param id
      * @return
      */
@@ -38,6 +69,7 @@ public interface VideoSeriesManageService {
 
     /**
      * 更新视频系列信息
+     *
      * @param videoSeriesDTO
      * @return
      */
@@ -45,6 +77,7 @@ public interface VideoSeriesManageService {
 
     /**
      * 新增视频系列信息
+     *
      * @param videoSeriesDTO
      * @return
      */
@@ -69,6 +102,7 @@ public interface VideoSeriesManageService {
 
     /**
      * 根据查询关键字，获取查询的系列数量
+     *
      * @param query
      * @return
      */
@@ -76,6 +110,7 @@ public interface VideoSeriesManageService {
 
     /**
      * 根据查询关键字，获取查询的系列数量
+     *
      * @param query
      * @return
      */
@@ -83,13 +118,15 @@ public interface VideoSeriesManageService {
 
     /**
      * 根据id获取视频系列
+     *
      * @param id
      * @return
      */
-   VideoSeries getVideoSeriesById(Integer id);
+    VideoSeries getVideoSeriesById(Integer id);
 
     /**
      * 根据用户名获取该用户的视频系列
+     *
      * @param params
      * @return
      */
@@ -97,6 +134,7 @@ public interface VideoSeriesManageService {
 
     /**
      * 根据用户名获取该用户的视频系列数量
+     *
      * @param userId
      * @return
      */

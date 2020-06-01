@@ -57,8 +57,7 @@ public class OrderManageServiceImpl implements OrderManageService {
 
     @Override
     public boolean deleteOrder(Integer id) {
-        orderManageRepository.deleteById(id);
-        return true;
+        return orderManageRepository.deleteOrder(id) == 1;
     }
 
     @Override

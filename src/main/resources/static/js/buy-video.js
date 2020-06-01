@@ -20,7 +20,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                 formDataVideo.append("userId", userId);
                 formDataVideo.append("videoId", videoId);
                 formDataVideo.append("isDelete", 0);
-                formDataVideo.append("isVideo", 0);
+                formDataVideo.append("isVideo", 1);
                 formDataVideo.append("integral", videoIntegral);
                 $.ajax({
                     url: "/orderManage/insertOrder",
@@ -76,7 +76,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             formDataVideo.append("userId", userId);
             formDataVideo.append("videoId", videoId);
             formDataVideo.append("isDelete", 0);
-            formDataVideo.append("isVideo", 0);
+            formDataVideo.append("isVideo", 1);
             $.ajax({
                 url: "/orderManage/insertOrderNotPay",
                 type: "post",
@@ -87,7 +87,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                 success: function (data) {
                     layer.close(index);
                     if(data.data === true){
-                        layer.msg("取消成功！", {icon: 6});
+                        layer.msg("取消成功，已添加进订单中！", {icon: 6});
                     }else {
                         layer.msg("取消失败！", {icon: 5});
                     }

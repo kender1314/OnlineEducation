@@ -34,8 +34,8 @@ public class UserManageController {
      * @return 用户信息列表
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/userList")
-    public Result<Object> getUserList(@RequestParam Map<String, Object> params) {
+    @RequestMapping(method = RequestMethod.POST, value = "/getUsersList")
+    public Result<Object> getUsersList(@RequestParam Map<String, Object> params) {
         Page<User> user = userManageService.getUserList(params);
         return ResultUtils.success(user);
     }

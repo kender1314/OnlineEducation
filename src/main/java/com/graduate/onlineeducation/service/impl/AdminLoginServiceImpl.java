@@ -23,8 +23,13 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 
     @Override
     public boolean login(Map<String, Object> params, HttpSession session) {
-        String username = (String) params.get("username");
-        String password = (String) params.get("password");
+        Object username1 =  params.get("username");
+        Object password1 =  params.get("password");
+        if (username1 == null || password1 == null) {
+            return false;
+        }
+        String username =  params.get("username").toString();
+        String password =  params.get("password").toString();
         Admin admin = adminLoginRepository.login(username);
         if (SaltEncryptUtil.stringToDecode(password).
                 equals(SaltEncryptUtil.stringToDecode(admin.getAdminPassword()))){

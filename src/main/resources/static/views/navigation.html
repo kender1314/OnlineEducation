@@ -6,10 +6,10 @@
 </head>
 <body>
 <ul class="layui-nav layui-bg-blue">
-    <a href="index.html"><img src="../images/logo.png" height="42" width="250" style="margin-right: 50px"/></a>
+    <a href="/userUrl/index"><img src="../images/logo.png" height="42" width="250" style="margin-right: 50px"/></a>
     <li class="layui-nav-item layui-this"><a href="/userUrl/index">首页</a></li>
     <li class="layui-nav-item">
-        <a href="javascript:;">分类</a>
+        <a href="javascript:;">视频</a>
         <dl class="layui-nav-child">
             <dd><a href="/userUrl/videoList?videoClassification=编程语言">编程语言</a></dd>
             <dd><a href="/userUrl/videoList?videoClassification=云计算大数据">云计算大数据</a></dd>
@@ -19,10 +19,20 @@
         </dl>
     </li>
     <li class="layui-nav-item">
+        <a href="javascript:;">系列</a>
+        <dl class="layui-nav-child">
+            <dd><a href="/userUrl/seriesList?seriesClassification=编程语言">编程语言</a></dd>
+            <dd><a href="/userUrl/seriesList?seriesClassification=云计算大数据">云计算大数据</a></dd>
+            <dd><a href="/userUrl/seriesList?seriesClassification=计算机基础">计算机基础</a></dd>
+            <dd><a href="/userUrl/seriesList?seriesClassification=移动开发">移动开发</a></dd>
+            <dd><a href="/userUrl/seriesList?seriesClassification=前沿技术">前沿技术</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item">
         <a href="javascript:void(0);" onClick="showQuestions()">问题中心</a>
     </li>
     <input type="hidden" id="userId" name="userId" th:value="${session.user.id}">'
-    <div class="layui-input-inline" id="showSearch" style="margin-left: 39%">
+    <div class="layui-input-inline" id="showSearch" style="margin-left: 35%">
         <input type="tel" name="search" id="search"
                style="display: none; width: 190px; border-radius:10px; height: 30px; border: white 1px solid; padding-left: 10px">
         <button id="searchSubmit" onClick="searchSubmit()" type="submit"
@@ -86,7 +96,7 @@
             document.getElementById("search").style.display = "inline";
             document.getElementById("images").style.display = "none";
             document.getElementById("searchSubmit").style.display = "inline";
-            document.getElementById("showSearch").style.marginLeft = "25%";
+            document.getElementById("showSearch").style.marginLeft = "21%";
         } else
             document.getElementById("search").style.display = "none";
     }

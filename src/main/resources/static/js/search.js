@@ -13,7 +13,7 @@ layui.use(['laypage', 'layer'], function () {
             laypage.render({
                 elem: 'demo7'
                 , count: data.data
-                // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                , layout: ['count', 'prev', 'page', 'next']
                 , limit: 10
                 , jump: function (obj) {
                     //调用加载函数加载数据
@@ -34,7 +34,7 @@ layui.use(['laypage', 'layer'], function () {
                 laypage.render({
                     elem: 'demo7'
                     , count: data.data
-                    , layout: ['count']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
@@ -55,7 +55,7 @@ layui.use(['laypage', 'layer'], function () {
                 laypage.render({
                     elem: 'demo7'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
@@ -76,7 +76,7 @@ layui.use(['laypage', 'layer'], function () {
                 laypage.render({
                     elem: 'demo7'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
@@ -97,7 +97,7 @@ layui.use(['laypage', 'layer'], function () {
                 laypage.render({
                     elem: 'demo7'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
@@ -201,7 +201,9 @@ function showSeriesByQuery(pageNo, pageSize, query) {
                         "                                    </div>\n" +
                         "                                    </a>\n" +
                         "                                    <div class=\"my-course-introduce layui-input-inline\" style=\"width: 900px; min-height: 150px\">\n" +
+                        "                                    <a href=\"/userUrl/playSeriesBySeries?seriesId=" + data.data.content[i].id + "&pageNum=1\">" +
                         "                                        <div class=\"layui-card-header\">" + data.data.content[i].seriesName + "</div>\n" +
+                        "                                    </a>\n" +
                         "                                        <div class=\"layui-card-body\">\n" +
                         "                                             <span style=\"font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
                         "                                                总集数：" + data.data.content[i].seriesNumber + "\n" +
@@ -263,29 +265,21 @@ function showQuestionByQuery(pageNo, pageSize, query) {
                         "                                    </div>\n" +
                         "                                    <div class=\"layui-input-inline\" style=\"float: right\">\n" +
                         "                                    <img src=\"../images/user1.png\" style=\"width: 16px; height: 16px\"/>\n" +
-                        "                                    <span style=\"font-size: 10px; color:#999;margin-right: 40px;\">" + data.data.content[i].user.userName +"</span>";
-
-                    // if(data.data.content[i].questionIsSolve === 1){
-                    //     var appendhtml2 = "<img src=\"../images/correct.png\" style=\"width: 16px; height: 16px\"/>" +
-                    //         "<span style=\"font-size: 10px; margin-right: 40px; color: green\">已解决</span>\n";
-                    // }else {
-                    //     var appendhtml2 = "<img src=\"../images/error.png\" style=\"width: 16px; height: 16px\"/>" +
-                    //         "<span style=\"font-size: 10px; margin-right: 40px; color: red\">未解决</span>\n";
-                    // }
-
-                    var appendhtml3 = "<span style=\"font-size: 10px; color:#999;margin-right: 40px\">分类：" + data.data.content[i].classification + "</span>\n" +
+                        "                                    <span style=\"font-size: 10px; color:#999;margin-right: 40px;\">" + data.data.content[i].user.userName +"</span>" +
+                        "                                        <span style=\"font-size: 10px; color:#999;margin-right: 40px\">分类：" + data.data.content[i].classification + "</span>\n" +
                         "                                        <span style=\"font-size: 10px; color:#999;margin-right: 40px\">" + data.data.content[i].questionDate + "</span>\n" +
                         "                                    </div>\n" +
                         "                                    <div style=\"clear: both\"></div>\n" +
                         "                                </div>\n" +
                         "                                <div class=\"layui-card-body\">" +
-                        "                                   <span style=\"font-size: 12px; color:#999\"><b>问题详述：</b>" + data.data.content[i].questionContent +"</span>" +
+                        "                                   <span style=\"font-size: 12px; color:#999\"><b>问题详述：</b>" + data.data.content[i].questionContent +"</span><br>" +
+                        "                                   <span style=\"font-size: 10px; color: #00be00\">浏览" + data.data.content[i].viewNumber +"</span>" +
                         "                               </div>\n" +
                         "                            </div>\n" +
                         "                        </div>\n" +
                         "                    </div>";
 
-                    $("#videoClass_limitless_item").append(appendhtml1  + appendhtml3);
+                    $("#videoClass_limitless_item").append(appendhtml1);
                 }
             }
         }

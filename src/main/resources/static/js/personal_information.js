@@ -177,13 +177,19 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 ,
                 id: 'edit-hobby' + type //防止重复弹出
                 ,
-                content: '   <div class="layui-inline" style="margin-top: 20px; margin-right: 40px">\n' +
-                    '       <label class="layui-form-label" style="font-size: 13px">专业兴趣</label>\n' +
-                    '       <div class="layui-input-inline">\n' +
-                    '        <input type="tel" name="major" id="major" class="layui-input"' +
-                    'style="width: 200px; height: 30px; margin-top: 5px">\n' +
-                    '       </div>\n' +
-                    '   </div>'
+                content: '   <div class="layui-inline" style="margin-top: 20px; margin-right: 40px">\n'
+                    + '       <label class="layui-form-label" style="font-size: 13px">专业兴趣</label>\n'
+                    + '       <div class="layui-input-inline">\n'
+                    + '       <select name="major" id="major"\n'
+                    + '             style="width: 200px; height: 30px; margin-top: 5px">\n'
+                    + '             <option value="编程语言">编程语言</option>\n'
+                    + '             <option value="云计算大数据">云计算大数据</option>\n'
+                    + '             <option value="计算机基础">计算机基础</option>\n'
+                    + '             <option value="移动开发">移动开发</option>\n'
+                    + '             <option value="前沿技术">前沿技术</option>\n'
+                    + '          </select>\n'
+                    + '       </div>\n'
+                    + '   </div>'
                 ,
                 btn: ['保存', '取消']
                 , btn1: function (index, layero) {
@@ -517,6 +523,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     formData.append("questionDate", questionDate);
                     formData.append("questionIsSolve", questionIsSolve);
                     formData.append("isDelete", isDelete);
+                    formData.append("viewNumber", 0);
                     $.ajax({
                         url: "/questionManage/insertQuestion",
                         type: "post",
@@ -690,7 +697,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 laypage.render({
                     elem: 'demo7'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
@@ -737,7 +744,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 laypage.render({
                     elem: 'demoPage1'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
@@ -762,7 +769,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 laypage.render({
                     elem: 'demo8'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
@@ -784,7 +791,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 laypage.render({
                     elem: 'demo8'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
@@ -805,7 +812,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 laypage.render({
                     elem: 'demo8'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
@@ -826,7 +833,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 laypage.render({
                     elem: 'demo8'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
@@ -851,7 +858,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 laypage.render({
                     elem: 'demo9'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         showCollectVideo(obj.curr, obj.limit, userId)
@@ -873,7 +880,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 laypage.render({
                     elem: 'demo9'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         showCollectQuestion(obj.curr, obj.limit, userId)
@@ -1005,7 +1012,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 laypage.render({
                     elem: 'demo9'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
@@ -1032,7 +1039,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 laypage.render({
                     elem: 'demo9'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
@@ -1232,7 +1239,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 laypage.render({
                     elem: 'demo10'
                     , count: data.data
-                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next']
                     , limit: 10
                     , jump: function (obj) {
                         getQuestionByUserId(obj.curr, obj.limit, userId)
@@ -1811,7 +1818,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
         var seriesIntegral = document.getElementById("seriesIntegral").value;
         var seriesNumber = document.getElementById("seriesNumber").value;
         var introduction = document.getElementById("seriesIntroduction").value;
-        var introduction = document.getElementById("seriesIntroduction").value;
+        // var introduction = document.getElementById("seriesIntroduction").value;
         var myDate = new Date();
         var seriesDate = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
 
@@ -1892,10 +1899,10 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
             success: function (data) {
                 if (data.data === true) {
                     //关闭弹框
-                    layer.msg("添加成功", {icon: 6});
+                    layer.msg("添加成功， 等待管理员审核", {icon: 6});
                     setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
                         window.location.reload();//页面刷新
-                    }, 1000);
+                    }, 2000);
                 } else {
                     layer.msg("添加失败", {icon: 5});
                 }
@@ -2638,7 +2645,7 @@ function selectSeries() {
         case "编程语言":
             area.innerHTML = "" +
                 "<option value=\"Java\">Java</option>" +
-                "<option value=\"C++\">C++</option>" +
+                "<option value=\"php\">php</option>" +
                 "<option value=\"Python\">Python</option>" +
                 "<option value=\"C\">C</option>";
             break;
@@ -2682,7 +2689,7 @@ function selectSeries1() {
         case "编程语言":
             area.innerHTML = "" +
                 "<option value=\"Java\">Java</option>" +
-                "<option value=\"C++\">C++</option>" +
+                "<option value=\"php\">php</option>" +
                 "<option value=\"Python\">Python</option>" +
                 "<option value=\"C\">C</option>";
             break;
@@ -2726,7 +2733,7 @@ function selectSeries2() {
         case "编程语言":
             area.innerHTML = "" +
                 "<option value=\"Java\">Java</option>" +
-                "<option value=\"C++\">C++</option>" +
+                "<option value=\"php\">php</option>" +
                 "<option value=\"Python\">Python</option>" +
                 "<option value=\"C\">C</option>";
             break;

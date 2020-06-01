@@ -27,14 +27,12 @@ public class UserManageServiceImpl implements UserManageService {
 
     @Override
     public Page<User> getUserList(Map<String, Object> params) {
-        Specification<User> specification = new ByUserSpecification(params);
-        return userManageRepository.findAll(specification, PaginationBase.getPagination(params));
+        return userManageRepository.getUserList(PaginationBase.getPagination(params));
     }
 
     @Override
     public boolean deleteUser(Integer id) {
-        userManageRepository.deleteById(id);
-        return true;
+        return userManageRepository.deleteByUserId(id) == 1;
     }
 
     @Override

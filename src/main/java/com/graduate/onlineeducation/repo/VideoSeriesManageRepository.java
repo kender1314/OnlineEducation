@@ -26,6 +26,36 @@ public interface VideoSeriesManageRepository extends PagingAndSortingRepository<
     Page<VideoSeries> findAll(Specification<VideoSeries> spec, Pageable pageable);
 
     /**
+     * 根据二级分类获取系列列表
+     * @param query
+     * @param pageable
+     * @return
+     */
+    Page<VideoSeries> searchByLittleClassification(String query, Pageable pageable);
+
+    /**
+     * 根据分类获取系列列表
+     * @param query
+     * @param pageable
+     * @return
+     */
+    Page<VideoSeries> searchByClassification(String query, Pageable pageable);
+
+    /**
+     * 根据二级分类获取系列列表数量
+     * @param query
+     * @return
+     */
+    Integer getCountLittleClassification(String query);
+
+    /**
+     * 根据分类获取系列列表数量
+     * @param query
+     * @return
+     */
+    Integer getCountClassification(String query);
+
+    /**
      * 删除系列
      * @param id
      */

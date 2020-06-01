@@ -73,8 +73,11 @@ public class UrlAdminController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/adminVideoSeriesList")
-    public String adminVideoSeriesList(Integer id, Model model) {
+    public String adminVideoSeriesList(Integer id, String seriesClassification, String classificationLittle, Integer seriesNumber, Model model) {
         model.addAttribute("id", id);
+        model.addAttribute("seriesClassification", seriesClassification);
+        model.addAttribute("classificationLittle", classificationLittle);
+        model.addAttribute("seriesNumber", seriesNumber);
         return "/views/admin_video_series_list";
     }
 

@@ -50,12 +50,13 @@ public class AdminDTO implements Serializable {
 
     }
 
-    public AdminDTO(Integer id, String adminName, Integer adminAuthority, String adminPosition, String userName) {
+    public AdminDTO(Integer id, String adminName, Integer adminAuthority, String adminPosition, String userName, Integer isDelete) {
         this.id = id;
         this.adminName = adminName;
         this.adminAuthority = adminAuthority;
         this.adminPosition = adminPosition;
         this.userName = userName;
+        this.isDelete = isDelete;
     }
 
     public Integer getId() {

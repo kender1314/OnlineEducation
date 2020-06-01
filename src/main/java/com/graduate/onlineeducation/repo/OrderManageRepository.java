@@ -40,6 +40,13 @@ public interface OrderManageRepository extends PagingAndSortingRepository<Order,
     Order getOrderById(Integer id);
 
     /**
+     * 根据订单id获取订单信息(伪删除)
+     * @param id
+     * @return
+     */
+    Integer deleteOrder (Integer id);
+
+    /**
      * 删除订单
      * @param id
      */

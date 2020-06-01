@@ -21,8 +21,24 @@ import org.springframework.transaction.annotation.Transactional;
 @Profile({"mysql"})
 public interface JpaVideoSeriesManageRepository extends VideoSeriesManageRepository {
     @Override
-    @Query(value = "select * from gp_video_series where series_is_delete = 0", nativeQuery = true)
+    @Query(value = "select * from gp_video_series where series_is_delete = 0 order by series_date desc ", nativeQuery = true)
     Page<VideoSeries> findAll(Specification<VideoSeries> spec, Pageable pageable);
+
+    @Override
+    @Query(value = "select * from gp_video_series where series_classification_little = ?1 and series_is_delete = 0 ", nativeQuery = true)
+    Page<VideoSeries> searchByLittleClassification(String query, Pageable pageable);
+
+    @Override
+    @Query(value = "select * from gp_video_series where series_classification = ?1 and series_is_delete = 0 ", nativeQuery = true)
+    Page<VideoSeries> searchByClassification(String query, Pageable pageable);
+
+    @Override
+    @Query(value = "select count(*) from gp_video_series where series_classification_little = ?1 and series_is_delete = 0 ", nativeQuery = true)
+    Integer getCountLittleClassification(String query);
+
+    @Override
+    @Query(value = "select count(*) from gp_video_series where series_classification = ?1 and series_is_delete = 0 ", nativeQuery = true)
+    Integer getCountClassification(String query);
 
     @Override
     void deleteById(Integer id);

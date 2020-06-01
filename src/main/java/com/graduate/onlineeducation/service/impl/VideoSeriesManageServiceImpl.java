@@ -34,6 +34,28 @@ public class VideoSeriesManageServiceImpl implements VideoSeriesManageService {
     }
 
     @Override
+    public Page<VideoSeries> searchByLittleClassification(Map<String, Object> params) {
+        String query = (String) params.get("query");
+        return videoSeriesManageRepository.searchByLittleClassification(query, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public Page<VideoSeries> searchByClassification(Map<String, Object> params) {
+        String query = (String) params.get("query");
+        return videoSeriesManageRepository.searchByClassification(query, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public Integer getCountLittleClassification(String classificationLittle) {
+        return videoSeriesManageRepository.getCountLittleClassification(classificationLittle);
+    }
+
+    @Override
+    public Integer getCountClassification(String seriesClassification) {
+        return videoSeriesManageRepository.getCountClassification(seriesClassification);
+    }
+
+    @Override
     public boolean deleteSeries(Integer id) {
         videoSeriesManageRepository.deleteById(id);
         return true;

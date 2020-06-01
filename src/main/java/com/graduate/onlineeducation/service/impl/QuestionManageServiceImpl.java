@@ -33,14 +33,12 @@ public class QuestionManageServiceImpl implements QuestionManageService {
 
     @Override
     public boolean deleteQuestion(Integer id) {
-        questionManageRepository.deleteById(id);
-        return true;
+        return questionManageRepository.deleteByQuestionId(id) == 1;
     }
 
     @Override
     public Page<Question> getQuestionList(Map<String, Object> params) {
-        Specification<Question> specification = new ByQuestionSpecification(params);
-        return questionManageRepository.findAll(specification, PaginationBase.getPagination(params));
+        return questionManageRepository.getQuestionList(PaginationBase.getPagination(params));
     }
 
     @Override

@@ -141,7 +141,7 @@ public interface BookmarkManageRepository extends PagingAndSortingRepository<Boo
      * @param userId
      * @return
      */
-    void deleteBookmarkOfVideo(String bookmarkName, Integer userId);
+    Integer deleteBookmarkOfVideo(String bookmarkName, Integer userId);
 
     /**
      * 根据用户id和收藏夹名称，删除问题不为空的收藏记录
@@ -149,14 +149,14 @@ public interface BookmarkManageRepository extends PagingAndSortingRepository<Boo
      * @param userId
      * @return
      */
-    void deleteBookmarkOfQuestion(String bookmarkName, Integer userId);
+    Integer deleteBookmarkOfQuestion(String bookmarkName, Integer userId);
 
     /**
      * 根据id删除收藏记录
      * @param id
      * @return
      */
-    void deleteBookmarkById(Integer id);
+    Integer deleteBookmarkById(Integer id);
 
     /**
      * 根据用户id和收藏夹名称，更新视频不为空的收藏记录

@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Profile({"mysql"})
 public interface JpaVideoManageRepository extends VideoManageRepository {
     @Override
-    @Query(value = "select * from gp_video where ISNULL(series_id) and video_status = 1", nativeQuery = true)
+    @Query(value = "select * from gp_video where ISNULL(series_id) and video_status = 1 and video_is_delete = 0", nativeQuery = true)
     Page<Video> findVideoNoSeries(Specification<Video> spec, Pageable pageable);
 
     @Override
@@ -50,12 +50,12 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
      */
     @Override
     @Query(value = "select gp_video.* from gp_user, gp_video where gp_video.user_id = gp_user.user_id and (\n" +
-            "gp_user.user_name like %?1% or video_name like %?1% or video_introduce like %?1%) and video_status = 1 and ISNULL(series_id)", nativeQuery = true)
+            "gp_user.user_name like %?1% or video_name like %?1% or video_introduce like %?1%) and video_status = 1 and ISNULL(series_id) and video_is_delete = 0", nativeQuery = true)
     Page<Video> findVideoNoSeriesByParam(String query, Pageable pageable);
 
     @Override
     @Query(value = "select count(*) from gp_user, gp_video where gp_video.user_id = gp_user.user_id and (\n" +
-            "gp_user.user_name like %?1% or video_name like %?1% or video_introduce like %?1%) and video_status = 1 and ISNULL(series_id)", nativeQuery = true)
+            "gp_user.user_name like %?1% or video_name like %?1% or video_introduce like %?1%) and video_status = 1 and ISNULL(series_id) and video_is_delete = 0", nativeQuery = true)
     Integer getCountByQuery(String query);
 
     @Override
@@ -70,7 +70,7 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
     Video getVideoById(Integer id);
 
     @Override
-    @Query(value = "select count(*) from gp_video where video_classification = ?1 and video_status = 1 and ISNULL(series_id)", nativeQuery = true)
+    @Query(value = "select count(*) from gp_video where video_classification = ?1 and video_status = 1 and ISNULL(series_id) and video_is_delete = 0", nativeQuery = true)
     Integer getCountByClassification(String videoClassification);
 
     @Override

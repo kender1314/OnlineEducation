@@ -69,6 +69,12 @@ public class UserLoginServiceImpl implements UserLoginService {
 
     @Override
     public User register(User user) {
+        user.setActiveStatus(0);
+        String activeCode = IDUtils.getUUID();
+        user.setActiveCode(activeCode);
+        //设置默认积分为0
+        user.setUserIntegral(0);
+        user.setIsDelete(0);
         User users = userLoginRepository.save(user);
         //获取激活码
         String code = user.getActiveCode();
@@ -95,7 +101,6 @@ public class UserLoginServiceImpl implements UserLoginService {
     }
 
     @Override
-    @Transactional
     public boolean rePassword(String mail) {
         String activeCode = IDUtils.getUUID();
         int temp = userLoginRepository.updateActiveCode(activeCode, mail);
@@ -107,7 +112,6 @@ public class UserLoginServiceImpl implements UserLoginService {
     }
 
     @Override
-    @Transactional
     public boolean updatePassword(Map<String, Object> params) {
         String mail = (String) params.get("mail");
         String password = (String) params.get("password");

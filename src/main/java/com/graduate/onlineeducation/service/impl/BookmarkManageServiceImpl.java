@@ -145,22 +145,19 @@ public class BookmarkManageServiceImpl implements BookmarkManageService {
     public boolean deleteBookmarkOfVideo(Map<String, Object> params) {
         Integer userId = Integer.parseInt(params.get("userId").toString());
         String bookmarkName = params.get("bookmarkName").toString();
-        bookmarkManageRepository.deleteBookmarkOfVideo(bookmarkName, userId);
-        return true;
+        return bookmarkManageRepository.deleteBookmarkOfVideo(bookmarkName, userId) != 0;
     }
 
     @Override
     public boolean deleteBookmarkOfQuestion(Map<String, Object> params) {
         Integer userId = Integer.parseInt(params.get("userId").toString());
         String bookmarkName = params.get("bookmarkName").toString();
-        bookmarkManageRepository.deleteBookmarkOfQuestion(bookmarkName, userId);
-        return true;
+        return bookmarkManageRepository.deleteBookmarkOfQuestion(bookmarkName, userId) != 0;
     }
 
     @Override
     public boolean deleteBookmarkById(Integer id) {
-        bookmarkManageRepository.deleteBookmarkById(id);
-        return true;
+        return bookmarkManageRepository.deleteBookmarkById(id) == 1;
     }
 
     @Override

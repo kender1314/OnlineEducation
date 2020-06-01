@@ -25,7 +25,7 @@ public interface JpaBookmarkManageRepository extends BookmarkManageRepository {
 
     @Override
     @Query(value = "select * from gp_bookmark where bookmark_id in (select min(bookmark_id) from " +
-            "gp_bookmark WHERE user_id = ?1 and bookmark_is_video = 1  group by bookmark_name)", nativeQuery = true)
+            "gp_bookmark WHERE user_id = ?1 and bookmark_is_video = 1  group by bookmark_name) and bookmark_is_delete = 0", nativeQuery = true)
     Page<Bookmark> getVideoBookmarksList(Integer userId, Pageable pageable);
 
     @Override
@@ -35,45 +35,45 @@ public interface JpaBookmarkManageRepository extends BookmarkManageRepository {
 
     @Override
     @Query(value = "select * from gp_bookmark where bookmark_id in (select min(bookmark_id) from " +
-            "gp_bookmark WHERE user_id = ?1 and ISNULL(video_id) and bookmark_is_video = 0 and bookmark_is_delete = 0 group by bookmark_name)", nativeQuery = true)
+            "gp_bookmark WHERE user_id = ?1 and ISNULL(video_id) and bookmark_is_video = 0 group by bookmark_name) and bookmark_is_delete = 0", nativeQuery = true)
     List<Bookmark> getQuestionBookmarksListByUserId(Integer userId);
 
     @Override
     @Query(value = "select count(*) from gp_bookmark where bookmark_id in (select min(bookmark_id) from " +
-            "gp_bookmark WHERE user_id = ?1 and video_id is not null group by bookmark_name)", nativeQuery = true)
+            "gp_bookmark WHERE user_id = ?1 and bookmark_is_video = 1 group by bookmark_name) and bookmark_is_delete = 0", nativeQuery = true)
     Integer getCountVideoBookmarks(Integer userId);
 
     @Override
     @Query(value = "select * from gp_bookmark where bookmark_id in (select min(bookmark_id) from " +
-            "gp_bookmark WHERE user_id = ?1 and bookmark_is_video = 0 group by bookmark_name)", nativeQuery = true)
+            "gp_bookmark WHERE user_id = ?1 and bookmark_is_video = 0 group by bookmark_name) and bookmark_is_delete = 0", nativeQuery = true)
     Page<Bookmark> getQuestionBookmarksList(Integer userId, Pageable pageable);
 
     @Override
     @Query(value = "select count(*) from gp_bookmark where bookmark_id in (select min(bookmark_id) from " +
-            "gp_bookmark WHERE user_id = ?1 and question_id is not null group by bookmark_name)", nativeQuery = true)
+            "gp_bookmark WHERE user_id = ?1 and question_id is not null group by bookmark_name) and bookmark_is_delete = 0", nativeQuery = true)
     Integer getCountQuestionBookmarks(Integer userId);
 
     @Override
-    @Query(value = "select * from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and video_id is not null", nativeQuery = true)
+    @Query(value = "select * from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and video_id is not null  and bookmark_is_delete = 0", nativeQuery = true)
     Page<Bookmark> getVideoBookmarks(String bookmarkName, Integer userId, Pageable pageable);
 
     @Override
-    @Query(value = "select count(*) from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and video_id is not null", nativeQuery = true)
+    @Query(value = "select count(*) from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and video_id is not null  and bookmark_is_delete = 0", nativeQuery = true)
     Integer getVideoBookmarksCount(String bookmarkName, Integer userId);
 
     @Override
-    @Query(value = "select * from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and question_id is not null", nativeQuery = true)
+    @Query(value = "select * from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and question_id is not null and bookmark_is_delete = 0", nativeQuery = true)
     Page<Bookmark> getQuestionBookmarks(String bookmarkName, Integer userId, Pageable pageable);
 
     @Override
-    @Query(value = "select count(*) from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and question_id is not null", nativeQuery = true)
+    @Query(value = "select count(*) from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and question_id is not null and bookmark_is_delete = 0", nativeQuery = true)
     Integer getQuestionBookmarksCount(String bookmarkName, Integer userId);
 
     @Override
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM gp_bookmark where bookmark_name = ?1 and user_id = ?2 and video_id is not null", nativeQuery = true)
-    void deleteBookmarkOfVideo(String bookmarkName, Integer userId);
+    @Query(value = "update gp_bookmark set bookmark_is_delete = 1 where bookmark_name = ?1 and user_id = ?2 and bookmark_is_video = 1", nativeQuery = true)
+    Integer deleteBookmarkOfVideo(String bookmarkName, Integer userId);
 
     @Override
     @Modifying
@@ -108,14 +108,14 @@ public interface JpaBookmarkManageRepository extends BookmarkManageRepository {
     @Override
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM gp_bookmark where bookmark_name = ?1 and user_id = ?2 and question_id is not null", nativeQuery = true)
-    void deleteBookmarkOfQuestion(String bookmarkName, Integer userId);
+    @Query(value = "update gp_bookmark set bookmark_is_delete = 1 where bookmark_name = ?1 and user_id = ?2 and bookmark_is_video = 0", nativeQuery = true)
+    Integer deleteBookmarkOfQuestion(String bookmarkName, Integer userId);
 
     @Override
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM gp_bookmark where bookmark_id = ?1", nativeQuery = true)
-    void deleteBookmarkById(Integer id);
+    @Query(value = "update gp_bookmark set bookmark_is_delete = 1 where bookmark_id = ?1", nativeQuery = true)
+    Integer deleteBookmarkById(Integer id);
 
     @Override
     @Modifying

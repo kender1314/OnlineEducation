@@ -16,12 +16,19 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 @NoRepositoryBean
 public interface AdminManageRepository extends PagingAndSortingRepository<Admin, Integer> {
     /**
-     * 查找所有用户
+     * 获取所有管理员
      * @param pageable
      * @return
      */
     @Override
     Page<Admin> findAll(Pageable pageable);
+
+    /**
+     * 获取所有管理员
+     * @param pageable
+     * @return
+     */
+    Page<Admin> getAdminList(Pageable pageable);
 
     /**
      * 更新或新增管理员
@@ -37,6 +44,12 @@ public interface AdminManageRepository extends PagingAndSortingRepository<Admin,
      */
     @Override
     void deleteById(Integer id);
+
+    /**
+     * 删除管理员（伪删除）
+     * @param id
+     */
+    Integer deleteByAdminId(Integer id);
 
     /**
      * 查找管理员信息

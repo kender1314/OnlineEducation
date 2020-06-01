@@ -250,10 +250,11 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
      */
     window.collectQuestionA = function (bookmarkName) {
         var formData = new FormData();
+        var isVideo = 0;
         formData.append("bookmarkName", bookmarkName);
         formData.append("userId", userId);
         formData.append("isDelete", 0);
-        formData.append("isVideo", 1);
+        formData.append("isVideo", isVideo);
         formData.append("questionId", questionId);
         $.ajax({
             url: "/bookmarkManage/insertQuestionBookmark",

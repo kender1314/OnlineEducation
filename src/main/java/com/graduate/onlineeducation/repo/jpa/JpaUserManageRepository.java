@@ -30,6 +30,10 @@ public interface JpaUserManageRepository extends UserManageRepository {
     @Override
     Page<User> findAll(Specification<User> spec, Pageable pageable);
 
+    @Override
+    @Query(value = "select * from gp_user where user_is_delete = 0", nativeQuery = true)
+    Page<User> getUserList(Pageable pageable);
+
     /**
      * 删除用户
      *
@@ -37,6 +41,12 @@ public interface JpaUserManageRepository extends UserManageRepository {
      */
     @Override
     void deleteById(Integer id);
+
+    @Override
+    @Modifying
+    @Transactional
+    @Query(value = "update gp_user set user_is_delete = 1 where user_id = ?1", nativeQuery = true)
+    Integer deleteByUserId(Integer id);
 
     /**
      * 新增和更新用户
@@ -58,9 +68,9 @@ public interface JpaUserManageRepository extends UserManageRepository {
      * @return
      */
     @Override
-    @Query(value = "select * from gp_user where user_name like %?1% or user_phone_number like %?1% " +
+    @Query(value = "select * from gp_user where (user_name like %?1% or user_phone_number like %?1% " +
             "or user_major like %?1% or user_mail like %?1% or user_address like %?1% " +
-            "or user_education like %?1%", nativeQuery = true)
+            "or user_education like %?1%) and user_is_delete = 0", nativeQuery = true)
     Page<User> findByParam(String query, Pageable pageable);
 
     @Override

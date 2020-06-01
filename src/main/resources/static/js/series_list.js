@@ -1,4 +1,4 @@
-var videoClassification = document.getElementById("videoClassification").value;
+var seriesClassification = document.getElementById("seriesClassification").value;
 var classificationLittle;
 layui.use(['laypage', 'layer', 'jquery'], function () {
     var laypage = layui.laypage
@@ -6,7 +6,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
     var $ = layui.$;
 
     $.ajax({
-        url: "/videoManage/getCountByClassification?videoClassification=" + videoClassification,
+        url: "/videoSeriesManage/getCountByClassification?seriesClassification=" + seriesClassification,
         type: "post",
         dataType: "json",
         contentType: false,
@@ -19,7 +19,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                 , limit: 10
                 , jump: function (obj) {
                     //调用加载函数加载数据
-                    showByClassification(obj.curr, obj.limit, videoClassification);
+                    showByClassification(obj.curr, obj.limit, seriesClassification);
                 }
             });
         }
@@ -29,9 +29,9 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
      * 根据一级分类获取视频列表
      */
     $('#videoClass1, #videoClass1_limitless').on('click', function () {
-        videoClassification = "编程语言";
+        seriesClassification = "编程语言";
         $.ajax({
-            url: "/videoManage/getCountByClassification?videoClassification=" + videoClassification,
+            url: "/videoSeriesManage/getCountByClassification?seriesClassification=" + seriesClassification,
             type: "post",
             dataType: "json",
             contentType: false,
@@ -44,16 +44,16 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
-                        showByClassification(obj.curr, obj.limit, videoClassification);
+                        showByClassification(obj.curr, obj.limit, seriesClassification);
                     }
                 });
             }
         });
     });
     $('#videoClass2, #videoClass2_limitless').on('click', function () {
-        videoClassification = "云计算大数据";
+        seriesClassification = "云计算大数据";
         $.ajax({
-            url: "/videoManage/getCountByClassification?videoClassification=" + videoClassification,
+            url: "/videoSeriesManage/getCountByClassification?seriesClassification=" + seriesClassification,
             type: "post",
             dataType: "json",
             contentType: false,
@@ -66,7 +66,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
-                        showByClassification(obj.curr, obj.limit, videoClassification);
+                        showByClassification(obj.curr, obj.limit, seriesClassification);
                     }
                 });
             }
@@ -74,9 +74,9 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
     });
 
     $('#videoClass3, #videoClass3_limitless').on('click', function () {
-        videoClassification = "计算机基础";
+        seriesClassification = "计算机基础";
         $.ajax({
-            url: "/videoManage/getCountByClassification?videoClassification=" + videoClassification,
+            url: "/videoSeriesManage/getCountByClassification?seriesClassification=" + seriesClassification,
             type: "post",
             dataType: "json",
             contentType: false,
@@ -89,7 +89,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
-                        showByClassification(obj.curr, obj.limit, videoClassification);
+                        showByClassification(obj.curr, obj.limit, seriesClassification);
                     }
                 });
             }
@@ -97,9 +97,9 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
     });
 
     $('#videoClass4, #videoClass4_limitless').on('click', function () {
-        videoClassification = "移动开发";
+        seriesClassification = "移动开发";
         $.ajax({
-            url: "/videoManage/getCountByClassification?videoClassification=" + videoClassification,
+            url: "/videoSeriesManage/getCountByClassification?seriesClassification=" + seriesClassification,
             type: "post",
             dataType: "json",
             contentType: false,
@@ -112,7 +112,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
-                        showByClassification(obj.curr, obj.limit, videoClassification);
+                        showByClassification(obj.curr, obj.limit, seriesClassification);
                     }
                 });
             }
@@ -120,9 +120,9 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
     });
 
     $('#videoClass5, #videoClass5_limitless').on('click', function () {
-        videoClassification = "前沿技术";
+        seriesClassification = "前沿技术";
         $.ajax({
-            url: "/videoManage/getCountByClassification?videoClassification=" + videoClassification,
+            url: "/videoSeriesManage/getCountByClassification?seriesClassification=" + seriesClassification,
             type: "post",
             dataType: "json",
             contentType: false,
@@ -135,7 +135,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                     , limit: 10
                     , jump: function (obj) {
                         //调用加载函数加载数据
-                        showByClassification(obj.curr, obj.limit, videoClassification);
+                        showByClassification(obj.curr, obj.limit, seriesClassification);
                     }
                 });
             }
@@ -148,7 +148,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
     //编程语言
     function showClassificationLittle(classificationLittle) {
         $.ajax({
-            url: "/videoManage/getCountByLittleClassification?classificationLittle=" + classificationLittle,
+            url: "/videoSeriesManage/getCountByLittleClassification?classificationLittle=" + classificationLittle,
             type: "post",
             dataType: "json",
             contentType: false,
@@ -250,13 +250,13 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
     });
 });
 
-function showByClassification(pageNo, pageSize, videoClassification) {
+function showByClassification(pageNo, pageSize, seriesClassification) {
     var formData = new FormData();
-    formData.append("query", videoClassification);
+    formData.append("query", seriesClassification);
     formData.append("limit", pageSize);
     formData.append("page", pageNo);
     $.ajax({
-        url: "/videoManage/searchByClassification",
+        url: "/videoSeriesManage/searchByClassification",
         type: "post",
         dataType: "json",
         data: formData,
@@ -276,30 +276,39 @@ function showByClassification(pageNo, pageSize, videoClassification) {
             } else {
                 document.getElementById("demo7").style.display = "block";
                 for (var i = 0; i < data.data.numberOfElements; i++) {
-                    var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
-                        "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
-                        "                                    <div class=\"layui-card\">\n" +
-                        "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "&pageNum=1\">" +
-                        "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
-                        "                                            <div style=\"height: 40px\">\n" +
-                        "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
-                        "                                            </div>\n" +
-                        "                                        </a>\n" +
+                    var appendHtml =  "<div style=\"width: 100%; min-height: 150px; background-color: #dee3e2;margin-bottom: 20px;\">\n" +
+                        "                                    <a href=\"/userUrl/playSeriesBySeries?seriesId=" + data.data.content[i].id + "&pageNum=1\">" +
+                        "                                    <div class=\"course-img layui-input-inline\" style=\"width: 250px; height: 150px\">\n" +
+                        "                                        <img src=" + data.data.content[i].seriesImageUrl + "\n" +
+                        "                                             height=\"150\"\n" +
+                        "                                             width=\"250\"/>\n" +
+                        "                                    </div>\n" +
+                        "                                    </a>\n" +
+                        "                                    <div class=\"my-course-introduce layui-input-inline\" style=\"width: 900px; min-height: 150px\">\n" +
+                        "                                    <a href=\"/userUrl/playSeriesBySeries?seriesId=" + data.data.content[i].id + "&pageNum=1\">" +
+                        "                                        <div class=\"layui-card-header\">" + data.data.content[i].seriesName + "</div>\n" +
+                        "                                    </a>\n" +
                         "                                        <div class=\"layui-card-body\">\n" +
-                        "                                            <div class=\"layui-input-inline\" style=\"float: left\">\n" +
-                        "                                                <img src=\"../images/integral.png\" style=\"width: 16px; height: 16px\"/>\n" +
-                        "                                                <span style=\"color: red; font-size: 10px\">" + data.data.content[i].videoIntegral + "</span>&nbsp;&nbsp;" +
-                        "                                                <img src=\"../images/play.png\" style=\"width: 16px; height: 16px\"/>\n" +
-                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].playbackVolume + "</span>\n" +
-                        "                                            </div>\n" +
-                        "                                            <div class=\"layui-input-inline\" style=\"float: right\">\n" +
-                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].videoDate + "</span>\n" +
-                        "                                            </div>\n" +
-                        "                                            <div style=\"clear: both\"></div>\n" +
+                        "                                             <span style=\"font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                总集数：" + data.data.content[i].seriesNumber + "\n" +
+                        "                                            </span>\n" +
+                        "                                            <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                分类：" + data.data.content[i].seriesClassification + "\n" +
+                        "                                            </span>\n" +
+                        "                                            <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                二级分类：" + data.data.content[i].classificationLittle + "\n" +
+                        "                                            </span>\n" +
+                        "                                            <span style=\"margin-left: 20px; font-size: 12px; color: green; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                <img src=\"../images/integral.png\" style=\"width: 13px; height: 13px\"/>\n" +
+                        "                                                " + data.data.content[i].seriesIntegral + "\n" +
+                        "                                            </span>" +
+                        "                                        </div>\n" +
+                        "                                        <div class=\"layui-card-body\">\n" +
+                        "                                           <span style=\"font-size: 12px; color:#999\"><b>系列简介：</b>" + data.data.content[i].introduction +"</span>" +
                         "                                        </div>\n" +
                         "                                    </div>\n" +
                         "                                </div>";
-                    $("#videoClass_limitless_item").append(appendhtml);
+                    $("#videoClass_limitless_item").append(appendHtml);
                 }
             }
         }
@@ -312,7 +321,7 @@ function showByClassificationLittle(pageNo, pageSize, classificationLittle) {
     formData.append("limit", pageSize);
     formData.append("page", pageNo);
     $.ajax({
-        url: "/videoManage/searchByLittleClassification",
+        url: "/videoSeriesManage/searchByLittleClassification",
         type: "post",
         dataType: "json",
         data: formData,
@@ -332,30 +341,39 @@ function showByClassificationLittle(pageNo, pageSize, classificationLittle) {
             } else {
                 document.getElementById("demo7").style.display = "block";
                 for (var i = 0; i < data.data.numberOfElements; i++) {
-                    var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
-                        "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
-                        "                                    <div class=\"layui-card\">\n" +
-                        "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "&pageNum=1\">" +
-                        "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
-                        "                                            <div style=\"height: 40px\">\n" +
-                        "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
-                        "                                            </div>\n" +
-                        "                                        </a>\n" +
+                    var appendHtml =  "<div style=\"width: 100%; min-height: 150px; background-color: #dee3e2;margin-bottom: 20px;\">\n" +
+                        "                                    <a href=\"/userUrl/playSeriesBySeries?seriesId=" + data.data.content[i].id + "&pageNum=1\">" +
+                        "                                    <div class=\"course-img layui-input-inline\" style=\"width: 250px; height: 150px\">\n" +
+                        "                                        <img src=" + data.data.content[i].seriesImageUrl + "\n" +
+                        "                                             height=\"150\"\n" +
+                        "                                             width=\"250\"/>\n" +
+                        "                                    </div>\n" +
+                        "                                    </a>\n" +
+                        "                                    <div class=\"my-course-introduce layui-input-inline\" style=\"width: 900px; min-height: 150px\">\n" +
+                        "                                    <a href=\"/userUrl/playSeriesBySeries?seriesId=" + data.data.content[i].id + "&pageNum=1\">" +
+                        "                                        <div class=\"layui-card-header\">" + data.data.content[i].seriesName + "</div>\n" +
+                        "                                    </a>\n" +
                         "                                        <div class=\"layui-card-body\">\n" +
-                        "                                            <div class=\"layui-input-inline\" style=\"float: left\">\n" +
-                        "                                                <img src=\"../images/integral.png\" style=\"width: 16px; height: 16px\"/>\n" +
-                        "                                                <span style=\"color: red; font-size: 10px\">" + data.data.content[i].videoIntegral + "</span>&nbsp;&nbsp;" +
-                        "                                                <img src=\"../images/play.png\" style=\"width: 16px; height: 16px\"/>\n" +
-                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].playbackVolume + "</span>\n" +
-                        "                                            </div>\n" +
-                        "                                            <div class=\"layui-input-inline\" style=\"float: right\">\n" +
-                        "                                                <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].videoDate + "</span>\n" +
-                        "                                            </div>\n" +
-                        "                                            <div style=\"clear: both\"></div>\n" +
+                        "                                             <span style=\"font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                总集数：" + data.data.content[i].seriesNumber + "\n" +
+                        "                                            </span>\n" +
+                        "                                            <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                分类：" + data.data.content[i].seriesClassification + "\n" +
+                        "                                            </span>\n" +
+                        "                                            <span style=\"margin-left: 20px; font-size: 12px; color: #23b8ff; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                二级分类：" + data.data.content[i].classificationLittle + "\n" +
+                        "                                            </span>\n" +
+                        "                                            <span style=\"margin-left: 20px; font-size: 12px; color: green; border:  1px solid #23b8ff; padding: 5px; background-color: white\">\n" +
+                        "                                                <img src=\"../images/integral.png\" style=\"width: 13px; height: 13px\"/>\n" +
+                        "                                                " + data.data.content[i].seriesIntegral + "\n" +
+                        "                                            </span>" +
+                        "                                        </div>\n" +
+                        "                                        <div class=\"layui-card-body\">\n" +
+                        "                                           <span style=\"font-size: 12px; color:#999\"><b>系列简介：</b>" + data.data.content[i].introduction +"</span>" +
                         "                                        </div>\n" +
                         "                                    </div>\n" +
                         "                                </div>";
-                    $("#videoClass_limitless_item").append(appendhtml);
+                    $("#videoClass_limitless_item").append(appendHtml);
                 }
             }
         }

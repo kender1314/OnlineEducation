@@ -28,17 +28,9 @@ public class QuestionManageController {
     @Autowired
     private QuestionManageService questionManageService;
 
-    @Autowired
-    private AnswerManageService answerManageService;
-
-    @Autowired
-    private BookmarkManageService bookmarkManageService;
-
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/deleteQuestion")
     public Result<Object> deleteQuestion(Integer id){
-//        answerManageService.deleteAnswerByQuestionId(id);
-//        bookmarkManageService.deleteBookmarkByQuestionId(id);
         boolean flag = questionManageService.deleteQuestion(id);
         return ResultUtils.success(flag);
     }

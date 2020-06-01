@@ -215,18 +215,21 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     var videoDate = document.getElementById("videoDate").value;
                     var videoIntroduce = document.getElementById("videoIntroduce").value;
                     var isDelete = document.getElementById("isDelete").value;
+                    var videoImageUrl = document.getElementById("videoImageUrl").value;
+                    var videoImage = document.getElementById("videoImage").value;
                     formData.append("id", id);
                     formData.append("videoName", videoName);
                     formData.append("videoStatus", videoStatus);
                     formData.append("videoNumber", videoNumber);
                     formData.append("videoClassification", videoClassification);
                     formData.append("classificationLittle", classificationLittle);
-                    // formData.append("videoIntegral", videoIntegral);
                     formData.append("coverUrl", coverUrl);
                     formData.append("playbackVolume", playbackVolume);
                     formData.append("videoDate", videoDate);
                     formData.append("videoIntroduce", videoIntroduce);
                     formData.append("isDelete", isDelete);
+                    formData.append("videoImage", videoImage);
+                    formData.append("videoImageUrl", videoImageUrl);
                     $.ajax({
                         url: "/videoManage/updateVideo",
                         type: "post",
@@ -431,7 +434,7 @@ function selectSeries(){
     {
         case "编程语言": area.innerHTML="" +
             "<option value=\"Java\">Java</option>" +
-            "<option value=\"C++\">C++</option>" +
+            "<option value=\"php\">php</option>" +
             "<option value=\"Python\">Python</option>" +
             "<option value=\"C\">C</option>";
             break;
@@ -469,7 +472,7 @@ function selectSeries1(){
     {
         case "编程语言": area.innerHTML="" +
             "<option value=\"Java\">Java</option>" +
-            "<option value=\"C++\">C++</option>" +
+            "<option value=\"php\">php</option>" +
             "<option value=\"Python\">Python</option>" +
             "<option value=\"C\">C</option>";
             break;

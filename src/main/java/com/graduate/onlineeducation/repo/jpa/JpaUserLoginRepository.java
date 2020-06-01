@@ -9,6 +9,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.transaction.Transactional;
+
 /**
  * @Author hejiang
  * @Version 1.0.0 RELEASE
@@ -57,6 +59,7 @@ public interface JpaUserLoginRepository extends UserLoginRepository {
      * @param mail
      * @return
      */
+    @Transactional
     @Override
     @Modifying
     @Query(value = "update gp_user set user_mail_active_code = ?1 where user_mail = ?2", nativeQuery = true)
@@ -70,6 +73,7 @@ public interface JpaUserLoginRepository extends UserLoginRepository {
      */
     @Override
     @Modifying
+    @Transactional
     @Query(value = "update gp_user set user_password = ?1 where user_mail = ?2", nativeQuery = true)
     int updatePassword( String password, String mail);
 }

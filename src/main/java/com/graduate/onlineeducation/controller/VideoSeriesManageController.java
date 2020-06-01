@@ -34,6 +34,32 @@ public class VideoSeriesManageController {
     }
 
     @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/searchByLittleClassification")
+    public Result<Object> searchByLittleClassification(@RequestParam Map<String, Object> params) {
+        Page<VideoSeries> videoSeries = videoSeriesManageService.searchByLittleClassification(params);
+        return ResultUtils.success(videoSeries);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/searchByClassification")
+    public Result<Object> searchByClassification(@RequestParam Map<String, Object> params) {
+        Page<VideoSeries> videoSeries = videoSeriesManageService.searchByClassification(params);
+        return ResultUtils.success(videoSeries);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountByLittleClassification")
+    public Result<Object> getCountByLittleClassification(String classificationLittle) {
+        return ResultUtils.success(videoSeriesManageService.getCountLittleClassification(classificationLittle));
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountByClassification")
+    public Result<Object> getCountByClassification(String seriesClassification) {
+        return ResultUtils.success(videoSeriesManageService.getCountClassification(seriesClassification));
+    }
+
+    @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/deleteSeries")
     public Result<Object> deleteSeries(Integer id){
         return ResultUtils.success(videoSeriesManageService.deleteSeries(id));

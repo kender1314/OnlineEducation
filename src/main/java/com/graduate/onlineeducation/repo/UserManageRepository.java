@@ -24,11 +24,25 @@ public interface UserManageRepository extends PagingAndSortingRepository<User, I
     Page<User> findAll(Specification<User> spec, Pageable pageable);
 
     /**
+     * 获取所有用户
+     * @param pageable
+     * @return
+     */
+    Page<User> getUserList(Pageable pageable);
+
+    /**
      * 删除用户
      * @param id
      */
     @Override
     void deleteById(Integer id);
+
+    /**
+     * 删除用户（伪删除）
+     * @param id
+     * @return
+     */
+    Integer deleteByUserId(Integer id);
 
     /**
      * 新增和更新用户

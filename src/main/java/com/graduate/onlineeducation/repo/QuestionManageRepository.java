@@ -21,8 +21,14 @@ public interface QuestionManageRepository extends PagingAndSortingRepository<Que
      * 删除问题
      * @param id
      */
-    @Override
-    void deleteById(Integer id);
+    Integer deleteByQuestionId(Integer id);
+
+    /**
+     * 获取所有问题
+     * @param pageable
+     * @return
+     */
+    Page<Question> getQuestionList(Pageable pageable);
 
     /**
      * 查找所有问题

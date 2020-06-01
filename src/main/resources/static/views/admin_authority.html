@@ -211,8 +211,13 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">职位</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" id="adminPosition" placeholder="请输入职位" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '       <select name="adminPosition" id="adminPosition"\n'
+                        + '             style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '             <option value="董事长">董事长</option>\n'
+                        + '             <option value="经理">经理</option>\n'
+                        + '             <option value="项目经理">项目经理</option>\n'
+                        + '             <option value="部门主管">部门主管</option>\n'
+                        + '          </select>\n'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -251,6 +256,7 @@
                         formData.append("adminPassword", adminPassword);
                         formData.append("adminAuthority", adminAuthority);
                         formData.append("adminPosition", adminPosition);
+                        formData.append("isDelete", 0);
                         $.ajax({
                             url: "/adminManage/insertAdmin",
                             type: "post",
@@ -264,6 +270,9 @@
                                     //关闭弹框
                                     layer.close(index);
                                     layer.msg("添加成功", {icon: 6});
+                                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                        window.location.reload();//页面刷新
+                                    }, 1000);
                                 } else {
                                     layer.msg("添加失败", {icon: 5});
                                 }
@@ -293,6 +302,9 @@
                                 //关闭弹框
                                 layer.close(index);
                                 layer.msg("删除成功", {icon: 6});
+                                setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                    window.location.reload();//页面刷新
+                                }, 1000);
                             } else {
                                 layer.msg("删除失败", {icon: 5});
                             }
@@ -309,6 +321,7 @@
 
                     content: '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
                         + '<input type="hidden" name="id" id="id" value="' + data.id + '">'
+                        + '<input type="hidden" name="isDelete" id="isDelete" value="' + data.isDelete + '">'
                         + '<table>'
                         + '<tr>'
                         + '<td>'
@@ -346,8 +359,14 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">职位</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" id="adminPosition" placeholder="请输入职位" value="' + data.adminPosition + '" autocomplete="off" class="layui-input" '
-                        + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '       <select name="adminPosition" id="adminPosition"\n'
+                        + '             style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '             <option value="' + data.adminPosition + '">默认：' + data.adminPosition + '</option>\n'
+                        + '             <option value="董事长">董事长</option>\n'
+                        + '             <option value="经理">经理</option>\n'
+                        + '             <option value="项目经理">项目经理</option>\n'
+                        + '             <option value="部门主管">部门主管</option>\n'
+                        + '          </select>\n'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -383,12 +402,14 @@
                         var adminPassword = document.getElementById("adminPassword").value;
                         var adminAuthority = document.getElementById("adminAuthority").value;
                         var adminPosition = document.getElementById("adminPosition").value;
+                        var isDelete = document.getElementById("isDelete").value;
                         formData.append("adminPassword", adminPassword);
                         formData.append("id", id);
                         formData.append("adminName", adminName);
                         formData.append("userName", userName);
                         formData.append("adminAuthority", adminAuthority);
                         formData.append("adminPosition", adminPosition);
+                        formData.append("isDelete", isDelete);
                         $.ajax({
                             url: "/adminManage/updateAdmin",
                             type: "post",
@@ -402,6 +423,9 @@
                                     //关闭弹框
                                     layer.close(index);
                                     layer.msg("更新成功", {icon: 6});
+                                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                        window.location.reload();//页面刷新
+                                    }, 1000);
                                 } else {
                                     layer.msg("更新失败", {icon: 5});
                                 }

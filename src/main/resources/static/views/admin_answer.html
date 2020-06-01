@@ -136,6 +136,9 @@
                                 //关闭弹框
                                 layer.close(index);
                                 layer.msg("删除成功", {icon: 6});
+                                setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                    window.location.reload();//页面刷新
+                                }, 1000);
                             } else {
                                 layer.msg("删除失败", {icon: 5});
                             }

@@ -23,7 +23,7 @@ import java.util.Map;
 public interface JpaCommentManageRepository extends CommentManageRepository {
 
     @Override
-    @Query(value = "select * from gp_comment where video_id = ?1", nativeQuery = true)
+    @Query(value = "select * from gp_comment where video_id = ?1 and comment_is_delete = 0", nativeQuery = true)
     Page<Comment> findAll(Integer videoId, Pageable pageable);
 
     @Override

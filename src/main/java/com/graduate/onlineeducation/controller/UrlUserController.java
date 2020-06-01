@@ -98,6 +98,12 @@ public class UrlUserController {
         return "/views/video_list";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/seriesList")
+    public String seriesList(String seriesClassification, Model model) {
+        model.addAttribute("seriesClassification", seriesClassification);
+        return "/views/series_list";
+    }
+
     /**
      * 系列拦截
      * @param seriesId
@@ -420,17 +426,6 @@ public class UrlUserController {
         model.addAttribute("videoSeries", videoSeries);
 
         return "/views/upload_series_video";
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/test")
-    public String test(@RequestParam(value = "pageNum", defaultValue = "1") String pageNo, Model model) {
-        Map<String, Object> params = new HashMap<>(10);
-        params.put("limit", 10);
-        params.put("page", pageNo);
-        Page<Question> pages = questionManageService.getQuestionListTest(params, model);
-        model.addAttribute("pages", pages);
-
-        return "/views/test";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/questionList")

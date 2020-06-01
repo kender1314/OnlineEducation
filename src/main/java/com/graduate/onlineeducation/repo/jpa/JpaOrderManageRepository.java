@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @Date 2020-02-18 20:41
  * @Description:
  */
-@SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 @Profile({"mysql"})
 public interface JpaOrderManageRepository extends OrderManageRepository {
     /**
@@ -28,6 +27,7 @@ public interface JpaOrderManageRepository extends OrderManageRepository {
      * @return
      */
     @Override
+    @Query(value = "select * from gp_order where order_is_delete = 0 order by order_date desc ", nativeQuery = true)
     Page<Order> findAll(Specification<Order> spec, Pageable pageable);
 
     @Override
@@ -36,11 +36,17 @@ public interface JpaOrderManageRepository extends OrderManageRepository {
             "where gp_order.user_id = gp_user.user_id\n" +
             "and gp_order.series_id = gp_video_series.series_id and gp_order.video_id = gp_video.video_id AND" +
             "(gp_user.user_name like %?1% or order_number like %?1% or\n" +
-            "gp_video_series.series_name like %?1% or gp_video.video_name like %?1%)", nativeQuery = true)
+            "gp_video_series.series_name like %?1% or gp_video.video_name like %?1%) and order_is_delete = 0", nativeQuery = true)
     Page<Order> findByQuery(String query, Pageable pageable);
 
     @Override
     Order getOrderById(Integer id);
+
+    @Override
+    @Modifying
+    @Transactional
+    @Query(value = "update gp_order set order_is_delete = 1 where order_id = ?1", nativeQuery = true)
+    Integer deleteOrder (Integer id);
 
     @Override
     void deleteById(Integer id);
@@ -74,35 +80,35 @@ public interface JpaOrderManageRepository extends OrderManageRepository {
     Integer getCountListOfSeries(Integer userId);
 
     @Override
-    @Query(value = "select count(*) from gp_order where user_id = ?1", nativeQuery = true)
+    @Query(value = "select count(*) from gp_order where user_id = ?1 and order_is_delete = 0", nativeQuery = true)
     Integer getCountOrderList(Integer userId);
 
     @Override
-    @Query(value = "select * from gp_order where user_id = ?1", nativeQuery = true)
+    @Query(value = "select * from gp_order where user_id = ?1 and order_is_delete = 0", nativeQuery = true)
     Page<Order> getOrderListByUserId(Integer userId, Pageable pageable);
 
     @Override
-    @Query(value = "select count(*) from gp_order where user_id = ?1 and order_status = 1", nativeQuery = true)
+    @Query(value = "select count(*) from gp_order where user_id = ?1 and order_status = 1 and order_is_delete = 0", nativeQuery = true)
     Integer getCountNonPayment(Integer userId);
 
     @Override
-    @Query(value = "select * from gp_order where user_id = ?1 and order_status = 1", nativeQuery = true)
+    @Query(value = "select * from gp_order where user_id = ?1 and order_status = 1 and order_is_delete = 0", nativeQuery = true)
     Page<Order> getNonPaymentList(Integer userId, Pageable pageable);
 
     @Override
-    @Query(value = "select count(*) from gp_order where user_id = ?1 and order_status = 2", nativeQuery = true)
+    @Query(value = "select count(*) from gp_order where user_id = ?1 and order_status = 2 and order_is_delete = 0", nativeQuery = true)
     Integer getCountPayment(Integer userId);
 
     @Override
-    @Query(value = "select * from gp_order where user_id = ?1 and order_status = 2", nativeQuery = true)
+    @Query(value = "select * from gp_order where user_id = ?1 and order_status = 2 and order_is_delete = 0", nativeQuery = true)
     Page<Order> getPaymentList(Integer userId, Pageable pageable);
 
     @Override
-    @Query(value = "select count(*) from gp_order where user_id = ?1 and order_status = 3", nativeQuery = true)
+    @Query(value = "select count(*) from gp_order where user_id = ?1 and order_status = 3 and order_is_delete = 0", nativeQuery = true)
     Integer getCountLoseEfficacy(Integer userId);
 
     @Override
-    @Query(value = "select * from gp_order where user_id = ?1 and order_status = 3", nativeQuery = true)
+    @Query(value = "select * from gp_order where user_id = ?1 and order_status = 3 and order_is_delete = 0", nativeQuery = true)
     Page<Order> getLoseEfficacyList(Integer userId, Pageable pageable);
 
     @Override
