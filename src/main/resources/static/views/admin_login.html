@@ -18,16 +18,18 @@
         <div class="layui-form-item">
             <label class="layui-form-label">账号</label>
             <div class="layui-input-block">
-                <input type="text" name="username" id="username" lay-verify="title" autocomplete="off" placeholder="请输入账号"
-                       class="layui-input" onblur="checkUserName()" style="width: 300px">
+                <input type="text" name="username" id="username" lay-verify="title" autocomplete="off"
+                       placeholder="请输入账号"
+                       class="layui-input" onchange="checkUserName()" style="width: 300px">
                 <span id="username-tips"></span>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">密码</label>
             <div class="layui-input-block">
-                <input type="password" name="password" id="password" placeholder="请输入密码" autocomplete="off" class="layui-input"
-                       onblur="checkPassword()" style="width: 300px">
+                <input type="password" name="password" id="password" placeholder="请输入密码" autocomplete="off"
+                       class="layui-input"
+                       onchange="checkPassword()" style="width: 300px">
                 <span id="password-tips"></span>
             </div>
         </div>
@@ -57,40 +59,44 @@
 <script src="../js/obscure.js"></script>
 <script>
     $("#sub").click(function () {
-        $("#form").ajaxSubmit(function (data) {
-            if (data.data === true) {
-                window.location.href = "/url/adminIndex";
-            }else {
-                alert("输入账号或密码错误");
-            }
-        });
+        var userName = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        if (userName.length >= 5 && password.length >= 6) {
+            $("#form").ajaxSubmit(function (data) {
+                if (data.data === true) {
+                    window.location.href = "/url/adminIndex";
+                } else {
+                    alert("输入账号或密码错误");
+                }
+            });
+        } else {
+            alert("请正确输入账号或密码");
+        }
     });
 
     function checkUserName() {
         var userName = document.getElementById("username").value;
-        if (userName === ""){
+        if (userName === "") {
             document.getElementById("username-tips").innerHTML = "<br><font color='red'>输入账号不能为空!</font>";
-            document.getElementById("submit").disabled = true;
-        }else if (userName.length < 5){
-            document.getElementById("username-tips").innerHTML = "<br><font color='red'>用户名至少得5个字符!</font>";
-            document.getElementById("submit").disabled = true;
-        }else {
+            document.getElementById("sub").disabled = true;
+        } else {
             document.getElementById("username-tips").innerHTML = "";
-            document.getElementById("submit").disabled = false;
+            document.getElementById("sub").disabled = false;
         }
     }
+
     function checkPassword() {
         var password = document.getElementById("password").value;
-        if (password === ""){
+        if (password === "") {
             document.getElementById("password-tips").innerHTML = "<br><font color='red'>输入密码不能为空!</font>";
-            document.getElementById("submit").disabled = true;
-        }else if (password.length < 6){
+            document.getElementById("sub").disabled = true;
+        } else if (password.length < 6) {
             document.getElementById("password-tips").innerHTML = "<br><font color='red'>密码名至少得6个字符!</font>";
-            document.getElementById("submit").disabled = true;
-        }else {
+            document.getElementById("sub").disabled = true;
+        } else {
             document.getElementById("password-tips").innerHTML = "";
             document.getElementById("password").value = obscure(password, 10);
-            document.getElementById("submit").disabled = false;
+            document.getElementById("sub").disabled = false;
         }
     }
 </script>

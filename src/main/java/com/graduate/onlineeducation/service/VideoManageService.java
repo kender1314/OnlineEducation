@@ -6,6 +6,7 @@ import com.graduate.onlineeducation.entity.Video;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -83,6 +84,13 @@ public interface VideoManageService {
      * @return
      */
     Page<Video> getVideoBySeriesId(Map<String, Object> params);
+
+    /**
+     * 根据系列id获取对应的视频列表(不分页)
+     * @param seriesId
+     * @return
+     */
+    List<Video> getVideoListBySeriesId(Integer seriesId);
 
     /**
      * 根据分类获取视频列表

@@ -309,7 +309,7 @@ function showByClassification(pageNo, pageSize, videoClassification) {
     formData.append("query", videoClassification);
     // formData.append("limit", pageSize);
     // formData.append("page", pageNo);
-    formData.append("limit", 5);
+    formData.append("limit", 10);
     formData.append("page", 1);
     $.ajax({
         url: "/videoManage/searchByClassification",
@@ -332,10 +332,10 @@ function showByClassification(pageNo, pageSize, videoClassification) {
             } else {
                 for (var i = 0; i < data.data.numberOfElements; i++) {
                     var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
-                        "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
+                        "                               <div class=\"layui-inline\" style=\"width: 212px; padding: 5px; margin-left: 15px\">\n" +
                         "                                    <div class=\"layui-card\">\n" +
                         "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "&pageNum=1\">" +
-                        "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
+                        "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\" height=\"119\">\n" +
                         "                                            <div style=\"height: 40px\">\n" +
                         "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
                         "                                            </div>\n" +
@@ -371,7 +371,7 @@ function showByClassificationLittle(pageNo, pageSize, classificationLittle) {
     formData.append("query", classificationLittle);
     // formData.append("limit", pageSize);
     // formData.append("page", pageNo);
-    formData.append("limit", 5);
+    formData.append("limit", 10);
     formData.append("page", 1);
     $.ajax({
         url: "/videoManage/searchByLittleClassification",
@@ -394,10 +394,10 @@ function showByClassificationLittle(pageNo, pageSize, classificationLittle) {
             } else {
                 for (var i = 0; i < data.data.numberOfElements; i++) {
                     var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
-                        "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
+                        "                               <div class=\"layui-inline\" style=\"width: 212px; padding: 5px; margin-left: 15px\">\n" +
                         "                                    <div class=\"layui-card\">\n" +
                         "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "&pageNum=1\">" +
-                        "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
+                        "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\" height=\"119\">\n" +
                         "                                            <div style=\"height: 40px\">\n" +
                         "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
                         "                                            </div>\n" +
@@ -449,7 +449,7 @@ function showSeriesByClassification(pageNo, pageSize, seriesClassification) {
                         "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
                         "                                    <div class=\"layui-card\">\n" +
                         "                                    <a href=\"/userUrl/playSeriesBySeries?seriesId=" + data.data.content[i].id + "&pageNum=1\">" +
-                        "                                           <img src=" + data.data.content[i].seriesImageUrl + " width=\"212\">\n" +
+                        "                                           <img src=" + data.data.content[i].seriesImageUrl + " width=\"212\" height=\"119\">\n" +
                         "                                            <div style=\"height: 40px\">\n" +
                         "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].seriesName + "</span>\n" +
                         "                                            </div>\n" +
@@ -498,7 +498,6 @@ function showSeriesByClassificationLittle(pageNo, pageSize, classificationLittle
         success: function (data) {
             $("#series-list").empty();
             if (data.data.numberOfElements === 0) {
-                $("#series-more").empty();
                 $("#series-list").empty();
                 document.getElementById("recommend-series").style.display = "none";
             } else {
@@ -507,7 +506,7 @@ function showSeriesByClassificationLittle(pageNo, pageSize, classificationLittle
                         "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
                         "                                    <div class=\"layui-card\">\n" +
                         "                                        <a href=\"/userUrl/playSeriesBySeries?seriesId=" + data.data.content[i].id + "&pageNum=1\">" +
-                        "                                           <img src=" + data.data.content[i].seriesImageUrl + " width=\"212\">\n" +
+                        "                                           <img src=" + data.data.content[i].seriesImageUrl + " width=\"212\" height=\"119\">\n" +
                         "                                            <div style=\"height: 40px\">\n" +
                         "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].seriesName + "</span>\n" +
                         "                                            </div>\n" +
@@ -528,12 +527,6 @@ function showSeriesByClassificationLittle(pageNo, pageSize, classificationLittle
                         "                                </div>";
                     $("#series-list").append(appendhtml);
                 }
-                document.getElementById("recommend-series").style.display = "block";
-                $("#series-more").empty();
-                var appendHtml = "   <a href=\"/userUrl/seriesList?seriesClassification=" + classificationLittle +"\">\n" +
-                    "                    <span style=\" font-size: 16px\">更多&nbsp;&nbsp;<img src=\"../images/more.png\" width='12'/></span>\n" +
-                    "                </a>";
-                $("#series-more").append(appendHtml);
             }
         }
     });

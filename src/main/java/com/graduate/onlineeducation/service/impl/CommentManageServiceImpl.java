@@ -84,7 +84,12 @@ public class CommentManageServiceImpl implements CommentManageService {
 //        if (comment != null && comment.getUser().getId().equals(commentDTO.getUserId())) {
 //            return false;
 //        }
-        CommentDTO temp = commentManageRepository.save(commentDTO);
+        CommentDTO temp = null;
+        try {
+            temp = commentManageRepository.save(commentDTO);
+        }catch (Exception e){
+            logger.info("评论为空->>>>>" + e);
+        }
         return temp != null;
     }
 

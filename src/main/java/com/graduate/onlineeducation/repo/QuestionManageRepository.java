@@ -19,12 +19,22 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface QuestionManageRepository extends PagingAndSortingRepository<Question, Integer> {
     /**
      * 删除问题
+     *
      * @param id
      */
     Integer deleteByQuestionId(Integer id);
 
     /**
+     * 浏览量+1
+     *
+     * @param id
+     * @return
+     */
+    Integer addOneQuestionPlay(Integer id);
+
+    /**
      * 获取所有问题
+     *
      * @param pageable
      * @return
      */
@@ -32,6 +42,7 @@ public interface QuestionManageRepository extends PagingAndSortingRepository<Que
 
     /**
      * 查找所有问题
+     *
      * @param spec
      * @param pageable
      * @return
@@ -40,6 +51,7 @@ public interface QuestionManageRepository extends PagingAndSortingRepository<Que
 
     /**
      * 获取所有问题信息列表，按时间新旧排序
+     *
      * @param pageable
      * @return
      */
@@ -47,6 +59,7 @@ public interface QuestionManageRepository extends PagingAndSortingRepository<Que
 
     /**
      * 查找问题信息
+     *
      * @param query
      * @param pageable
      * @return
@@ -55,6 +68,7 @@ public interface QuestionManageRepository extends PagingAndSortingRepository<Que
 
     /**
      * 根据查询关键字，获取查询的系列数量
+     *
      * @param query
      * @return
      */
@@ -62,6 +76,7 @@ public interface QuestionManageRepository extends PagingAndSortingRepository<Que
 
     /**
      * 根据id获取问题信息
+     *
      * @param id
      * @return
      */
@@ -69,6 +84,7 @@ public interface QuestionManageRepository extends PagingAndSortingRepository<Que
 
     /**
      * 根据用户id获取用户提出的问题
+     *
      * @param id
      * @param pageable
      * @return
@@ -77,6 +93,7 @@ public interface QuestionManageRepository extends PagingAndSortingRepository<Que
 
     /**
      * 根据用户id获取用户的问题数量
+     *
      * @param id
      * @return
      */
@@ -84,6 +101,7 @@ public interface QuestionManageRepository extends PagingAndSortingRepository<Que
 
     /**
      * 新增问题
+     *
      * @param questionDTO
      * @return
      */

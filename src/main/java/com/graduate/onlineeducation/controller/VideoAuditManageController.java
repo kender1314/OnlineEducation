@@ -31,10 +31,31 @@ public class VideoAuditManageController {
     }
 
     @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getVideoNoAuditByUserId")
+    public Result<Object> getVideoNoAuditByUserId(@RequestParam Map<String, Object> params){
+        Page<Video> videos = videoAuditManageService.getVideoNoAuditByUserId(params);
+        return ResultUtils.success(videos);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getCountVideoNoAuditByUserId")
+    public Result<Object> getCountVideoNoAuditByUserId(Integer userId){
+        return ResultUtils.success(videoAuditManageService.getCountVideoNoAuditByUserId(userId));
+    }
+
+    @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/updateVideoAuditPass")
     public Result<Object> updateVideoAuditPass(Integer id){
         return ResultUtils.success(videoAuditManageService.updateVideoAuditPass(id));
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/updateVideoAuditNotPass")
+    public Result<Object> updateVideoAuditNotPass(Integer id){
+        return ResultUtils.success(videoAuditManageService.updateVideoAuditNotPass(id));
+    }
+
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/search")

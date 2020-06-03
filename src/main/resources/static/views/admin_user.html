@@ -40,10 +40,15 @@
                         <dd><a href="/url/adminVideoAudit">视频审核管理</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} == 3"><a href="/url/adminAuthority">权限管理</a></li>
-                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminQuestion">问题管理</a></li>
-                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminOrder">订单管理</a></li>
-                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminUser">用户管理</a></li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} == 3"><a href="/url/adminAuthority">权限管理</a>
+                </li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminQuestion">问题管理</a>
+                </li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a
+                        href="/url/adminOrder">订单管理</a></li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a
+                        href="/url/adminUser">用户管理</a></li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminCarousel">首页轮播管理</a></li>
                 <!--                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>-->
                 <!--                <li class="layui-nav-item"><a href="">积分管理</a></li>-->
             </ul>
@@ -219,6 +224,7 @@
                         + '    <div class="layui-input-block">\n'
                         + '      <input type="tel" name="userIntegral" id="userIntegral" placeholder="请输入积分" value="' + data.userIntegral + '" autocomplete="off" class="layui-input" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '      <span id="user-integral-tips" style="color:red; font-size: 4px"></span>'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -300,44 +306,49 @@
                         var activeStatus = document.getElementById("activeStatus").value;
                         var isDelete = document.getElementById("isDelete").value;
                         var activeCode = document.getElementById("activeCode").value;
-                        if(activeCode !== null){
+                        if (activeCode !== null) {
                             formData.append("activeCode", activeCode);
                         }
-                        formData.append("id", id);
-                        formData.append("userName", userName);
-                        formData.append("userPhoneNumber", userPhoneNumber);
-                        formData.append("userMail", userMail);
-                        formData.append("userPassword", userPassword);
-                        formData.append("userIntegral", userIntegral);
-                        formData.append("userEducation", userEducation);
-                        formData.append("userAddress", userAddress);
-                        formData.append("major", major);
-                        formData.append("userBirth", userBirth);
-                        formData.append("introduction", introduction);
-                        formData.append("activeStatus", activeStatus);
-                        formData.append("isDelete", isDelete);
-                        $.ajax({
-                            url: "/userManage/updateUser",
-                            type: "post",
-                            dataType: "json",
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            success: function (msg) {
-                                console.log(msg);
-                                if (msg.data === true) {
-                                    //关闭弹框
-                                    layer.close(index);
-                                    layer.msg("更新成功", {icon: 6});
-                                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
-                                        window.location.reload();//页面刷新
-                                    }, 1000);
-                                } else {
-                                    layer.msg("更新失败", {icon: 5});
+                        if (userIntegral === "") {
+                            document.getElementById("user-integral-tips").innerHTML = "<font color='red'>用户积分不能为空！</font>";
+                        } else {
+                            document.getElementById("user-integral-tips").innerHTML = "";
+                            formData.append("id", id);
+                            formData.append("userName", userName);
+                            formData.append("userPhoneNumber", userPhoneNumber);
+                            formData.append("userMail", userMail);
+                            formData.append("userPassword", userPassword);
+                            formData.append("userIntegral", userIntegral);
+                            formData.append("userEducation", userEducation);
+                            formData.append("userAddress", userAddress);
+                            formData.append("major", major);
+                            formData.append("userBirth", userBirth);
+                            formData.append("introduction", introduction);
+                            formData.append("activeStatus", activeStatus);
+                            formData.append("isDelete", isDelete);
+                            $.ajax({
+                                url: "/userManage/updateUser",
+                                type: "post",
+                                dataType: "json",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function (msg) {
+                                    console.log(msg);
+                                    if (msg.data === true) {
+                                        //关闭弹框
+                                        layer.close(index);
+                                        layer.msg("更新成功", {icon: 6});
+                                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                            window.location.reload();//页面刷新
+                                        }, 1000);
+                                    } else {
+                                        layer.msg("更新失败", {icon: 5});
+                                    }
                                 }
-                            }
-                        });
+                            });
 
+                        }
                     },
                 });
             }

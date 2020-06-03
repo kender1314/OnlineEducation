@@ -21,8 +21,10 @@
                 <div style="width: 100%; text-align: center">
                     上传视频<input type="file" id="uploadVideo"
                                class="layui-btn layui-btn-primary layui-btn-sm">
+                    <span style="font-size: 12px" id="upload-video-tips"></span>
                     上传封面<input type="file" id="uploadVideoImage"
                                class="layui-btn layui-btn-primary layui-btn-sm">
+                    <span style="font-size: 12px" id="upload-image-tips"></span>
                 </div>
                 <hr>
                 <div style="margin-left: 20%">
@@ -33,6 +35,7 @@
                                    autocomplete="off"
                                    class="layui-input"
                                    style="width: 150px; height: 30px; margin-top: 5px">
+                            <span style="font-size: 12px" id="video-name-tips"></span>
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -66,8 +69,9 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label" style="font-size: 13px">视频简介</label>
                         <div style="margin-left: 110px; width: 410px; ">
-                                            <textarea placeholder="请输入简介" id="introduction"
+                            <textarea placeholder="请输入简介" id="introduction" style="width: 500px; height: 200px"
                                                       class="layui-textarea"></textarea>
+                            <span style="font-size: 12px" id="video-introduce-tips"></span>
                         </div>
                     </div>
                     <div class="layui-form-item">

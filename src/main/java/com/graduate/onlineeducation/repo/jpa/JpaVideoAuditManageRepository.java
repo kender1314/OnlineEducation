@@ -25,10 +25,24 @@ public interface JpaVideoAuditManageRepository extends VideoAuditManageRepositor
     Page<Video> findVideoNoAudit(Specification<Video> spec, Pageable pageable);
 
     @Override
+    @Query(value = "select * from gp_video where video_status = 0 and video_is_delete = 0 and user_id = ?1", nativeQuery = true)
+    Page<Video> getVideoNoAuditByUserId(Integer userId, Pageable pageable);
+
+    @Override
+    @Query(value = "select count(*) from gp_video where video_status = 0 and video_is_delete = 0 and user_id = ?1", nativeQuery = true)
+    Integer getCountVideoNoAuditByUserId(Integer userId);
+
+    @Override
     @Transactional
     @Modifying
     @Query(value = "update gp_video set video_status = 1 where video_id = ?1", nativeQuery = true)
-    int updateVideoAuditPass(Integer id);
+    Integer updateVideoAuditPass(Integer id);
+
+    @Override
+    @Transactional
+    @Modifying
+    @Query(value = "update gp_video set video_status = 2 where video_id = ?1", nativeQuery = true)
+    Integer updateVideoAuditNotPass(Integer id);
 
     @Override
     @Query(value = "select gp_video.* from gp_user, gp_video where gp_video.user_id = gp_user.user_id AND video_status = 2 AND (\n" +

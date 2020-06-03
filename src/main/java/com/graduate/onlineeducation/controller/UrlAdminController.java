@@ -1,10 +1,22 @@
 package com.graduate.onlineeducation.controller;
 
 import com.graduate.onlineeducation.autoconfigure.annotations.Intercept;
+import com.graduate.onlineeducation.entity.Video;
+import com.graduate.onlineeducation.entity.VideoSeries;
+import com.graduate.onlineeducation.service.CarouselManageService;
+import com.graduate.onlineeducation.service.VideoManageService;
+import com.graduate.onlineeducation.service.VideoSeriesManageService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author hejiang
@@ -16,6 +28,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/url")
 public class UrlAdminController {
+
+    @Autowired
+    private VideoManageService videoManageService;
+
+    @Autowired
+    private VideoSeriesManageService videoSeriesManageService;
+
+    @Autowired
+    private CarouselManageService carouselManageService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/adminIndex")
     public String adminIndex() {
@@ -102,5 +123,30 @@ public class UrlAdminController {
     public String adminVideoPlay(String coverUrl, Model model) {
         model.addAttribute("coverUrl", coverUrl);
         return "/views/admin_videoPlay";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/adminPlayVideo")
+    public String adminPlayVideo(Integer id, Model model) {
+        Video video = videoManageService.getVideoById(id);
+        model.addAttribute("video", video);
+        return "/views/admin_play_video";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/playSeries")
+    public String playSeries(Integer videoId, Integer seriesId, Model model) {
+        VideoSeries videoSeries = videoSeriesManageService.getVideoSeriesById(seriesId);
+        List<Video> pageVideoBySeriesId = videoManageService.getVideoListBySeriesId(seriesId);
+        Video video = videoManageService.getVideoById(videoId);
+        model.addAttribute("video", video);
+        model.addAttribute("videoSeries", videoSeries);
+        model.addAttribute("pageSeriesList", pageVideoBySeriesId);
+        return "/views/admin_play_series";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/adminCarousel")
+    public String adminCarousel(Model model) {
+        List<Map<String, Object>> videoList = carouselManageService.getCarouselList();
+        model.addAttribute("pages", videoList);
+        return "/views/admin_carousel";
     }
 }

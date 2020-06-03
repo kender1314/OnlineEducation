@@ -6,6 +6,19 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
     var $ = layui.$;
 
     /**
+     * 浏览量+1
+     */
+    $.ajax({
+        url: "/questionManage/addOneQuestionPlay?id=" + questionId,
+        type: "post",
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            console.log("播放量+1：" + data.data)
+        }
+    });
+    /**
      * 获取时间
      */
     $.ajax({
@@ -275,6 +288,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             }
         });
     }
+
     window.addLike = function (id) {
         $.ajax({
             url: "/answerManage/addAnswerLikeById?answerId=" + id + "&userId=" + userId,
@@ -399,6 +413,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             }
         });
     }
+
     window.replyA = function(id, content){
         layer.open({
             type: 6,

@@ -37,6 +37,11 @@ public class QuestionManageServiceImpl implements QuestionManageService {
     }
 
     @Override
+    public boolean addOneQuestionPlay(Integer id) {
+        return questionManageRepository.addOneQuestionPlay(id) == 1;
+    }
+
+    @Override
     public Page<Question> getQuestionList(Map<String, Object> params) {
         return questionManageRepository.getQuestionList(PaginationBase.getPagination(params));
     }

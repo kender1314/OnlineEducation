@@ -48,6 +48,7 @@
                         href="/url/adminOrder">订单管理</a></li>
                 <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a
                         href="/url/adminUser">用户管理</a></li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminCarousel">首页轮播管理</a></li>
                 <!--                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>-->
                 <!--                <li class="layui-nav-item"><a href="">积分管理</a></li>-->
             </ul>
@@ -180,7 +181,7 @@
                         + '<div class="layui-form-item" style="margin-top: 20px">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">用户名</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" id="adminName" onblur="checkAdminName()" placeholder="请输入用户名" autocomplete="off" class="layui-input" '
+                        + '      <input type="tel" id="adminName" onchange="checkAdminName()" placeholder="请输入用户名" autocomplete="off" class="layui-input" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
                         + '<span id="adminName-tips" style="color:red; font-size: 4px"></span>'
                         + '    </div>\n'
@@ -192,6 +193,7 @@
                         + '    <div class="layui-input-block">\n'
                         + '      <input type="tel" id="userName" placeholder="请输入姓名" autocomplete="off" class="layui-input" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '<span id="admin-userName-tips" style="color:red; font-size: 4px"></span>'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -201,7 +203,7 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">密码</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" id="adminPassword" onblur="checkAdminPassword()" placeholder="请输入密码" autocomplete="off" class="layui-input" '
+                        + '      <input type="tel" id="adminPassword" onchange="checkAdminPassword()" placeholder="请输入密码" autocomplete="off" class="layui-input" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
                         + '<span id="adminPassword-tips" style="color:red; font-size: 4px"></span>'
                         + '    </div>\n'
@@ -251,34 +253,47 @@
                         var adminPassword = document.getElementById("adminPassword").value;
                         var adminAuthority = document.getElementById("adminAuthority").value;
                         var adminPosition = document.getElementById("adminPosition").value;
-                        formData.append("adminName", adminName);
-                        formData.append("userName", userName);
-                        formData.append("adminPassword", adminPassword);
-                        formData.append("adminAuthority", adminAuthority);
-                        formData.append("adminPosition", adminPosition);
-                        formData.append("isDelete", 0);
-                        $.ajax({
-                            url: "/adminManage/insertAdmin",
-                            type: "post",
-                            dataType: "json",
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            success: function (msg) {
-                                console.log(msg);
-                                if (msg.data === true) {
-                                    //关闭弹框
-                                    layer.close(index);
-                                    layer.msg("添加成功", {icon: 6});
-                                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
-                                        window.location.reload();//页面刷新
-                                    }, 1000);
-                                } else {
-                                    layer.msg("添加失败", {icon: 5});
+                        if (adminName === "") {
+                            document.getElementById("adminName-tips").innerHTML = "<font color='red'>请输入用户名！</font>";
+                        } else if (userName === "") {
+                            document.getElementById("adminName-tips").innerHTML = "";
+                            document.getElementById("admin-userName-tips").innerHTML = "<font color='red'>请输入姓名！</font>";
+                        } else if (adminPassword === "") {
+                            document.getElementById("adminName-tips").innerHTML = "";
+                            document.getElementById("admin-userName-tips").innerHTML = "";
+                            document.getElementById("adminPassword-tips").innerHTML = "<font color='red'>请输入密码！</font>";
+                        } else {
+                            document.getElementById("adminName-tips").innerHTML = "";
+                            document.getElementById("admin-userName-tips").innerHTML = "";
+                            document.getElementById("adminPassword-tips").innerHTML = "";
+                            formData.append("adminName", adminName);
+                            formData.append("userName", userName);
+                            formData.append("adminPassword", adminPassword);
+                            formData.append("adminAuthority", adminAuthority);
+                            formData.append("adminPosition", adminPosition);
+                            formData.append("isDelete", 0);
+                            $.ajax({
+                                url: "/adminManage/insertAdmin",
+                                type: "post",
+                                dataType: "json",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function (msg) {
+                                    console.log(msg);
+                                    if (msg.data === true) {
+                                        //关闭弹框
+                                        layer.close(index);
+                                        layer.msg("添加成功", {icon: 6});
+                                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                            window.location.reload();//页面刷新
+                                        }, 1000);
+                                    } else {
+                                        layer.msg("添加失败", {icon: 5});
+                                    }
                                 }
-                            }
-                        });
-
+                            });
+                        }
                     },
                     btn2: function (index, layero) {
                         layer.close(index);
@@ -340,6 +355,7 @@
                         + '    <div class="layui-input-block">\n'
                         + '      <input type="tel" id="userName" placeholder="请输入姓名" value="' + data.userName + '"  autocomplete="off" class="layui-input" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                        + '<span id="admin-userName-tips" style="color:red; font-size: 4px"></span>'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -349,9 +365,8 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">密码</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '      <input type="tel" id="adminPassword" onblur="checkAdminPassword()" placeholder="请输入密码" autocomplete="off" class="layui-input" '
+                        + '      <input type="tel" id="adminPassword"  placeholder="请输入密码" autocomplete="off" class="layui-input" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
-                        + '<span id="adminPassword-tips" style="color:red; font-size: 4px"></span>'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -403,35 +418,43 @@
                         var adminAuthority = document.getElementById("adminAuthority").value;
                         var adminPosition = document.getElementById("adminPosition").value;
                         var isDelete = document.getElementById("isDelete").value;
-                        formData.append("adminPassword", adminPassword);
-                        formData.append("id", id);
-                        formData.append("adminName", adminName);
-                        formData.append("userName", userName);
-                        formData.append("adminAuthority", adminAuthority);
-                        formData.append("adminPosition", adminPosition);
-                        formData.append("isDelete", isDelete);
-                        $.ajax({
-                            url: "/adminManage/updateAdmin",
-                            type: "post",
-                            dataType: "json",
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            success: function (msg) {
-                                console.log(msg);
-                                if (msg.data === true) {
-                                    //关闭弹框
-                                    layer.close(index);
-                                    layer.msg("更新成功", {icon: 6});
-                                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
-                                        window.location.reload();//页面刷新
-                                    }, 1000);
-                                } else {
-                                    layer.msg("更新失败", {icon: 5});
+                        if (adminName === "") {
+                            document.getElementById("adminName-tips").innerHTML = "<font color='red'>用户名不能为空！</font>";
+                        } else if (userName === "") {
+                            document.getElementById("adminName-tips").innerHTML = "";
+                            document.getElementById("admin-userName-tips").innerHTML = "<font color='red'>姓名不能为空！</font>";
+                        } else {
+                            document.getElementById("adminName-tips").innerHTML = "";
+                            document.getElementById("admin-userName-tips").innerHTML = "";
+                            formData.append("adminPassword", adminPassword);
+                            formData.append("id", id);
+                            formData.append("adminName", adminName);
+                            formData.append("userName", userName);
+                            formData.append("adminAuthority", adminAuthority);
+                            formData.append("adminPosition", adminPosition);
+                            formData.append("isDelete", isDelete);
+                            $.ajax({
+                                url: "/adminManage/updateAdmin",
+                                type: "post",
+                                dataType: "json",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function (msg) {
+                                    console.log(msg);
+                                    if (msg.data === true) {
+                                        //关闭弹框
+                                        layer.close(index);
+                                        layer.msg("更新成功", {icon: 6});
+                                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                            window.location.reload();//页面刷新
+                                        }, 1000);
+                                    } else {
+                                        layer.msg("更新失败", {icon: 5});
+                                    }
                                 }
-                            }
-                        });
-
+                            });
+                        }
                     },
                 });
             }

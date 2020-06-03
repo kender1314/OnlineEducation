@@ -37,10 +37,15 @@
                         <dd><a href="/url/adminVideoAudit">视频审核管理</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} == 3"><a href="/url/adminAuthority">权限管理</a></li>
-                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminQuestion">问题管理</a></li>
-                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminOrder">订单管理</a></li>
-                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminUser">用户管理</a></li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} == 3"><a href="/url/adminAuthority">权限管理</a>
+                </li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminQuestion">问题管理</a>
+                </li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a
+                        href="/url/adminOrder">订单管理</a></li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a
+                        href="/url/adminUser">用户管理</a></li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminCarousel">首页轮播管理</a></li>
                 <!--                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>-->
                 <!--                <li class="layui-nav-item"><a href="">积分管理</a></li>-->
             </ul>
@@ -81,7 +86,6 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    <a class="layui-btn layui-btn-xs" lay-event="list">列表</a>
 </script>
 
 <script src="../lib/layui/layui.js"></script>
@@ -120,18 +124,25 @@
             , cols: [
                 [
                     {type: 'numbers', title: '序号', width: 100, fixed: 'left'}
-                    , {field: 'seriesName', title: '系列名', unresize: true, sort: true}
-                    , { field: 'user', title: '用户名', templet: function (d) {
+                    , {field: 'seriesName', title: '系列名',  templet: function (d) {
+                        return "<a href=\"/url/adminVideoSeriesList?id=" + d.id + "&seriesClassification=" + d.seriesClassification
+                            +"&classificationLittle=" + d.classificationLittle + "&seriesNumber=" + d.seriesNumber
+                            + "\">" +d.seriesName+ "</a>";
+                    }
+                }
+                    , {
+                    field: 'user', title: '用户名', templet: function (d) {
                         return d.user.userName;
-                    }}
+                    }
+                }
                     , {field: 'seriesNumber', title: '总集数', width: 100}
                     , {field: 'seriesDate', title: '创建时间', width: 100}
                     , {field: 'seriesClassification', title: '系列类别', width: 100}
                     , {field: 'classificationLittle', title: '二级分类', width: 100}
                     // , {field: 'videoStatus', title: '视频状态', width: 100}
                     , {field: 'introduction', title: '系列简介'}
-                    , {field: 'seriesIntegral', title: '积分', }
-                    , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
+                    , {field: 'seriesIntegral', title: '积分',}
+                    , {fixed: 'right', title: '操作', toolbar: '#barDemo'}
                 ]
             ]
             , id: 'testReload'
@@ -183,6 +194,7 @@
                         + '    <div class="layui-input-block">\n'
                         + '      <input type="tel" name="seriesName" id="seriesName" placeholder="请输入系列名" value="' + data.seriesName + '" autocomplete="off" class="layui-input" '
                         + 'style="width: 150px;px; height: 30px; margin-top: 5px">\n'
+                        + '      <span style="font-size: 12px" id="series-seriesName-tips"></span>\n'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -216,7 +228,7 @@
                         + '      <div class="layui-input-inline">\n'
                         + '        <select name="seriesClassification1" id="seriesClassification1" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px" onchange="selectSeries1()" lay-verify="required" lay-search="">\n'
-                        + '          <option value="'+ data.seriesClassification + '">默认：'+ data.seriesClassification + '</option>\n'
+                        + '          <option value="' + data.seriesClassification + '">默认：' + data.seriesClassification + '</option>\n'
                         + '          <option value="编程语言">编程语言</option>\n'
                         + '          <option value="云计算大数据">云计算大数据</option>\n'
                         + '          <option value="计算机基础">计算机基础</option>\n'
@@ -236,8 +248,8 @@
                         + '      <div class="layui-input-inline">\n'
                         + '        <select name="classificationLittle1" id="classificationLittle1" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px" lay-verify="required" lay-search="">\n'
-                        + '          <option value="'+ data.classificationLittle + '">默认：'+ data.classificationLittle + '</option>\n'
-                        +           '</select>\n'
+                        + '          <option value="' + data.classificationLittle + '">默认：' + data.classificationLittle + '</option>\n'
+                        + '</select>\n'
                         + '      </div>\n'
                         + '    </div>'
                         + '    </div>\n'
@@ -261,6 +273,7 @@
                         + '    <label class="layui-form-label" style="font-size: 13px">系列简介</label>\n'
                         + '    <div style="margin-left: 110px; width: 410px; ">\n'
                         + '      <textarea placeholder="请输入简介" name="introduction" style="width: 460px; height: 200px" id="introduction" class="layui-textarea">' + data.introduction + '</textarea>\n'
+                        + '      <span style="font-size: 12px" id="series-introduction-tips"></span>\n'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -282,48 +295,53 @@
                         var seriesDate = document.getElementById("seriesDate").value;
                         var seriesImage = document.getElementById("seriesImage").value;
                         var seriesImageUrl = document.getElementById("seriesImageUrl").value;
-                        formData.append("id", id);
-                        formData.append("seriesName", seriesName);
-                        formData.append("seriesNumber", seriesNumber);
-                        formData.append("seriesIntegral", seriesIntegral);
-                        formData.append("introduction", introduction);
-                        formData.append("seriesClassification", seriesClassification);
-                        formData.append("classificationLittle", classificationLittle);
-                        formData.append("isDelete", isDelete);
-                        formData.append("seriesDate", seriesDate);
-                        formData.append("seriesImage", seriesImage);
-                        formData.append("seriesImageUrl", seriesImageUrl);
-                        $.ajax({
-                            url: "/videoSeriesManage/updateVideoSeries",
-                            type: "post",
-                            dataType: "json",
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            success: function (msg) {
-                                console.log(msg);
-                                if (msg.data === true) {
-                                    //关闭弹框
-                                    layer.close(index);
-                                    layer.msg("更新成功", {icon: 6});
-                                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
-                                        window.location.reload();//页面刷新
-                                    }, 1000);
-                                } else {
-                                    layer.msg("更新失败", {icon: 5});
+                        if (seriesName === "") {
+                            document.getElementById("series-seriesName-tips").innerHTML = "<font color='red'>请输入系列名！</font>";
+                        } else if (introduction === "") {
+                            document.getElementById("series-seriesName-tips").innerHTML = "";
+                            document.getElementById("series-introduction-tips").innerHTML = "<font color='red'>请输入系列简介！</font>";
+                        } else {
+                            document.getElementById("series-seriesName-tips").innerHTML = "";
+                            document.getElementById("series-introduction-tips").innerHTML = "";
+                            formData.append("id", id);
+                            formData.append("seriesName", seriesName);
+                            formData.append("seriesNumber", seriesNumber);
+                            formData.append("seriesIntegral", seriesIntegral);
+                            formData.append("introduction", introduction);
+                            formData.append("seriesClassification", seriesClassification);
+                            formData.append("classificationLittle", classificationLittle);
+                            formData.append("isDelete", isDelete);
+                            formData.append("seriesDate", seriesDate);
+                            formData.append("seriesImage", seriesImage);
+                            formData.append("seriesImageUrl", seriesImageUrl);
+                            $.ajax({
+                                url: "/videoSeriesManage/updateVideoSeries",
+                                type: "post",
+                                dataType: "json",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function (msg) {
+                                    console.log(msg);
+                                    if (msg.data === true) {
+                                        //关闭弹框
+                                        layer.close(index);
+                                        layer.msg("更新成功", {icon: 6});
+                                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                            window.location.reload();//页面刷新
+                                        }, 1000);
+                                    } else {
+                                        layer.msg("更新失败", {icon: 5});
+                                    }
                                 }
-                            }
-                        });
-
+                            });
+                        }
                     },
                 });
                 laydate.render({
                     elem: '#test5'
-                    ,type: 'datetime'
+                    , type: 'datetime'
                 });
-            } else if (obj.event === 'list') {
-                window.location.href ="/url/adminVideoSeriesList?id=" + data.id + "&seriesClassification=" + data.seriesClassification +
-                    "&classificationLittle=" + data.classificationLittle + "&seriesNumber=" + data.seriesNumber;
             }
         });
 
@@ -340,6 +358,7 @@
                         '                                <div class="layui-upload" style="margin-left: 33%; margin-top: 10px">\n' +
                         '                                    上传封面&nbsp;&nbsp;<input type="file" id="uploadImage1"\n' +
                         '                                           class="layui-btn layui-btn-primary layui-btn-sm">\n' +
+                        '                                            <span style="font-size: 12px" id="series-uploadImage-tips"></span>\n' +
                         '                                </div>\n' +
                         '                                <hr>\n' +
                         '                                <div style="margin-left: 20%">\n' +
@@ -350,6 +369,7 @@
                         '                                                   autocomplete="off"\n' +
                         '                                                   class="layui-input"\n' +
                         '                                                   style="width: 150px; height: 30px; margin-top: 5px">\n' +
+                        '                                            <span style="font-size: 12px" id="series-seriesName-tips"></span>\n' +
                         '                                        </div>\n' +
                         '                                    </div>\n' +
                         '                                    <div class="layui-form-item">\n' +
@@ -405,6 +425,7 @@
                         '                                        <div style="margin-left: 110px; width: 410px; ">\n' +
                         '                                            <textarea placeholder="请输入简介" style="width: 460px; height: 200px" id="seriesIntroduction"\n' +
                         '                                                      class="layui-textarea"></textarea>\n' +
+                        '                                            <span style="font-size: 12px" id="series-seriesIntroduction-tips"></span>\n' +
                         '                                        </div>\n' +
                         '                                    </div>\n' +
                         '                                </div>\n' +
@@ -414,10 +435,7 @@
                     btn1: function (index, layero) {
                         var formData = new FormData();
                         var logo_file = document.getElementById("uploadImage1");
-                        if (logo_file !== null) {
-                            var image = logo_file.files[0];
-                            formData.append("image", image);
-                        }
+                        var image = logo_file.files[0];
                         var seriesName = document.getElementById("seriesName").value;
                         var seriesClassification = document.getElementById("seriesClassification1").value;
                         var classificationLittle = document.getElementById("classificationLittle1").value;
@@ -425,42 +443,65 @@
                         var seriesNumber = document.getElementById("seriesNumber").value;
                         var introduction = document.getElementById("seriesIntroduction").value;
                         var myDate = new Date();
-                        var seriesDate = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
+                        var seriesDate = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
 
-                        formData.append("userId", 1);
-                        formData.append("seriesName", seriesName);
-                        formData.append("seriesNumber", seriesNumber);
-                        formData.append("introduction", introduction);
-                        formData.append("seriesIntegral", seriesIntegral);
-                        formData.append("seriesClassification", seriesClassification);
-                        formData.append("classificationLittle", classificationLittle);
-                        // formData.append("seriesImage", seriesImage1);
-                        // formData.append("seriesImageUrl", seriesImageUrl1);
-                        formData.append("seriesDate", seriesDate);
-                        formData.append("isDelete", 0);
-                        $.ajax({
-                            url: "/videoSeriesManage/insertVideoSeriesAndImage",
-                            type: "post",
-                            dataType: "json",
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            success: function (data) {
-                                if (data.data === true) {
-                                    //关闭弹框
-                                    layer.msg("新建成功", {icon: 6});
-                                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
-                                        window.location.reload();//页面刷新
-                                    }, 1000);
-                                } else {
-                                    layer.msg("新建失败", {icon: 5});
+                        if (image === undefined) {
+                            document.getElementById("series-uploadImage-tips").innerHTML = "<font color='red'>请上传图片！</font>";
+                        } else if (seriesName === "") {
+                            document.getElementById("series-uploadImage-tips").innerHTML = "";
+                            document.getElementById("series-seriesName-tips").innerHTML = "<font color='red'>请输入系列名！</font>";
+                        } else if (introduction === "") {
+                            document.getElementById("series-uploadImage-tips").innerHTML = "";
+                            document.getElementById("series-seriesName-tips").innerHTML = "";
+                            document.getElementById("series-seriesIntroduction-tips").innerHTML = "<font color='red'>请输入系列简介！</font>";
+                        } else {
+                            document.getElementById("series-uploadImage-tips").innerHTML = "";
+                            document.getElementById("series-seriesName-tips").innerHTML = "";
+                            document.getElementById("series-seriesIntroduction-tips").innerHTML = "";
+                            formData.append("image", image);
+                            formData.append("userId", 1);
+                            formData.append("seriesName", seriesName);
+                            formData.append("seriesNumber", seriesNumber);
+                            formData.append("introduction", introduction);
+                            formData.append("seriesIntegral", seriesIntegral);
+                            formData.append("seriesClassification", seriesClassification);
+                            formData.append("classificationLittle", classificationLittle);
+                            // formData.append("seriesImage", seriesImage1);
+                            // formData.append("seriesImageUrl", seriesImageUrl1);
+                            formData.append("seriesDate", seriesDate);
+                            formData.append("isDelete", 0);
+                            $.ajax({
+                                url: "/videoSeriesManage/insertVideoSeriesAndImage",
+                                type: "post",
+                                dataType: "json",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+                                    if (data.data === true) {
+                                        //关闭弹框
+                                        layer.msg("新建成功", {icon: 6});
+                                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                            window.location.reload();//页面刷新
+                                        }, 1000);
+                                    } else {
+                                        layer.msg("新建失败", {icon: 5});
+                                    }
                                 }
-                            }
-                        });
-
+                            });
+                        }
                     },
                     btn2: function (index, layero) {
                         layer.close(index);
+                    }
+                });
+                $('#uploadImage1').on('change', function () {
+                    var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
+                        fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
+                    // 检查是否是图片
+                    if (!fileFormat.match(/.png|.jpg|.jpeg/)) {
+                        layer.msg("上传错误,文件格式必须为：png/jpg/jpeg", {icon: 5});
+                        document.getElementById('uploadImage1').value = ""
                     }
                 });
             }
@@ -490,42 +531,48 @@
             active[type] ? active[type].call(this) : '';
         });
     });
-    function selectSeries1(){
-        var select=document.getElementById("seriesClassification1");
-        var c=select.value;
-        var area=document.getElementById("classificationLittle1");
-        switch(c)
-        {
-            case "编程语言": area.innerHTML="" +
-                "<option value=\"Java\">Java</option>" +
-                "<option value=\"php\">php</option>" +
-                "<option value=\"Python\">Python</option>" +
-                "<option value=\"C\">C</option>";
+
+    function selectSeries1() {
+        var select = document.getElementById("seriesClassification1");
+        var c = select.value;
+        var area = document.getElementById("classificationLittle1");
+        switch (c) {
+            case "编程语言":
+                area.innerHTML = "" +
+                    "<option value=\"Java\">Java</option>" +
+                    "<option value=\"php\">php</option>" +
+                    "<option value=\"Python\">Python</option>" +
+                    "<option value=\"C\">C</option>";
                 break;
-            case "云计算大数据":area.innerHTML="" +
-                "<option value=\"Hadoop\">Hadoop</option>" +
-                "<option value=\"Spark\">Spark</option>" +
-                "<option value=\"Hbase\">Hbase</option>" +
-                "<option value=\"阿里云\">阿里云</option>" +
-                "<option value=\"Docker\">Docker</option>";
+            case "云计算大数据":
+                area.innerHTML = "" +
+                    "<option value=\"Hadoop\">Hadoop</option>" +
+                    "<option value=\"Spark\">Spark</option>" +
+                    "<option value=\"Hbase\">Hbase</option>" +
+                    "<option value=\"阿里云\">阿里云</option>" +
+                    "<option value=\"Docker\">Docker</option>";
                 break;
-            case "计算机基础":area.innerHTML="" +
-                "<option value=\"计算机网络\">计算机网络</option>" +
-                "<option value=\"算法与数据结构\">算法与数据结构</option>";
+            case "计算机基础":
+                area.innerHTML = "" +
+                    "<option value=\"计算机网络\">计算机网络</option>" +
+                    "<option value=\"算法与数据结构\">算法与数据结构</option>";
                 break;
-            case "移动开发":area.innerHTML="" +
-                "<option value=\"Android\">Android</option>" +
-                "<option value=\"iOS\">iOS</option>" +
-                "<option value=\"React native\">React native</option>";
+            case "移动开发":
+                area.innerHTML = "" +
+                    "<option value=\"Android\">Android</option>" +
+                    "<option value=\"iOS\">iOS</option>" +
+                    "<option value=\"React native\">React native</option>";
                 break;
-            case "前沿技术":area.innerHTML="" +
-                "<option value=\"微服务\">微服务</option>" +
-                "<option value=\"区块链\">区块链</option>" +
-                "<option value=\"机器学习\">机器学习</option>" +
-                "<option value=\"深度学习\">深度学习</option>" +
-                "<option value=\"计算机视觉\">计算机视觉</option>";
+            case "前沿技术":
+                area.innerHTML = "" +
+                    "<option value=\"微服务\">微服务</option>" +
+                    "<option value=\"区块链\">区块链</option>" +
+                    "<option value=\"机器学习\">机器学习</option>" +
+                    "<option value=\"深度学习\">深度学习</option>" +
+                    "<option value=\"计算机视觉\">计算机视觉</option>";
                 break;
-            default:alert("error");
+            default:
+                alert("error");
         }
     };
 </script>

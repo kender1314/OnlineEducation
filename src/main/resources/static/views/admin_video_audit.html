@@ -41,6 +41,7 @@
                 <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminQuestion">问题管理</a></li>
                 <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminOrder">订单管理</a></li>
                 <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminUser">用户管理</a></li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminCarousel">首页轮播管理</a></li>
                 <!--                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>-->
                 <!--                <li class="layui-nav-item"><a href="">积分管理</a></li>-->
             </ul>
@@ -158,12 +159,10 @@
             if (obj.event === 'fail') {
                 layer.confirm('请确认操作', function (index) {
                     $.ajax({
-                        url: "/videoManage/deleteVideo?id=" + data.id,
+                        url: "/videoAuditManage/updateVideoAuditNotPass?id=" + data.id,
                         type: "POST",
                         success: function (msg) {
                             if (msg.data === true) {
-                                //删除这一行
-                                obj.del();
                                 //关闭弹框
                                 layer.close(index);
                                 layer.msg("操作成功", {icon: 6});

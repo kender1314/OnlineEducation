@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -86,6 +87,11 @@ public class VideoManageServiceImpl implements VideoManageService {
     public Page<Video> getVideoBySeriesId(Map<String, Object> params) {
         Integer seriesId = Integer.parseInt(params.get("seriesId").toString());
         return videoManageRepository.getVideoBySeriesId(seriesId, PaginationBase.getPagination(params));
+    }
+
+    @Override
+    public List<Video> getVideoListBySeriesId(Integer seriesId) {
+        return videoManageRepository.getVideoListBySeriesId(seriesId);
     }
 
     @Override

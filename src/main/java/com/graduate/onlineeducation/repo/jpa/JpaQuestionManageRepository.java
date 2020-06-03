@@ -28,6 +28,12 @@ public interface JpaQuestionManageRepository extends QuestionManageRepository {
     Integer deleteByQuestionId(Integer id);
 
     @Override
+    @Transactional
+    @Modifying
+    @Query(value = "update gp_question set question_view_number = question_view_number + 1 where question_id = ?1", nativeQuery = true)
+    Integer addOneQuestionPlay(Integer id);
+
+    @Override
     @Query(value = "select * from gp_question where question_is_delete = 0 order by question_date desc ", nativeQuery = true)
     Page<Question> getQuestionList(Pageable pageable);
 

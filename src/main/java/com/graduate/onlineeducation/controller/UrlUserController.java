@@ -55,8 +55,13 @@ public class UrlUserController {
     @Autowired
     private OrderManageService orderManageService;
 
+    @Autowired
+    private CarouselManageService carouselManageService;
+
     @RequestMapping(method = RequestMethod.GET, value = "/index")
-    public String index() {
+    public String index(Model model) {
+        List<Map<String, Object>> videoList = carouselManageService.getCarouselList();
+        model.addAttribute("pages", videoList);
         return "/views/index";
     }
 
@@ -171,11 +176,7 @@ public class UrlUserController {
         params.put("videoId", videoId);
         params.put("page", pageNo);
 
-        Map<String, Object> params1 = new HashMap<>(10);
-        params1.put("limit", 10);
-        params1.put("seriesId", seriesId);
-        params1.put("page", pageNo);
-        Page<Video> pageVideoBySeriesId = videoManageService.getVideoBySeriesId(params1);
+        List<Video> pageVideoBySeriesId = videoManageService.getVideoListBySeriesId(seriesId);
         Page<Comment> pages = commentManageService.getCommentByVideoId(params);
         List<CommentDO> list = getCommentDo(pageNo, model, pages);
         model.addAttribute("pages", list);

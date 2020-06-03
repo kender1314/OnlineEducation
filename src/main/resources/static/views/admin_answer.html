@@ -44,7 +44,8 @@
                 <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminQuestion">问题管理</a></li>
                 <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminOrder">订单管理</a></li>
                 <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminUser">用户管理</a></li>
-<!--                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>-->
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminCarousel">首页轮播管理</a></li>
+                <!--                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>-->
                 <!--                <li class="layui-nav-item"><a href="">积分管理</a></li>-->
             </ul>
         </div>

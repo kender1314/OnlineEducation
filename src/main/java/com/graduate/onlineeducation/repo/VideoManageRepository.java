@@ -9,6 +9,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.List;
+
 /**
  * @Author hejiang
  * @Version 1.0.0 RELEASE
@@ -80,6 +82,13 @@ public interface VideoManageRepository extends PagingAndSortingRepository<Video,
      * @return
      */
     Page<Video> getVideoBySeriesId(Integer seriesId, Pageable pageable);
+
+    /**
+     * 根据系列id获取对应的视频列表（不分页）
+     * @param seriesId
+     * @return
+     */
+    List<Video> getVideoListBySeriesId(Integer seriesId);
 
     /**
      * 根据分类获取视频的数量

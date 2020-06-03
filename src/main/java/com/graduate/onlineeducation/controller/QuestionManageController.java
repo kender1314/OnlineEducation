@@ -29,6 +29,13 @@ public class QuestionManageController {
     private QuestionManageService questionManageService;
 
     @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/addOneQuestionPlay")
+    public Result<Object> addOneQuestionPlay(Integer id){
+        boolean flag = questionManageService.addOneQuestionPlay(id);
+        return ResultUtils.success(flag);
+    }
+
+    @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/deleteQuestion")
     public Result<Object> deleteQuestion(Integer id){
         boolean flag = questionManageService.deleteQuestion(id);

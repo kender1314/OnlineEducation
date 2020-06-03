@@ -136,10 +136,10 @@ function showVideoByQuery(pageNo, pageSize, query) {
                 document.getElementById("demo7").style.display = "block";
                 for (var i = 0; i < data.data.numberOfElements; i++) {
                     var appendhtml = "<input type=\"hidden\" id=\"videoId\" name=\"videoId\" value=" + data.data.content[i].id + ">\n " +
-                        "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px; margin-left: 15px\">\n" +
+                        "                               <div class=\"layui-inline\" style=\"width: 212px; padding: 5px; margin-left: 15px\">\n" +
                         "                                    <div class=\"layui-card\">\n" +
                         "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "&pageNum=1\">" +
-                        "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
+                        "                                           <img src=" + data.data.content[i].videoImageUrl + " width=\"212\" height=\"119\">\n" +
                         "                                            <div style=\"min-height: 30px; margin-left: 15px; \">\n" +
                         "                                                <span style=\"font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
                         "                                            </div>\n" +
@@ -192,7 +192,7 @@ function showSeriesByQuery(pageNo, pageSize, query) {
             } else {
                 document.getElementById("demo7").style.display = "block";
                 for (var i = 0; i < data.data.numberOfElements; i++) {
-                    var appendHtml =  "<div style=\"width: 100%; min-height: 150px; background-color: #dee3e2;margin-bottom: 20px;\">\n" +
+                    var appendHtml =  "<div class=\"layui-card\" style=\"width: 100%; min-height: 150px; margin-bottom: 20px;\">\n" +
                         "                                    <a href=\"/userUrl/playSeriesBySeries?seriesId=" + data.data.content[i].id + "&pageNum=1\">" +
                         "                                    <div class=\"course-img layui-input-inline\" style=\"width: 250px; height: 150px\">\n" +
                         "                                        <img src=" + data.data.content[i].seriesImageUrl + "\n" +

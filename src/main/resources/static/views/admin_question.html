@@ -40,10 +40,15 @@
                         <dd><a href="/url/adminVideoAudit">视频审核管理</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} == 3"><a href="/url/adminAuthority">权限管理</a></li>
-                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminQuestion">问题管理</a></li>
-                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminOrder">订单管理</a></li>
-                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminUser">用户管理</a></li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} == 3"><a href="/url/adminAuthority">权限管理</a>
+                </li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminQuestion">问题管理</a>
+                </li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a
+                        href="/url/adminOrder">订单管理</a></li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a
+                        href="/url/adminUser">用户管理</a></li>
+                <li class="layui-nav-item" th:if="${session.admin.adminAuthority} != 2"><a href="/url/adminCarousel">首页轮播管理</a></li>
                 <!--                <li class="layui-nav-item"><a href="/url/adminComment">评论管理</a></li>-->
                 <!--                <li class="layui-nav-item"><a href="">积分管理</a></li>-->
             </ul>
@@ -111,12 +116,12 @@
             , cols: [
                 [
                     {type: 'numbers', title: '序号', width: 100, fixed: 'left'}
-                    , {
-                        field: 'user', title: '用户名', templet: function (d) {
-                            return d.user.userName;
-                        }
-                    }
                     , {field: 'questionName', title: '问题题目'}
+                    , {
+                    field: 'user', title: '用户名', templet: function (d) {
+                        return d.user.userName;
+                    }
+                }
                     , {field: 'questionContent', title: '问题内容'}
                     , {field: 'questionDate', title: '发表日期'}
                     // , {field: 'questionIntegral', title: '悬赏积分'}
@@ -174,6 +179,7 @@
                         + '    <label class="layui-form-label" style="font-size: 13px">问题题目</label>\n'
                         + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; ">\n'
                         + '      <textarea placeholder="请输入问题题目" style="width: 460px; height: 200px" name="questionName" id="questionName" class="layui-textarea">' + data.questionName + '</textarea>\n'
+                        + '      <span id="question-name-tips" style="color:red; font-size: 4px"></span>'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -196,7 +202,7 @@
                         + '      <div class="layui-input-inline">\n'
                         + '        <select name="modules" name="classification" id="classification" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px" lay-verify="required" lay-search="">\n'
-                        + '          <option value="'+ data.classification + '">默认：'+ data.classification + '</option>\n'
+                        + '          <option value="' + data.classification + '">默认：' + data.classification + '</option>\n'
                         + '          <option value="编程语言">编程语言</option>\n'
                         + '          <option value="云计算大数据">云计算大数据</option>\n'
                         + '          <option value="计算机基础">计算机基础</option>\n'
@@ -214,7 +220,7 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">查看人数</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + '      <input type="number" min="0" id="viewNumber" value="' + data.viewNumber +'" placeholder="请输入查看人数" autocomplete="off" class="layui-input" '
+                        + '      <input type="number" min="0" id="viewNumber" value="' + data.viewNumber + '" placeholder="请输入查看人数" autocomplete="off" class="layui-input" '
                         + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
                         + '    </div>\n'
                         + '  </div>'
@@ -223,7 +229,7 @@
                         + '<div class="layui-form-item">\n'
                         + '    <label class="layui-form-label" style="font-size: 13px">发表日期</label>\n'
                         + '    <div class="layui-input-block">\n'
-                        + ' <input type="date" class="layui-input" id="questionDate" placeholder="yyyy-MM-dd HH:mm:ss" value="' + data.questionDate +'"'
+                        + ' <input type="date" class="layui-input" id="questionDate" placeholder="yyyy-MM-dd HH:mm:ss" value="' + data.questionDate + '"'
                         + 'style="width: 150px; height: 30px; margin-top: 5px">'
                         + '    </div>\n'
                         + '  </div>'
@@ -235,6 +241,7 @@
                         + '    <label class="layui-form-label" style="font-size: 13px">问题内容</label>\n'
                         + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; ">\n'
                         + '      <textarea placeholder="请输入内容" style="width: 460px; height: 200px" name="questionContent" id="questionContent" class="layui-textarea">' + data.questionContent + '</textarea>\n'
+                        + '      <span id="question-content-tips" style="color:red; font-size: 4px"></span>'
                         + '    </div>\n'
                         + '  </div>'
                         + '</td>'
@@ -255,42 +262,50 @@
                         var questionIsSolve = document.getElementById("questionIsSolve").value;
                         var isDelete = document.getElementById("isDelete").value;
                         var userId = document.getElementById("userId").value;
-                        formData.append("id", id);
-                        formData.append("questionName", questionName);
-                        formData.append("questionIntegral", questionIntegral);
-                        formData.append("classification", classification);
-                        formData.append("viewNumber", viewNumber);
-                        formData.append("questionDate", questionDate);
-                        formData.append("questionContent", questionContent);
-                        formData.append("questionIsSolve", questionIsSolve);
-                        formData.append("isDelete", isDelete);
-                        formData.append("userId", userId);
-                        $.ajax({
-                            url: "/questionManage/insertQuestion",
-                            type: "post",
-                            dataType: "json",
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            success: function (msg) {
-                                console.log(msg);
-                                if (msg.data === true) {
-                                    //关闭弹框
-                                    layer.close(index);
-                                    layer.msg("更新成功", {icon: 6});
-                                    setTimeout(function () {
-                                        window.location.reload();
-                                    }, 1000)
-                                } else {
-                                    layer.msg("更新失败", {icon: 5});
+                        if (questionName === "") {
+                            document.getElementById("question-name-tips").innerHTML = "<font color='red'>请输入问题名！</font>";
+                        } else if (questionContent === "") {
+                            document.getElementById("question-name-tips").innerHTML = "";
+                            document.getElementById("question-content-tips").innerHTML = "<font color='red'>请输入问题内容！</font>";
+                        } else {
+                            document.getElementById("question-name-tips").innerHTML = "";
+                            document.getElementById("question-content-tips").innerHTML = "";
+                            formData.append("id", id);
+                            formData.append("questionName", questionName);
+                            formData.append("questionIntegral", questionIntegral);
+                            formData.append("classification", classification);
+                            formData.append("viewNumber", viewNumber);
+                            formData.append("questionDate", questionDate);
+                            formData.append("questionContent", questionContent);
+                            formData.append("questionIsSolve", questionIsSolve);
+                            formData.append("isDelete", isDelete);
+                            formData.append("userId", userId);
+                            $.ajax({
+                                url: "/questionManage/insertQuestion",
+                                type: "post",
+                                dataType: "json",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function (msg) {
+                                    console.log(msg);
+                                    if (msg.data === true) {
+                                        //关闭弹框
+                                        layer.close(index);
+                                        layer.msg("更新成功", {icon: 6});
+                                        setTimeout(function () {
+                                            window.location.reload();
+                                        }, 1000)
+                                    } else {
+                                        layer.msg("更新失败", {icon: 5});
+                                    }
                                 }
-                            }
-                        });
-
+                            });
+                        }
                     }
                 });
             } else if (obj.event === 'answerList') {
-                window.location.href ="/url/adminAnswer?id=" + data.id;
+                window.location.href = "/url/adminAnswer?id=" + data.id;
             }
         });
 

@@ -12,6 +12,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @Author hejiang
  * @Version 1.0.0 RELEASE
@@ -63,6 +65,10 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
     Page<Video> getVideoBySeriesId(Integer seriesId, Pageable pageable);
 
     @Override
+    @Query(value = "select * from gp_video where series_id = ?1 and video_status = 1 and video_is_delete = 0  order by video_number asc", nativeQuery = true)
+    List<Video> getVideoListBySeriesId(Integer seriesId);
+
+    @Override
     @Query(value = "select * from gp_video where video_classification = ?1 and video_status = 1 and ISNULL(series_id) and video_is_delete = 0", nativeQuery = true)
     Page<Video> searchByClassification(String query, Pageable pageable);
 
@@ -90,11 +96,11 @@ public interface JpaVideoManageRepository extends VideoManageRepository {
     Page<Video> getVideoByUserId(Integer id, Pageable pageable);
 
     @Override
-    @Query(value = "select * from gp_video where video_id = ?1 and video_is_delete = 0", nativeQuery = true)
+    @Query(value = "select * from gp_video where video_id = ?1 and video_status = 1 and video_is_delete = 0", nativeQuery = true)
     Video getVideoByVideoId(Integer id);
 
     @Override
-    @Query(value = "select min(video_id) from gp_video where series_id = ?1 and video_is_delete = 0", nativeQuery = true)
+    @Query(value = "select min(video_id) from gp_video where series_id = ?1 and video_status = 1 and video_is_delete = 0", nativeQuery = true)
     Integer getMinVideoIdBySeries(Integer series);
 
     @Override

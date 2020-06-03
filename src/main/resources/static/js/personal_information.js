@@ -467,7 +467,8 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     + '    <label class="layui-form-label" style="font-size: 13px">问题题目</label>\n'
                     + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; ">\n'
                     + '      <textarea placeholder="请输入问题题目" name="questionName" id="questionName" class="layui-textarea"></textarea>\n'
-                    + '    </div>\n'
+                    + '      <span style="font-size: 12px" id="question-name-tips"></span>\n'
+                    + '     </div>\n'
                     + '  </div>'
                     + '</td>'
                     + '</tr>'
@@ -498,6 +499,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     + '    <label class="layui-form-label" style="font-size: 13px">问题内容</label>\n'
                     + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; ">\n'
                     + '      <textarea placeholder="请输入内容" name="questionContent" id="questionContent" class="layui-textarea"></textarea>\n'
+                    + '      <span style="font-size: 12px" id="question-content-tips"></span>\n'
                     + '    </div>\n'
                     + '  </div>'
                     + '</td>'
@@ -512,39 +514,48 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     var questionIntegral = document.getElementById("questionIntegral").value;
                     var classification = document.getElementById("classification").value;
                     var questionContent = document.getElementById("questionContent").value;
-                    var questionDate = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
+                    var questionDate = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
                     var questionIsSolve = 0;
                     var isDelete = 0;
-                    formData.append("userId", userId);
-                    formData.append("questionName", questionName);
-                    formData.append("questionIntegral", questionIntegral);
-                    formData.append("classification", classification);
-                    formData.append("questionContent", questionContent);
-                    formData.append("questionDate", questionDate);
-                    formData.append("questionIsSolve", questionIsSolve);
-                    formData.append("isDelete", isDelete);
-                    formData.append("viewNumber", 0);
-                    $.ajax({
-                        url: "/questionManage/insertQuestion",
-                        type: "post",
-                        dataType: "json",
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        success: function (msg) {
-                            console.log(msg);
-                            if (msg.data === true) {
-                                //关闭弹框
-                                layer.close(index);
-                                layer.msg("添加成功", {icon: 6});
-                                setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
-                                    window.location.reload();//页面刷新
-                                }, 1000);
-                            } else {
-                                layer.msg("添加失败", {icon: 5});
+                    if (questionName === "") {
+                        document.getElementById("question-name-tips").innerHTML = "<font color='red'>请输入问题名！</font>";
+                    } else if (questionContent === "") {
+                        document.getElementById("question-name-tips").innerHTML = "";
+                        document.getElementById("question-content-tips").innerHTML = "<font color='red'>请输入问题内容！</font>";
+                    } else {
+                        document.getElementById("question-name-tips").innerHTML = "";
+                        document.getElementById("question-content-tips").innerHTML = "";
+                        formData.append("userId", userId);
+                        formData.append("questionName", questionName);
+                        formData.append("questionIntegral", questionIntegral);
+                        formData.append("classification", classification);
+                        formData.append("questionContent", questionContent);
+                        formData.append("questionDate", questionDate);
+                        formData.append("questionIsSolve", questionIsSolve);
+                        formData.append("isDelete", isDelete);
+                        formData.append("viewNumber", 0);
+                        $.ajax({
+                            url: "/questionManage/insertQuestion",
+                            type: "post",
+                            dataType: "json",
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success: function (msg) {
+                                console.log(msg);
+                                if (msg.data === true) {
+                                    //关闭弹框
+                                    layer.close(index);
+                                    layer.msg("添加成功", {icon: 6});
+                                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                        window.location.reload();//页面刷新
+                                    }, 1000);
+                                } else {
+                                    layer.msg("添加失败", {icon: 5});
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
 
                 },
                 btn2: function (index, layero) {
@@ -749,6 +760,31 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     , jump: function (obj) {
                         //调用加载函数加载数据
                         showMyVideoSeries(obj.curr, obj.limit, userId);
+                    }
+                });
+            }
+        });
+    });
+
+    /**
+     * 获取自己上传的单个视频
+     */
+    $('#show-wait-pass-video').on('click', function () {
+        $.ajax({
+            url: "/videoAuditManage/getCountVideoNoAuditByUserId?userId=" + userId,
+            type: "post",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                laypage.render({
+                    elem: 'demoPage2'
+                    , count: data.data
+                    // , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    , limit: 8
+                    , jump: function (obj) {
+                        //调用加载函数加载数据
+                        showMyWaitPassVideo(obj.curr, obj.limit, userId);
                     }
                 });
             }
@@ -1331,6 +1367,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             + '    <label class="layui-form-label" style="font-size: 13px">问题题目</label>\n'
                             + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; ">\n'
                             + '      <textarea placeholder="请输入问题题目" name="questionName" id="questionName" class="layui-textarea">' + data.data.questionName + '</textarea>\n'
+                            + '      <span style="font-size: 12px" id="question-name-tips"></span>\n'
                             + '    </div>\n'
                             + '  </div>'
                             + '</td>'
@@ -1363,6 +1400,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             + '    <label class="layui-form-label" style="font-size: 13px">问题内容</label>\n'
                             + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; ">\n'
                             + '      <textarea placeholder="请输入内容" name="questionContent" id="questionContent" class="layui-textarea">' + data.data.questionContent + '</textarea>\n'
+                            + '      <span style="font-size: 12px" id="question-content-tips"></span>\n'
                             + '    </div>\n'
                             + '  </div>'
                             + '</td>'
@@ -1383,37 +1421,46 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             var isDelete = document.getElementById("isDelete").value;
                             // var viewNumber = document.getElementById("viewNumber").value;
                             var viewNumber = 0;
-                            formData.append("id", id);
-                            formData.append("userId", userId);
-                            formData.append("questionName", questionName);
-                            formData.append("questionIntegral", questionIntegral);
-                            formData.append("classification", classification);
-                            formData.append("questionContent", questionContent);
-                            formData.append("questionDate", questionDate);
-                            formData.append("questionIsSolve", questionIsSolve);
-                            formData.append("isDelete", isDelete);
-                            formData.append("viewNumber", viewNumber);
-                            $.ajax({
-                                url: "/questionManage/insertQuestion",
-                                type: "post",
-                                dataType: "json",
-                                data: formData,
-                                contentType: false,
-                                processData: false,
-                                success: function (msg) {
-                                    console.log(msg);
-                                    if (msg.data === true) {
-                                        //关闭弹框
-                                        layer.close(index);
-                                        layer.msg("修改成功", {icon: 6});
-                                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
-                                            window.location.reload();//页面刷新
-                                        }, 1000);
-                                    } else {
-                                        layer.msg("修改失败", {icon: 5});
+                            if (questionName === "") {
+                                document.getElementById("question-name-tips").innerHTML = "<font color='red'>请输入问题名！</font>";
+                            }else if(questionContent === ""){
+                                document.getElementById("question-name-tips").innerHTML = "";
+                                document.getElementById("question-content-tips").innerHTML = "<font color='red'>请输入问题名！</font>";
+                            }else {
+                                document.getElementById("question-name-tips").innerHTML = "";
+                                document.getElementById("question-content-tips").innerHTML = "";
+                                formData.append("id", id);
+                                formData.append("userId", userId);
+                                formData.append("questionName", questionName);
+                                formData.append("questionIntegral", questionIntegral);
+                                formData.append("classification", classification);
+                                formData.append("questionContent", questionContent);
+                                formData.append("questionDate", questionDate);
+                                formData.append("questionIsSolve", questionIsSolve);
+                                formData.append("isDelete", isDelete);
+                                formData.append("viewNumber", viewNumber);
+                                $.ajax({
+                                    url: "/questionManage/insertQuestion",
+                                    type: "post",
+                                    dataType: "json",
+                                    data: formData,
+                                    contentType: false,
+                                    processData: false,
+                                    success: function (msg) {
+                                        console.log(msg);
+                                        if (msg.data === true) {
+                                            //关闭弹框
+                                            layer.close(index);
+                                            layer.msg("修改成功", {icon: 6});
+                                            setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                                                window.location.reload();//页面刷新
+                                            }, 1000);
+                                        } else {
+                                            layer.msg("修改失败", {icon: 5});
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            }
 
                         },
                         btn2: function (index, layero) {
@@ -1481,10 +1528,10 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 } else {
                     document.getElementById("demoPage").style.display = "block";
                     for (var i = 0; i < data.data.numberOfElements; i++) {
-                        var appendhtml = "<div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px;\">\n" +
+                        var appendhtml = "<div class=\"layui-inline\" style=\"width: 212px; padding: 5px;\">\n" +
                             "                                <div class=\"layui-card\">\n" +
                             "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "&pageNum=1\">" +
-                            "                                        <img src=" + data.data.content[i].videoImageUrl + " width=\"212\">\n" +
+                            "                                        <img src=" + data.data.content[i].videoImageUrl + " width=\"212\" height=\"119\">\n" +
                             "                                            <div style=\"height: 40px\">\n" +
                             "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
                             "                                            </div>\n" +
@@ -1564,7 +1611,64 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
         });
     }
 
-    window.deleteVideoSeriesById = function (id){
+    window.showMyWaitPassVideo = function (pageNo, pageSize, userId) {
+        var formData = new FormData();
+        formData.append("userId", userId);
+        formData.append("limit", pageSize);
+        formData.append("page", pageNo);
+        $.ajax({
+            url: "/videoAuditManage/getVideoNoAuditByUserId",
+            type: "post",
+            dataType: "json",
+            async: false,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $("#my-wait-pass-video").empty();
+                if (data.data.numberOfElements === 0) {
+                    document.getElementById("demoPage2").style.display = "none";
+                    var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                        "<div>" +
+                        "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
+                        "<span>暂无相关信息！</span>" +
+                        "</div>" +
+                        "</div>"
+                    $("#my-wait-pass-video").append(appendhtml);
+                } else {
+                    document.getElementById("demoPage").style.display = "block";
+                    for (var i = 0; i < data.data.numberOfElements; i++) {
+                        var appendhtml = "<div class=\"layui-inline\" style=\"width: 212px; padding: 5px;\">\n" +
+                            "                                <div class=\"layui-card\">\n" +
+                            "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].id + "&pageNum=1\">" +
+                            "                                        <img src=" + data.data.content[i].videoImageUrl + " width=\"212\" height=\"119\">\n" +
+                            "                                            <div style=\"height: 40px\">\n" +
+                            "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].videoName + "</span>\n" +
+                            "                                            </div>\n" +
+                            "                                    </a>\n" +
+                            "                                    <div class=\"layui-card-body\">\n" +
+                            "                                        <div class=\"layui-input-inline\" style=\"float: left\">\n" +
+                            "                                            <img src=\"../images/integral.png\" style=\"width: 16px; height: 16px\"/>\n" +
+                            "                                            <span style=\"color: red; font-size: 10px\">" + data.data.content[i].videoIntegral + "</span>&nbsp;&nbsp;\n" +
+                            "                                            <img src=\"../images/play.png\" style=\"width: 16px; height: 16px\"/>\n" +
+                            "                                            <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].playbackVolume + "</span>\n" +
+                            "                                        </div>\n" +
+                            "                                        <div class=\"layui-input-inline\" style=\"float: right\">\n" +
+                            "                                            <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].videoDate + "</span>\n" +
+                            "                                        </div>\n" +
+                            "                                        <div style=\"clear: both\"></div>\n" +
+                            "                                    </div>\n" +
+                            "                                </div>\n" +
+                            "                            </div>";
+                        $("#my-wait-pass-video").append(appendhtml);
+                    }
+                }
+
+            }
+        });
+    }
+
+    window.deleteVideoSeriesById = function (id) {
         layer.confirm('是否删除', function (index) {
             $.ajax({
                 url: "/videoSeriesManage/deleteVideoSeriesById?id=" + id,
@@ -1633,7 +1737,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                         ,
                         title: '修改问题'
                         ,
-                        area: ['600px', 'auto']
+                        area: ['650px', 'auto']
                         ,
 
                         content: '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
@@ -1696,8 +1800,8 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             + '<td colspan="2">'
                             + '<div class="layui-form-item">\n'
                             + '    <label class="layui-form-label" style="font-size: 13px">视频介绍</label>\n'
-                            + '    <div style="margin-left: 110px; width: 410px; ">\n'
-                            + '      <textarea placeholder="请输入内容" name="videoIntroduce" id="videoIntroduce" class="layui-textarea">' + data.data.videoIntroduce + '</textarea>\n'
+                            + '    <div style="margin-left: 110px; width: 460px; ">\n'
+                            + '      <textarea placeholder="请输入内容" style="width: 460px; height: 200px" name="videoIntroduce" id="videoIntroduce" class="layui-textarea">' + data.data.videoIntroduce + '</textarea>\n'
                             + '    </div>\n'
                             + '  </div>'
                             + '</td>'
@@ -1777,137 +1881,165 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
         })
     }
 
-    $('#uploadImage1').on('change',function(){
+    $('#uploadImage1').on('change', function () {
         var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
             fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
         // 检查是否是图片
-        if( !fileFormat.match(/.png|.jpg|.jpeg/) ) {
+        if (!fileFormat.match(/.png|.jpg|.jpeg/)) {
             layer.msg("上传错误,文件格式必须为：png/jpg/jpeg", {icon: 5});
-            return;
+            document.getElementById('uploadImage1').value = ""
         }
     });
 
-    $('#uploadVideoImage').on('change',function(){
+    $('#uploadVideoImage').on('change', function () {
         var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
             fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
         // 检查是否是图片
-        if( !fileFormat.match(/.png|.jpg|.jpeg/) ) {
+        if (!fileFormat.match(/.png|.jpg|.jpeg/)) {
             layer.msg("上传错误,文件格式必须为：png/jpg/jpeg", {icon: 5});
+            document.getElementById('uploadVideoImage').value = ""
         }
     });
 
-    $('#uploadVideo').on('change',function(){
+    $('#uploadVideo').on('change', function () {
         var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
             fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
         // 检查是否是图片
-        if( !fileFormat.match(/.mp4|.avi/) ) {
+        if (!fileFormat.match(/.mp4|.avi/)) {
             layer.msg("上传错误,视频格式必须为：mp4", {icon: 5});
+            document.getElementById('uploadVideo').value = ""
         }
     });
 
     $('#addVideoSeries').on('click', function () {
+        var seriesName = document.getElementById("seriesName").value;
         var formData = new FormData();
         var logo_file = document.getElementById("uploadImage1");
-        if (logo_file !== null) {
-            var image = logo_file.files[0];
-            formData.append("image", image);
-        }
-        var seriesName = document.getElementById("seriesName").value;
-        var seriesClassification = document.getElementById("seriesClassification1").value;
-        var classificationLittle = document.getElementById("classificationLittle1").value;
-        var seriesIntegral = document.getElementById("seriesIntegral").value;
-        var seriesNumber = document.getElementById("seriesNumber").value;
+        var image = logo_file.files[0];
         var introduction = document.getElementById("seriesIntroduction").value;
-        // var introduction = document.getElementById("seriesIntroduction").value;
-        var myDate = new Date();
-        var seriesDate = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
+        if (image === undefined) {
+            document.getElementById("image-tips").innerHTML = "<font color='red'>请上传封面!</font>";
+        } else if (seriesName === "") {
+            document.getElementById("image-tips").innerHTML = "";
+            document.getElementById("seriesName-tips").innerHTML = "<font color='red'>系列名不能为空!</font>";
+        } else if (introduction === "") {
+            document.getElementById("image-tips").innerHTML = "";
+            document.getElementById("seriesName-tips").innerHTML = "";
+            document.getElementById("introduce-tips").innerHTML = "<font color='red'>简介不能为空!</font>";
+        } else {
+            document.getElementById("seriesName-tips").innerHTML = "";
+            document.getElementById("image-tips").innerHTML = "";
+            document.getElementById("introduce-tips").innerHTML = "";
+            var seriesClassification = document.getElementById("seriesClassification1").value;
+            var classificationLittle = document.getElementById("classificationLittle1").value;
+            var seriesIntegral = document.getElementById("seriesIntegral").value;
+            var seriesNumber = document.getElementById("seriesNumber").value;
+            // var introduction = document.getElementById("seriesIntroduction").value;
+            var myDate = new Date();
+            var seriesDate = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
 
-        formData.append("userId", userId);
-        formData.append("seriesName", seriesName);
-        formData.append("seriesNumber", seriesNumber);
-        formData.append("introduction", introduction);
-        formData.append("seriesIntegral", seriesIntegral);
-        formData.append("seriesClassification", seriesClassification);
-        formData.append("classificationLittle", classificationLittle);
-        // formData.append("seriesImage", seriesImage1);
-        // formData.append("seriesImageUrl", seriesImageUrl1);
-        formData.append("seriesDate", seriesDate);
-        formData.append("isDelete", 0);
-        $.ajax({
-            url: "/videoSeriesManage/insertVideoSeriesAndImage",
-            type: "post",
-            dataType: "json",
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                if (data.data === true) {
-                    //关闭弹框
-                    layer.msg("新建成功", {icon: 6});
-                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
-                        window.location.reload();//页面刷新
-                    }, 1000);
-                } else {
-                    layer.msg("新建失败", {icon: 5});
+            formData.append("userId", userId);
+            formData.append("seriesName", seriesName);
+            formData.append("seriesNumber", seriesNumber);
+            formData.append("introduction", introduction);
+            formData.append("seriesIntegral", seriesIntegral);
+            formData.append("seriesClassification", seriesClassification);
+            formData.append("classificationLittle", classificationLittle);
+            // formData.append("seriesImage", seriesImage1);
+            // formData.append("seriesImageUrl", seriesImageUrl1);
+            formData.append("seriesDate", seriesDate);
+            formData.append("isDelete", 0);
+            formData.append("image", image);
+            $.ajax({
+                url: "/videoSeriesManage/insertVideoSeriesAndImage",
+                type: "post",
+                dataType: "json",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.data === true) {
+                        //关闭弹框
+                        layer.msg("新建成功", {icon: 6});
+                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                            window.location.reload();//页面刷新
+                        }, 1000);
+                    } else {
+                        layer.msg("新建失败", {icon: 5});
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
     $('#addVideoAndImage').on('click', function () {
         var formData = new FormData();
         var uploadVideo_file = document.getElementById("uploadVideo");
-        if (uploadVideo_file !== null) {
-            var uploadVideo = uploadVideo_file.files[0];
-            formData.append("uploadVideo", uploadVideo);
-        }
+        var uploadVideo = uploadVideo_file.files[0];
         var uploadVideoImage_file = document.getElementById("uploadVideoImage");
-        if (uploadVideoImage_file !== null) {
-            var uploadVideoImage = uploadVideoImage_file.files[0];
-            formData.append("uploadVideoImage", uploadVideoImage);
-        }
-
+        var uploadVideoImage = uploadVideoImage_file.files[0];
         var videoName = document.getElementById("videoName").value;
         var videoClassification = document.getElementById("videoClassification2").value;
         var classificationLittle = document.getElementById("classificationLittle2").value;
         var videoIntegral = document.getElementById("videoIntegral").value;
         var introduction = document.getElementById("introduction").value;
         var myDate = new Date();
-        var videoDate = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
-
-        formData.append("userId", userId);
-        formData.append("videoName", videoName);
-        formData.append("videoClassification", videoClassification);
-        formData.append("classificationLittle", classificationLittle);
-        formData.append("videoIntroduce", introduction);
-        formData.append("videoStatus", 0);
-        formData.append("videoIntegral", videoIntegral);
-        formData.append("playbackVolume", 0);
-        formData.append("videoDate", videoDate);
-        // formData.append("videoImage", 0);
-        // formData.append("videoImageUrl", 0);
-        // formData.append("coverUrl", 0);
-        formData.append("isDelete", 0);
-        formData.append("videoNumber", 0);
-        $.ajax({
-            url: "/videoManage/insertVideo",
-            type: "post",
-            dataType: "json",
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                if (data.data === true) {
-                    //关闭弹框
-                    layer.msg("添加成功， 等待管理员审核", {icon: 6});
-                    setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
-                        window.location.reload();//页面刷新
-                    }, 2000);
-                } else {
-                    layer.msg("添加失败", {icon: 5});
+        var videoDate = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
+        if (uploadVideo === undefined) {
+            document.getElementById("upload-video-tips").innerHTML = "<font color='red'>请上传视频!</font>";
+        } else if (uploadVideoImage === undefined) {
+            document.getElementById("upload-video-tips").innerHTML = "";
+            document.getElementById("upload-image-tips").innerHTML = "<font color='red'>请图片视频!</font>";
+        } else if (videoName === "") {
+            document.getElementById("upload-video-tips").innerHTML = "";
+            document.getElementById("upload-image-tips").innerHTML = "";
+            document.getElementById("video-name-tips").innerHTML = "<font color='red'>请输入视频名字！</font>";
+        } else if (introduction === "") {
+            document.getElementById("upload-video-tips").innerHTML = "";
+            document.getElementById("upload-image-tips").innerHTML = "";
+            document.getElementById("video-name-tips").innerHTML = "";
+            document.getElementById("video-introduce-tips").innerHTML = "<font color='red'>请输入视频简介!</font>";
+        } else {
+            document.getElementById("upload-video-tips").innerHTML = "";
+            document.getElementById("upload-image-tips").innerHTML = "";
+            document.getElementById("video-name-tips").innerHTML = "";
+            document.getElementById("video-introduce-tips").innerHTML = "";
+            formData.append("uploadVideoImage", uploadVideoImage);
+            formData.append("uploadVideo", uploadVideo);
+            formData.append("userId", userId);
+            formData.append("videoName", videoName);
+            formData.append("videoClassification", videoClassification);
+            formData.append("classificationLittle", classificationLittle);
+            formData.append("videoIntroduce", introduction);
+            formData.append("videoStatus", 0);
+            formData.append("videoIntegral", videoIntegral);
+            formData.append("playbackVolume", 0);
+            formData.append("videoDate", videoDate);
+            // formData.append("videoImage", 0);
+            // formData.append("videoImageUrl", 0);
+            // formData.append("coverUrl", 0);
+            formData.append("isDelete", 0);
+            formData.append("videoNumber", 0);
+            $.ajax({
+                url: "/videoManage/insertVideo",
+                type: "post",
+                dataType: "json",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.data === true) {
+                        //关闭弹框
+                        layer.msg("添加成功， 等待管理员审核", {icon: 6});
+                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                            window.location.reload();//页面刷新
+                        }, 2000);
+                    } else {
+                        layer.msg("添加失败", {icon: 5});
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
 });
@@ -1943,7 +2075,7 @@ function showVideoByOrder(pageNo, pageSize, userId) {
                         "                               <div class=\"layui-col-md6\" style=\"width: 222px; padding: 5px;\">\n" +
                         "                                    <div class=\"layui-card\">\n" +
                         "                                        <a href=\"/userUrl/playVideo?id=" + data.data.content[i].video.id + "&pageNum=1\">" +
-                        "                                           <img src=" + data.data.content[i].video.videoImageUrl + " width=\"212\">\n" +
+                        "                                           <img src=" + data.data.content[i].video.videoImageUrl + " width=\"212\" height=\"119\">\n" +
                         "                                            <div style=\"height: 40px\">\n" +
                         "                                                <span style=\"margin-left: 15px; font-size: 12px\">" + data.data.content[i].video.videoName + "</span>\n" +
                         "                                            </div>\n" +
@@ -2037,7 +2169,7 @@ function showSeriesByOrder(pageNo, pageSize, userId) {
 }
 
 function playVideoBySeries(seriesId) {
-    window.location.href ="/userUrl/playSeriesBySeries?seriesId=" + seriesId + "&pageNum=1";
+    window.location.href = "/userUrl/playSeriesBySeries?seriesId=" + seriesId + "&pageNum=1";
 }
 
 /**
@@ -2170,7 +2302,7 @@ function showAllOrder(pageNo, pageSize, userId) {
                             "                                                <div class=\"layui-input-inline\">\n" +
                             "                                                    <button type=\"button\"\n" +
                             "                                                            class=\"layui-btn layui-btn-sm layui-btn-normal  layui-btn-radius\"\n" +
-                            "                                                            style=\"margin-left: 10px\" onclick='toPay(" + data.data.content[i].id + ", " + data.data.content[i].isVideo +")'>立即支付\n" +
+                            "                                                            style=\"margin-left: 10px\" onclick='toPay(" + data.data.content[i].id + ", " + data.data.content[i].isVideo + ")'>立即支付\n" +
                             "                                                    </button>\n" +
                             "                                                    <button type=\"button\"\n" +
                             "                                                            class=\"layui-btn layui-btn-sm layui-btn-danger  layui-btn-radius\"\n" +
@@ -2323,7 +2455,7 @@ function showNonPaymentOrder(pageNo, pageSize, userId) {
                         "                                                <div class=\"layui-input-inline\">\n" +
                         "                                                    <button type=\"button\"\n" +
                         "                                                            class=\"layui-btn layui-btn-sm layui-btn-normal  layui-btn-radius\"\n" +
-                        "                                                            style=\"margin-left: 10px\" onclick='toPay(" + data.data.content[i].id + ", " + data.data.content[i].isVideo +")'>立即支付\n" +
+                        "                                                            style=\"margin-left: 10px\" onclick='toPay(" + data.data.content[i].id + ", " + data.data.content[i].isVideo + ")'>立即支付\n" +
                         "                                                    </button>\n" +
                         "                                                    <button type=\"button\"\n" +
                         "                                                            class=\"layui-btn layui-btn-sm layui-btn-danger  layui-btn-radius\"\n" +

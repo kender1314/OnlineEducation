@@ -100,7 +100,10 @@ public class OrderManageServiceImpl implements OrderManageService {
         if (isSuccess == 0) {
             return false;
         } else {
-            userManageRepository.addIntegralByOrder(userIdOfSeller, integral);
+            Integer isSuccessed = userManageRepository.addIntegralByOrder(userIdOfSeller, integral);
+            if(isSuccessed == 0){
+                return false;
+            }
             return orderManageRepository.save(order) != null;
         }
     }

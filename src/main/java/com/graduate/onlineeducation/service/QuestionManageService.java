@@ -23,6 +23,13 @@ public interface QuestionManageService {
     boolean deleteQuestion(Integer id);
 
     /**
+     * 浏览量+1
+     * @param id
+     * @return
+     */
+    boolean addOneQuestionPlay(Integer id);
+
+    /**
      * 获取所有问题信息列表
      * @param params
      * @return

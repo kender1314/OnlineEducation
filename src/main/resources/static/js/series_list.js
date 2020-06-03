@@ -276,7 +276,7 @@ function showByClassification(pageNo, pageSize, seriesClassification) {
             } else {
                 document.getElementById("demo7").style.display = "block";
                 for (var i = 0; i < data.data.numberOfElements; i++) {
-                    var appendHtml =  "<div style=\"width: 100%; min-height: 150px; background-color: #dee3e2;margin-bottom: 20px;\">\n" +
+                    var appendHtml =  "<div class=\"layui-card\ style=\"width: 100%; min-height: 150px; margin-bottom: 20px;\">\n" +
                         "                                    <a href=\"/userUrl/playSeriesBySeries?seriesId=" + data.data.content[i].id + "&pageNum=1\">" +
                         "                                    <div class=\"course-img layui-input-inline\" style=\"width: 250px; height: 150px\">\n" +
                         "                                        <img src=" + data.data.content[i].seriesImageUrl + "\n" +
@@ -284,7 +284,7 @@ function showByClassification(pageNo, pageSize, seriesClassification) {
                         "                                             width=\"250\"/>\n" +
                         "                                    </div>\n" +
                         "                                    </a>\n" +
-                        "                                    <div class=\"my-course-introduce layui-input-inline\" style=\"width: 900px; min-height: 150px\">\n" +
+                        "                                    <div class=\"my-course-introduce layui-input-inline\" style=\"width: 900px; min-height: 150px; \">\n" +
                         "                                    <a href=\"/userUrl/playSeriesBySeries?seriesId=" + data.data.content[i].id + "&pageNum=1\">" +
                         "                                        <div class=\"layui-card-header\">" + data.data.content[i].seriesName + "</div>\n" +
                         "                                    </a>\n" +
@@ -331,7 +331,7 @@ function showByClassificationLittle(pageNo, pageSize, classificationLittle) {
             $("#videoClass_limitless_item").empty();
             if (data.data.numberOfElements === 0) {
                 document.getElementById("demo7").style.display = "none";
-                var appendhtml = "<div style=\" text-align: center; background-color: white; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
+                var appendhtml = "<div style=\" text-align: center; height: 400px; width: 80%; margin-left: 10%; padding-top: 200px\">" +
                     "<div>" +
                     "<img src=\"../images/failure.png\" style=\"width: 100px; height: 100px; \"/>" +
                     "<span>暂无相关信息，请查看其它分类！</span>" +
@@ -341,7 +341,7 @@ function showByClassificationLittle(pageNo, pageSize, classificationLittle) {
             } else {
                 document.getElementById("demo7").style.display = "block";
                 for (var i = 0; i < data.data.numberOfElements; i++) {
-                    var appendHtml =  "<div style=\"width: 100%; min-height: 150px; background-color: #dee3e2;margin-bottom: 20px;\">\n" +
+                    var appendHtml =  "<div class=\"layui-card\ style=\"width: 100%; min-height: 150px; background-color: #dee3e2;margin-bottom: 20px;\">\n" +
                         "                                    <a href=\"/userUrl/playSeriesBySeries?seriesId=" + data.data.content[i].id + "&pageNum=1\">" +
                         "                                    <div class=\"course-img layui-input-inline\" style=\"width: 250px; height: 150px\">\n" +
                         "                                        <img src=" + data.data.content[i].seriesImageUrl + "\n" +
