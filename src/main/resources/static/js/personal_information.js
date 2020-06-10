@@ -453,7 +453,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 ,
                 title: '提出问题'
                 ,
-                area: ['600px', 'auto']
+                area: ['900px', '700px']
                 ,
                 id: 'addQuestion' + type //防止重复弹出
                 ,
@@ -465,8 +465,8 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     + '<td colspan="2">'
                     + '<div class="layui-form-item" style="margin-top: 20px">\n'
                     + '    <label class="layui-form-label" style="font-size: 13px">问题题目</label>\n'
-                    + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; ">\n'
-                    + '      <textarea placeholder="请输入问题题目" name="questionName" id="questionName" class="layui-textarea"></textarea>\n'
+                    + '    <div class="layui-input-block" style="margin-left: 110px; width: 460px; ">\n'
+                    + '      <input type="text" placeholder="请输入问题题目" name="questionName" id="questionName" style="width: 710px; height: 30px "/>\n'
                     + '      <span style="font-size: 12px" id="question-name-tips"></span>\n'
                     + '     </div>\n'
                     + '  </div>'
@@ -495,10 +495,11 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     + '</tr>'
                     + '<tr>'
                     + '<td colspan="2">'
-                    + '<div class="layui-form-item">\n'
+                    + '<div class="layui-form-item" >\n'
                     + '    <label class="layui-form-label" style="font-size: 13px">问题内容</label>\n'
-                    + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; ">\n'
-                    + '      <textarea placeholder="请输入内容" name="questionContent" id="questionContent" class="layui-textarea"></textarea>\n'
+                    + '    <div class="layui-input-block" style="margin-left: 110px; width: 710px; " id="test-editormd">\n'
+                    + '      <textarea placeholder="请输入内容" style="display:none;" name="questionContent" id="questionContent" class="layui-textarea"></textarea>\n'
+                    + '      <textarea id="text" class="editormd-html-textarea" name="text"></textarea>\n'
                     + '      <span style="font-size: 12px" id="question-content-tips"></span>\n'
                     + '    </div>\n'
                     + '  </div>'
@@ -514,12 +515,16 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     var questionIntegral = document.getElementById("questionIntegral").value;
                     var classification = document.getElementById("classification").value;
                     var questionContent = document.getElementById("questionContent").value;
+                    var questionText = document.getElementById("text").value;
+                    // console.log(questionContent);
+                    // console.log(questionContentText);
+                    // debugger;
                     var questionDate = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
                     var questionIsSolve = 0;
                     var isDelete = 0;
                     if (questionName === "") {
                         document.getElementById("question-name-tips").innerHTML = "<font color='red'>请输入问题名！</font>";
-                    } else if (questionContent === "") {
+                    } else if (questionContentText === "") {
                         document.getElementById("question-name-tips").innerHTML = "";
                         document.getElementById("question-content-tips").innerHTML = "<font color='red'>请输入问题内容！</font>";
                     } else {
@@ -530,6 +535,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                         formData.append("questionIntegral", questionIntegral);
                         formData.append("classification", classification);
                         formData.append("questionContent", questionContent);
+                        formData.append("questionText", questionText);
                         formData.append("questionDate", questionDate);
                         formData.append("questionIsSolve", questionIsSolve);
                         formData.append("isDelete", isDelete);
@@ -539,6 +545,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             type: "post",
                             dataType: "json",
                             data: formData,
+                            async: true,
                             contentType: false,
                             processData: false,
                             success: function (msg) {
@@ -561,6 +568,16 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                 btn2: function (index, layero) {
                     layer.close(index);
                 }
+            });
+            $(function() {
+                editormd("test-editormd", {
+                    width: "710px",
+                    height: 450,
+                    syncScrolling : "single",
+                    // tocm : true, // Using [TOCM]
+                    path : "../lib/editormd/lib/",
+                    saveHTMLToTextarea : true
+                });
             });
         }
     };
@@ -1351,7 +1368,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                         ,
                         title: '修改问题'
                         ,
-                        area: ['600px', 'auto']
+                        area: ['900px', '700px']
                         ,
                         content: '<div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
                             + '<input type="hidden" id="questionDate" name="questionDate" value="' + data.data.questionDate + '">'
@@ -1366,7 +1383,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             + '<div class="layui-form-item" style="margin-top: 20px">\n'
                             + '    <label class="layui-form-label" style="font-size: 13px">问题题目</label>\n'
                             + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; ">\n'
-                            + '      <textarea placeholder="请输入问题题目" name="questionName" id="questionName" class="layui-textarea">' + data.data.questionName + '</textarea>\n'
+                            + '      <input type="text" placeholder="请输入问题题目" name="questionName" id="questionName" style="width: 710px; height: 30px " value="' + data.data.questionName + '">\n'
                             + '      <span style="font-size: 12px" id="question-name-tips"></span>\n'
                             + '    </div>\n'
                             + '  </div>'
@@ -1381,7 +1398,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             + '      <div class="layui-input-inline">\n'
                             + '        <select name="modules" name="classification" id="classification" '
                             + 'style="width: 150px; height: 30px" lay-verify="required" lay-search="">\n'
-                            + '          <option value="' + data.classification + '">默认：' + data.data.classification + '</option>\n'
+                            + '          <option selected value="' + data.classification + '">默认：' + data.data.classification + '</option>\n'
                             + '          <option value="编程语言">编程语言</option>\n'
                             + '          <option value="云计算大数据">云计算大数据</option>\n'
                             + '          <option value="计算机基础">计算机基础</option>\n'
@@ -1398,8 +1415,9 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             + '<td colspan="2">'
                             + '<div class="layui-form-item">\n'
                             + '    <label class="layui-form-label" style="font-size: 13px">问题内容</label>\n'
-                            + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; ">\n'
+                            + '    <div class="layui-input-block" style="margin-left: 110px; width: 410px; " id="test-editormd">\n'
                             + '      <textarea placeholder="请输入内容" name="questionContent" id="questionContent" class="layui-textarea">' + data.data.questionContent + '</textarea>\n'
+                            + '      <textarea id="text" class="editormd-html-textarea" name="text"></textarea>\n'
                             + '      <span style="font-size: 12px" id="question-content-tips"></span>\n'
                             + '    </div>\n'
                             + '  </div>'
@@ -1411,7 +1429,6 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                         , btn1: function (index, layero) {
 
                             var formData = new FormData();
-                            var myDate = new Date();
                             var questionName = document.getElementById("questionName").value;
                             var questionIntegral = document.getElementById("questionIntegral").value;
                             var classification = document.getElementById("classification").value;
@@ -1419,11 +1436,15 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             var questionDate = document.getElementById("questionDate").value;
                             var questionIsSolve = document.getElementById("questionIsSolve").value;
                             var isDelete = document.getElementById("isDelete").value;
+                            var questionText = document.getElementById("text").value;
+                            // console.log("classification-->" + classification);
+                            // console.log("questionText-->" + questionText);
+                            // debugger;
                             // var viewNumber = document.getElementById("viewNumber").value;
                             var viewNumber = 0;
                             if (questionName === "") {
                                 document.getElementById("question-name-tips").innerHTML = "<font color='red'>请输入问题名！</font>";
-                            }else if(questionContent === ""){
+                            }else if(questionText === ""){
                                 document.getElementById("question-name-tips").innerHTML = "";
                                 document.getElementById("question-content-tips").innerHTML = "<font color='red'>请输入问题名！</font>";
                             }else {
@@ -1435,6 +1456,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                                 formData.append("questionIntegral", questionIntegral);
                                 formData.append("classification", classification);
                                 formData.append("questionContent", questionContent);
+                                formData.append("questionText", questionText);
                                 formData.append("questionDate", questionDate);
                                 formData.append("questionIsSolve", questionIsSolve);
                                 formData.append("isDelete", isDelete);
@@ -1466,6 +1488,16 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                         btn2: function (index, layero) {
                             layer.close(index);
                         }
+                    });
+                    $(function() {
+                        editormd("test-editormd", {
+                            width: "710px",
+                            height: 450,
+                            syncScrolling : "single",
+                            // tocm : true, // Using [TOCM]
+                            path : "../lib/editormd/lib/",
+                            saveHTMLToTextarea : true
+                        });
                     });
                 }
             }
@@ -1874,6 +1906,15 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                         },
                         btn2: function (index, layero) {
                             layer.close(index);
+                        }
+                    });
+                    $('#imageFile').on('change', function () {
+                        var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
+                            fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
+                        // 检查是否是图片
+                        if (!fileFormat.match(/.png|.jpg|.jpeg/)) {
+                            layer.msg("上传错误,文件格式必须为：png/jpg/jpeg", {icon: 5});
+                            document.getElementById('imageFile').value = ""
                         }
                     });
                 }
@@ -2296,7 +2337,7 @@ function showAllOrder(pageNo, pageSize, userId) {
                             "                                        </div>\n" +
                             "                                    </div>";
                     } else if (data.data.content[i].orderStatus === 1) {
-                        appendhtml2 = "                                                    <span style=\"margin-left: 50px\">状态：<span\n" +
+                        appendhtml2 = "                                                    <span style=\"margin-left: 30px\">状态：<span\n" +
                             "                                                            style=\"color: green; \">未支付</span></span>\n" +
                             "                                                </div>\n" +
                             "                                                <div class=\"layui-input-inline\">\n" +
@@ -2449,7 +2490,7 @@ function showNonPaymentOrder(pageNo, pageSize, userId) {
                             "                                                            style=\"color: red\">系列</span></span>\n";
 
                     }
-                    appendhtml2 = "                                                    <span style=\"margin-left: 50px\">状态：<span\n" +
+                    appendhtml2 = "                                                    <span style=\"margin-left: 30px\">状态：<span\n" +
                         "                                                            style=\"color: green; \">未支付</span></span>\n" +
                         "                                                </div>\n" +
                         "                                                <div class=\"layui-input-inline\">\n" +

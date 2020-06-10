@@ -39,6 +39,9 @@ public class QuestionDTO implements Serializable {
     @Column(name = "question_content")
     private String questionContent;
 
+    @Column(name = "question_text")
+    private String questionText;
+
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @NotNull
@@ -144,12 +147,21 @@ public class QuestionDTO implements Serializable {
         this.userId = userId;
     }
 
+    public String getQuestionText() {
+        return questionText;
+    }
+
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
+    }
+
     @Override
     public String toString() {
-        return "Question{" +
+        return "QuestionDTO{" +
                 "id=" + id +
                 ", questionName='" + questionName + '\'' +
                 ", questionContent='" + questionContent + '\'' +
+                ", questionText='" + questionText + '\'' +
                 ", questionDate=" + questionDate +
                 ", questionIntegral=" + questionIntegral +
                 ", classification='" + classification + '\'' +

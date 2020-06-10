@@ -39,6 +39,9 @@ public class QuestionDateDTO implements Serializable {
     @Column(name = "question_content")
     private String questionContent;
 
+    @Column(name = "question_text")
+    private String questionText;
+
     @Column(name = "question_date")
     private String questionDate;
 
@@ -142,13 +145,22 @@ public class QuestionDateDTO implements Serializable {
         this.isDelete = isDelete;
     }
 
+    public String getQuestionText() {
+        return questionText;
+    }
+
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
+    }
+
     @Override
     public String toString() {
-        return "Question{" +
+        return "QuestionDateDTO{" +
                 "id=" + id +
                 ", questionName='" + questionName + '\'' +
                 ", questionContent='" + questionContent + '\'' +
-                ", questionDate=" + questionDate +
+                ", questionText='" + questionText + '\'' +
+                ", questionDate='" + questionDate + '\'' +
                 ", questionIntegral=" + questionIntegral +
                 ", classification='" + classification + '\'' +
                 ", viewNumber=" + viewNumber +

@@ -20,6 +20,12 @@ spring:
     url: jdbc:mysql://localhost:3306/onlineeducation?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
+  #配置文件上传路径以及数据库存储路径
+  upload:
+    imageUrl: D:/ideaIU/GP-upload/img/
+    videoUrl: D:/ideaIU/GP-upload/video/
+    databaseUrl: http://localhost:8080/files/
+    fileMap: /files/**
   # 配置发送方信息
   mail:
     host: smtp.qq.com

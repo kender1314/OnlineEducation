@@ -17,6 +17,6 @@ import org.springframework.data.jpa.repository.Query;
 @Profile({"mysql"})
 public interface JpaQuestionDateManageRepository  extends QuestionDateManageRepository {
     @Override
-    @Query(value = "select * from gp_question where user_id = 1 and question_is_delete = 0 ", nativeQuery = true)
+    @Query(value = "select * from gp_question where question_is_delete = 0 order by question_date desc", nativeQuery = true)
     Page<QuestionDateDTO> getQuestionListOrderByDate(Pageable pageable);
 }

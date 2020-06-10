@@ -79,7 +79,7 @@
     $("#sub").click(function () {
         var userName = document.getElementById("username").value;
         var password = document.getElementById("password").value;
-        if(userName.length >= 5 && password.length >= 6){
+        if(userName.length >= 4 && password.length >= 6){
             $("#form").ajaxSubmit(function (data) {
                 if (data.data === true) {
                     window.location.href = "/userUrl/index";
@@ -102,10 +102,10 @@
         if (userName === "") {
             document.getElementById("username-tips").innerHTML = "<br><font color='red'>输入账号不能为空!</font>";
             document.getElementById("sub").disabled = true;
-        } else if (userName.length < 5) {
-            document.getElementById("username-tips").innerHTML = "<br><font color='red'>用户名至少得5个字符!</font>";
+        } else if (userName.length < 4) {
+            document.getElementById("username-tips").innerHTML = "<br><font color='red'>用户名至少得4个字符!</font>";
             document.getElementById("sub").disabled = true;
-        } else if(userName.length >= 5 && password.length >= 6){
+        } else if(userName.length >= 4 && password.length >= 6){
             document.getElementById("username-tips").innerHTML = "";
             document.getElementById("sub").disabled = false;
         }

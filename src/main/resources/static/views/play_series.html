@@ -126,7 +126,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="demo8" style="text-align:center;"></div>
+                    <div th:id="'demo' + ${page.id} + ''" style="text-align:center;"></div>
                 </div>
             </div>
         </div>
@@ -136,29 +136,29 @@
         <table style="margin-left: 30%">
             <tr>
                 <td>共<span th:text="${totalElements}">1</span>条&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td><a th:href="@{/userUrl/playVideo(pageNum=1, id=${video.id})}">
+                <td><a th:href="@{/userUrl/playSeriesBySeries(pageNum=1, seriesId=${videoSeries.id})}">
                     <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">首页</button>
                 </a></td>
                 <td th:switch="${pageNum}">
-                    <p th:case="1"><a th:href="@{/userUrl/playVideo(pageNum=1, id=${video.id})}">
+                    <p th:case="1"><a th:href="@{/userUrl/playSeriesBySeries(pageNum=1, seriesId=${videoSeries.id})}">
                         <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">上一页</button>
                     </a></p>
                     <p th:case="*"><a
-                            th:href="@{/userUrl/playVideo(pageNum=${pageNum-1}, id=${video.id})}">
+                            th:href="@{/userUrl/playSeriesBySeries(pageNum=${pageNum-1}, seriesId=${videoSeries.id})}">
                         <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">上一页</button>
                     </a></p>
                 </td>
                 <td th:switch="${pageNum}">
                     <p th:case="${totalPages}"><a
-                            th:href="@{/userUrl/playVideo(pageNum=${totalPages}, id=${video.id})}">
+                            th:href="@{/userUrl/playSeriesBySeries(pageNum=${totalPages}, seriesId=${videoSeries.id})}">
                         <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">下一页</button>
                     </a></p>
                     <p th:case="*"><a
-                            th:href="@{/userUrl/playVideo(pageNum=${pageNum+1}, id=${video.id})}">
+                            th:href="@{/userUrl/playSeriesBySeries(pageNum=${pageNum+1}, seriesId=${videoSeries.id})}">
                         <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">下一页</button>
                     </a></p>
                 </td>
-                <td><a th:href="@{/userUrl/playVideo(pageNum=${totalPages}, id=${video.id})}">
+                <td><a th:href="@{/userUrl/playSeriesBySeries(pageNum=${totalPages}, seriesId=${videoSeries.id})}">
                     <button type="button" class="layui-btn-sm layui-btn layui-btn-primary">尾页</button>
                 </a></td>
                 <td>&nbsp;&nbsp;&nbsp;&nbsp;共<span th:text="${totalPages}">1</span>页</td>

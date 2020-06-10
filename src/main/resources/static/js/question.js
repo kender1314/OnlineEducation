@@ -29,9 +29,11 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
         processData: false,
         success: function (data) {
             $("#questionDate").empty();
+            $("#questionContent").empty();
             if (data.data !== null) {
                 var appendhtml = "<span style=\"font-size: 12px; color: #999\">" + data.data.questionDate + "</span>";
                 $("#questionDate").append(appendhtml);
+                $("#questionContent").append(data.data.questionText);
             }
         }
     });
@@ -56,7 +58,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
     $('#answer-submit').on('click', function () {
         var answerContent = document.getElementById("answer-content").value;
         var myDate = new Date();
-        var date = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
+        var date = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
         var formData = new FormData();
         if (answerContent === "" || answerContent == null) {
             document.getElementById("content-warm").style.display = "block";
@@ -80,7 +82,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                         window.location.reload();//页面刷新
                     }, 1000);
                 } else {
-                    layer.msg("评论失败，请重试！", {icon: 6});
+                    layer.msg("评论失败，请重试！", {icon: 5});
                 }
             }
         });
@@ -143,7 +145,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
     /**
      * 收藏问题
      */
-    window.collectQuestion = function(){
+    window.collectQuestion = function () {
         $.ajax({
             url: "/bookmarkManage/getQuestionBookmarksListByUserId?userId=" + userId,
             type: "post",
@@ -313,7 +315,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
     window.answerReply = function (id) {
         var answerContent = document.getElementById("answerReply" + id).value;
         var myDate = new Date();
-        var date = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
+        var date = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
         var formData = new FormData();
         if (answerContent === "" || answerContent == null) {
             document.getElementById("answerReply-warm" + id).style.display = "block";
@@ -354,7 +356,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             processData: false,
             success: function (data) {
                 laypage.render({
-                    elem: 'demo8'
+                    elem: 'demo' + answerId
                     , count: data.data
                     , layout: ['prev', 'page', 'next', 'count']
                     , limit: 8
@@ -383,7 +385,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             success: function (data) {
                 if (data.data !== null) {
                     var rpleyContent = document.getElementById("reply" + replyId).style.display;
-                    if (rpleyContent === "none") {
+                    // if (rpleyContent === "none") {
                         document.getElementById("reply" + replyId).style.display = "block";
                         $("#replyAnswer" + replyId).empty();
                         for (var i = 0; i < data.data.numberOfElements; i++) {
@@ -406,15 +408,15 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                                 "                                                </div>";
                             $("#replyAnswer" + replyId).append(appendhtml);
                         }
-                    } else {
-                        document.getElementById("reply" + replyId).style.display = "none";
-                    }
+                    // } else {
+                    //     document.getElementById("reply" + replyId).style.display = "none";
+                    // }
                 }
             }
         });
     }
 
-    window.replyA = function(id, content){
+    window.replyA = function (id, content) {
         layer.open({
             type: 6,
             title: '回复评论--"' + content + '"',
@@ -428,7 +430,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             btn1: function (index, layero) {
                 var answerContent = document.getElementById("replyA").value;
                 var myDate = new Date();
-                var date = myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
+                var date = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
                 var formData = new FormData();
                 if (answerContent === "" || answerContent == null) {
                     document.getElementById("replyA-warm").style.display = "block";
@@ -472,4 +474,6 @@ function answer() {
         document.getElementById("my-answer-content").style.display = "none";
     }
 }
+
+editormd.markdownToHTML("questionContent");
 

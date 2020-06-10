@@ -201,7 +201,7 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             processData: false,
             success: function (data) {
                 laypage.render({
-                    elem: 'demo8'
+                    elem: 'demo' + commentId
                     , count: data.data
                     , layout: ['prev', 'page', 'next', 'count']
                     , limit: 8
@@ -229,7 +229,8 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
             success: function (data) {
                 if (data.data !== null) {
                     var rpleyContent = document.getElementById("reply" + replyId).style.display;
-                    if (rpleyContent === "none") {
+                    // if (rpleyContent === "none") {
+                    //     console.log(1);
                         document.getElementById("reply" + replyId).style.display = "block";
                         $("#replyComment" + replyId).empty();
                         for (var i = 0; i < data.data.numberOfElements; i++) {
@@ -252,9 +253,10 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                                 "                        </div>";
                             $("#replyComment" + replyId).append(appendhtml);
                         }
-                    } else {
-                        document.getElementById("reply" + replyId).style.display = "none";
-                    }
+                    // } else {
+                    //     console.log(2);
+                    //     document.getElementById("reply" + replyId).style.display = "none";
+                    // }
                 }
             }
         });
