@@ -68,8 +68,11 @@
                 <div class="layui-inline" style="width: 100px">操作</div>
             </div>
             <div class="layui-card" th:each="page : ${pages}" style="margin-bottom: 30px">
-                <div class="layui-inline" style="width: 250px"><img th:src="${page['video_image_url']}" height="100"
-                                                                    width="200"/></div>
+                <div class="layui-inline" style="width: 250px">
+                    <a th:href="'/url/adminPlayVideo?id=' + ${page['video_id']} + ''">
+                        <img th:src="${page['video_image_url']}" height="100" width="200"/>
+                    </a>
+                </div>
                 <div class="layui-inline" style="width: 200px"><span th:text="${page['video_name']}">Maven仓库</span></div>
                 <div class="layui-inline" style="width: 200px"><span th:text="${page['video_integral']}">5</span></div>
                 <div class="layui-inline" style="width: 200px"><span th:text="${page['video_classification']}">编程语言</span>

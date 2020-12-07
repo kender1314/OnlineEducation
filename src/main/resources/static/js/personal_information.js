@@ -524,7 +524,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                     var isDelete = 0;
                     if (questionName === "") {
                         document.getElementById("question-name-tips").innerHTML = "<font color='red'>请输入问题名！</font>";
-                    } else if (questionContentText === "") {
+                    } else if (questionText === "") {
                         document.getElementById("question-name-tips").innerHTML = "";
                         document.getElementById("question-content-tips").innerHTML = "<font color='red'>请输入问题内容！</font>";
                     } else {
@@ -1626,9 +1626,10 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                         var appendhtml = "<div class=\"layui-collapse\" lay-accordion=\"\">\n" +
                             "                            <div class=\"layui-colla-item\">\n" +
                             "                                <h2 class=\"layui-colla-title\">\n" +
+                            "                                  <a href=\"javascript:void(0);\" onclick='getVideoSeriesById(" + data.data.content[i].id + ")'>" +
                             "                                    <span>" + data.data.content[i].seriesName + "</span>\n" +
+                            "                                  </a>" +
                             "                                <div class=\"layui-btn-group\" style=\"float: right\">\n" +
-                            "                                    <button type=\"button\" class=\"layui-btn layui-btn-primary layui-btn-sm\" onclick='getVideoSeriesById(" + data.data.content[i].id + ")'>详情</button>\n" +
                             "                                    <button type=\"button\" class=\"layui-btn layui-btn-primary layui-btn-sm\" onclick='deleteVideoSeriesById(" + data.data.content[i].id + ")'><i class=\"layui-icon\"></i></button>\n" +
                             "                                </div>\n" +
                             "                                <div style=\"clear: both\"></div>\n" +
@@ -1680,8 +1681,8 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             "                                    </a>\n" +
                             "                                    <div class=\"layui-card-body\">\n" +
                             "                                        <div class=\"layui-input-inline\" style=\"float: left\">\n" +
-                            "                                            <img src=\"../images/integral.png\" style=\"width: 16px; height: 16px\"/>\n" +
-                            "                                            <span style=\"color: red; font-size: 10px\">" + data.data.content[i].videoIntegral + "</span>&nbsp;&nbsp;\n" +
+                            // "                                            <img src=\"../images/integral.png\" style=\"width: 16px; height: 16px\"/>\n" +
+                            // "                                            <span style=\"color: red; font-size: 10px\">" + data.data.content[i].videoIntegral + "</span>&nbsp;&nbsp;\n" +
                             "                                            <img src=\"../images/play.png\" style=\"width: 16px; height: 16px\"/>\n" +
                             "                                            <span style=\"font-size: 10px; color:#999;\">" + data.data.content[i].playbackVolume + "</span>\n" +
                             "                                        </div>\n" +
@@ -1786,7 +1787,7 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             + '    <label class="layui-form-label" style="font-size: 13px">视频名</label>\n'
                             + '    <div class="layui-input-block">\n'
                             + '      <input type="tel" name="videoName1" id="videoName1" placeholder="请输入视频名" value="' + data.data.videoName + '" autocomplete="off" class="layui-input" '
-                            + 'style="width: 150px; height: 30px; margin-top: 5px">\n'
+                            + 'style="width: 460px; height: 30px; margin-top: 5px">\n'
                             + '    </div>\n'
                             + '  </div>'
                             + '</td>'
@@ -1812,6 +1813,8 @@ layui.use(['layer', 'table', 'flow', 'tree', 'util', 'upload', 'laypage', 'uploa
                             + '    </div>\n'
                             + '  </div>'
                             + '</td>'
+                            + '</tr>'
+                            + '<tr>'
                             + '<td>'
                             + '<div class="layui-form-item">\n'
                             + '    <label class="layui-form-label" style="font-size: 13px">二级分类</label>\n'

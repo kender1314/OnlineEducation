@@ -54,19 +54,19 @@ public interface JpaBookmarkManageRepository extends BookmarkManageRepository {
     Integer getCountQuestionBookmarks(Integer userId);
 
     @Override
-    @Query(value = "select * from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and video_id is not null  and bookmark_is_delete = 0", nativeQuery = true)
+    @Query(value = "select * from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and video_id is not null and bookmark_is_video = 1 and bookmark_is_delete = 0", nativeQuery = true)
     Page<Bookmark> getVideoBookmarks(String bookmarkName, Integer userId, Pageable pageable);
 
     @Override
-    @Query(value = "select count(*) from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and video_id is not null  and bookmark_is_delete = 0", nativeQuery = true)
+    @Query(value = "select count(*) from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and video_id is not null and bookmark_is_video = 1 and bookmark_is_delete = 0", nativeQuery = true)
     Integer getVideoBookmarksCount(String bookmarkName, Integer userId);
 
     @Override
-    @Query(value = "select * from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and question_id is not null and bookmark_is_delete = 0", nativeQuery = true)
+    @Query(value = "select * from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and question_id is not null and bookmark_is_video = 0 and bookmark_is_delete = 0", nativeQuery = true)
     Page<Bookmark> getQuestionBookmarks(String bookmarkName, Integer userId, Pageable pageable);
 
     @Override
-    @Query(value = "select count(*) from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and question_id is not null and bookmark_is_delete = 0", nativeQuery = true)
+    @Query(value = "select count(*) from gp_bookmark where bookmark_name = ?1 and user_id = ?2 and question_id is not null and bookmark_is_video = 0 and bookmark_is_delete = 0", nativeQuery = true)
     Integer getQuestionBookmarksCount(String bookmarkName, Integer userId);
 
     @Override
@@ -120,13 +120,13 @@ public interface JpaBookmarkManageRepository extends BookmarkManageRepository {
     @Override
     @Modifying
     @Transactional
-    @Query(value = "update gp_bookmark set bookmark_name = ?1 where bookmark_name = ?2 and user_id = ?3 and video_id is not null", nativeQuery = true)
+    @Query(value = "update gp_bookmark set bookmark_name = ?1 where bookmark_name = ?2 and user_id = ?3 and bookmark_is_video = 1", nativeQuery = true)
     Integer updateBookmarkOfVideo(String newBookmarkName, String bookmarkName, Integer userId);
 
     @Override
     @Modifying
     @Transactional
-    @Query(value = "update gp_bookmark set bookmark_name = ?1 where bookmark_name = ?2 and user_id = ?3 and question_id is not null", nativeQuery = true)
+    @Query(value = "update gp_bookmark set bookmark_name = ?1 where bookmark_name = ?2 and user_id = ?3 and bookmark_is_video = 0", nativeQuery = true)
     Integer updateBookmarkOfQuestion(String newBookmarkName, String bookmarkName, Integer userId);
 
     @Override

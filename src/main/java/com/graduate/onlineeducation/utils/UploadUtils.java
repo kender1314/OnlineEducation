@@ -61,7 +61,7 @@ public class UploadUtils {
             File destFile = new File(destFileName);
             destFile.getParentFile().mkdirs();
             image.transferTo(destFile);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.info("视频封面上传错误->>>>" + e);
         }
     }
@@ -75,7 +75,7 @@ public class UploadUtils {
             File destFile = new File(destFileName);
             destFile.getParentFile().mkdirs();
             image.transferTo(destFile);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.info("视频封面上传错误->>>>" + e);
         }
     }
@@ -89,7 +89,7 @@ public class UploadUtils {
             File destFile = new File(destFileName);
             destFile.getParentFile().mkdirs();
             image.transferTo(destFile);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.info("视频系列封面上传错误->>>>" + e);
         }
     }
@@ -102,7 +102,7 @@ public class UploadUtils {
             File destFile = new File(destFileName);
             destFile.getParentFile().mkdirs();
             uploadVideo.transferTo(destFile);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.info("视频上传错误->>>>" + e);
         }
     }

@@ -89,6 +89,9 @@ layui.use(['laypage', 'layer', 'jquery'], function () {
                     layer.close(index);
                     if(data.data === true){
                         layer.msg("取消成功，已添加进订单中！", {icon: 6});
+                        setTimeout(function () {  //使用  setTimeout（）方法设百定定时2000毫秒度
+                            window.location.href ="/userUrl/personalInformation?userId=" + userId;
+                        }, 1000);
                     }else {
                         layer.msg("取消失败！", {icon: 5});
                     }

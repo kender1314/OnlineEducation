@@ -139,7 +139,7 @@
                     , {field: 'orderDate', title: '订单时间'}
                     , {field: 'orderStatus', title: '订单状态',  templet: function (d) {
                         if (d.orderStatus === 1) {
-                            return "<span style='color: yellow'>未支付</span>";
+                            return "<span style='color: #ff81a1'>未支付</span>";
                         }else if(d.orderStatus === 2){
                             return "<span style='color: green'>已支付</span>";
                         }else if(d.orderStatus === 3){

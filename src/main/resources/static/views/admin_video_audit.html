@@ -116,7 +116,10 @@
             , cols: [
                 [
                     {type: 'numbers', title: '序号', width: 100, fixed: 'left'}
-                    , {field: 'videoName', title: '视频名', sort: true}
+                    , {field: 'videoName', title: '视频名', templet: function (d) {
+                        return "<a href=\"/url/adminPlayVideo?id=" + d.id +"\"> " + d.videoName + "</a>";
+                    }
+                }
                     , {
                     field: 'user', title: '用户名', templet: function (d) {
                         return d.user.userName;

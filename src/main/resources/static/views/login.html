@@ -120,7 +120,7 @@
         } else if (password.length < 6) {
             document.getElementById("password-tips").innerHTML = "<br><font color='red'>密码名至少得6个字符!</font>";
             document.getElementById("sub").disabled = true;
-        } else if(userName.length >= 5 && password.length >= 6){
+        } else if(userName.length >= 4 && password.length >= 6){
             document.getElementById("password-tips").innerHTML = "";
             document.getElementById("password").value = obscure(password, 10);
             document.getElementById("sub").disabled = false;
